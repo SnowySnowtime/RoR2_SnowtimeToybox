@@ -1,0 +1,18 @@
+{
+  "name": "SnowtimeToybox",
+  "version_number": "1.0.6",
+  "website_url": "",
+  "description": "Skills, Difficulty, and Skin(s) for friends(eventually) and myself. More to come.",
+  "dependencies": [
+    "bbepis-BepInExPack-5.4.2121",
+	"RiskofThunder-R2API_DamageType-1.1.7",
+	"RiskofThunder-R2API_Difficulty-1.1.2",
+	"RiskofThunder-R2API_Director-2.3.8",
+	"RiskofThunder-R2API_Language-1.1.0",
+    "RiskofThunder-R2API_Skills-1.0.4",
+    "RiskofThunder-R2API_Skins-1.4.4",
+    "RiskofThunder-R2API_Sound-1.0.3",
+	"Smooth_Salad-ShaderSwapper-1.0.1",
+    "mwmw-DynamicSkinsFix-1.0.7"
+  ]
+}

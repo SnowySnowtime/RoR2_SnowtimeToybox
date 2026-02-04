@@ -3,13 +3,13 @@
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
 #
 .utmp/
-/[Ll]ibrary/
-/[Tt]emp/
-/[Oo]bj/
-/[Bb]uild/
-/[Bb]uilds/
-/[Ll]ogs/
-/[Uu]ser[Ss]ettings/
+SnowtimeToybox_UnityProject/[Ll]ibrary/
+SnowtimeToybox_UnityProject/[Tt]emp/
+SnowtimeToybox_UnityProject/[Oo]bj/
+SnowtimeToybox_UnityProject/[Bb]uild/
+SnowtimeToybox_UnityProject/[Bb]uilds/
+SnowtimeToybox_UnityProject/[Ll]ogs/
+SnowtimeToybox_UnityProject/[Uu]ser[Ss]ettings/
 *.log
 
 # MemoryCaptures can get excessive in size.
@@ -73,3 +73,51 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Risk of Rain
+SnowtimeToybox_UnityProject/[Pp]ackages/[Rr]isk of Rain 2/*.dll
+SnowtimeToybox_UnityProject/[Pp]ackages/[Rr]isk of Rain 2/[Pp]lugins/*.dll
+
+SnowtimeToybox_UnityProject/Assets/ThunderKitSettings/EditorInspectorSettings.asset
+SnowtimeToybox_UnityProject/Assets/ThunderKitSettings/RoR2.asset
+SnowtimeToybox_UnityProject/Assets/ThunderKitSettings/Logs/*
+SnowtimeToybox_UnityProject/Assets/ThunderKitSettings/ThunderKit Extensions.asset
+SnowtimeToybox_UnityProject/ThunderKit/
+
+SnowtimeToybox_UnityProject/Packages/*
+!SnowtimeToybox_UnityProject/Packages/packages-lock.json
+!SnowtimeToybox_UnityProject/Packages/manifest.json
+
+# WWise Stuff
+WWiseProject/.cache/
+WWiseProject/*.prof
+WwiseProject/*_WwiseProject.*.validationcache
+WwiseProject/*_WwiseProject.*.wsettings
+WwiseProject/**/*.akd
+
+# build stuff (unsure?)
+# Assets/Wwise/Deployment/Plugins/Windows/**/*.meta
+
+# WWise Picker (editor)
+# from https://www.audiokinetic.com/library/edge/?source=Unity&id=unity__troubleshooting.html
+# >> Do not keep AkWwiseProjectData.asset under version control! 
+# >> This is a temporary cache file for the Wwise project data, 
+# >> so as to avoid having the Wwise Picker continuously parse the Work Unit files.
+Assets/Wwise/Editor/ProjectData/AkWwiseProjectData.asset*
+
+# notes:
+# 1) if any other files go in Assets/Wwise/Editor/ProjectData/ besides AkWwiseProjectData.asset*,
+#    then don't ignore Assets/Wwise/Editor/ProjectData.meta. If AkWwiseProjectData.asset is the only item in there,
+#    then, it's OK to ignore this file.
+# 
+# Assets/Wwise/Editor/ProjectData.meta
+
+## --------------- ##
+## End WWise Stuff ##
+## --------------- ##
+
+# temp install files
+WwiseUnityIntegration_*_Src.zip
+
+# Mac stuff
+.DS_store
