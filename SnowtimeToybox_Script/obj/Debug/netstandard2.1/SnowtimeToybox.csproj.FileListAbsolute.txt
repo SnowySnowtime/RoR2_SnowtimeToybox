@@ -1,0 +1,14 @@
+D:\vrchatprojects\_RoR2Project\snowtimetoybox\Assets\SnowtimeMod\Scripts\bin\Debug\netstandard2.1\SnowtimeToybox.deps.json
+D:\vrchatprojects\_RoR2Project\snowtimetoybox\Assets\SnowtimeMod\Scripts\bin\Debug\netstandard2.1\SnowtimeToybox.dll
+D:\vrchatprojects\_RoR2Project\snowtimetoybox\Assets\SnowtimeMod\Scripts\bin\Debug\netstandard2.1\SnowtimeToybox.pdb
+D:\vrchatprojects\_RoR2Project\snowtimetoybox\Assets\SnowtimeMod\Scripts\bin\Debug\netstandard2.1\ShaderSwapper.dll
+D:\vrchatprojects\_RoR2Project\snowtimetoybox\Assets\SnowtimeMod\Scripts\bin\Debug\netstandard2.1\ShaderSwapper.xml
+D:\vrchatprojects\_RoR2Project\snowtimetoybox\Assets\SnowtimeMod\Scripts\obj\Debug\netstandard2.1\SnowtimeToybox.csproj.AssemblyReference.cache
+D:\vrchatprojects\_RoR2Project\snowtimetoybox\Assets\SnowtimeMod\Scripts\obj\Debug\netstandard2.1\SnowtimeToybox.GeneratedMSBuildEditorConfig.editorconfig
+D:\vrchatprojects\_RoR2Project\snowtimetoybox\Assets\SnowtimeMod\Scripts\obj\Debug\netstandard2.1\SnowtimeToybox.AssemblyInfoInputs.cache
+D:\vrchatprojects\_RoR2Project\snowtimetoybox\Assets\SnowtimeMod\Scripts\obj\Debug\netstandard2.1\SnowtimeToybox.AssemblyInfo.cs
+D:\vrchatprojects\_RoR2Project\snowtimetoybox\Assets\SnowtimeMod\Scripts\obj\Debug\netstandard2.1\SnowtimeToybox.csproj.CoreCompileInputs.cache
+D:\vrchatprojects\_RoR2Project\snowtimetoybox\Assets\SnowtimeMod\Scripts\obj\Debug\netstandard2.1\SnowtimeToybox.sourcelink.json
+D:\vrchatprojects\_RoR2Project\snowtimetoybox\Assets\SnowtimeMod\Scripts\obj\Debug\netstandard2.1\Snowtime.1F97E440.Up2Date
+D:\vrchatprojects\_RoR2Project\snowtimetoybox\Assets\SnowtimeMod\Scripts\obj\Debug\netstandard2.1\SnowtimeToybox.dll
+D:\vrchatprojects\_RoR2Project\snowtimetoybox\Assets\SnowtimeMod\Scripts\obj\Debug\netstandard2.1\SnowtimeToybox.pdb
