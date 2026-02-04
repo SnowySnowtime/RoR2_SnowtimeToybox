@@ -1,0 +1,60 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netstandard2.1</TargetFramework>
+		<LangVersion>preview</LangVersion>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="bin.meta" />
+	  <None Remove="ContentProvider.cs.meta" />
+	  <None Remove="EntityStates.meta" />
+	  <None Remove="EntityStates\EntityStateErrorFireWeapon.cs.meta" />
+	  <None Remove="Log.cs.meta" />
+	  <None Remove="nuget.config" />
+	  <None Remove="nuget.config.meta" />
+	  <None Remove="obj.meta" />
+	  <None Remove="SnowtimeContent.cs.meta" />
+	  <None Remove="SnowtimeStage.cs.meta" />
+	  <None Remove="SnowtimeStages.csproj.meta" />
+	  <None Remove="SnowtimeStages.sln.meta" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="BepInEx.Analyzers" Version="1.0.*">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+
+		<PackageReference Include="BepInEx.Core" Version="5.4.21" />
+
+		<PackageReference Include="R2API.Addressables" Version="1.1.3" />
+
+		<PackageReference Include="R2API.CharacterBody" Version="1.2.0" />
+
+		<PackageReference Include="R2API.Difficulty" Version="1.1.2" />
+
+		<PackageReference Include="R2API.Director" Version="2.3.8" />
+		<PackageReference Include="R2API.DamageType" Version="1.1.7" />
+		<PackageReference Include="R2API.Items" Version="1.0.*" />
+		<PackageReference Include="R2API.Language" Version="1.1.0" />
+		<PackageReference Include="R2API.Networking" Version="1.0.4" />
+		<PackageReference Include="R2API.Prefab" Version="1.1.1" />
+		<PackageReference Include="R2API.RecalculateStats" Version="1.6.5" />
+		<PackageReference Include="R2API.Sound" Version="1.0.3" />
+		<PackageReference Include="R2API.Stages" Version="1.0.3" />
+		<PackageReference Include="R2API.Unlockable" Version="1.0.2" />
+
+		<PackageReference Include="UnityEngine.Modules" Version="2021.3.33" IncludeAssets="compile" />
+		<PackageReference Include="RiskOfRain2.GameLibs" Version="1.4.1-r.0" />
+		<PackageReference Include="MMHOOK.RoR2" Version="2025.12.9" NoWarn="NU1701" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Reference Include="ShaderSwapper">
+	    <HintPath>bin\ShaderSwapper.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
+
+</Project>
