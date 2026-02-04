@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.1</TargetFramework>
@@ -55,6 +55,13 @@
 	  <Reference Include="ShaderSwapper">
 	    <HintPath>bin\ShaderSwapper.dll</HintPath>
 	  </Reference>
+	  <Reference Include="UnityHotReload">
+	    <HintPath>lib\UnityHotReload.dll</HintPath>
+	  </Reference>
 	</ItemGroup>
+
+	<!--Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	  <Exec Command="cp -r &quot;/run/media/icebrah/buh/github/RoR2_SnowtimeToybox/SnowtimeToybox_Script/bin/Debug/netstandard2.1/&quot; &quot;/run/media/icebrah/buh/gale/riskofrain2/profiles/debug 3/BepInEx/plugins/snowtimesnowysnowtimesnowsnowsnowsnowysnow/&quot;" />
+	</Target-->
 
 </Project>

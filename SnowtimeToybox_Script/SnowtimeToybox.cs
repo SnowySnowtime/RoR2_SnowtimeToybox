@@ -10,11 +10,18 @@ using RoR2.Skills;
 using ShaderSwapper;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Security;
 using System.Security.Permissions;
+using SnowtimeToybox.Buffs;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
+using UnityHotReloadNS;
 using Path = System.IO.Path;
+using SceneDirector = On.RoR2.SceneDirector;
 
 [module: UnverifiableCode]
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -60,6 +67,8 @@ namespace SnowtimeToybox
         public static GameObject FriendlyTurretBorboMaster;
         public static GameObject FriendlyTurretBorboBroken;
         //public static DroneDef FriendlyTurretTestDroneDef;
+        
+        public static List<GameObject> friendlyTurretList = [];
 
         public static bool Legendary = false;
         // Copied from RiskierRain, sorry borbo :(
@@ -93,6 +102,88 @@ namespace SnowtimeToybox
             };
 
             GlobalEventManager.onServerDamageDealt += SnowtimeDamageTypes.GlobalEventManager_onServerDamageDealt;
+            
+            On.RoR2.SceneDirector.Start += SceneDirectorOnStart;
+        }
+
+        private void SceneDirectorOnStart(SceneDirector.orig_Start orig, RoR2.SceneDirector self)
+        {
+            orig(self);
+            Log.Debug("hehe !");
+            
+            if (!NetworkServer.active) return;
+            
+            Vector3 position;
+            Quaternion rotation;
+
+            Dictionary<Vector3, Quaternion> stagePositions = new Dictionary<Vector3, Quaternion>();
+            string currStage = SceneManager.GetActiveScene().name;
+            switch (currStage)
+            {
+                case "blackbeach":
+                    stagePositions.Add(new Vector3(-60, -51.2f, -231), Quaternion.Euler(0, 0, 0)); //high cliff in the middle of the map
+                    break;
+                case "blackbeach2":
+                    stagePositions.Add(new Vector3(-101.4f, 1.5f, 20.1f), Quaternion.Euler(0, 292.8f, 0)); //between two knocked-over pillars near the gate
+                    break;
+                case "golemplains":
+                    stagePositions.Add(new Vector3(190.3899f, -86.776f, -135.183f), Quaternion.Euler(0f, 59.69361f, 0f));
+                    break;
+                case "golemplains2":
+                    stagePositions.Add(new Vector3(9.8f, 127.5f, -251.8f), Quaternion.Euler(0, 5, 0)); //on the cliff where the middle giant ring meets the ground
+                    break;
+                case "goolake":
+                    stagePositions.Add(new Vector3(53.9f, -45.9f, -219.6f), Quaternion.Euler(0, 190, 0)); //on the clifftop near the ancient gate
+                    break;
+                case "foggyswamp":
+                    stagePositions.Add(new Vector3(-83.74f, -83.35f, 39.09f), Quaternion.Euler(0, 104.27f, 0)); //on the wall / dam across from where two newt altars spawn
+                    break;
+                case "frozenwall":
+                    stagePositions.Add(new Vector3(-230.7f, 132, 239.4f), Quaternion.Euler(0, 167, 0)); //on cliff near water, next to the lone tree
+                    break;
+                case "wispgraveyard":
+                    stagePositions.Add(new Vector3(-341.5f, 79, 0.5f), Quaternion.Euler(0, 145, 0)); //small cliff outcrop above playable area, same large island with artifact code
+                    break;
+                case "dampcavesimple":
+                    stagePositions.Add(new Vector3(157.5f, -43.1f, -188.9f), Quaternion.Euler(0, 318.4f, 0)); //on the overhang above rex w/ 3 big rocks
+                    break;
+                case "shipgraveyard":
+                    stagePositions.Add(new Vector3(20.5f, -23.7f, 185.1f), Quaternion.Euler(0, 173.6f, 0)); //in the cave entrance nearest to the cliff, on the spire below the land bridge
+                    break;
+                case "rootjungle":
+                    stagePositions.Add(new Vector3(-196.6f, 190.1f, -204.5f), Quaternion.Euler(0, 80, 0)); //top of the highest root in the upper / back area
+                    break; 
+                case "skymeadow":
+                    stagePositions.Add(new Vector3(65.9f, 127.4f, -293.9f), Quaternion.Euler(0, 194.8f, 0)); //on top of the tallest rock spire, opposite side of map from the moon
+                    break;
+                case "snowyforest":
+                    stagePositions.Add(new Vector3(-38.7f, 112.7f, 153.1f), Quaternion.Euler(0, 54.1f, 0)); //on top of a lone elevated platform on a tree
+                    break;
+                case "ancientloft":
+                    stagePositions.Add(new Vector3(-133.4f, 33f, -280f), Quaternion.Euler(0, 354.5f, 0)); //on a branch under the main platform in the back corner of the map
+                    break;
+                case "sulfurpools":
+                    stagePositions.Add(new Vector3(-33.6f, 36.8f, 164.1f), Quaternion.Euler(0, 187f, 0)); //in the corner, atop of one of the columns
+                    break;
+                case "FBLScene":
+                    stagePositions.Add(new Vector3(58.3f, 372f, -88.8f), Quaternion.Euler(0, 0, 0)); //overlooking the shore
+                    break;
+                case "drybasin":
+                    stagePositions.Add(new Vector3(149.4f, 65.7f, -212.7f), Quaternion.Euler(0, 0, 0)); //in a cranny near collapsed aqueducts
+                    break;
+                case "lakes":
+                    stagePositions.Add(new Vector3(139f, 59.07873f, -181.3314f), Quaternion.Euler(355f, 325f, 0)); //behind a waterfall on the map's edge (how is there not already a secret here??)
+                    break;
+                default:
+                    Log.Debug("no custom pos !!! too bad ,..");
+                    return;
+            }        
+            GameObject turret = friendlyTurretList[Run.instance.runRNG.RangeInt(0, friendlyTurretList.Count)];
+            KeyValuePair<Vector3, Quaternion> stagePos = stagePositions.ElementAt(Run.instance.runRNG.RangeInt(0, stagePositions.Count));
+            GameObject term = Instantiate(turret, stagePos.Key, stagePos.Value);
+            Log.Debug($"turret name = {turret.name} !!!!");
+
+            NetworkServer.Spawn(term);
         }
 
         public static String assetDirectory;
@@ -130,14 +221,14 @@ namespace SnowtimeToybox
             // borbo turret borbo turret
             // Add Borbo Turret
             Log.Debug("Defining Friendly Turret based on Borbo (2R4R)");
-            GameObject FriendlyTurretBorboBody = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/_FriendlyTurretBorboBody.prefab");
-            GameObject FriendlyTurretBorboMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/_FriendlyTurretBorboMaster.prefab");
-            SkillFamily FriendlyTurretBorboSkillFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/Skills/BorboPrimaryFamily.asset");
-            SkillDef FriendlyTurretBorboSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/Skills/BorboBlast.asset");
+            FriendlyTurretBorboBody = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/_FriendlyTurretBorboBody.prefab");
+            FriendlyTurretBorboMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/_FriendlyTurretBorboMaster.prefab");
+            FriendlyTurretBorboSkillFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/Skills/BorboPrimaryFamily.asset");
+            FriendlyTurretBorboSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/Skills/BorboBlast.asset");
             // I am being PEDANTIC but i dont care!
             FriendlyTurretBorboSkillDef.activationState = new SerializableEntityStateType(typeof(ChargeBorboLaser));
-            GameObject FriendlyTurretBorboBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/_mdlFriendlyTurretBorboBroken.prefab");
-            DroneDef FriendlyTurretBorboDef = _stcharacterAssetBundle.LoadAsset<DroneDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/_FriendlyTurretBorbo.asset");
+            FriendlyTurretBorboBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/_mdlFriendlyTurretBorboBroken.prefab");
+            FriendlyTurretBorboDef = _stcharacterAssetBundle.LoadAsset<DroneDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/_FriendlyTurretBorbo.asset");
             // Add the Content
             Log.Debug("Adding Borbo Turret Assets");
             ContentAddition.AddEntityState(typeof(FireBorboLaser), out _);
@@ -154,52 +245,7 @@ namespace SnowtimeToybox
             Log.Debug("Adding Friendly Turrets Interactables to Stages");
             ContentAddition.AddNetworkedObject(FriendlyTurretBorboBroken);
             // i want die
-            InteractableSpawnCard FriendlyTurretBorboIsc = _stcharacterAssetBundle.LoadAsset<InteractableSpawnCard>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/_iscBrokenFriendlyTurretBorbo.asset");
-            // Manage the new Interactables
-            var directorCardFriendlyTurretBorbo = new DirectorCard // Borbo Turret Interactable
-            {
-                spawnCard = FriendlyTurretBorboIsc,
-                selectionWeight = 1000, // the higher it is, the more common it is
-                spawnDistance = DirectorCore.MonsterSpawnDistance.Standard,
-                minimumStageCompletions = 0,
-                preventOverhead = false
-            };
-            Log.Debug("Borbo Turret Director Card Info");
-            Log.Debug("spawnCard = " + directorCardFriendlyTurretBorbo.spawnCard);
-            Log.Debug("selectionWeight = " + directorCardFriendlyTurretBorbo.selectionWeight);
-            Log.Debug("spawnDistance = " + directorCardFriendlyTurretBorbo.spawnDistance);
-            Log.Debug("minimumStageCompletions = " + directorCardFriendlyTurretBorbo.minimumStageCompletions);
-            Log.Debug("preventOverhead = " + directorCardFriendlyTurretBorbo.preventOverhead);
-
-            var directorCardHolderFriendlyTurretBorbo = new DirectorAPI.DirectorCardHolder
-            {
-                Card = directorCardFriendlyTurretBorbo,
-                //CustomInteractableCategory = "SnowtimeFriendlyTurrets",
-                InteractableCategory = DirectorAPI.InteractableCategory.Drones
-                //InteractableCategorySelectionWeight = 1000,
-            };
-            Log.Debug("Borbo Turret Director Card Holder Info");
-            Log.Debug("Card = " + directorCardHolderFriendlyTurretBorbo.Card);
-            //Log.Debug("CustomInteractableCategory = " + directorCardHolderFriendlyTurretBorbo.CustomInteractableCategory);
-            //Log.Debug("InteractableCategorySelectionWeight = " + directorCardHolderFriendlyTurretBorbo.InteractableCategorySelectionWeight);
-
-            List<DirectorAPI.Stage> borboStageList = new List<DirectorAPI.Stage>();
-
-            borboStageList.Add(DirectorAPI.Stage.TitanicPlains);
-            borboStageList.Add(DirectorAPI.Stage.AbandonedAqueduct);
-            borboStageList.Add(DirectorAPI.Stage.WetlandAspect);
-            borboStageList.Add(DirectorAPI.Stage.AphelianSanctuary);
-            borboStageList.Add(DirectorAPI.Stage.RallypointDelta);
-            borboStageList.Add(DirectorAPI.Stage.ScorchedAcres);
-            borboStageList.Add(DirectorAPI.Stage.SirensCall);
-            borboStageList.Add(DirectorAPI.Stage.ConduitCanyon);
-            borboStageList.Add(DirectorAPI.Stage.SkyMeadow);
-
-            foreach (DirectorAPI.Stage stage in borboStageList)
-            {
-                Log.Debug("Adding Friendly Turrets to stage: " + stage);
-                DirectorAPI.Helpers.AddNewInteractableToStage(directorCardHolderFriendlyTurretBorbo, stage);
-            }
+            friendlyTurretList.Add(FriendlyTurretBorboBroken);
         }
 
 
@@ -241,9 +287,16 @@ namespace SnowtimeToybox
         {
             Log.Debug(GUID);
             Log.Debug("Adding SnowtimeToybox Custom BuffDefs...");
-            BuffDef BorboTurretDebuff = _stcharacterAssetBundle.LoadAsset<BuffDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/Buff/BorboTurretDebuff.asset");
+            BorboTurretDebuff = _stcharacterAssetBundle.LoadAsset<BuffDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/Buff/BorboTurretDebuff.asset");
             Log.Debug(BorboTurretDebuff);
             ContentAddition.AddBuffDef(BorboTurretDebuff);
+            
+            IEnumerable<Type> buffTypes = Assembly.GetExecutingAssembly().GetTypes().Where(type => !type.IsAbstract && type.IsSubclassOf(typeof(BuffBase)));
+            foreach (Type buffType in buffTypes)
+            {
+                BuffBase buff = (BuffBase)System.Activator.CreateInstance(buffType);
+                buff.Create();
+            }
         }
 
         public void AddCustomSkills()
@@ -284,6 +337,30 @@ namespace SnowtimeToybox
         private void Destroy()
         {
             Language.collectLanguageRootFolders -= CollectLanguageRootFolders;
+        }
+
+        private void Update()
+        {
+#if DEBUG
+            if (Input.GetKeyUp(KeyCode.F3))
+            {
+                UnityHotReload.LoadNewAssemblyVersion(typeof(SnowtimeToyboxMod).Assembly,
+                    Path.Combine(Path.GetDirectoryName(Info.Location)!, "SnowtimeToybox.dll"));
+            }
+#endif
+        }
+        
+        [ConCommand(commandName = "friendturretpos", flags = ConVarFlags.None, helpText = "get image friend !! find her lost girl friend inside me .,.,,. ")]
+        public static void friendturretfindher(ConCommandArgs args)
+        {
+            /*
+             * case "lakes":
+               stagePositions.Add(new Vector3(139f, 59.07873f, -181.3314f), Quaternion.Euler(355f, 325f, 0)); //behind a waterfall on the map's edge (how is there not already a secret here??)
+               break;
+             */
+            Log.Debug($"case \"{SceneManager.GetActiveScene().name}\":");
+            Log.Debug($"    stagePositions.Add(new Vector3({args.senderBody.footPosition.x}f, {args.senderBody.footPosition.y}f, {args.senderBody.footPosition.z}f), Quaternion.Euler({args.senderBody.modelLocator.modelTransform.rotation.eulerAngles.x}f, {args.senderBody.modelLocator.modelTransform.rotation.eulerAngles.y}f, {args.senderBody.modelLocator.modelTransform.rotation.eulerAngles.z}f));");
+            Log.Debug($"    break;");
         }
     }
 }

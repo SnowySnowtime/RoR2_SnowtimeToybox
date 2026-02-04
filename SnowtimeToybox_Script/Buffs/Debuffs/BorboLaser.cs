@@ -19,15 +19,19 @@ namespace SnowtimeToybox.Buffs
         {
             bool BorboDebuffed = sender.HasBuff(Buff);
             Log.Debug("Borbo Debuff Active = " + BorboDebuffed);
-            if (BorboDebuffed == true)
+            if (BorboDebuffed)
             {
                 Log.Debug("Go Crazy Borbo!");
-                args.armorTotalMult += 0f;
-                args.armorAdd += -90f;
-                args.attackSpeedMultAdd += 0f;
-                args.damageMultAdd += 0f;
-                args.jumpPowerMultAdd += 0f;
-                args.moveSpeedMultAdd += 0f;
+                args.armorTotalMult *= 0.2f;
+                args.attackSpeedTotalMult *= 0.2f;
+                args.damageTotalMult *= 0.2f;
+                args.jumpPowerTotalMult *= 0f;
+                args.moveSpeedTotalMult *= 0.2f;
+                Log.Debug($"armor mult {args.armorTotalMult}");
+                Log.Debug($"attackSpeedMultAdd {args.attackSpeedTotalMult}");
+                Log.Debug($"damageMultAdd {args.damageTotalMult}");
+                Log.Debug($"jumpPowerMultAdd {args.jumpPowerTotalMult}");
+                Log.Debug($"moveSpeedTotalMult {args.moveSpeedTotalMult}");
             }
         }
     }
