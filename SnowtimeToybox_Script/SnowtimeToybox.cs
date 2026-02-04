@@ -15,6 +15,7 @@ using System.Reflection;
 using System.Security;
 using System.Security.Permissions;
 using SnowtimeToybox.Buffs;
+using SnowtimeToybox.FriendlyTurretChecks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
@@ -380,8 +381,6 @@ namespace SnowtimeToybox
         {
             Log.Debug(GUID);
             Log.Debug("Adding SnowtimeToybox Friend Drones...");
-            // Entity States need to be added before the rest of the content is loaded.
-            Log.Debug("Adding Friendly Turret Entity States");
             // borbo turret borbo turret
             // Add Borbo Turret
             Log.Debug("Defining Friendly Turret based on Borbo (2R4R)");
@@ -391,10 +390,11 @@ namespace SnowtimeToybox
             FriendlyTurretBorboSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/Skills/BorboBlast.asset");
             // I am being PEDANTIC but i dont care!
             FriendlyTurretBorboSkillDef.activationState = new SerializableEntityStateType(typeof(ChargeBorboLaser));
-            FriendlyTurretBorboBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/_mdlFriendlyTurretBorboBroken.prefab");
             FriendlyTurretBorboDef = _stcharacterAssetBundle.LoadAsset<DroneDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/_FriendlyTurretBorbo.asset");
             // Add the Content
             Log.Debug("Adding Borbo Turret Assets");
+            // Entity States need to be added before the rest of the content is loaded.
+            Log.Debug("Adding Friendly Turret Entity States");
             ContentAddition.AddEntityState(typeof(FireBorboLaser), out _);
             ContentAddition.AddEntityState(typeof(ChargeBorboLaser), out _);
             ContentAddition.AddBody(FriendlyTurretBorboBody);
@@ -404,11 +404,15 @@ namespace SnowtimeToybox
             ContentAddition.AddEffect(FireBorboLaser.effectPrefabObject);
             ContentAddition.AddEffect(FireBorboLaser.hitEffectPrefabObject);
             ContentAddition.AddEffect(FireBorboLaser.tracerEffectPrefabObject);
-            // ContentAddition.AddDroneDef();
 
+            // Friendly Turret Interactables
             Log.Debug("Adding Friendly Turrets Interactables to Stages");
-            ContentAddition.AddNetworkedObject(FriendlyTurretBorboBroken);
+            FriendlyTurretBorboBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/_mdlFriendlyTurretBorboBroken.prefab");
+            BorboCheck borbocheck = FriendlyTurretBorboBroken.AddComponent<BorboCheck>();
+            PurchaseInteraction borbointeraction = FriendlyTurretBorboBroken.GetComponent<PurchaseInteraction>();
+            borbocheck.purchaseInteraction = borbointeraction;
             // i want die
+            ContentAddition.AddNetworkedObject(FriendlyTurretBorboBroken);
             friendlyTurretList.Add(FriendlyTurretBorboBroken);
         }
 
@@ -453,7 +457,6 @@ namespace SnowtimeToybox
             Log.Debug("Adding SnowtimeToybox Custom BuffDefs...");
             BorboTurretDebuff = _stcharacterAssetBundle.LoadAsset<BuffDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/Buff/BorboTurretDebuff.asset");
             Log.Debug(BorboTurretDebuff);
-            ContentAddition.AddBuffDef(BorboTurretDebuff);
             
             IEnumerable<Type> buffTypes = Assembly.GetExecutingAssembly().GetTypes().Where(type => !type.IsAbstract && type.IsSubclassOf(typeof(BuffBase)));
             foreach (Type buffType in buffTypes)
