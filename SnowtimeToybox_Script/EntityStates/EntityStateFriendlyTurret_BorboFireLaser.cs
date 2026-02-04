@@ -67,6 +67,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             blastAttack.radius = blastRadius;
             blastAttack.falloffModel = BlastAttack.FalloffModel.SweetSpot;
             blastAttack.bonusForce = force * modifiedAimRay.direction;
+            blastAttack.damageType = new DamageTypeCombo((DamageTypeCombo)DamageType.Generic, DamageTypeExtended.Generic, DamageSource.Primary);
             DamageAPI.AddModdedDamageType(blastAttack, SnowtimeDamageTypes.BorboSuperDebuffOnHit);
             blastAttack.Fire();
             _ = modifiedAimRay.origin;

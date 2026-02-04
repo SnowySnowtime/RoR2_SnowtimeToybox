@@ -21,17 +21,10 @@ namespace SnowtimeToybox.Buffs
         {
             if (!sender.HasBuff(Buff)) return;
             
-            Log.Debug("Go Crazy Borbo!");
-            args.armorTotalMult *= 0.2f;
-            args.attackSpeedTotalMult *= 0.2f;
+            args.armorAdd += -120f;
             args.damageTotalMult *= 0.2f;
             args.jumpPowerTotalMult *= 0f;
             args.moveSpeedTotalMult *= 0.2f;
-            Log.Debug($"armor mult {args.armorTotalMult}");
-            Log.Debug($"attackSpeedMultAdd {args.attackSpeedTotalMult}");
-            Log.Debug($"damageMultAdd {args.damageTotalMult}");
-            Log.Debug($"jumpPowerMultAdd {args.jumpPowerTotalMult}");
-            Log.Debug($"moveSpeedTotalMult {args.moveSpeedTotalMult}");
         }
     }
 }

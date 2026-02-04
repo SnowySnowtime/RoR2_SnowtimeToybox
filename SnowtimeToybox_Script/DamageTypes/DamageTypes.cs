@@ -31,7 +31,7 @@ namespace SnowtimeToybox
                 var temporaryOverlay = TemporaryOverlayManager.AddOverlay(report.victimBody.modelLocator.modelTransform.gameObject);
                 temporaryOverlay.duration = 3;
                 temporaryOverlay.animateShaderAlpha = true;
-                temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
+                temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 2.5f, 0f);
                 temporaryOverlay.destroyComponentOnEnd = true;
                 temporaryOverlay.originalMaterial = Addressables.LoadAssetAsync<Material>(RoR2BepInExPack.GameAssetPaths.Version_1_39_0.RoR2_Base_Common.matIsShocked_mat).WaitForCompletion();
                 temporaryOverlay.inspectorCharacterModel = report.victimBody.modelLocator.modelTransform.GetComponent<CharacterModel>();
