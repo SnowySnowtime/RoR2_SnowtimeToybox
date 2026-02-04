@@ -461,6 +461,7 @@ namespace SnowtimeToybox
                 BuffBase buff = (BuffBase)System.Activator.CreateInstance(buffType);
                 buff.Create();
             }
+            
         }
 
         public void AddCustomSkills()
