@@ -1,9 +1,6 @@
-using R2API;
 using RoR2;
 using SnowtimeToybox;
 using UnityEngine;
-using EntityStates;
-using EntityStates.SnowtimeToybox_FriendlyTurret;
 
 namespace EntityStates.SnowtimeToybox_FriendlyTurret
 {

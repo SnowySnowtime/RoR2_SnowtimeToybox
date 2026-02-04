@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\vrchatprojects\\_RoR2Project\\snowtimetoybox\\Assets\\SnowtimeMod\\Scripts\\SnowtimeToybox.csproj": {}
+    "D:\\vrchatprojects\\_RoR2Project\\RoR2_SnowtimeToybox\\SnowtimeToybox_Script\\SnowtimeToybox.csproj": {}
   },
   "projects": {
-    "D:\\vrchatprojects\\_RoR2Project\\snowtimetoybox\\Assets\\SnowtimeMod\\Scripts\\SnowtimeToybox.csproj": {
+    "D:\\vrchatprojects\\_RoR2Project\\RoR2_SnowtimeToybox\\SnowtimeToybox_Script\\SnowtimeToybox.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\vrchatprojects\\_RoR2Project\\snowtimetoybox\\Assets\\SnowtimeMod\\Scripts\\SnowtimeToybox.csproj",
+        "projectUniqueName": "D:\\vrchatprojects\\_RoR2Project\\RoR2_SnowtimeToybox\\SnowtimeToybox_Script\\SnowtimeToybox.csproj",
         "projectName": "SnowtimeToybox",
-        "projectPath": "D:\\vrchatprojects\\_RoR2Project\\snowtimetoybox\\Assets\\SnowtimeMod\\Scripts\\SnowtimeToybox.csproj",
+        "projectPath": "D:\\vrchatprojects\\_RoR2Project\\RoR2_SnowtimeToybox\\SnowtimeToybox_Script\\SnowtimeToybox.csproj",
         "packagesPath": "C:\\Users\\xxdoo\\.nuget\\packages\\",
-        "outputPath": "D:\\vrchatprojects\\_RoR2Project\\snowtimetoybox\\Assets\\SnowtimeMod\\Scripts\\obj\\",
+        "outputPath": "D:\\vrchatprojects\\_RoR2Project\\RoR2_SnowtimeToybox\\SnowtimeToybox_Script\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "D:\\vrchatprojects\\_RoR2Project\\snowtimetoybox\\Assets\\SnowtimeMod\\Scripts\\NuGet.Config",
+          "D:\\vrchatprojects\\_RoR2Project\\RoR2_SnowtimeToybox\\SnowtimeToybox_Script\\NuGet.Config",
           "C:\\Users\\xxdoo\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],

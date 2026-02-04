@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "6B3QND2F1UQ=",
+  "dgSpecHash": "6Pa4/R61rEE=",
   "success": true,
-  "projectFilePath": "D:\\vrchatprojects\\_RoR2Project\\snowtimetoybox\\Assets\\SnowtimeMod\\Scripts\\SnowtimeToybox.csproj",
+  "projectFilePath": "D:\\vrchatprojects\\_RoR2Project\\RoR2_SnowtimeToybox\\SnowtimeToybox_Script\\SnowtimeToybox.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\xxdoo\\.nuget\\packages\\bepinex.analyzers\\1.0.8\\bepinex.analyzers.1.0.8.nupkg.sha512",
     "C:\\Users\\xxdoo\\.nuget\\packages\\bepinex.baselib\\5.4.20\\bepinex.baselib.5.4.20.nupkg.sha512",

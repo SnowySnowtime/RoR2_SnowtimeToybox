@@ -5,23 +5,15 @@ using EntityStates;
 using EntityStates.SnowtimeToybox_FireHaloWeapon;
 using EntityStates.SnowtimeToybox_FriendlyTurret;
 using R2API;
-using R2API.Utils;
 using RoR2;
-using RoR2.ContentManagement;
 using RoR2.Skills;
-using RoR2BepInExPack;
-using RoR2BepInExPack.GameAssetPaths;
 using ShaderSwapper;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Security;
 using System.Security.Permissions;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using static R2API.RecalculateStatsAPI;
 using Path = System.IO.Path;
 
 [module: UnverifiableCode]
