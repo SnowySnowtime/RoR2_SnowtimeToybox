@@ -24,6 +24,8 @@ adds skins for my friends(eventually) and I. also adds one skill and difficulty.
 - thats it. this is still a personal mod, if you use these, go ham i guess, hope you have fun tho...
 
 ## Credits
+- icebro | a bunch of code directly committed, helping getting most of the friendly turret spawns and other effects working
+- acanthi | helped with figuring out how to do some things, like handling the interactable for the turret to remain per-player singletons
 - PlNK | Custom Icon for the Legendary difficulty
 - anartoast | Custom Icon for the H4-L0 PL45 Rifle, ideas for balancing said skill
 - .score | Assistance with making the on-hit bounce work for H4-L0 PL45 Rifle
