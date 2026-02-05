@@ -9,6 +9,8 @@ adds skins for my friends(eventually) and I. also adds one skill and difficulty.
 - You are only allowed to have one type of Friendly Turret per player.
 
 ## Implemented Friendly Turrets:
+- borbo turret borbo turret [2R4R](https://thunderstore.io/package/RiskOfBrainrot/2R4R/)
+![borbo waow](https://github.com/SnowySnowtime/RoR2_SnowtimeToybox/blob/main/borboturretpreview.jpg?raw=true)
 
 # Features
 
