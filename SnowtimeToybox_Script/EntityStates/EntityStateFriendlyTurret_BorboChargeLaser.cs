@@ -44,7 +44,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         {
             base.OnEnter();
             SetAIUpdateFrequency(alwaysUpdate: true);
-            duration = baseDuration / attackSpeedStat;
+            duration = baseDuration;
             Transform modelTransform = GetModelTransform();
             chargePlayID = Util.PlayAttackSpeedSound(attackSoundString, base.gameObject, attackSpeedStat);
             if ((bool)modelTransform)

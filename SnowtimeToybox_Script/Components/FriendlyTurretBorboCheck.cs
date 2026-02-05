@@ -32,7 +32,7 @@ namespace SnowtimeToybox.FriendlyTurretChecks
 
             purchaseInteraction.onDetailedPurchaseServer.AddListener(OnDetailedPurchase);
 
-            if (purchaseInteraction.displayNameToken == "FRIENDLYTURRET_BORBO_NAME")
+            if (purchaseInteraction.displayNameToken == "FRIENDLYTURRET_BORBO_BROKEN_NAME")
             {
                 Chat.SendBroadcastChat(new Chat.SimpleChatMessage() { baseToken = "<style=cEvent><color=#A8D3FF>Friendly Turret: pleas repair me, i will update 2r4r if you do..!</color></style>" });
             }

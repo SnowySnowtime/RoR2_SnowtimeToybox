@@ -14,6 +14,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         public static GameObject effectPrefab = effectPrefabObject;
         public static GameObject hitEffectPrefab = hitEffectPrefabObject;
         public static GameObject tracerEffectPrefab = tracerEffectPrefabObject;
+        public static Component TracerWaow;
         public static float damageCoefficient = 10.0f;
         public static float blastRadius = 4f;
         public static float force = 5000f;
@@ -33,7 +34,12 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         public override void OnEnter()
         {
             base.OnEnter();
-            duration = baseDuration / attackSpeedStat;
+            Component TracerWaow = tracerEffectPrefabObject.GetComponent<SnowtimeToybox.Components.TracerComponentLinger>();
+            if (!TracerWaow)
+            {
+                tracerEffectPrefabObject.AddComponent<SnowtimeToybox.Components.TracerComponentLinger>();
+            }
+            duration = baseDuration;
             modifiedAimRay = GetAimRay();
             modifiedAimRay.direction = laserDirection;
             GetModelAnimator();
@@ -61,7 +67,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             blastAttack.attacker = base.gameObject;
             blastAttack.inflictor = base.gameObject;
             blastAttack.teamIndex = TeamComponent.GetObjectTeam(base.gameObject);
-            blastAttack.baseDamage = damageStat * damageCoefficient;
+            blastAttack.baseDamage = (damageStat * damageCoefficient) * Math.Clamp((attackSpeedStat / 2), 1, 69420);
             blastAttack.baseForce = force * 0.2f;
             blastAttack.position = vector;
             blastAttack.radius = blastRadius;

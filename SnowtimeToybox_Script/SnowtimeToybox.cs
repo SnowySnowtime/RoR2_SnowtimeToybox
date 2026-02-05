@@ -245,6 +245,15 @@ namespace SnowtimeToybox
                     stagePositions.Add(new Vector3(300.2629f, 229.4142f, -126.4303f), Quaternion.Euler(0f, 125.6396f, 0f));
                     stagePositions.Add(new Vector3(169.5165f, 255.284f, 410.8152f), Quaternion.Euler(0f, 20.25785f, 0f));   
                     break;
+                // wormsworms Stages
+                case "observatory_wormsworms":
+                    stagePositions.Add(new Vector3(176.1036f, -2.617247f, -34.78374f), Quaternion.Euler(0f, 210.1473f, 0f));
+                    stagePositions.Add(new Vector3(-141.1253f, 77.90317f, 221.5992f), Quaternion.Euler(0f, 13.25202f, 0f));
+                    break;
+                case "foggyswampdownpour":
+                    stagePositions.Add(new Vector3(-749.5313f, 91.3914f, -2025.714f), Quaternion.Euler(0f, 227.2804f, 0f));
+                    stagePositions.Add(new Vector3(-1018.735f, 76.65155f, -2313.54f), Quaternion.Euler(0f, 334.4469f, 0f));
+                    break;
                 // Bobomb Battlefield - viliger
                 case "sm64_bbf_SM64_BBF":
                     stagePositions.Add(new Vector3(162.9347f, 38.44512f, 74.83717f), Quaternion.Euler(0f, 189.5465f, 0f));
