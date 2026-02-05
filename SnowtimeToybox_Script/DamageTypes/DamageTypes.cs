@@ -26,9 +26,6 @@ namespace SnowtimeToybox
             }
             if (report.damageInfo.HasModdedDamageType(BorboSuperDebuffOnHit))
             {
-                CharacterModel attackedModel = report.victimBody?.modelLocator?.modelTransform?.GetComponent<CharacterModel>(); // this had an nre somewhere .,,.. 
-                if (!attackedModel) return;
-                
                 report.victimBody.AddTimedBuff(SnowtimeToybox.SnowtimeToyboxMod.BorboTurretDebuff, 3);
             }
         }
