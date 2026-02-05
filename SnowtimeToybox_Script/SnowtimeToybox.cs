@@ -25,7 +25,7 @@ using System.Collections.ObjectModel;
 using On.RoR2.UI;
 using Path = System.IO.Path;
 using SceneDirector = On.RoR2.SceneDirector;
-using RoR2BepInExPack.GameAssetPaths;
+using SnowtimeToybox.FriendlyTurretChecks;
 
 [module: UnverifiableCode]
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -70,8 +70,9 @@ namespace SnowtimeToybox
         public static GameObject FriendlyTurretBorboBody;
         public static GameObject FriendlyTurretBorboMaster;
         public static GameObject FriendlyTurretBorboBroken;
+        public static GameObject FriendlyTurretUseEffect;
         //public static DroneDef FriendlyTurretTestDroneDef;
-        
+
         public static List<GameObject> friendlyTurretList = [];
 
         public static bool Legendary = false;
@@ -417,13 +418,14 @@ namespace SnowtimeToybox
             On.RoR2.PurchaseInteraction.GetInteractability += GetInteractabilityBorbo;
             // i want die
             ContentAddition.AddNetworkedObject(FriendlyTurretBorboBroken);
+            ContentAddition.AddEffect(BorboCheck.turretUseEffect);
             friendlyTurretList.Add(FriendlyTurretBorboBroken);
         }
 
         private Interactability GetInteractabilityBorbo(On.RoR2.PurchaseInteraction.orig_GetInteractability orig, PurchaseInteraction self, Interactor activator)
         {
             //Log.Debug(self.displayNameToken);
-            if (self.displayNameToken != "FRIENDLYTURRET_BORBO_INTERACTABLE_NAME")
+            if (self.displayNameToken != "FRIENDLYTURRET_BORBO_BROKEN_NAME")
             {
                 return orig(self, activator);
             }

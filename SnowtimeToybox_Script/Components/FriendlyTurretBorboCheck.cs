@@ -1,17 +1,20 @@
 using RoR2;
-using System.Collections.ObjectModel;
-using UnityEngine.Networking;
-using SnowtimeToybox;
-using System.Linq;
 using RoR2.EntityLogic;
+using SnowtimeToybox;
 using System.Collections;
+using System.Collections.ObjectModel;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.Networking;
 
 namespace SnowtimeToybox.FriendlyTurretChecks
 {
     public class BorboCheck : NetworkBehaviour
     {
         public PurchaseInteraction purchaseInteraction;
+        public static GameObject turretUseEffect = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/TurretUseEffect.prefab");
+
         SummonMasterBehavior summonMasterBehavior;
 
         public void Awake()
@@ -41,6 +44,14 @@ namespace SnowtimeToybox.FriendlyTurretChecks
             purchaseInteraction.SetAvailable(false);
             Chat.SendBroadcastChat(new Chat.SimpleChatMessage() { baseToken = "<style=cEvent><color=#30ff78>Thank you! We are friends now!</color></style>" });
             summonMasterBehavior.OpenSummon(payCostContext.activator);
+            EffectManager.SpawnEffect(turretUseEffect, new EffectData()
+            {
+                origin = gameObject.transform.position,
+                rotation = Quaternion.identity,
+                scale = 1f,
+                color = Color.white,
+            }, true);
+
             EventFunctions.Destroy(purchaseInteraction);
         }
     }
