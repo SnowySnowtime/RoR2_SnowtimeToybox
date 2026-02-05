@@ -22,7 +22,7 @@ namespace SnowtimeToybox.FriendlyTurretChecks
             if (NetworkServer.active && Run.instance)
             {
                 purchaseInteraction.SetAvailable(true);
-                Log.Debug("Added BorboCheck");
+                //Log.Debug("Added BorboCheck");
             }
 
             if (!summonMasterBehavior)

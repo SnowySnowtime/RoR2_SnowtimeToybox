@@ -25,7 +25,6 @@ using System.Collections.ObjectModel;
 using On.RoR2.UI;
 using Path = System.IO.Path;
 using SceneDirector = On.RoR2.SceneDirector;
-using SnowtimeToybox.FriendlyTurretChecks;
 
 [module: UnverifiableCode]
 #pragma warning disable CS0618 // Type or member is obsolete
