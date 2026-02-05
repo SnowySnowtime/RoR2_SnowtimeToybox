@@ -1,3 +1,7 @@
+`1.1.0`
+- Friendly Turrets!!!!!
+- Added just borbo turret for now, additional friendly turrret types pending
+
 `1.0.6`
 - added configs to disable my artstyle clashing skins!
 - overhauled material parameters to make the artstyle-clashing skins fit in a bit more (irony)
