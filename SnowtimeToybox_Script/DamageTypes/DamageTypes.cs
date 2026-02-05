@@ -26,6 +26,9 @@ namespace SnowtimeToybox
             }
             if (report.damageInfo.HasModdedDamageType(BorboSuperDebuffOnHit))
             {
+                CharacterModel attackedModel = report.victimBody?.modelLocator?.modelTransform?.GetComponent<CharacterModel>(); // this had an nre somewhere .,,.. 
+                if (!attackedModel) return;
+                
                 report.victimBody.AddTimedBuff(SnowtimeToybox.SnowtimeToyboxMod.BorboTurretDebuff, 3);
                 
                 var temporaryOverlay = TemporaryOverlayManager.AddOverlay(report.victimBody.modelLocator.modelTransform.gameObject);
@@ -34,8 +37,8 @@ namespace SnowtimeToybox
                 temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
                 temporaryOverlay.destroyComponentOnEnd = true;
                 temporaryOverlay.originalMaterial = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<Material>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/borboturretdebuffoverlay.mat");
-                temporaryOverlay.inspectorCharacterModel = report.victimBody.modelLocator.modelTransform.GetComponent<CharacterModel>();
-                temporaryOverlay.AddToCharacterModel(report.victimBody.modelLocator.modelTransform.GetComponent<CharacterModel>());
+                temporaryOverlay.inspectorCharacterModel = attackedModel;
+                temporaryOverlay.AddToCharacterModel(attackedModel);
             }
         }
     }

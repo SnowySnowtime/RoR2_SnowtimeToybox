@@ -22,6 +22,7 @@ using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityHotReloadNS;
 using System.Collections.ObjectModel;
+using On.RoR2.UI;
 using Path = System.IO.Path;
 using SceneDirector = On.RoR2.SceneDirector;
 using RoR2BepInExPack.GameAssetPaths;
@@ -421,53 +422,22 @@ namespace SnowtimeToybox
 
         private Interactability GetInteractabilityBorbo(On.RoR2.PurchaseInteraction.orig_GetInteractability orig, PurchaseInteraction self, Interactor activator)
         {
-            NetworkUser minionOwner;
-            LocalUser minionOwnerLocalUser;
-            //Log.Debug(self.name);
-
-            if (self.displayNameToken != "FRIENDLYTURRET_BORBO_BROKEN_NAME")
+            //Log.Debug(self.displayNameToken);
+            if (self.displayNameToken != "FRIENDLYTURRET_BORBO_INTERACTABLE_NAME")
             {
                 return orig(self, activator);
             }
-            else
+
+            CharacterBody[] minionBodies = activator.gameObject.GetComponent<CharacterBody>()?.GetMinionBodies();
+            if (minionBodies == null) return orig(self, activator);
+            
+            foreach (CharacterBody body in minionBodies)
             {
-            //Log.Debug("Checking Player Minion");
-            ReadOnlyCollection<PlayerCharacterMasterController> playerMasters = PlayerCharacterMasterController.instances;
-                foreach (PlayerCharacterMasterController player in playerMasters)
-                {
-                    //Log.Debug("player " + player);
-                    //Log.Debug("player.body.master.playerCharacterMasterController " + player.body.master.playerCharacterMasterController);
-                    CharacterBody[] minionBodies = player.body.GetMinionBodies();
-                    //Log.Debug("minionBodies " + minionBodies);
-                    //Log.Debug("minionBodies.Length " + minionBodies.Length);
-                    if (minionBodies.Length == 0)
-                    {
-                        //Log.Debug("No minions found, skipping check!");
-                        return orig(self, activator);
-                    }
-                    else foreach (CharacterBody body in minionBodies)
-                    {
-                        //Log.Debug(body.name);
-                        //Log.Debug("body.GetOwnerBody().master.playerCharacterMasterController " + body.GetOwnerBody().master.playerCharacterMasterController);
-                        if (body.baseNameToken == "FRIENDLYTURRET_BORBO_NAME")
-                        {
-                            minionOwner = body.GetOwnerBody().master.playerCharacterMasterController.networkUser;
-                            //Log.Debug("Minion Owner's NetworkUser Found...");
-                            if ((bool)minionOwner)
-                            {
-                                minionOwnerLocalUser = minionOwner.localUser;
-                                if (minionOwnerLocalUser != null)
-                                {
-                                    return Interactability.Disabled;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            return orig(self, activator);
-                        }
-                    }
-                }
+                //Log.Debug(body.name);
+                if (body.baseNameToken != "FRIENDLYTURRET_BORBO_NAME") continue;
+                
+                //Log.Debug("bweh ,..,");
+                return Interactability.Disabled;
             }
 
             return orig(self, activator);
