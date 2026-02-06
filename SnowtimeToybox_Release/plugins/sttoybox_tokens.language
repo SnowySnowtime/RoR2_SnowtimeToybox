@@ -19,6 +19,5 @@
 		"FRIENDLYTURRET_BORBO_BROKEN_NAME": "broken borbo turret",
 		"FRIENDLYTURRET_BORBO_BROKEN_CONTEXT": "repair borbo turret...",
 		"FRIENDLYTURRET_BORBO_BROKEN_DESCRIPTION": "<style=cEvent>please repair me! it hurt...</style>\nCharges a <style=cIsDamage>massively debuffing</style> <style=cIsUtility>laser blast</style> for <style=cIsDamage>1000% damage</style>.\n<style=cIsDamage>Debuffs</style>: Reduces <style=cIsDamage>armor</style> by <style=cIsDamage>120</style>, <style=cIsDamage>movement</style> and <style=cIsDamage>damage</style> by <style=cIsDamage>-80%</style>, and <style=cIsDamage>prevents jumping</style>.",
-		"FRIENDLYTURRET_BORBO_BROKEN_CONTEXT": "no lores,,, yet!",
 	}
 }
