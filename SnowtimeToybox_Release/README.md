@@ -1,5 +1,5 @@
 # SnowtimeToybox
-adds skins for my friends(eventually) and I. also adds one skill and difficulty. still working on other stuff.
+adds skins for my friends(eventually) and I. also adds one skill, difficulty, and a friendly turret! still working on other stuff.
 - please direct any feedback to snowysnowtime in the risk of rain 2 modding discord
 
 # Friendly Turrets!

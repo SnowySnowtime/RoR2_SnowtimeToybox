@@ -2,7 +2,7 @@
   "name": "SnowtimeToybox",
   "version_number": "1.1.0",
   "website_url": "",
-  "description": "Skills, Difficulty, and Skin(s) for friends(eventually) and myself. More to come.",
+  "description": "Skills, Difficulty, and Skin(s) for friends(eventually) and myself. Friendly Turret update!!! More to come.",
   "dependencies": [
     "bbepis-BepInExPack-5.4.2121",
 	"RiskofThunder-R2API_DamageType-1.1.7",
