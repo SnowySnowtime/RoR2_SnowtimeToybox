@@ -119,7 +119,8 @@ namespace SnowtimeToybox
 
             if (damageInfo.HasModdedDamageType(HaloRicochetOnHit))
             {
-                SnowtimeHaloRicochetOrb.CreateHaloRicochetOrb(damageInfo, victim.GetComponent<TeamIndex>(), victim.GetComponent<CharacterBody>());
+                //Log.Debug("OnHitEnemy DamageInfo: " + damageInfo + " Attacker: " + damageInfo.attacker + " Attacker Team: " + damageInfo.attacker.GetComponent<TeamComponent>().teamIndex + " Victim Body: " + victim.GetComponent<CharacterBody>());
+                SnowtimeHaloRicochetOrb.CreateHaloRicochetOrb(damageInfo, damageInfo.attacker.GetComponent<TeamComponent>().teamIndex, victim.GetComponent<CharacterBody>());
             }
             if (damageInfo.HasModdedDamageType(BorboSuperDebuffOnHit))
             {
