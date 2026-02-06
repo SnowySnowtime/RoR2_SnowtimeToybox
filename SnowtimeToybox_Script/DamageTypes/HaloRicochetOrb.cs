@@ -13,7 +13,7 @@ namespace SnowtimeToybox
 
         public override void Begin()
         {
-            this.speed = 110f;
+            this.speed = 220f;
             this.duration = Mathf.Max(this.distanceToTarget / this.speed, 0.167f);
             EffectData effectData = new EffectData()
             {
