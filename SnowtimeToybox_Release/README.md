@@ -10,6 +10,7 @@ adds skins for my friends(eventually) and I. also adds one skill, difficulty, an
 
 ## Implemented Friendly Turrets:
 - borbo turret borbo turret [2R4R](https://thunderstore.io/package/RiskOfBrainrot/2R4R/)
+- (please excuse me, this is a slightly earlier screenshot of the turret)
 ![borbo waow](https://github.com/SnowySnowtime/RoR2_SnowtimeToybox/blob/main/borboturretpreview.jpg?raw=true)
 
 # Features
@@ -26,6 +27,7 @@ adds skins for my friends(eventually) and I. also adds one skill, difficulty, an
 # Credits
 - icebro | a bunch of code directly committed, helping getting most of the friendly turret spawns and other effects working
 - acanthi | helped with figuring out how to do some things, like handling the interactable for the turret to remain per-player singletons
+- without icebro and acanthi, the friendly turret(s) would have never become a thing. thank you two so very much!
 - PlNK | Custom Icon for the Legendary difficulty
 - anartoast | Custom Icon for the H4-L0 PL45 Rifle, ideas for balancing said skill
 - .score | Assistance with making the on-hit bounce work for H4-L0 PL45 Rifle

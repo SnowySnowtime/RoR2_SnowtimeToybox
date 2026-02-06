@@ -1,6 +1,7 @@
 `1.1.0`
 - Friendly Turrets!!!!!
 - Added just borbo turret for now, additional friendly turrret types pending
+- so many thanks to icebro and acanthi for this update, without them this wouldnt of even happened
 
 `1.0.6`
 - added configs to disable my artstyle clashing skins!
