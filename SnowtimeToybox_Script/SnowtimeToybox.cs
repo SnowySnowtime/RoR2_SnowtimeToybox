@@ -105,9 +105,26 @@ namespace SnowtimeToybox
                 CharacterMaster.onStartGlobal -= CharacterMaster_OnStartGlobal;
             };
 
-            GlobalEventManager.onServerDamageDealt += SnowtimeDamageTypes.GlobalEventManager_onServerDamageDealt;
+            On.RoR2.GlobalEventManager.OnHitEnemy += JustLetMeDamageMyFoesPleaseThankYou;
             
             On.RoR2.SceneDirector.Start += SceneDirectorOnStart;
+        }
+        // KEEP YOURSELF SAFE
+        public static DamageAPI.ModdedDamageType HaloRicochetOnHit = DamageAPI.ReserveDamageType();
+        public static DamageAPI.ModdedDamageType BorboSuperDebuffOnHit = DamageAPI.ReserveDamageType();
+
+        private void JustLetMeDamageMyFoesPleaseThankYou(On.RoR2.GlobalEventManager.orig_OnHitEnemy orig, GlobalEventManager self, DamageInfo damageInfo, GameObject victim)
+        {
+            orig(self, damageInfo, victim);
+
+            if (damageInfo.HasModdedDamageType(HaloRicochetOnHit))
+            {
+                SnowtimeHaloRicochetOrb.CreateHaloRicochetOrb(damageInfo, victim.GetComponent<TeamIndex>(), victim.GetComponent<CharacterBody>());
+            }
+            if (damageInfo.HasModdedDamageType(BorboSuperDebuffOnHit))
+            {
+                victim.GetComponent<CharacterBody>().AddTimedBuff(BorboTurretDebuff, 3);
+            }
         }
 
         private void SceneDirectorOnStart(SceneDirector.orig_Start orig, RoR2.SceneDirector self)

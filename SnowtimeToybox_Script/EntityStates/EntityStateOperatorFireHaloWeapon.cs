@@ -79,7 +79,7 @@ namespace EntityStates.SnowtimeToybox_FireHaloWeapon
             base.ModifyBullet(bulletAttack);
             bulletAttack.damage = this.damageCoefficient * this.characterBody.damage;
             bulletAttack.damageType = new DamageTypeCombo((DamageTypeCombo)DamageType.IgniteOnHit, DamageTypeExtended.Generic, DamageSource.Primary);
-            DamageAPI.AddModdedDamageType(bulletAttack, SnowtimeDamageTypes.HaloRicochetOnHit);
+            DamageAPI.AddModdedDamageType(bulletAttack, SnowtimeToyboxMod.HaloRicochetOnHit);
             bulletAttack.muzzleName = this.muzzleName;
             bulletAttack.tracerEffectPrefab = this.tracerEffectPrefab;
             bulletAttack.hitEffectPrefab = this.hitEffectPrefab;
