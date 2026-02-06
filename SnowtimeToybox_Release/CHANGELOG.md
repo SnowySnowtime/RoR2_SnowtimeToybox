@@ -2,6 +2,7 @@
 - Friendly Turrets!!!!!
 - Added just borbo turret for now, additional friendly turrret types pending
 - so many thanks to icebro and acanthi for this update, without them this wouldnt of even happened
+- updated how damagetypes are handled. no longer will other hitscan characters have issues. (how did this only just recently break? lost 10h of my life trying to debug this)
 
 `1.0.6`
 - added configs to disable my artstyle clashing skins!

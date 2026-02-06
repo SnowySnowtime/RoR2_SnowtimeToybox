@@ -1,5 +1,5 @@
 # SnowtimeToybox
-adds skins for my friends(eventually) and I. also adds one skill, difficulty, and a friendly turret! still working on other stuff.
+adds skins for my friends and I. also adds one skill, difficulty, and a friendly turret! still working on other stuff.
 - please direct any feedback to snowysnowtime in the risk of rain 2 modding discord
 
 # Friendly Turrets!
@@ -7,6 +7,7 @@ adds skins for my friends(eventually) and I. also adds one skill, difficulty, an
 - A purchaseable singleton walking turret with (eventually) a little bit of personality, inspired by the Best Buddy from Alloyed Collective.
 - Every stage, a random Friendly Turret is selected. Can you find and help them?
 - You are only allowed to have one type of Friendly Turret per player.
+- Their balancing is open to discussion! If you feel it is underwhelming/overpowered, or have other suggestions for tuning or general feedback, let me know!
 
 ## Implemented Friendly Turrets:
 - borbo turret borbo turret [2R4R](https://thunderstore.io/package/RiskOfBrainrot/2R4R/)
