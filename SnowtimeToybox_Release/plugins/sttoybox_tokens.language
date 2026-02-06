@@ -14,6 +14,7 @@
 		"FRIENDLYTURRET_BORBO_SUBTITLE": "not so friendlies now...",
 		"FRIENDLYTURRET_BORBO_FUNCTION": "Highly resilient Walking Turret which aims to deal damage.",
 		"FRIENDLYTURRET_BORBO_DESCRIPTION": "Highly resilient Walking Turret which helps the owner deal more damage with its massively-debuffing laser blast.",
+		"FRIENDLYTURRET_BORBO_SKILL_NAME": "Borbo Blast",
 		"FRIENDLYTURRET_BORBO_SKILL_DESCRIPTION": "Charges a <style=cIsDamage>massively debuffing</style> <style=cIsUtility>laser blast</style> for <style=cIsDamage>1000% damage</style>.\n<style=cIsDamage>Debuffs</style>: Reduces <style=cIsDamage>armor</style> by <style=cIsDamage>120</style>, <style=cIsDamage>movement</style> and <style=cIsDamage>damage</style> by <style=cIsDamage>-80%</style>, and <style=cIsDamage>prevents jumping</style>.",
 		
 		"FRIENDLYTURRET_BORBO_BROKEN_NAME": "broken borbo turret",

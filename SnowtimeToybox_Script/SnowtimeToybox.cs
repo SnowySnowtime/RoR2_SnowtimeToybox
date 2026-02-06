@@ -49,7 +49,7 @@ namespace SnowtimeToybox
         public const string Name = nameof(SnowtimeToyboxMod);
         public const string Version = "1.0.0";
         public const string GUID = Author + "." + Name;
-        // public static ConfigEntry<bool> ToggleBloodGulch { get; set; }
+        public static ConfigEntry<bool> ToggleSpawnMessages { get; set; }
 
         public static SnowtimeToyboxMod instance;
 
@@ -85,7 +85,7 @@ namespace SnowtimeToybox
 
             Log.Init(Logger);
 
-            //ToggleBloodGulch = Config.Bind("Stage 1 Toggles", "Blood Gulch", true, "If true, Blood Gulch is added to the loop, otherwise it shall not appear");
+            ToggleSpawnMessages = Config.Bind("Friendly Turret Functions", "Spawn Message", true, "If true, the Friendly Turrets will give a message on every stage they spawn on, for insight on if and which turret spawned. Otherwise, friendly turrets are shy, and are also sad!");
 
             Language.collectLanguageRootFolders += CollectLanguageRootFolders;
 
