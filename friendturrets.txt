@@ -16,6 +16,7 @@ PlNK Turret - [FF69B4]
 slow firing explosive shotgun that causes comedically high knockback to self and enemies
 like you know how cadet and shock trooper can shotgun jump
 basically that as its main skill
+mr krabs walking sfx (increase walking animation rate too)
 
 Acanthi Turret - [WHITE]
 Evil ass red laser beam that bleeds on hit
