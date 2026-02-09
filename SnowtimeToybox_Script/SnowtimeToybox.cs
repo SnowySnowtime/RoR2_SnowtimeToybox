@@ -25,6 +25,7 @@ using System.Collections.ObjectModel;
 using On.RoR2.UI;
 using Path = System.IO.Path;
 using SceneDirector = On.RoR2.SceneDirector;
+using Rewired.ComponentControls.Data;
 
 [module: UnverifiableCode]
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -62,6 +63,9 @@ namespace SnowtimeToybox
         public static GameObject OrbObject;
 
         // friend walker turrets!
+        // Global
+        public static GameObject FriendlyTurretUseEffect;
+        // borbo turret
         public static DroneDef FriendlyTurretBorboDef;
         public static InteractableSpawnCard FriendlyTurretBorboIsc;
         public static SkillFamily FriendlyTurretBorboSkillFamily;
@@ -69,11 +73,17 @@ namespace SnowtimeToybox
         public static GameObject FriendlyTurretBorboBody;
         public static GameObject FriendlyTurretBorboMaster;
         public static GameObject FriendlyTurretBorboBroken;
-        public static GameObject FriendlyTurretUseEffect;
+        // Strawberry Shortcake Turret
+        public static DroneDef FriendlyTurretShortcakeDef;
+        public static InteractableSpawnCard FriendlyTurretShortcakeIsc;
+        public static SkillFamily FriendlyTurretShortcakeSkillFamily;
+        public static SkillDef FriendlyTurretShortcakeSkillDef;
+        public static GameObject FriendlyTurretShortcakeBody;
+        public static GameObject FriendlyTurretShortcakeMaster;
+        public static GameObject FriendlyTurretShortcakeBroken;
         //public static DroneDef FriendlyTurretTestDroneDef;
 
         public static List<GameObject> friendlyTurretList = [];
-        public static List<ItemDef> turretShortcakeItemWhitelist = [];
 
         public static bool Legendary = false;
         // Copied from RiskierRain, sorry borbo :(
@@ -373,11 +383,12 @@ namespace SnowtimeToybox
                 default:
                     Log.Debug("no custom pos !!! too bad ,..");
                     return;
-            }        
+            }
+            Log.Debug("Friendly Turret Count: " + friendlyTurretList.Count);
             GameObject turret = friendlyTurretList[Run.instance.runRNG.RangeInt(0, friendlyTurretList.Count)];
             KeyValuePair<Vector3, Quaternion> stagePos = stagePositions.ElementAt(Run.instance.runRNG.RangeInt(0, stagePositions.Count));
             GameObject term = Instantiate(turret, stagePos.Key, stagePos.Value);
-            //Log.Debug($"turret name = {turret.name} !!!!");
+            Log.Debug($"turret name = {turret.name} !!!!");
 
             NetworkServer.Spawn(term);
         }
@@ -477,24 +488,50 @@ namespace SnowtimeToybox
             ContentAddition.AddEffect(FireBorboLaser.hitEffectPrefabObject);
             ContentAddition.AddEffect(FireBorboLaser.tracerEffectPrefabObject);
 
+            // Add Strawberry Shortcake Turret
+            FriendlyTurretShortcakeBody = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Shortcake/_FriendlyTurretShortcakeBody.prefab");
+            FriendlyTurretShortcakeMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Shortcake/_FriendlyTurretShortcakeMaster.prefab");
+            FriendlyTurretShortcakeSkillFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Shortcake/Skills/ShortcakePrimaryFamily.asset");
+            FriendlyTurretShortcakeSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Shortcake/Skills/ShortcakeTaunt.asset");
+            // I am being PEDANTIC but i dont care!
+            FriendlyTurretShortcakeSkillDef.activationState = new SerializableEntityStateType(typeof(ChargeBorboLaser));
+            FriendlyTurretShortcakeDef = _stcharacterAssetBundle.LoadAsset<DroneDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Shortcake/_FriendlyTurretShortcake.asset");
+            ContentAddition.AddBody(FriendlyTurretShortcakeBody);
+            ContentAddition.AddMaster(FriendlyTurretShortcakeMaster);
+            ContentAddition.AddSkillFamily(FriendlyTurretShortcakeSkillFamily);
+            ContentAddition.AddSkillDef(FriendlyTurretShortcakeSkillDef);
+
+
             // Friendly Turret Interactables
             Log.Debug("Adding Friendly Turrets Interactables to Stages");
             FriendlyTurretBorboBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/_mdlFriendlyTurretBorboBroken.prefab");
+            FriendlyTurretShortcakeBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Shortcake/_mdlFriendlyTurretShortcakeBroken.prefab");
             BorboCheck borbocheck = FriendlyTurretBorboBroken.AddComponent<BorboCheck>();
+            BorboCheck shortcakecheck = FriendlyTurretShortcakeBroken.AddComponent<BorboCheck>();
             PurchaseInteraction borbointeraction = FriendlyTurretBorboBroken.GetComponent<PurchaseInteraction>();
+            PurchaseInteraction shortcakeinteraction = FriendlyTurretShortcakeBroken.GetComponent<PurchaseInteraction>();
             borbocheck.purchaseInteraction = borbointeraction;
+            shortcakecheck.purchaseInteraction = shortcakeinteraction;
 
-            On.RoR2.PurchaseInteraction.GetInteractability += GetInteractabilityBorbo;
+            On.RoR2.PurchaseInteraction.GetInteractability += GetInteractabilityFriendlyTurrets;
             // i want die
             ContentAddition.AddNetworkedObject(FriendlyTurretBorboBroken);
+            ContentAddition.AddNetworkedObject(FriendlyTurretShortcakeBroken);
             ContentAddition.AddEffect(BorboCheck.turretUseEffect);
             friendlyTurretList.Add(FriendlyTurretBorboBroken);
+            friendlyTurretList.Add(FriendlyTurretShortcakeBroken);
+            Log.Debug(friendlyTurretList);
         }
 
-        private Interactability GetInteractabilityBorbo(On.RoR2.PurchaseInteraction.orig_GetInteractability orig, PurchaseInteraction self, Interactor activator)
+        string interactablesuffering = " (UnityEngine.GameObject)";
+        string charactersuffering = "(Clone) (UnityEngine.GameObject)";
+        string interactablesmaster;
+        string charactersmaster;
+
+        private Interactability GetInteractabilityFriendlyTurrets(On.RoR2.PurchaseInteraction.orig_GetInteractability orig, PurchaseInteraction self, Interactor activator)
         {
             //Log.Debug(self.displayNameToken);
-            if (self.displayNameToken != "FRIENDLYTURRET_BORBO_BROKEN_NAME")
+            if (!self.displayNameToken.StartsWith("FRIENDLYTURRET_"))
             {
                 return orig(self, activator);
             }
@@ -504,11 +541,29 @@ namespace SnowtimeToybox
             
             foreach (CharacterBody body in minionBodies)
             {
-                //Log.Debug(body.name);
-                if (body.baseNameToken != "FRIENDLYTURRET_BORBO_NAME") continue;
-                
-                //Log.Debug("bweh ,..,");
-                return Interactability.Disabled;
+                interactablesmaster = self.GetComponent<SummonMasterBehavior>().masterPrefab.gameObject.ToString();
+                if (interactablesmaster.EndsWith(interactablesuffering))
+                {
+                    interactablesmaster = interactablesmaster.Substring(0, interactablesmaster.LastIndexOf(interactablesuffering));
+                }
+                charactersmaster = body.master.gameObject.ToString();
+                if (charactersmaster.EndsWith(charactersuffering))
+                {
+                    charactersmaster = charactersmaster.Substring(0, charactersmaster.LastIndexOf(charactersuffering));
+                }
+                Log.Debug("Interactable: " + self.displayNameToken + " Minion CharacterBody: " + body.baseNameToken);
+                Log.Debug("Cleaned Interactable Summonable: " + interactablesmaster + " Minion Master: " + charactersmaster);
+                Log.Debug("Does Interactable Summon Master match CharacterBody Master?");
+                if (charactersmaster.Contains(interactablesmaster))
+                {
+                    Log.Debug("Previous query returned true");
+                    return Interactability.Disabled;
+                }
+                else
+                {
+                    Log.Debug("Previous query returned false");
+                    return orig(self, activator);
+                }
             }
 
             return orig(self, activator);

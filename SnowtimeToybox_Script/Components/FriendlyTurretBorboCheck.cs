@@ -43,6 +43,10 @@ namespace SnowtimeToybox.FriendlyTurretChecks
                 {
                     Chat.SendBroadcastChat(new Chat.SimpleChatMessage() { baseToken = "<style=cEvent><color=#A8D3FF>Friendly Turret: pleas repair me, i will update 2r4r if you do..!</color></style>" });
                 }
+                else if (purchaseInteraction.displayNameToken == "FRIENDLYTURRET_SHORTCAKE_BROKEN_NAME")
+                {
+                    Chat.SendBroadcastChat(new Chat.SimpleChatMessage() { baseToken = "<style=cEvent><color=#A8D3FF>Friendly Turret: uwaah! pleas repair me, i have a cake for you if you do..!</color></style>" });
+                }
                 // Strawberry Shortcake Turret Selected
             }
         }
@@ -52,7 +56,6 @@ namespace SnowtimeToybox.FriendlyTurretChecks
         {
             purchaseInteraction.SetAvailable(false);
             Chat.SendBroadcastChat(new Chat.SimpleChatMessage() { baseToken = "<style=cEvent><color=#30ff78>Thank you! We are friends now!</color></style>" });
-            summonMasterBehavior.OpenSummon(payCostContext.activator);
             EffectManager.SpawnEffect(turretUseEffect, new EffectData()
             {
                 origin = gameObject.transform.position,
@@ -60,6 +63,8 @@ namespace SnowtimeToybox.FriendlyTurretChecks
                 scale = 1f,
                 color = Color.white,
             }, true);
+
+            summonMasterBehavior.OpenSummon(payCostContext.activator);
 
             EventFunctions.Destroy(purchaseInteraction);
         }
