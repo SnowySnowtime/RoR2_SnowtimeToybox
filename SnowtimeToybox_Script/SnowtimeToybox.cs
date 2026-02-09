@@ -541,6 +541,12 @@ namespace SnowtimeToybox
             
             foreach (CharacterBody body in minionBodies)
             {
+                if (!body.baseNameToken.StartsWith("FRIENDLYTURRET_"))
+                {
+                    return orig(self, activator);
+                }
+
+                Log.Debug("Minion: " + body.baseNameToken);
                 interactablesmaster = self.GetComponent<SummonMasterBehavior>().masterPrefab.gameObject.ToString();
                 if (interactablesmaster.EndsWith(interactablesuffering))
                 {
