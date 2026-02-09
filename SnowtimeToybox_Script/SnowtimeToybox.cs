@@ -541,12 +541,12 @@ namespace SnowtimeToybox
             
             foreach (CharacterBody body in minionBodies)
             {
-                if (!body.baseNameToken.StartsWith("FRIENDLYTURRET_"))
+                if (body.baseNameToken.StartsWith("FRIENDLYTURRET_"))
                 {
-                    return orig(self, activator);
+                    continue;
                 }
 
-                Log.Debug("Minion: " + body.baseNameToken);
+                //Log.Debug("Minion: " + body.baseNameToken);
                 interactablesmaster = self.GetComponent<SummonMasterBehavior>().masterPrefab.gameObject.ToString();
                 if (interactablesmaster.EndsWith(interactablesuffering))
                 {
@@ -557,18 +557,13 @@ namespace SnowtimeToybox
                 {
                     charactersmaster = charactersmaster.Substring(0, charactersmaster.LastIndexOf(charactersuffering));
                 }
-                Log.Debug("Interactable: " + self.displayNameToken + " Minion CharacterBody: " + body.baseNameToken);
-                Log.Debug("Cleaned Interactable Summonable: " + interactablesmaster + " Minion Master: " + charactersmaster);
-                Log.Debug("Does Interactable Summon Master match CharacterBody Master?");
+                //Log.Debug("Interactable: " + self.displayNameToken + " Minion CharacterBody: " + body.baseNameToken);
+                //Log.Debug("Cleaned Interactable Summonable: " + interactablesmaster + " Minion Master: " + charactersmaster);
+                //Log.Debug("Does Interactable Summon Master match CharacterBody Master?");
                 if (charactersmaster.Contains(interactablesmaster))
                 {
-                    Log.Debug("Previous query returned true");
+                    //Log.Debug("Previous query returned true");
                     return Interactability.Disabled;
-                }
-                else
-                {
-                    Log.Debug("Previous query returned false");
-                    return orig(self, activator);
                 }
             }
 
