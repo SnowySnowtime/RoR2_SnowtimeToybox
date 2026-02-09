@@ -1,0 +1,16 @@
+Legendary All Skulls On
+(maybe even have them as artifacts???? idk difficulty might be better.)
+Fog: Difficulty Scaling +100%
+Tilt: Most enemy Stats increased by 10%, Enemy Critical Rate +5%
+Tough Luck: Enemies have +1 Luck
+Anger: Enemy Attack Speed +30%, Enemy Cooldown Reduction +35%
+Black Eye: Health and Shield regen is disabled. Health and Shield Regen is reactivated for 5s on kill
+Catch: Enemies sometimes fire an additional grenade projectile on skill cast
+Famine: All gold received is reduced by 30%
+Mythic: Enemy Health +30%
+Iron: Enemy Shield +30%
+Thunderstorm: Enemy and non-player allies have their damage increased by +50%
+
+Skulls that likely wont be implemented
+Assassin: Enemies are permanently cloaked
+Blind: The entire Objectives board is disabled, Keep track of your time

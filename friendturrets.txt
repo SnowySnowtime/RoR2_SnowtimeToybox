@@ -1,0 +1,58 @@
+Friendly Walking Turrets (Purchaseable)
+Friendly Turrets are singleton allies that can only be found once per stage. Each stage is guaranteed to spawn a friendly turret, but the selected friendly turret is random.
+Singleton, meaning only one turret per type are allowed per player.
+
+borbo turret - [DONE!!!!!!]
+fires a fucking laser beam that heavily debuffs a target
+
+Snowtime Turret -
+halo 3 gauss hog turret
+
+anartoast turret - [MAGENTA]
+seeker.
+will need penisseeker mod installed to be enabled unless allowed to make a clone of their projectile for the mod
+
+PlNK Turret - [FF69B4]
+slow firing explosive shotgun that causes comedically high knockback to self and enemies
+like you know how cadet and shock trooper can shotgun jump
+basically that as its main skill
+
+Acanthi Turret - [WHITE]
+Evil ass red laser beam that bleeds on hit
+Summons Bread Turret.
+beam that tethers the two turrets (visual)
+
+Icebro (bread) Turret - [PINK]
+Always Target Acanthi Turret, fires a beam that increases luck by 1
+
+Strawberry Shortcake Turret -
+Fires strawberries (razorwire) at enemies that attack the turret
+Visuals: Turret that has one plate of a slice of cake on it, which has a strawberry on it
+COMMAND: Fire strawberries at all nearby targets
+
+HIFU Turret - [WHITE/PINK, REFER TO PICTURE SENT IN DM, PORTAL TURRET WITH HEART]
+uhh maybe let them charm nearby enemies, making them invincible and bringing them in with its beam/stunning them, then converting them into allies with some damage boost, with tangibility but without health decay
+and then make those allies minions of it and give them the leash component/item so they tp around the turret
+like a funnier happiest mask
+cooldown probably at least 30s? wouldn't work on bosses or final bosses
+
+Other Purchaseable Turrets/Walking Turrets/Drones
+
+Hoarder Turret (PlNK IDEA) -
+Turret that bags an enemy (vanilla drifter) then throws them
+will probably need alloyed collective to work
+
+T0AST3R Turret (Bread & Acanthi Idea) -
+Shoots Toast which explodes on hit and ignites.
+
+ANKLE Turret -
+Tiny turret that roots and bites its enemies
+
+Bard Turret/Drone -
+Turret that is a walking warbanner, playing music audible only within its zone
+
+Halo Stuff (Purchaseable)
+Halo Wars Locust -
+tank turret, pulls aggro, slowest turret but is built for survivability
+this type of turret may be worse post-loop, so give it some humorous scaling maybe,,?
+fires a laser beam

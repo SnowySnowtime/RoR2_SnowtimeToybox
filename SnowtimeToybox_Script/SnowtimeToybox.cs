@@ -73,6 +73,7 @@ namespace SnowtimeToybox
         //public static DroneDef FriendlyTurretTestDroneDef;
 
         public static List<GameObject> friendlyTurretList = [];
+        public static List<ItemDef> turretShortcakeItemWhitelist = [];
 
         public static bool Legendary = false;
         // Copied from RiskierRain, sorry borbo :(
@@ -405,11 +406,53 @@ namespace SnowtimeToybox
             AddCustomSkills();
             AddCustomAllies();
             AddCustomBuffs();
+            AddCustomTagsToItems();
+        }
+
+        public void AddCustomTagsToItems()
+        {
+            Log.Debug("SnowtimeToybox is adding custom tags to items for Friendly Turrets/Drones...");
+            ItemDef[] whitelistShortcakeVars =
+                [
+                // Base
+                RoR2Content.Items.Thorns,
+                RoR2Content.Items.FlatHealth,
+                RoR2Content.Items.HealWhileSafe,
+                RoR2Content.Items.ArmorPlate,
+                RoR2Content.Items.PersonalShield,
+                RoR2Content.Items.Infusion,
+                RoR2Content.Items.ChainLightning,
+                RoR2Content.Items.BarrierOnOverHeal,
+                RoR2Content.Items.Plant,
+                RoR2Content.Items.BounceNearby,
+                RoR2Content.Items.ShockNearby,
+                RoR2Content.Items.Pearl,
+                RoR2Content.Items.ShinyPearl,
+                RoR2Content.Items.Knurl,
+                // DLC1
+                DLC1Content.Items.OutOfCombatArmor,
+                DLC1Content.Items.PermanentDebuffOnHit,
+                DLC1Content.Items.LunarSun,
+                DLC1Content.Items.HalfSpeedDoubleHealth,
+                DLC1Content.Items.MissileVoid,
+                DLC1Content.Items.ChainLightningVoid,
+                // DLC2
+                // DLC3
+                DLC3Content.Items.CookedSteak,
+                DLC3Content.Items.BarrierOnCooldown,
+                DLC3Content.Items.ShieldBooster,
+                DLC3Content.Items.ShockDamageAura,
+                ];
+            foreach (ItemDef item in whitelistShortcakeVars)
+            {
+                Log.Debug("Added " + item.name + " to Strawberry Shortcake Turret's item whitelist");
+                ItemAPI.ApplyTagToItem("turretShortcakeWhitelist", item);
+            }
         }
 
         public void AddCustomAllies()
         {
-            Log.Debug("Adding SnowtimeToybox Friend Drones...");
+            Log.Debug("Adding SnowtimeToybox Friend Turrets/Drones...");
             // borbo turret borbo turret
             // Add Borbo Turret
             Log.Debug("Defining Friendly Turret based on Borbo (2R4R)");
