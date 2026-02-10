@@ -24,24 +24,6 @@ namespace SnowtimeToybox.Components
         private List<ItemInfo> LastOwnerInventoryState = new();
         public string turret;
 
-        EquipmentDef[] friendlyTurretEquipmentWhitelist = [
-            // Base
-            RoR2Content.Elites.Fire.eliteEquipmentDef,
-            RoR2Content.Elites.Lightning.eliteEquipmentDef,
-            RoR2Content.Elites.Ice.eliteEquipmentDef,
-            RoR2Content.Elites.Haunted.eliteEquipmentDef,
-            RoR2Content.Elites.Poison.eliteEquipmentDef,
-            RoR2Content.Elites.Lunar.eliteEquipmentDef,
-            // DLC1
-            DLC1Content.Elites.Void.eliteEquipmentDef,
-            DLC1Content.Elites.Earth.eliteEquipmentDef,
-            // DLC2
-            DLC2Content.Elites.Bead.eliteEquipmentDef,
-            DLC2Content.Elites.Aurelionite.eliteEquipmentDef,
-            // DLC3
-            DLC3Content.Elites.Collective.eliteEquipmentDef,
-        ];
-
         public void Start()
         {
             self = GetComponent<CharacterMaster>();
@@ -84,12 +66,23 @@ namespace SnowtimeToybox.Components
 
             if (currentEquipIndex != ownerEquipIndex)
             {
-                self.inventory.SetEquipmentIndex(ownerEquipIndex, false);
+                Log.Debug("Checking if Equipment is an Elite Equipment");
+                Log.Debug(SnowtimeToyboxMod.eliteDefsEquipInherit.Contains(ownerEquipIndex));
+                Log.Debug("Owner Equipment Index: " + ownerEquipIndex);
+                if (!SnowtimeToyboxMod.eliteDefsEquipInherit.Contains(ownerEquipIndex))
+                {
+                    Log.Debug("Check Failed, checking if we have equipment to begin with.");
+                    if (currentEquipIndex == 0) return;
+                    Log.Debug("We had an equipment prior, removing equipment.");
+                    self.inventory.SetEquipmentIndex(0, true);
+                }
+                else
+                {
+                    Log.Debug("Check Passed.");
+                    self.inventory.SetEquipmentIndex(ownerEquipIndex, false);
+                }
             }
 
-            Log.Debug(LastOwnerInventoryState);
-            Log.Debug(ownerEquipIndex);
-            Log.Debug(currentEquipIndex);
             LastOwnerInventoryState = ownerState;
         }
 

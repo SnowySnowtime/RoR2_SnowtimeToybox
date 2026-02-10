@@ -488,13 +488,27 @@ namespace SnowtimeToybox
             AddCustomAllies();
             AddCustomBuffs();
             ItemCatalog.availability.CallWhenAvailable(AddCustomTagsToItems);
+            EquipmentCatalog.availability.CallWhenAvailable(AddElitesToList);
         }
 
         public void AddCustomTagsToItems()
         {
             Log.Debug("SnowtimeToybox is adding custom tags to items for Friendly Turrets/Drones...");
-            ItemDef[] whitelistShortcakeVars =
-                [
+            ItemDef[] whitelistBorboVars = [
+                // Base
+                RoR2Content.Items.Syringe,
+                RoR2Content.Items.BossDamageBonus,
+                RoR2Content.Items.Pearl,
+                RoR2Content.Items.ShinyPearl,
+                RoR2Content.Items.FallBoots,
+                // DLC1
+                DLC1Content.Items.PermanentDebuffOnHit,
+                // DLC2
+                DLC2Content.Items.MeteorAttackOnHighDamage,
+                DLC2Content.Items.AttackSpeedPerNearbyAllyOrEnemy,
+                // DLC3
+            ];
+            ItemDef[] whitelistShortcakeVars = [
                 // Base
                 RoR2Content.Items.Thorns,
                 RoR2Content.Items.FlatHealth,
@@ -510,6 +524,7 @@ namespace SnowtimeToybox
                 RoR2Content.Items.Pearl,
                 RoR2Content.Items.ShinyPearl,
                 RoR2Content.Items.Knurl,
+                RoR2Content.Items.FallBoots,
                 // DLC1
                 DLC1Content.Items.OutOfCombatArmor,
                 DLC1Content.Items.PermanentDebuffOnHit,
@@ -523,7 +538,12 @@ namespace SnowtimeToybox
                 DLC3Content.Items.BarrierOnCooldown,
                 DLC3Content.Items.ShieldBooster,
                 DLC3Content.Items.ShockDamageAura,
-                ];
+            ];
+            foreach (ItemDef item in whitelistBorboVars)
+            {
+                Log.Debug("Added " + item.name + " to borbo turret's item whitelist");
+                ItemAPI.ApplyTagToItem("turretBorboWhitelist", item);
+            }
             foreach (ItemDef item in whitelistShortcakeVars)
             {
                 Log.Debug("Added " + item.name + " to Strawberry Shortcake Turret's item whitelist");
@@ -533,6 +553,18 @@ namespace SnowtimeToybox
             {
                 if (!SeekingTheVoid.SeekingTheVoid.isPairyEnabled) return;
                 ItemAPI.ApplyTagToItem("turretShortcakeWhitelist", SeekingTheVoid.StrawPairy.StrawPairyDef);
+            }
+        }
+
+        public static List<EquipmentIndex> eliteDefsEquipInherit = [];
+        public void AddElitesToList()
+        {
+            Log.Debug("SnowtimeToybox is listing Elite equipment for inheritance...");
+            List<EquipmentIndex> eliteDefsEquipInherit = [];
+            foreach(var eliteDef in EliteCatalog.eliteDefs)
+            {
+                eliteDefsEquipInherit.Add(eliteDef.eliteEquipmentDef.equipmentIndex);
+                Log.Debug("Elite Equipment: " + eliteDef.eliteEquipmentDef + " Index: " + eliteDef.eliteEquipmentDef.equipmentIndex);
             }
         }
 
