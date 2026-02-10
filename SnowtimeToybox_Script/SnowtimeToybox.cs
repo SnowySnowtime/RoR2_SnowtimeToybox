@@ -147,6 +147,7 @@ namespace SnowtimeToybox
             if (!self.gameObject.GetComponent<FriendlyTurretInheritance>())
             {
                 self.gameObject.AddComponent<FriendlyTurretInheritance>();
+                self.gameObject.GetComponent<FriendlyTurretInheritance>().turretType = self.GetBody().baseNameToken;
                 Log.Debug("Added FriendlyTurretInheritance to: " + self.GetBody().baseNameToken);
             }
         }

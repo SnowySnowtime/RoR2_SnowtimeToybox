@@ -1,3 +1,7 @@
+`1.1.2`
+- Fixed an issue where if any equipment had an ID of 0, it would be given to a turret if there was no valid equipment on the owner to give the turrets.
+- added icon. whoops.
+
 `1.1.1`
 - Strawberry Shortcake Friendly Turret!!!!!!
 - Friendly Turrets now emit sounds,,, DLC3 may be required

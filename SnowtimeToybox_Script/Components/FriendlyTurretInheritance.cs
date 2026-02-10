@@ -21,6 +21,7 @@ namespace SnowtimeToybox.Components
     {
         public Inventory ownerInventory;
         public CharacterMaster self;
+        public string turretType;
         private List<ItemInfo> LastOwnerInventoryState = new();
         public string turret;
 
@@ -52,7 +53,14 @@ namespace SnowtimeToybox.Components
             List<ItemInfo> ownerState = BuildInventoryState(ownerInventory);
             EquipmentIndex ownerEquipIndex = self.minionOwnership.ownerMaster.inventory.currentEquipmentIndex;
             //Log.Debug("Inventory Updated...");
-            self.inventory.CopyItemsFrom(ownerInventory, ItemFilter);
+            if (turret == "FRIENDLYTURRET_SHORTCAKE_NAME")
+            {
+                self.inventory.CopyItemsFrom(ownerInventory, ItemFilterShortcake);
+            }
+            else if (turret == "FRIENDLYTURRET_BORBO_NAME")
+            {
+                self.inventory.CopyItemsFrom(ownerInventory, ItemFilterBorbo);
+            }
 
             foreach (ItemInfo info in currentState)
             {
@@ -76,7 +84,7 @@ namespace SnowtimeToybox.Components
                     //Log.Debug("Check Failed, checking if we have equipment to begin with.");
                     if (currentEquipIndex == 0) return;
                     //Log.Debug("We had an equipment prior, removing equipment.");
-                    self.inventory.SetEquipmentIndex(0, true);
+                    self.inventory.SetEquipmentIndex(EquipmentIndex.None, true);
                 }
                 else
                 {
@@ -104,29 +112,30 @@ namespace SnowtimeToybox.Components
             return list;
         }
 
-        private bool ItemFilter(ItemIndex index)
+        private bool ItemFilterShortcake(ItemIndex index)
         {
             ItemDef item = ItemCatalog.GetItemDef(index);
             if (item.tier == ItemTier.NoTier) return false;
-            if (turret == "FRIENDLYTURRET_SHORTCAKE_NAME")
+            if (item.ContainsTag(ItemAPI.FindItemTagByName("turretShortcakeWhitelist")))
             {
-                if (item.ContainsTag(ItemAPI.FindItemTagByName("turretShortcakeWhitelist")))
-                {
-                    return true;
-                }
+                return true;
             }
-            else if (turret == "FRIENDLYTURRET_BORBO_NAME")
+
+            return false;
+        }
+        private bool ItemFilterBorbo(ItemIndex index)
+        {
+            ItemDef item = ItemCatalog.GetItemDef(index);
+            if (item.tier == ItemTier.NoTier) return false;
+            if (item.ContainsTag(ItemAPI.FindItemTagByName("turretBorboWhitelist")))
             {
-                if (item.ContainsTag(ItemAPI.FindItemTagByName("turretBorboWhitelist")))
-                {
-                    return true;
-                }
+                return true;
             }
 
             return false;
         }
 
-        private class ItemInfo
+    private class ItemInfo
         {
             public ItemIndex index;
             public int count;
