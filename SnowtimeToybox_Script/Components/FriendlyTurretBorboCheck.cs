@@ -32,22 +32,18 @@ namespace SnowtimeToybox.FriendlyTurretChecks
 
             purchaseInteraction.onDetailedPurchaseServer.AddListener(OnDetailedPurchase);
 
-            if (!SnowtimeToyboxMod.ToggleSpawnMessages.Value)
+            if (SnowtimeToyboxMod.ToggleSpawnMessages.Value)
             {
-                return;
-            }
-            else
-            {
-                // Borbo Turret Selected
-                if (purchaseInteraction.displayNameToken == "FRIENDLYTURRET_BORBO_BROKEN_NAME")
+                switch (purchaseInteraction.displayNameToken)
                 {
-                    Chat.SendBroadcastChat(new Chat.SimpleChatMessage() { baseToken = "<style=cEvent><color=#A8D3FF>Friendly Turret: pleas repair me, i will update 2r4r if you do..!</color></style>" });
+                    case "FRIENDLYTURRET_BORBO_BROKEN_NAME": // Borbo Turret Selected
+                        Chat.SendBroadcastChat(new Chat.SimpleChatMessage() { baseToken = "<style=cEvent><color=#A8D3FF>Friendly Turret: pleas repair me, i will update 2r4r if you do..!</color></style>" });
+                        break;  
+                    case "FRIENDLYTURRET_SHORTCAKE_BROKEN_NAME": // Strawberry Shortcake Turret Selected
+                        Chat.SendBroadcastChat(new Chat.SimpleChatMessage() { baseToken = "<style=cEvent><color=#A8D3FF>Friendly Turret: uwaah! pleas repair me, i have a cake for you if you do..!</color></style>" });
+                        break;
                 }
-                else if (purchaseInteraction.displayNameToken == "FRIENDLYTURRET_SHORTCAKE_BROKEN_NAME")
-                {
-                    Chat.SendBroadcastChat(new Chat.SimpleChatMessage() { baseToken = "<style=cEvent><color=#A8D3FF>Friendly Turret: uwaah! pleas repair me, i have a cake for you if you do..!</color></style>" });
-                }
-                // Strawberry Shortcake Turret Selected
+                
             }
         }
 

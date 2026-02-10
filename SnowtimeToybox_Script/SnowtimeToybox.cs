@@ -84,6 +84,7 @@ namespace SnowtimeToybox
         //public static DroneDef FriendlyTurretTestDroneDef;
 
         public static List<GameObject> friendlyTurretList = [];
+        public static string[] friendlyTurretListNames;
 
         public static bool Legendary = false;
         // Copied from RiskierRain, sorry borbo :(
@@ -160,13 +161,9 @@ namespace SnowtimeToybox
         private void SceneDirectorOnStart(SceneDirector.orig_Start orig, RoR2.SceneDirector self)
         {
             orig(self);
-            //Log.Debug("hehe !");
             
             if (!NetworkServer.active) return;
             
-            Vector3 position;
-            Quaternion rotation;
-
             Dictionary<Vector3, Quaternion> stagePositions = new Dictionary<Vector3, Quaternion>();
             string currStage = SceneManager.GetActiveScene().name;
             switch (currStage)
@@ -402,12 +399,45 @@ namespace SnowtimeToybox
                     Log.Debug("no custom pos !!! too bad ,..");
                     return;
             }
+            
+            //make a sister array to friendly turret list that has the count of each type of turret .,,. 
+            int[] turretCounts = new int[friendlyTurretList.Count];
+            ReadOnlyCollection<CharacterMaster> characterMaster = CharacterMaster.readOnlyInstancesList;
+            foreach (CharacterMaster minion in characterMaster)
+            {
+                if(minion.minionOwnership == null) continue;
+                if (!minion.name.Contains("FriendlyTurret")) continue;
+                
+                string cleanedName = minion.name.Replace("(Clone)", "");
+                for (int i = 0; i < friendlyTurretList.Count; i++)
+                {
+                    //Log.Debug($"comaprings {cleanedName} tp {friendlyTurretListNames[i]} !!!");;
+                    if (cleanedName != friendlyTurretListNames[i]) continue;
+                        
+                    //Log.Debug($"found turret {cleanedName} !!! adding to list of current turrets .,,. ");
+                    turretCounts[i]++;
+                }
+            }
+            
+            //add turrets that arent maxed out to the list of available turrets to spawn ,..
+            List<GameObject> availableTurrets = [];
+            for (int i = 0; i < friendlyTurretList.Count; i++)
+            {
+                // skip if max amount of turrets reached ,.,. .,...
+                //Log.Debug("turret[i] count = " + turretCounts[i]);
+                if (turretCounts[i] == PlayerCharacterMasterController.playerCount) continue;
+                
+                //Log.Debug($"adding {friendlyTurretList[i]} to available turret list !!!");
+                availableTurrets.Add(friendlyTurretList[i]);
+            }
+            if (availableTurrets.Count == 0) return;
+            
             Log.Debug("Friendly Turret Count: " + friendlyTurretList.Count);
-            GameObject turret = friendlyTurretList[Run.instance.runRNG.RangeInt(0, friendlyTurretList.Count)];
+            GameObject turret = friendlyTurretList[Run.instance.runRNG.RangeInt(0, availableTurrets.Count)];
             KeyValuePair<Vector3, Quaternion> stagePos = stagePositions.ElementAt(Run.instance.runRNG.RangeInt(0, stagePositions.Count));
             GameObject term = Instantiate(turret, stagePos.Key, stagePos.Value);
             Log.Debug($"turret name = {turret.name} !!!!");
-
+    
             NetworkServer.Spawn(term);
         }
 
@@ -546,6 +576,12 @@ namespace SnowtimeToybox
             friendlyTurretList.Add(FriendlyTurretBorboBroken);
             friendlyTurretList.Add(FriendlyTurretShortcakeBroken);
             Log.Debug(friendlyTurretList);
+            
+            friendlyTurretListNames = new string[friendlyTurretList.Count];
+            for(int i = 0; i < friendlyTurretList.Count; i++)
+            {
+                friendlyTurretListNames[i] = friendlyTurretList[i].GetComponent<SummonMasterBehavior>().masterPrefab.GetComponent<CharacterMaster>().name;
+            }
         }
 
         string interactablesuffering = " (UnityEngine.GameObject)";
