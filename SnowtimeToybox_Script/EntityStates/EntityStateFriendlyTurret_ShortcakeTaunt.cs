@@ -43,6 +43,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 {
                     SnowtimeOrbs snowtimeOrb = new SnowtimeOrbs();
                     snowtimeOrb.attacker = base.gameObject;
+                    snowtimeOrb.speed = 300f;
                     snowtimeOrb.damageColorIndex = DamageColorIndex.Default;
                     snowtimeOrb.damageValue = this.characterBody.damage * damageCoefficient;
                     snowtimeOrb.isCrit = Util.CheckRoll(critStat, base.characterBody.master);

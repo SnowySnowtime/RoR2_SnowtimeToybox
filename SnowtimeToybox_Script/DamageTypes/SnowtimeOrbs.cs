@@ -16,7 +16,7 @@ namespace SnowtimeToybox
             ShortcakeRetaliateFriendly
         }
 
-        public float speed = 50f;
+        public float speed = 200f;
 
         public float damageValue;
 
@@ -55,7 +55,7 @@ namespace SnowtimeToybox
 
         public override void Begin()
         {
-            base.duration = 0.1f;
+            base.duration = Mathf.Max(this.distanceToTarget / this.speed, 0.1f);;
             GameObject orbasset = null;
             switch (snowtimeOrbType)
             {
@@ -78,7 +78,7 @@ namespace SnowtimeToybox
             EffectData effectData = new EffectData
             {
                 origin = origin,
-                genericFloat = base.duration
+                genericFloat = (base.duration * 2f)
             };
             effectData.SetHurtBoxReference(target);
             EffectManager.SpawnEffect(orbasset, effectData, transmit: true);

@@ -50,7 +50,7 @@ namespace SnowtimeToybox
     {
         public const string Author = "SnowySnowtime";
         public const string Name = nameof(SnowtimeToyboxMod);
-        public const string Version = "1.1.0";
+        public const string Version = "1.1.1";
         public const string GUID = Author + "." + Name;
         public static ConfigEntry<bool> ToggleSpawnMessages { get; set; }
 
@@ -67,6 +67,10 @@ namespace SnowtimeToybox
         // friend walker turrets!
         // Global
         public static GameObject FriendlyTurretUseEffect;
+        public static SkillFamily FriendlyTurretBorboUtilSkillFamily;
+        public static SkillDef FriendlyTurretBorboUtilSkillDef;
+        public static SkillFamily FriendlyTurretShortcakeUtilSkillFamily;
+        public static SkillDef FriendlyTurretShortcakeUtilSkillDef;
         // borbo turret
         public static DroneDef FriendlyTurretBorboDef;
         public static InteractableSpawnCard FriendlyTurretBorboIsc;
@@ -92,7 +96,7 @@ namespace SnowtimeToybox
         // Copied from RiskierRain, sorry borbo :(
         public static bool ModLoaded(string modGuid) { return !string.IsNullOrEmpty(modGuid) && BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey(modGuid); }
         public static bool riskierLoaded => ModLoaded("com.RiskOfBrainrot.RiskierRain");
-        public static bool acanthivoidLoaded => ModLoaded(SeekingTheVoid.SeekingTheVoid.PluginGUID);
+        public static bool acanthivoidLoaded => ModLoaded("acanthi.SeekingTheVoid");
 
         public void Awake()
         {
@@ -101,7 +105,6 @@ namespace SnowtimeToybox
             Log.Init(Logger);
 
             ToggleSpawnMessages = Config.Bind("Friendly Turret Functions", "Spawn Message", true, "If true, the Friendly Turrets will give a message on every stage they spawn on, for insight on if and which turret spawned. Otherwise, friendly turrets are shy, and are also sad!");
-
             Language.collectLanguageRootFolders += CollectLanguageRootFolders;
 
             Run.onRunStartGlobal += (Run run) =>
@@ -132,16 +135,19 @@ namespace SnowtimeToybox
             orig(self);
 
             if (!self) return;
+            if (!self.GetBody()) return;
 
             if (!self.GetBody().baseNameToken.Contains("FRIENDLYTURRET")) return;
 
             if (!self.bodyPrefab.GetComponent<EquipmentSlot>())
             {
                 self.bodyPrefab.AddComponent<EquipmentSlot>();
+                Log.Debug("Added EquipmentSlot to: " + self.GetBody().baseNameToken);
             }
             if (!self.gameObject.GetComponent<FriendlyTurretInheritance>())
             {
                 self.gameObject.AddComponent<FriendlyTurretInheritance>();
+                Log.Debug("Added FriendlyTurretInheritance to: " + self.GetBody().baseNameToken);
             }
         }
 
@@ -204,8 +210,8 @@ namespace SnowtimeToybox
                     stagePositions.Add(new Vector3(-4.805637f, -204.4452f, -12.48376f), Quaternion.Euler(0f, 152.4669f, 0f));
                     break;
                 case "blackbeach2":
-                    stagePositions.Add(new Vector3(169.8698f, 64.44502f, 82.08018f), Quaternion.Euler(0f, 299.7927f, 0f));
-                    stagePositions.Add(new Vector3(13.04305f, 87.5433f, -133.105f), Quaternion.Euler(0f, 294.1472f, 0f));
+                    stagePositions.Add(new Vector3(13.17906f, 87.47905f, -133.2737f), Quaternion.Euler(0f, 323.4963f, 0f));
+                    stagePositions.Add(new Vector3(-174.5754f, 17.0354f, -96.01575f), Quaternion.Euler(0f, 23.97439f, 0f));
                     break;
                 case "lakes":
                     stagePositions.Add(new Vector3(86.66148f, 15.45605f, 118.2119f), Quaternion.Euler(0f, 195.2255f, 0f));
@@ -225,8 +231,8 @@ namespace SnowtimeToybox
                     break;
                 // Stage 2
                 case "goolake":
-                    stagePositions.Add(new Vector3(124.067f, -89.11221f, -27.27255f), Quaternion.Euler(0f, 316.3753f, 0f));
-                    stagePositions.Add(new Vector3(193.6179f, -122.2057f, 81.4991f), Quaternion.Euler(0f, 115.5808f, 0f));
+                    stagePositions.Add(new Vector3(116.9908f, -91.04021f, -7.358109f), Quaternion.Euler(0f, 170.321f, 0f));
+                    stagePositions.Add(new Vector3(193.6468f, -122.2093f, 81.47984f), Quaternion.Euler(0f, 134.2626f, 0f));
                     break;
                 case "foggyswamp":
                     stagePositions.Add(new Vector3(21.54059f, -97.81608f, -48.92618f), Quaternion.Euler(0f, 294.0464f, 0f));
@@ -578,8 +584,11 @@ namespace SnowtimeToybox
             FriendlyTurretBorboMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/_FriendlyTurretBorboMaster.prefab");
             FriendlyTurretBorboSkillFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/Skills/BorboPrimaryFamily.asset");
             FriendlyTurretBorboSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/Skills/BorboBlast.asset");
+            FriendlyTurretBorboUtilSkillFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/Skills/BorboUtilityFamily.asset");
+            FriendlyTurretBorboUtilSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/Skills/BorboShenanigans.asset");
             // I am being PEDANTIC but i dont care!
             FriendlyTurretBorboSkillDef.activationState = new SerializableEntityStateType(typeof(ChargeBorboLaser));
+            FriendlyTurretBorboUtilSkillDef.activationState = new SerializableEntityStateType(typeof(Shenanigans));
             FriendlyTurretBorboDef = _stcharacterAssetBundle.LoadAsset<DroneDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/_FriendlyTurretBorbo.asset");
             // Add the Content
             Log.Debug("Adding Borbo Turret Assets");
@@ -601,8 +610,11 @@ namespace SnowtimeToybox
             FriendlyTurretShortcakeMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Shortcake/_FriendlyTurretShortcakeMaster.prefab");
             FriendlyTurretShortcakeSkillFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Shortcake/Skills/ShortcakePrimaryFamily.asset");
             FriendlyTurretShortcakeSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Shortcake/Skills/ShortcakeTaunt.asset");
+            FriendlyTurretShortcakeUtilSkillFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Shortcake/Skills/ShortcakeUtilityFamily.asset");
+            FriendlyTurretShortcakeUtilSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Shortcake/Skills/ShortcakeShenanigans.asset");
             // I am being PEDANTIC but i dont care!
             FriendlyTurretShortcakeSkillDef.activationState = new SerializableEntityStateType(typeof(ShortcakeTaunt));
+            FriendlyTurretShortcakeUtilSkillDef.activationState = new SerializableEntityStateType(typeof(Shenanigans));
             FriendlyTurretShortcakeDef = _stcharacterAssetBundle.LoadAsset<DroneDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Shortcake/_FriendlyTurretShortcake.asset");
             ContentAddition.AddEntityState(typeof(ShortcakeTaunt), out _);
             ContentAddition.AddBody(FriendlyTurretShortcakeBody);
@@ -616,6 +628,7 @@ namespace SnowtimeToybox
             ContentAddition.AddEffect(SnowtimeOrbs.orbShortcakeRetaliateFriendlyImpactObject);
             ContentAddition.AddEffect(SnowtimeOrbs.orbShortcakeTauntImpactObject);
 
+            ContentAddition.AddEntityState(typeof(Shenanigans), out _);
 
             // Friendly Turret Interactables
             Log.Debug("Adding Friendly Turrets Interactables to Stages");

@@ -7,12 +7,15 @@ adds skins for my friends and I. also adds one skill, difficulty, and a friendly
 - A purchaseable singleton walking turret with (eventually) a little bit of personality, inspired by the Best Buddy from Alloyed Collective.
 - Every stage, a random Friendly Turret is selected. Can you find and help them?
 - You are only allowed to have one type of Friendly Turret per player.
+- Once all players collect all available Friendly Turret types, the Friendly Turrets no longer spawn until one meets a woeful end.
 - Their balancing is open to discussion! If you feel it is underwhelming/overpowered, or have other suggestions for tuning or general feedback, let me know!
 
 ## Implemented Friendly Turrets:
 - borbo turret borbo turret [2R4R](https://thunderstore.io/package/RiskOfBrainrot/2R4R/)
 - (please excuse me, this is a slightly earlier screenshot of the turret)
 ![borbo waow](https://github.com/SnowySnowtime/RoR2_SnowtimeToybox/blob/main/borboturretpreview.jpg?raw=true)
+- Strawberry Shortcake Turret
+![shortcake waow](https://github.com/SnowySnowtime/RoR2_SnowtimeToybox/blob/main/borboturretpreview.jpg?raw=true)
 
 # Features
 

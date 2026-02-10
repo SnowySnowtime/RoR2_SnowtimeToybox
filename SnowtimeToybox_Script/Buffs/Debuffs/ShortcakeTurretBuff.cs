@@ -47,6 +47,7 @@ namespace SnowtimeToybox.Buffs
             {
                 SnowtimeOrbs snowtimeOrb = new SnowtimeOrbs();
                 snowtimeOrb.attacker = pookie.gameObject;
+                snowtimeOrb.speed = 220f;
                 snowtimeOrb.snowtimeOrbType = SnowtimeOrbs.OrbTypes.ShortcakeRetaliate;
                 snowtimeOrb.damageValue = damageValue;
                 snowtimeOrb.isCrit = isCrit;

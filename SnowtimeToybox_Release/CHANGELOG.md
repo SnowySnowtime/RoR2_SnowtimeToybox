@@ -1,3 +1,12 @@
+`1.1.1`
+- Strawberry Shortcake Friendly Turret!!!!!!
+- Friendly Turrets now emit sounds,,, DLC3 may be required
+- Friendly Turrets can now inherit items
+- Fixed a few floating spawns for the Friendly Turrets
+- (icebro) Friendly Turrets stop spawning when all players have that type of turret
+- some other changes i probably forgot, this update was a doozy.
+- shortcake shortcake shortcake shortcake (she is the best);;;
+
 `1.1.0`
 - Friendly Turrets!!!!!
 - Added just borbo turret for now, additional friendly turrret types pending
