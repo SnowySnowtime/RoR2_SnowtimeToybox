@@ -10,6 +10,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
+using UnityEngine.TextCore.LowLevel;
 
 // Code from Collective Rewiring by pseudopulse
 // TODO: Add a few configuration settings so that each turret can use this singular component
@@ -19,29 +20,27 @@ namespace SnowtimeToybox.Components
     public class FriendlyTurretInheritance : MonoBehaviour
     {
         public Inventory ownerInventory;
-        public EquipmentSlot ownerEquipment;
         public CharacterMaster self;
         private List<ItemInfo> LastOwnerInventoryState = new();
-        private EquipmentSlot LastOwnerEquipmentState = new();
         public string turret;
-        EquipmentDef[] friendlyTurretEquipmentWhitelist =
-                [
-                // Base
-                RoR2Content.Elites.Fire.eliteEquipmentDef,
-                RoR2Content.Elites.Lightning.eliteEquipmentDef,
-                RoR2Content.Elites.Ice.eliteEquipmentDef,
-                RoR2Content.Elites.Haunted.eliteEquipmentDef,
-                RoR2Content.Elites.Poison.eliteEquipmentDef,
-                RoR2Content.Elites.Lunar.eliteEquipmentDef,
-                // DLC1
-                DLC1Content.Elites.Void.eliteEquipmentDef,
-                DLC1Content.Elites.Earth.eliteEquipmentDef,
-                // DLC2
-                DLC2Content.Elites.Bead.eliteEquipmentDef,
-                DLC2Content.Elites.Aurelionite.eliteEquipmentDef,
-                // DLC3
-                DLC3Content.Elites.Collective.eliteEquipmentDef,
-                ];
+
+        EquipmentDef[] friendlyTurretEquipmentWhitelist = [
+            // Base
+            RoR2Content.Elites.Fire.eliteEquipmentDef,
+            RoR2Content.Elites.Lightning.eliteEquipmentDef,
+            RoR2Content.Elites.Ice.eliteEquipmentDef,
+            RoR2Content.Elites.Haunted.eliteEquipmentDef,
+            RoR2Content.Elites.Poison.eliteEquipmentDef,
+            RoR2Content.Elites.Lunar.eliteEquipmentDef,
+            // DLC1
+            DLC1Content.Elites.Void.eliteEquipmentDef,
+            DLC1Content.Elites.Earth.eliteEquipmentDef,
+            // DLC2
+            DLC2Content.Elites.Bead.eliteEquipmentDef,
+            DLC2Content.Elites.Aurelionite.eliteEquipmentDef,
+            // DLC3
+            DLC3Content.Elites.Collective.eliteEquipmentDef,
+        ];
 
         public void Start()
         {
@@ -51,13 +50,6 @@ namespace SnowtimeToybox.Components
 
         public void FixedUpdate()
         {
-            if (!ownerEquipment)
-            {
-                if (self.minionOwnership && self.minionOwnership.ownerMaster)
-                {
-                    ownerEquipment = self.minionOwnership.ownerMaster.GetBody().equipmentSlot;
-                }
-            }
             if (!ownerInventory)
             {
                 if (self.minionOwnership && self.minionOwnership.ownerMaster)
@@ -72,9 +64,10 @@ namespace SnowtimeToybox.Components
         private void FriendlyTurretMirrorInventory()
         {
             List<ItemInfo> currentState = BuildInventoryState(self.inventory);
+            EquipmentIndex currentEquipIndex = self.inventory.currentEquipmentIndex;
             List<ItemInfo> ownerState = BuildInventoryState(ownerInventory);
-            EquipmentSlot currentEquipState = (self.GetBody().equipmentSlot);
-            EquipmentSlot ownerEquipState = ownerEquipment;
+            EquipmentIndex ownerEquipIndex = self.minionOwnership.ownerMaster.inventory.currentEquipmentIndex;
+            Log.Debug("Inventory Updated...");
             self.inventory.CopyItemsFrom(ownerInventory, ItemFilter);
 
             foreach (ItemInfo info in currentState)
@@ -89,8 +82,15 @@ namespace SnowtimeToybox.Components
                 }
             }
 
+            if (currentEquipIndex != ownerEquipIndex)
+            {
+                self.inventory.SetEquipmentIndex(ownerEquipIndex, false);
+            }
+
+            Log.Debug(LastOwnerInventoryState);
+            Log.Debug(ownerEquipIndex);
+            Log.Debug(currentEquipIndex);
             LastOwnerInventoryState = ownerState;
-            LastOwnerEquipmentState = ownerEquipState;
         }
 
         private List<ItemInfo> BuildInventoryState(Inventory source)
@@ -101,7 +101,7 @@ namespace SnowtimeToybox.Components
             {
                 list.Add(new()
                 {
-                    index = index,
+                    index = index,  
                     count = source.GetItemCountPermanent(index)
                 });
             }

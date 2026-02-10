@@ -4,28 +4,29 @@ using BepInEx.Configuration;
 using EntityStates;
 using EntityStates.SnowtimeToybox_FireHaloWeapon;
 using EntityStates.SnowtimeToybox_FriendlyTurret;
+using On.RoR2.UI;
 using R2API;
+using Rewired.ComponentControls.Data;
 using RoR2;
 using RoR2.Skills;
 using ShaderSwapper;
+using SnowtimeToybox.Buffs;
+using SnowtimeToybox.Components;
+using SnowtimeToybox.FriendlyTurretChecks;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Security;
 using System.Security.Permissions;
-using SnowtimeToybox.Buffs;
-using SnowtimeToybox.FriendlyTurretChecks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityHotReloadNS;
-using System.Collections.ObjectModel;
-using On.RoR2.UI;
 using Path = System.IO.Path;
 using SceneDirector = On.RoR2.SceneDirector;
-using Rewired.ComponentControls.Data;
 
 [module: UnverifiableCode]
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -44,6 +45,7 @@ namespace SnowtimeToybox
     [BepInDependency(R2API.DifficultyAPI.PluginGUID)]
     [BepInDependency("com.RiskOfBrainrot.RiskierRain", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.RiskOfBrainrot.SwanSongExtended", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency(SeekingTheVoid.SeekingTheVoid.PluginGUID, BepInDependency.DependencyFlags.SoftDependency)]
     public class SnowtimeToyboxMod : BaseUnityPlugin
     {
         public const string Author = "SnowySnowtime";
@@ -90,6 +92,7 @@ namespace SnowtimeToybox
         // Copied from RiskierRain, sorry borbo :(
         public static bool ModLoaded(string modGuid) { return !string.IsNullOrEmpty(modGuid) && BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey(modGuid); }
         public static bool riskierLoaded => ModLoaded("com.RiskOfBrainrot.RiskierRain");
+        public static bool acanthivoidLoaded => ModLoaded(SeekingTheVoid.SeekingTheVoid.PluginGUID);
 
         public void Awake()
         {
@@ -121,6 +124,25 @@ namespace SnowtimeToybox
             
             On.RoR2.SceneDirector.Start += SceneDirectorOnStart;
             On.RoR2.CharacterBody.FixedUpdate += ShortcakeTurretHandler;
+            On.RoR2.CharacterMaster.Start += AddInheritanceToFriendlyTurrets;
+        }
+
+        private void AddInheritanceToFriendlyTurrets(On.RoR2.CharacterMaster.orig_Start orig, CharacterMaster self)
+        {
+            orig(self);
+
+            if (!self) return;
+
+            if (!self.GetBody().baseNameToken.Contains("FRIENDLYTURRET")) return;
+
+            if (!self.bodyPrefab.GetComponent<EquipmentSlot>())
+            {
+                self.bodyPrefab.AddComponent<EquipmentSlot>();
+            }
+            if (!self.gameObject.GetComponent<FriendlyTurretInheritance>())
+            {
+                self.gameObject.AddComponent<FriendlyTurretInheritance>();
+            }
         }
 
         // KEEP YOURSELF SAFE
@@ -465,7 +487,7 @@ namespace SnowtimeToybox
             AddCustomSkills();
             AddCustomAllies();
             AddCustomBuffs();
-            AddCustomTagsToItems();
+            ItemCatalog.availability.CallWhenAvailable(AddCustomTagsToItems);
         }
 
         public void AddCustomTagsToItems()
@@ -506,6 +528,11 @@ namespace SnowtimeToybox
             {
                 Log.Debug("Added " + item.name + " to Strawberry Shortcake Turret's item whitelist");
                 ItemAPI.ApplyTagToItem("turretShortcakeWhitelist", item);
+            }
+            if(acanthivoidLoaded)
+            {
+                if (!SeekingTheVoid.SeekingTheVoid.isPairyEnabled) return;
+                ItemAPI.ApplyTagToItem("turretShortcakeWhitelist", SeekingTheVoid.StrawPairy.StrawPairyDef);
             }
         }
 

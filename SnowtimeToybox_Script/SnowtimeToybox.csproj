@@ -53,7 +53,10 @@
 
 	<ItemGroup>
 	  <Reference Include="ShaderSwapper">
-	    <HintPath>bin\ShaderSwapper.dll</HintPath>
+	    <HintPath>_modsupportbins\ShaderSwapper.dll</HintPath>
+	  </Reference>
+	  <Reference Include="SeekingTheVoid">
+	    <HintPath>_modsupportbins\SeekingTheVoid.dll</HintPath>
 	  </Reference>
 	  <Reference Include="UnityHotReload">
 	    <HintPath>lib\UnityHotReload.dll</HintPath>

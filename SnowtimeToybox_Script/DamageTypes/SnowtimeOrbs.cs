@@ -16,7 +16,7 @@ namespace SnowtimeToybox
             ShortcakeRetaliateFriendly
         }
 
-        public float speed = 100f;
+        public float speed = 50f;
 
         public float damageValue;
 

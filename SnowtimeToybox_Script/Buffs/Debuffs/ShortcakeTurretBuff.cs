@@ -19,7 +19,6 @@ namespace SnowtimeToybox.Buffs
         private void ShortcakeDamaged(On.RoR2.GlobalEventManager.orig_OnHitEnemy orig, GlobalEventManager self, DamageInfo damageInfo, GameObject victim)
         {
             orig(self, damageInfo, victim);
-            Log.Debug("why did you hurt my pookie :(");
             CharacterBody pookie = victim.GetComponent<CharacterBody>();
             if(pookie != null)
             {
@@ -28,6 +27,7 @@ namespace SnowtimeToybox.Buffs
                     return;
                 }
             }
+            //Log.Debug("why did you hurt my pookie :(");
 
             int a = 999;
             float radius = 45f;
