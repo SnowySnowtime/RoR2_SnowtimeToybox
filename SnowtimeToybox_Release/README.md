@@ -15,7 +15,7 @@ adds skins for my friends and I. also adds one skill, difficulty, and a friendly
 - (please excuse me, this is a slightly earlier screenshot of the turret)
 ![borbo waow](https://github.com/SnowySnowtime/RoR2_SnowtimeToybox/blob/main/borboturretpreview.jpg?raw=true)
 - Strawberry Shortcake Turret
-![shortcake waow](https://github.com/SnowySnowtime/RoR2_SnowtimeToybox/blob/main/borboturretpreview.jpg?raw=true)
+![shortcake waow](https://github.com/SnowySnowtime/RoR2_SnowtimeToybox/blob/main/shortcaketurretpreview.jpg?raw=true)
 
 # Features
 
