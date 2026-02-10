@@ -1,4 +1,4 @@
-﻿using BepInEx;
+using BepInEx;
 using BepInEx.Bootstrap;
 using BepInEx.Configuration;
 using EntityStates;
@@ -455,7 +455,7 @@ namespace SnowtimeToybox
             if (availableTurrets.Count == 0) return;
             
             Log.Debug("Friendly Turret Count: " + friendlyTurretList.Count);
-            GameObject turret = friendlyTurretList[Run.instance.runRNG.RangeInt(0, availableTurrets.Count)];
+            GameObject turret = availableTurrets[Run.instance.runRNG.RangeInt(0, availableTurrets.Count)];
             KeyValuePair<Vector3, Quaternion> stagePos = stagePositions.ElementAt(Run.instance.runRNG.RangeInt(0, stagePositions.Count));
             GameObject term = Instantiate(turret, stagePos.Key, stagePos.Value);
             Log.Debug($"turret name = {turret.name} !!!!");
