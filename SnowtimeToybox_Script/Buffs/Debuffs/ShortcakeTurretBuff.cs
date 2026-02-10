@@ -32,7 +32,7 @@ namespace SnowtimeToybox.Buffs
             int a = 999;
             float radius = 45f;
             bool isCrit = pookie.RollCrit();
-            float damageValue = 2.5f * pookie.damage;
+            float damageValue = 3f * pookie.damage;
             TeamIndex teamIndex2 = pookie.teamComponent.teamIndex;
             HurtBox[] hurtBoxes = new SphereSearch
             {

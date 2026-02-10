@@ -49,7 +49,7 @@ namespace SnowtimeToybox.Components
             EquipmentIndex currentEquipIndex = self.inventory.currentEquipmentIndex;
             List<ItemInfo> ownerState = BuildInventoryState(ownerInventory);
             EquipmentIndex ownerEquipIndex = self.minionOwnership.ownerMaster.inventory.currentEquipmentIndex;
-            Log.Debug("Inventory Updated...");
+            //Log.Debug("Inventory Updated...");
             self.inventory.CopyItemsFrom(ownerInventory, ItemFilter);
 
             foreach (ItemInfo info in currentState)
@@ -66,19 +66,19 @@ namespace SnowtimeToybox.Components
 
             if (currentEquipIndex != ownerEquipIndex)
             {
-                Log.Debug("Checking if Equipment is an Elite Equipment");
-                Log.Debug(SnowtimeToyboxMod.eliteDefsEquipInherit.Contains(ownerEquipIndex));
-                Log.Debug("Owner Equipment Index: " + ownerEquipIndex);
+                //Log.Debug("Checking if Equipment is an Elite Equipment");
+                //Log.Debug(SnowtimeToyboxMod.eliteDefsEquipInherit.Contains(ownerEquipIndex));
+                //Log.Debug("Owner Equipment Index: " + ownerEquipIndex);
                 if (!SnowtimeToyboxMod.eliteDefsEquipInherit.Contains(ownerEquipIndex))
                 {
-                    Log.Debug("Check Failed, checking if we have equipment to begin with.");
+                    //Log.Debug("Check Failed, checking if we have equipment to begin with.");
                     if (currentEquipIndex == 0) return;
-                    Log.Debug("We had an equipment prior, removing equipment.");
+                    //Log.Debug("We had an equipment prior, removing equipment.");
                     self.inventory.SetEquipmentIndex(0, true);
                 }
                 else
                 {
-                    Log.Debug("Check Passed.");
+                    //Log.Debug("Check Passed.");
                     self.inventory.SetEquipmentIndex(ownerEquipIndex, false);
                 }
             }

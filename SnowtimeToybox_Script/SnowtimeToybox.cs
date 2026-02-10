@@ -454,11 +454,11 @@ namespace SnowtimeToybox
             }
             if (availableTurrets.Count == 0) return;
             
-            Log.Debug("Friendly Turret Count: " + friendlyTurretList.Count);
+            //Log.Debug("Friendly Turret Count: " + friendlyTurretList.Count);
             GameObject turret = availableTurrets[Run.instance.runRNG.RangeInt(0, availableTurrets.Count)];
             KeyValuePair<Vector3, Quaternion> stagePos = stagePositions.ElementAt(Run.instance.runRNG.RangeInt(0, stagePositions.Count));
             GameObject term = Instantiate(turret, stagePos.Key, stagePos.Value);
-            Log.Debug($"turret name = {turret.name} !!!!");
+            //Log.Debug($"turret name = {turret.name} !!!!");
     
             NetworkServer.Spawn(term);
         }
@@ -560,7 +560,7 @@ namespace SnowtimeToybox
         public void AddElitesToList()
         {
             Log.Debug("SnowtimeToybox is listing Elite equipment for inheritance...");
-            List<EquipmentIndex> eliteDefsEquipInherit = [];
+            eliteDefsEquipInherit = [];
             foreach(var eliteDef in EliteCatalog.eliteDefs)
             {
                 eliteDefsEquipInherit.Add(eliteDef.eliteEquipmentDef.equipmentIndex);
@@ -595,6 +595,7 @@ namespace SnowtimeToybox
             ContentAddition.AddEffect(FireBorboLaser.hitEffectPrefabObject);
             ContentAddition.AddEffect(FireBorboLaser.tracerEffectPrefabObject);
 
+            Log.Debug("Defining Friendly Turret based on Shortcake (Snowtime Partner)");
             // Add Strawberry Shortcake Turret
             FriendlyTurretShortcakeBody = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Shortcake/_FriendlyTurretShortcakeBody.prefab");
             FriendlyTurretShortcakeMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Shortcake/_FriendlyTurretShortcakeMaster.prefab");
