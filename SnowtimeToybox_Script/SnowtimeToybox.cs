@@ -119,7 +119,9 @@ namespace SnowtimeToybox
             On.RoR2.GlobalEventManager.OnHitEnemy += JustLetMeDamageMyFoesPleaseThankYou;
             
             On.RoR2.SceneDirector.Start += SceneDirectorOnStart;
+            On.RoR2.CharacterBody.FixedUpdate += ShortcakeTurretHandler;
         }
+
         // KEEP YOURSELF SAFE
         public static DamageAPI.ModdedDamageType HaloRicochetOnHit = DamageAPI.ReserveDamageType();
         public static DamageAPI.ModdedDamageType BorboSuperDebuffOnHit = DamageAPI.ReserveDamageType();
@@ -137,6 +139,22 @@ namespace SnowtimeToybox
             {
                 victim.GetComponent<CharacterBody>().AddTimedBuff(BorboTurretDebuff, 3);
             }
+        }
+
+        private void ShortcakeTurretHandler(On.RoR2.CharacterBody.orig_FixedUpdate orig, RoR2.CharacterBody self)
+        {
+            if (self.teamComponent.teamIndex == TeamIndex.Player)
+            {
+                if (self.baseNameToken.Contains("FRIENDLYTURRET_SHORTCAKE"))
+                {
+                    if (!self.HasBuff(ShortcakeTurretBuff))
+                    {
+                        self.AddBuff(ShortcakeTurretBuff);
+                    }
+                }
+            }
+
+            orig(self);
         }
 
         private void SceneDirectorOnStart(SceneDirector.orig_Start orig, RoR2.SceneDirector self)
@@ -494,12 +512,19 @@ namespace SnowtimeToybox
             FriendlyTurretShortcakeSkillFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Shortcake/Skills/ShortcakePrimaryFamily.asset");
             FriendlyTurretShortcakeSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Shortcake/Skills/ShortcakeTaunt.asset");
             // I am being PEDANTIC but i dont care!
-            FriendlyTurretShortcakeSkillDef.activationState = new SerializableEntityStateType(typeof(ChargeBorboLaser));
+            FriendlyTurretShortcakeSkillDef.activationState = new SerializableEntityStateType(typeof(ShortcakeTaunt));
             FriendlyTurretShortcakeDef = _stcharacterAssetBundle.LoadAsset<DroneDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Shortcake/_FriendlyTurretShortcake.asset");
+            ContentAddition.AddEntityState(typeof(ShortcakeTaunt), out _);
             ContentAddition.AddBody(FriendlyTurretShortcakeBody);
             ContentAddition.AddMaster(FriendlyTurretShortcakeMaster);
             ContentAddition.AddSkillFamily(FriendlyTurretShortcakeSkillFamily);
             ContentAddition.AddSkillDef(FriendlyTurretShortcakeSkillDef);
+            ContentAddition.AddEffect(SnowtimeOrbs.orbShortcakeRetaliateObject);
+            ContentAddition.AddEffect(SnowtimeOrbs.orbShortcakeRetaliateFriendlyObject);
+            ContentAddition.AddEffect(SnowtimeOrbs.orbShortcakeTauntObject);
+            ContentAddition.AddEffect(SnowtimeOrbs.orbShortcakeRetaliateImpactObject);
+            ContentAddition.AddEffect(SnowtimeOrbs.orbShortcakeRetaliateFriendlyImpactObject);
+            ContentAddition.AddEffect(SnowtimeOrbs.orbShortcakeTauntImpactObject);
 
 
             // Friendly Turret Interactables
@@ -603,12 +628,15 @@ namespace SnowtimeToybox
         }
 
         public static BuffDef BorboTurretDebuff;
+        public static BuffDef ShortcakeTurretBuff;
 
         public void AddCustomBuffs()
         {
             Log.Debug("Adding SnowtimeToybox Custom BuffDefs...");
             BorboTurretDebuff = _stcharacterAssetBundle.LoadAsset<BuffDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/Buff/BorboTurretDebuff.asset");
+            ShortcakeTurretBuff = _stcharacterAssetBundle.LoadAsset<BuffDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Shortcake/Buff/ShortcakeTurretBuff.asset");
             Log.Debug(BorboTurretDebuff);
+            Log.Debug(ShortcakeTurretBuff);
             
             IEnumerable<Type> buffTypes = Assembly.GetExecutingAssembly().GetTypes().Where(type => !type.IsAbstract && type.IsSubclassOf(typeof(BuffBase)));
             foreach (Type buffType in buffTypes)
