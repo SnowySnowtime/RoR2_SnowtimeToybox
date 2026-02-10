@@ -40,13 +40,13 @@ adds skins for my friends and I. also adds one skill, difficulty, and a friendly
 ## TODO
 
 - additional friendly turrets based on individuals (not sorted):
-- Shortcake | "Strawberry Shortcake Turret"
 - Snowy Snowtime | "Snowtime Turret"
 - Anartoast | "Seeker Turret"
 - Lukas | "Lukas Turret"
 - Acanthi | "Acanthi Turret"
 - Icebro | "bread turret"
 - PlNK | "PlNK Turret"
+- HIFU | "HIFU Turret"
 
 ## TODO(2)
 - Other drones or turrets (possibility of being implemented):
