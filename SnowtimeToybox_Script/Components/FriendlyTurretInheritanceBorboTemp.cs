@@ -46,6 +46,14 @@ namespace SnowtimeToybox.Components
             self.inventory.GiveItemPermanent(RoR2Content.Items.MinionLeash);
         }
 
+        private void OnDestroy()
+        {
+            if(ownerInventory)
+            {
+                ownerInventory.onInventoryChanged -= FriendlyTurretMirrorInventory;
+            }
+        }
+
         private void FriendlyTurretMirrorInventory()
         {
             List<ItemInfo> currentState = BuildInventoryState(self.inventory);
