@@ -1,3 +1,8 @@
+`1.1.3`
+- fixed an issue where all turrets were inheriting items meant for another turret
+- updated equipment check on turrets again
+- readme,,
+
 `1.1.2`
 - Fixed an issue where if any equipment had an ID of 0, it would be given to a turret if there was no valid equipment on the owner to give the turrets.
 - added icon. whoops.

@@ -505,6 +505,8 @@ namespace SnowtimeToybox
         public void AddCustomTagsToItems()
         {
             Log.Debug("SnowtimeToybox is adding custom tags to items for Friendly Turrets/Drones...");
+            ItemAPI.AddItemTag("turretShortcakeWhitelist");
+            ItemAPI.AddItemTag("turretBorboWhitelist");
             ItemDef[] whitelistBorboVars = [
                 // Base
                 RoR2Content.Items.Syringe,

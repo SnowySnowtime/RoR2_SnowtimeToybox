@@ -109,10 +109,10 @@ namespace SnowtimeToybox.Components
         {
             ItemDef item = ItemCatalog.GetItemDef(index);
             if (item.tier == ItemTier.NoTier) return false;
-            Log.Debug("Item Token: " + item.nameToken + " Has Borbo Tag: " + item.ContainsTag(ItemAPI.FindItemTagByName("turretBorboWhitelist")));
+            //Log.Debug("Item Token: " + item.nameToken + " Has Borbo Tag: " + item.ContainsTag(ItemAPI.FindItemTagByName("turretBorboWhitelist")));
             if (item.ContainsTag(ItemAPI.FindItemTagByName("turretBorboWhitelist")))
             {
-                Log.Debug("Item Token: " + item.nameToken + " passed check for Shortcake whitelist");
+                //Log.Debug("Item Token: " + item.nameToken + " passed check for Shortcake whitelist");
                 return true;
             }
 
