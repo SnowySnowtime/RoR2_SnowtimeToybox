@@ -144,11 +144,15 @@ namespace SnowtimeToybox
                 self.bodyPrefab.AddComponent<EquipmentSlot>();
                 Log.Debug("Added EquipmentSlot to: " + self.GetBody().baseNameToken);
             }
-            if (!self.gameObject.GetComponent<FriendlyTurretInheritance>())
+            if (self.GetBody().baseNameToken.Contains("FRIENDLYTURRET_SHORTCAKE"))
             {
-                self.gameObject.AddComponent<FriendlyTurretInheritance>();
-                self.gameObject.GetComponent<FriendlyTurretInheritance>().turretType = self.GetBody().baseNameToken;
-                Log.Debug("Added FriendlyTurretInheritance to: " + self.GetBody().baseNameToken);
+                self.gameObject.AddComponent<FriendlyTurretInheritanceShortcake>();
+                Log.Debug("Added Inheritance(Shortcake) to: " + self.GetBody().baseNameToken);
+            }
+            if (self.GetBody().baseNameToken.Contains("FRIENDLYTURRET_BORBO"))
+            {
+                self.gameObject.AddComponent<FriendlyTurretInheritanceBorbo>();
+                Log.Debug("Added Inheritance(Borbo) to: " + self.GetBody().baseNameToken);
             }
         }
 

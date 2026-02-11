@@ -17,7 +17,7 @@ using UnityEngine.TextCore.LowLevel;
 // Also handle equipment, somehow.
 namespace SnowtimeToybox.Components
 {
-    public class FriendlyTurretInheritance : MonoBehaviour
+    public class FriendlyTurretInheritanceShortcake : MonoBehaviour
     {
         public Inventory ownerInventory;
         public CharacterMaster self;
@@ -109,8 +109,10 @@ namespace SnowtimeToybox.Components
         {
             ItemDef item = ItemCatalog.GetItemDef(index);
             if (item.tier == ItemTier.NoTier) return false;
+            Log.Debug( "Item Token: " + item.nameToken + " Has Shortcake Tag: " + item.ContainsTag(ItemAPI.FindItemTagByName("turretShortcakeWhitelist")) );
             if (item.ContainsTag(ItemAPI.FindItemTagByName("turretShortcakeWhitelist")))
             {
+                Log.Debug("Item Token: " + item.nameToken + " passed check for Shortcake whitelist");
                 return true;
             }
 
