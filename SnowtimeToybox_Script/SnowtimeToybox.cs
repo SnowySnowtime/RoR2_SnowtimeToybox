@@ -524,6 +524,7 @@ namespace SnowtimeToybox
             ItemDef[] whitelistShortcakeVars = [
                 // Base
                 RoR2Content.Items.Thorns,
+                RoR2Content.Items.BarrierOnKill,
                 RoR2Content.Items.FlatHealth,
                 RoR2Content.Items.HealWhileSafe,
                 RoR2Content.Items.ArmorPlate,
@@ -540,15 +541,12 @@ namespace SnowtimeToybox
                 RoR2Content.Items.FallBoots,
                 // DLC1
                 DLC1Content.Items.OutOfCombatArmor,
-                DLC1Content.Items.PermanentDebuffOnHit,
-                DLC1Content.Items.LunarSun,
                 DLC1Content.Items.HalfSpeedDoubleHealth,
                 DLC1Content.Items.MissileVoid,
                 DLC1Content.Items.ChainLightningVoid,
                 // DLC2
                 // DLC3
                 DLC3Content.Items.CookedSteak,
-                DLC3Content.Items.BarrierOnCooldown,
                 DLC3Content.Items.ShieldBooster,
                 DLC3Content.Items.ShockDamageAura,
             ];

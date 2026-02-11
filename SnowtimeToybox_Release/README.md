@@ -30,13 +30,13 @@ adds skins for my friends and I. also adds one skill, difficulty, and a friendly
 <details>
 <summary>borbo turret's Inherited Items</summary>
 
-| Inherited Items | ![waow](https://riskofrain2.wiki.gg/images/thumb/SotV_Icon.png/18px-SotV_Icon.png?6638fd)DLC1 / ![waow](https://riskofrain2.wiki.gg/images/thumb/SotS_Icon.png/18px-SotS_Icon.png?fe9b34)DLC2 /![waow](https://riskofrain2.wiki.gg/images/thumb/AC_Icon.png/18px-AC_Icon.png?a92833)DLC3  |
+| Inherited Items | ![waow](https://riskofrain2.wiki.gg/images/thumb/SotV_Icon.png/18px-SotV_Icon.png)DLC1 / ![waow](https://riskofrain2.wiki.gg/images/thumb/SotS_Icon.png/18px-SotS_Icon.png)DLC2 /![waow](https://riskofrain2.wiki.gg/images/thumb/AC_Icon.png/18px-AC_Icon.png)DLC3  |
 | --- | --- |
 | ![1](https://riskofrain2.wiki.gg/images/Soldier%27s_Syringe.png) | [Soldier's Syringe](https://riskofrain2.wiki.gg/wiki/Soldier%27s_Syringe) |
 | ![1](https://riskofrain2.wiki.gg/images/thumb/Armor-Piercing_Rounds.png/128px-Armor-Piercing_Rounds.png) | [Armor-Piercing Rounds](https://riskofrain2.wiki.gg/wiki/Armor-Piercing_Rounds) |
-| ![1](https://riskofrain2.wiki.gg/images/thumb/Bolstering_Lantern.png/128px-Bolstering_Lantern.png) | ![waow](https://riskofrain2.wiki.gg/images/thumb/SotS_Icon.png/18px-SotS_Icon.png?fe9b34)[Bolstering Lantern](https://riskofrain2.wiki.gg/wiki/Bolstering_Lantern) |
-| ![3](https://riskofrain2.wiki.gg/images/Symbiotic_Scorpion.png) | ![waow](https://riskofrain2.wiki.gg/images/thumb/SotV_Icon.png/18px-SotV_Icon.png?6638fd)[Symbiotic Scorpion](https://riskofrain2.wiki.gg/wiki/Symbiotic_Scorpion) |
-| ![3](https://riskofrain2.wiki.gg/images/Runic_Lens.png) | ![waow](https://riskofrain2.wiki.gg/images/thumb/SotS_Icon.png/18px-SotS_Icon.png?fe9b34)[Runic Lens](https://riskofrain2.wiki.gg/wiki/Runic_Lens) |
+| ![1](https://riskofrain2.wiki.gg/images/thumb/Bolstering_Lantern.png/128px-Bolstering_Lantern.png) | ![waow](https://riskofrain2.wiki.gg/images/thumb/SotS_Icon.png/18px-SotS_Icon.png)[Bolstering Lantern](https://riskofrain2.wiki.gg/wiki/Bolstering_Lantern) |
+| ![3](https://riskofrain2.wiki.gg/images/Symbiotic_Scorpion.png) | ![waow](https://riskofrain2.wiki.gg/images/thumb/SotV_Icon.png/18px-SotV_Icon.png)[Symbiotic Scorpion](https://riskofrain2.wiki.gg/wiki/Symbiotic_Scorpion) |
+| ![3](https://riskofrain2.wiki.gg/images/Runic_Lens.png) | ![waow](https://riskofrain2.wiki.gg/images/thumb/SotS_Icon.png/18px-SotS_Icon.png)[Runic Lens](https://riskofrain2.wiki.gg/wiki/Runic_Lens) |
 </details>
 
 
@@ -45,13 +45,15 @@ adds skins for my friends and I. also adds one skill, difficulty, and a friendly
 <details>
 <summary>Strawberry Shortcake Turret's Inherited Items</summary>
 
-| Inherited Items | ![waow](https://riskofrain2.wiki.gg/images/thumb/SotV_Icon.png/18px-SotV_Icon.png?6638fd)DLC1 / ![waow](https://riskofrain2.wiki.gg/images/thumb/SotS_Icon.png/18px-SotS_Icon.png?fe9b34)DLC2 /![waow](https://riskofrain2.wiki.gg/images/thumb/AC_Icon.png/18px-AC_Icon.png?a92833)DLC3  |
-| --- | --- |
-| ![1](https://riskofrain2.wiki.gg/images/Bison_Steak.png) | [Bison Steak](https://riskofrain2.wiki.gg/wiki/Bison_Steak) |
-| ![1](https://riskofrain2.wiki.gg/images/Cautious_Slug.png) | [Cautious Slug](https://riskofrain2.wiki.gg/wiki/Cautious_Slug) |
-| ![1](https://riskofrain2.wiki.gg/images/Repulsion_Armor_Plate.png) | [Repulsion Armor Plate](https://riskofrain2.wiki.gg/wiki/Repulsion_Armor_Plate) |
-| ![1](https://riskofrain2.wiki.gg/images/thumb/Personal_Shield_Generator.png/128px-Personal_Shield_Generator.png) | [Personal Shield Generator](https://riskofrain2.wiki.gg/wiki/Personal_Shield_Generator) |
-| ![1](https://riskofrain2.wiki.gg/images/Oddly-shaped_Opal.png) | ![waow](https://riskofrain2.wiki.gg/images/thumb/SotV_Icon.png/18px-SotV_Icon.png?6638fd)[Oddly-shaped Opal](https://riskofrain2.wiki.gg/wiki/Oddly-shaped_Opal) |
+| Inherited Items | ![waow](https://riskofrain2.wiki.gg/images/thumb/SotV_Icon.png/18px-SotV_Icon.png)DLC1 / ![waow](https://riskofrain2.wiki.gg/images/thumb/SotS_Icon.png/18px-SotS_Icon.png)DLC2 /![waow](https://riskofrain2.wiki.gg/images/thumb/AC_Icon.png/18px-AC_Icon.png)DLC3  | Inherited Items | ![waow](https://riskofrain2.wiki.gg/images/thumb/SotV_Icon.png/18px-SotV_Icon.png)DLC1 / ![waow](https://riskofrain2.wiki.gg/images/thumb/SotS_Icon.png/18px-SotS_Icon.png)DLC2 /![waow](https://riskofrain2.wiki.gg/images/thumb/AC_Icon.png/18px-AC_Icon.png)DLC3 | Inherited Items | ![waow](https://riskofrain2.wiki.gg/images/thumb/SotV_Icon.png/18px-SotV_Icon.png)DLC1 / ![waow](https://riskofrain2.wiki.gg/images/thumb/SotS_Icon.png/18px-SotS_Icon.png)DLC2 /![waow](https://riskofrain2.wiki.gg/images/thumb/AC_Icon.png/18px-AC_Icon.png)DLC3 |
+| --- | --- | --- | --- | --- | --- |
+| ![1](https://riskofrain2.wiki.gg/images/Bison_Steak.png) | [Bison Steak](https://riskofrain2.wiki.gg/wiki/Bison_Steak) | ![1](https://riskofrain2.wiki.gg/images/Cautious_Slug.png) | [Cautious Slug](https://riskofrain2.wiki.gg/wiki/Cautious_Slug) | ![1](https://riskofrain2.wiki.gg/images/Repulsion_Armor_Plate.png) | [Repulsion Armor Plate](https://riskofrain2.wiki.gg/wiki/Repulsion_Armor_Plate) |
+| ![1](https://riskofrain2.wiki.gg/images/thumb/Personal_Shield_Generator.png/128px-Personal_Shield_Generator.png) | [Personal Shield Generator](https://riskofrain2.wiki.gg/wiki/Personal_Shield_Generator) | ![1](https://riskofrain2.wiki.gg/images/Topaz_Brooch.png) | [Topaz Brooch](https://riskofrain2.wiki.gg/wiki/Topaz_Brooch) | ![1](https://riskofrain2.wiki.gg/images/Oddly-shaped_Opal.png) | ![waow](https://riskofrain2.wiki.gg/images/thumb/SotV_Icon.png/18px-SotV_Icon.png)[Oddly-shaped Opal](https://riskofrain2.wiki.gg/wiki/Oddly-shaped_Opal) |
+| ![2](https://i.imgur.com/7FV66Gt.png) | [Straw'Pair'y](https://thunderstore.io/package/acanthic/SeekingTheVoid/) | ![2](https://riskofrain2.wiki.gg/images/Razorwire.png) | [Razorwire](https://riskofrain2.wiki.gg/wiki/Razorwire) | ![2](https://riskofrain2.wiki.gg/images/Kinetic_Dampener.png) | ![waow](https://riskofrain2.wiki.gg/images/thumb/AC_Icon.png/18px-AC_Icon.png)[Kinetic Dampener](https://riskofrain2.wiki.gg/wiki/Kinetic_Dampener) |
+| ![2](https://riskofrain2.wiki.gg/images/thumb/Infusion.png/128px-Infusion.png) | [Infusion](https://riskofrain2.wiki.gg/wiki/Infusion) | ![2](https://riskofrain2.wiki.gg/images/Ukulele.png) | [Ukulele](https://riskofrain2.wiki.gg/wiki/Ukulele) | ![2](https://riskofrain2.wiki.gg/images/Polylute.png) | ![waow](https://riskofrain2.wiki.gg/images/thumb/SotV_Icon.png/18px-SotV_Icon.png)[Polylute](https://riskofrain2.wiki.gg/wiki/Polylute) |
+| ![2](https://riskofrain2.wiki.gg/images/Plasma_Shrimp.png) | ![waow](https://riskofrain2.wiki.gg/images/thumb/SotV_Icon.png/18px-SotV_Icon.png)[Plasma Shrimp](https://riskofrain2.wiki.gg/wiki/Plasma_Shrimp) | ![3](https://riskofrain2.wiki.gg/images/Aegis.png) | [Aegis](https://riskofrain2.wiki.gg/wiki/Aegis) | ![3](https://riskofrain2.wiki.gg/images/Interstellar_Desk_Plant.png) | [Interstellar Desk Plant](https://riskofrain2.wiki.gg/wiki/Interstellar_Desk_Plant) |
+| ![3](https://riskofrain2.wiki.gg/images/thumb/Sentient_Meat_Hook.png/128px-Sentient_Meat_Hook.png) | [Sentient Meat Hook](https://riskofrain2.wiki.gg/wiki/Sentient_Meat_Hook) | ![3](https://riskofrain2.wiki.gg/images/thumb/Unstable_Tesla_Coil.png/128px-Unstable_Tesla_Coil.png) | [Unstable Tesla Coil](https://riskofrain2.wiki.gg/wiki/Unstable_Tesla_Coil) | ![4](https://riskofrain2.wiki.gg/images/thumb/Titanic_Knurl.png/128px-Titanic_Knurl.png) | [Titanic Knurl](https://riskofrain2.wiki.gg/wiki/Titanic_Knurl) |
+| ![4](https://riskofrain2.wiki.gg/images/Faulty_Conductor.png) | ![waow](https://riskofrain2.wiki.gg/images/thumb/AC_Icon.png/18px-AC_Icon.png)[Faulty Conductor](https://riskofrain2.wiki.gg/wiki/Faulty_Conductor) | ![5](https://riskofrain2.wiki.gg/images/Seared_Steak.png) | ![waow](https://riskofrain2.wiki.gg/images/thumb/AC_Icon.png/18px-AC_Icon.png)[Seared Steak](https://riskofrain2.wiki.gg/wiki/Seared_Steak) | ![6](https://riskofrain2.wiki.gg/images/Stone_Flux_Pauldron.png?c5291f) | ![waow](https://riskofrain2.wiki.gg/images/thumb/SotV_Icon.png/18px-SotV_Icon.png)[Stone Flux Pauldron](https://riskofrain2.wiki.gg/wiki/Stone_Flux_Pauldron) |
 </details>
 
 
@@ -118,26 +120,26 @@ adds skins for my friends and I. also adds one skill, difficulty, and a friendly
 ## borbo turret borbo turret [2R4R](https://thunderstore.io/package/RiskOfBrainrot/2R4R/)
 ![borbo waow](https://github.com/SnowySnowtime/RoR2_SnowtimeToybox/blob/main/borboturretpreview.jpg?raw=true)
 
-| Inherited Items | ![waow](https://riskofrain2.wiki.gg/images/thumb/SotV_Icon.png/18px-SotV_Icon.png?6638fd)DLC1 / ![waow](https://riskofrain2.wiki.gg/images/thumb/SotS_Icon.png/18px-SotS_Icon.png?fe9b34)DLC2 /![waow](https://riskofrain2.wiki.gg/images/thumb/AC_Icon.png/18px-AC_Icon.png?a92833)DLC3  |
+| Inherited Items | ![waow](https://riskofrain2.wiki.gg/images/thumb/SotV_Icon.png/18px-SotV_Icon.png)DLC1 / ![waow](https://riskofrain2.wiki.gg/images/thumb/SotS_Icon.png/18px-SotS_Icon.png)DLC2 /![waow](https://riskofrain2.wiki.gg/images/thumb/AC_Icon.png/18px-AC_Icon.png)DLC3  |
 | --- | --- |
 | ![1](https://riskofrain2.wiki.gg/images/Soldier%27s_Syringe.png) | [Soldier's Syringe](https://riskofrain2.wiki.gg/wiki/Soldier%27s_Syringe) |
 | ![1](https://riskofrain2.wiki.gg/images/thumb/Armor-Piercing_Rounds.png/128px-Armor-Piercing_Rounds.png) | [Armor-Piercing Rounds](https://riskofrain2.wiki.gg/wiki/Armor-Piercing_Rounds) |
-| ![1](https://riskofrain2.wiki.gg/images/thumb/Bolstering_Lantern.png/128px-Bolstering_Lantern.png) | ![waow](https://riskofrain2.wiki.gg/images/thumb/SotS_Icon.png/18px-SotS_Icon.png?fe9b34)[Bolstering Lantern](https://riskofrain2.wiki.gg/wiki/Bolstering_Lantern) |
-| ![3](https://riskofrain2.wiki.gg/images/Symbiotic_Scorpion.png) | ![waow](https://riskofrain2.wiki.gg/images/thumb/SotV_Icon.png/18px-SotV_Icon.png?6638fd)[Symbiotic Scorpion](https://riskofrain2.wiki.gg/wiki/Symbiotic_Scorpion) |
-| ![3](https://riskofrain2.wiki.gg/images/Runic_Lens.png) | ![waow](https://riskofrain2.wiki.gg/images/thumb/SotS_Icon.png/18px-SotS_Icon.png?fe9b34)[Runic Lens](https://riskofrain2.wiki.gg/wiki/Runic_Lens) |
+| ![1](https://riskofrain2.wiki.gg/images/thumb/Bolstering_Lantern.png/128px-Bolstering_Lantern.png) | ![waow](https://riskofrain2.wiki.gg/images/thumb/SotS_Icon.png/18px-SotS_Icon.png)[Bolstering Lantern](https://riskofrain2.wiki.gg/wiki/Bolstering_Lantern) |
+| ![3](https://riskofrain2.wiki.gg/images/Symbiotic_Scorpion.png) | ![waow](https://riskofrain2.wiki.gg/images/thumb/SotV_Icon.png/18px-SotV_Icon.png)[Symbiotic Scorpion](https://riskofrain2.wiki.gg/wiki/Symbiotic_Scorpion) |
+| ![3](https://riskofrain2.wiki.gg/images/Runic_Lens.png) | ![waow](https://riskofrain2.wiki.gg/images/thumb/SotS_Icon.png/18px-SotS_Icon.png)[Runic Lens](https://riskofrain2.wiki.gg/wiki/Runic_Lens) |
 
 ## Strawberry Shortcake Turret
 ![shortcake waow](https://github.com/SnowySnowtime/RoR2_SnowtimeToybox/blob/main/shortcaketurretpreview.jpg?raw=true)
 <details>
 <summary>Strawberry Shortcake Turret's Inherited Items</summary>
 
-| Inherited Items | ![waow](https://riskofrain2.wiki.gg/images/thumb/SotV_Icon.png/18px-SotV_Icon.png?6638fd)DLC1 / ![waow](https://riskofrain2.wiki.gg/images/thumb/SotS_Icon.png/18px-SotS_Icon.png?fe9b34)DLC2 /![waow](https://riskofrain2.wiki.gg/images/thumb/AC_Icon.png/18px-AC_Icon.png?a92833)DLC3  |
+| Inherited Items | ![waow](https://riskofrain2.wiki.gg/images/thumb/SotV_Icon.png/18px-SotV_Icon.png)DLC1 / ![waow](https://riskofrain2.wiki.gg/images/thumb/SotS_Icon.png/18px-SotS_Icon.png)DLC2 /![waow](https://riskofrain2.wiki.gg/images/thumb/AC_Icon.png/18px-AC_Icon.png)DLC3  |
 | --- | --- |
 | ![1](https://riskofrain2.wiki.gg/images/Soldier%27s_Syringe.png) | [Soldier's Syringe](https://riskofrain2.wiki.gg/wiki/Soldier%27s_Syringe) |
 | ![1](https://riskofrain2.wiki.gg/images/thumb/Armor-Piercing_Rounds.png/128px-Armor-Piercing_Rounds.png) | [Armor-Piercing Rounds](https://riskofrain2.wiki.gg/wiki/Armor-Piercing_Rounds) |
-| ![1](https://riskofrain2.wiki.gg/images/thumb/Bolstering_Lantern.png/128px-Bolstering_Lantern.png) | ![waow](https://riskofrain2.wiki.gg/images/thumb/SotS_Icon.png/18px-SotS_Icon.png?fe9b34)[Bolstering Lantern](https://riskofrain2.wiki.gg/wiki/Bolstering_Lantern) |
-| ![3](https://riskofrain2.wiki.gg/images/Symbiotic_Scorpion.png) | ![waow](https://riskofrain2.wiki.gg/images/thumb/SotV_Icon.png/18px-SotV_Icon.png?6638fd)[Symbiotic Scorpion](https://riskofrain2.wiki.gg/wiki/Symbiotic_Scorpion) |
-| ![3](https://riskofrain2.wiki.gg/images/Runic_Lens.png) | ![waow](https://riskofrain2.wiki.gg/images/thumb/SotS_Icon.png/18px-SotS_Icon.png?fe9b34)[Runic Lens](https://riskofrain2.wiki.gg/wiki/Runic_Lens) |
+| ![1](https://riskofrain2.wiki.gg/images/thumb/Bolstering_Lantern.png/128px-Bolstering_Lantern.png) | ![waow](https://riskofrain2.wiki.gg/images/thumb/SotS_Icon.png/18px-SotS_Icon.png)[Bolstering Lantern](https://riskofrain2.wiki.gg/wiki/Bolstering_Lantern) |
+| ![3](https://riskofrain2.wiki.gg/images/Symbiotic_Scorpion.png) | ![waow](https://riskofrain2.wiki.gg/images/thumb/SotV_Icon.png/18px-SotV_Icon.png)[Symbiotic Scorpion](https://riskofrain2.wiki.gg/wiki/Symbiotic_Scorpion) |
+| ![3](https://riskofrain2.wiki.gg/images/Runic_Lens.png) | ![waow](https://riskofrain2.wiki.gg/images/thumb/SotS_Icon.png/18px-SotS_Icon.png)[Runic Lens](https://riskofrain2.wiki.gg/wiki/Runic_Lens) |
 </details>
 
 
