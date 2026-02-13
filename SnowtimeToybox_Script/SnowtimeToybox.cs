@@ -101,6 +101,7 @@ namespace SnowtimeToybox
         //public static DroneDef FriendlyTurretTestDroneDef;
 
         public static List<GameObject> friendlyTurretList = [];
+        public static List<ItemTag> customItemTags;
         public static string[] friendlyTurretListNames;
 
         public static bool Legendary = false;
@@ -161,42 +162,21 @@ namespace SnowtimeToybox
             AddCustomSkills();
             AddCustomAllies();
             AddCustomBuffs();
-            
-            On.RoR2.ItemCatalog.Init += ItemCatalogOnInit;
+
+            ItemTag FriendTurret_Borbo_Whitelist = ItemAPI.AddItemTag("FriendTurret_Borbo_Whitelist");
+            Log.Debug("FriendTurret_Borbo_Whitelist: " + FriendTurret_Borbo_Whitelist);
+
+            ItemTag FriendTurret_Shortcake_Whitelist = ItemAPI.AddItemTag("FriendTurret_Shortcake_Whitelist");
+            Log.Debug("FriendTurret_Shortcake_Whitelist: " + FriendTurret_Shortcake_Whitelist);
+
+            ItemTag FriendTurret_Snowtime_Whitelist = ItemAPI.AddItemTag("FriendTurret_Snowtime_Whitelist");
+            Log.Debug("FriendTurret_Snowtime_Whitelist: " + FriendTurret_Snowtime_Whitelist);  
+
+            ItemTag globalWhitelist = ItemAPI.AddItemTag("GlobalFriendTurret_Whitelist");
+            Log.Debug("GlobalFriendTurret_Whitelist: " + globalWhitelist);
 
             ItemCatalog.availability.CallWhenAvailable(AddCustomTagsToItems);
             EquipmentCatalog.availability.CallWhenAvailable(AddElitesToList);
-        }
-
-        private void ItemCatalogOnInit(On.RoR2.ItemCatalog.orig_Init orig)
-        {
-            ItemTag FriendTurret_Borbo_Whitelist = ItemAPI.AddItemTag("FriendTurret_Borbo_Whitelist");
-            Log.Debug(FriendTurret_Borbo_Whitelist);
-            
-            ItemTag FriendTurret_Shortcake_Whitelist = ItemAPI.AddItemTag("FriendTurret_Shortcake_Whitelist");
-            Log.Debug(FriendTurret_Shortcake_Whitelist);
-            
-            ItemTag FriendTurret_Snowtime_Whitelist = ItemAPI.AddItemTag("FriendTurret_Snowtime_Whitelist");
-            Log.Debug(FriendTurret_Snowtime_Whitelist);
-            
-            ItemTag globalWhitelist = ItemAPI.AddItemTag("GlobalFriendTurret_Whitelist");
-            Log.Debug(globalWhitelist);
-            
-            ItemTag globalWhitelist1 = ItemAPI.AddItemTag("1");
-            Log.Debug(globalWhitelist1);
-            ItemTag globalWhitelist2 = ItemAPI.AddItemTag("2");
-            Log.Debug(globalWhitelist2);
-            ItemTag globalWhitelist3 = ItemAPI.AddItemTag("3");
-            Log.Debug(globalWhitelist3);
-            ItemTag globalWhitelist4 = ItemAPI.AddItemTag("4");
-            Log.Debug(globalWhitelist4);
-
-            orig();
-        }
-
-        private void Start()
-        {
-            
         }
 
         // KEEP YOURSELF SAFE
