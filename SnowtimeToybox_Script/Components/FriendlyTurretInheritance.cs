@@ -129,8 +129,11 @@ namespace SnowtimeToybox.Components
             ItemDef item = ItemCatalog.GetItemDef(index);
             //Log.Debug("Item Token: " + item.nameToken);
             if (item.tier == ItemTier.NoTier) return false;
-            //Log.Debug("Item Token: " + item.nameToken + " Has Whitelisted Tag: " + item.ContainsTag(ItemAPI.FindItemTagByName(whitelistedTag)));
-            if (item.ContainsTag(ItemAPI.FindItemTagByName(whitelistedTag)) || item.ContainsTag(ItemAPI.FindItemTagByName("GlobalFriendTurret_Whitelist")))
+            ItemTag specificTag = (ItemAPI.FindItemTagByName(whitelistedTag));
+            ItemTag globalTag = ItemAPI.FindItemTagByName("FriendlyTurretWhitelist");
+            Log.Debug("Item Token: " + item.nameToken + " Has Whitelisted Tag: " + item.ContainsTag(ItemAPI.FindItemTagByName(whitelistedTag)));
+            Log.Debug("specificTag: " + specificTag + " globalTag: " + globalTag);
+            if (item.ContainsTag(specificTag) || item.ContainsTag(globalTag))
             {
                 //Log.Debug("Item Token: " + item.nameToken + " passed check for Shortcake whitelist");
                 return true;
