@@ -58,6 +58,9 @@
 	  <Reference Include="SeekingTheVoid">
 	    <HintPath>_modsupportbins\SeekingTheVoid.dll</HintPath>
 	  </Reference>
+	  <Reference Include="RobItems">
+	    <HintPath>_modsupportbins\RobItems.dll</HintPath>
+	  </Reference>
 	  <Reference Include="UnityHotReload">
 	    <HintPath>lib\UnityHotReload.dll</HintPath>
 	  </Reference>
