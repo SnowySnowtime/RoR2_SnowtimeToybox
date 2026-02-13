@@ -5,15 +5,16 @@
 Snowy Snowtime
 ---
 - Added Snowtime Turret
+- Added Golden Apple and Heavy Boots from RobItems to the Global Friendly Turret Whitelist
 
 icebro
 ---
-- Fixed an issue where the friendly turrets did not disallow purchasing a duplicate turret.
-- helped debug an issue with itemtags for turret whitelists (it was partially r2api being outdated though).
+- Fixed an issue where the friendly turrets did not disallow purchasing a duplicate turret
+- helped debug an issue with itemtags for turret whitelists (it was partially r2api being outdated though)
 
 .score
 ---
-- Rewrote the Friendly Turret Inheritance component to be significantly more performant.
+- Rewrote the Friendly Turret Inheritance component to be significantly more performant
 
 </details>
 
@@ -32,7 +33,7 @@ icebro
 <summary>Update Summary</summary>
 
 
-- Fixed an issue where if any equipment had an ID of 0, it would be given to a turret if there was no valid equipment on the owner to give the turrets.
+- Fixed an issue where if any equipment had an ID of 0, it would be given to a turret if there was no valid equipment on the owner to give the turrets
 - added icon. whoops.
 </details>
 
