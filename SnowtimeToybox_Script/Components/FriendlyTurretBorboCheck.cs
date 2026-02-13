@@ -42,6 +42,9 @@ namespace SnowtimeToybox.FriendlyTurretChecks
                     case "FRIENDLYTURRET_SHORTCAKE_BROKEN_NAME": // Strawberry Shortcake Turret Selected
                         Chat.SendBroadcastChat(new Chat.SimpleChatMessage() { baseToken = "<style=cEvent><color=#A8D3FF>Friendly Turret: uwaah! pleas repair me, i have a cake for you if you do..!</color></style>" });
                         break;
+                    case "FRIENDLYTURRET_SNOWTIME_BROKEN_NAME": // Strawberry Shortcake Turret Selected
+                        Chat.SendBroadcastChat(new Chat.SimpleChatMessage() { baseToken = "<style=cEvent><color=#A8D3FF>Friendly Turret: bwaaaa! pleas repair me, i have some ice for you if you do..!</color></style>" });
+                        break;
                 }
                 
             }

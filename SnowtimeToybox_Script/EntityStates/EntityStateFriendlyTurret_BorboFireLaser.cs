@@ -15,8 +15,8 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         public static GameObject hitEffectPrefab = hitEffectPrefabObject;
         public static GameObject tracerEffectPrefab = tracerEffectPrefabObject;
         public static Component TracerWaow;
-        public static float damageCoefficient = 10.0f;
-        public static float blastRadius = 4f;
+        public static float damageCoefficient = 15.0f;
+        public static float blastRadius = 8f;
         public static float force = 5000f;
         public static float minSpread = 0f;
         public static float maxSpread = 0f;

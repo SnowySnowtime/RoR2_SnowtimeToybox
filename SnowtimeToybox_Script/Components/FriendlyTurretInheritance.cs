@@ -1,57 +1,58 @@
-using EntityStates.AffixVoid;
 using R2API;
 using RoR2;
-using RoR2.EntityLogic;
-using SnowtimeToybox;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
-using UnityEngine.TextCore.LowLevel;
 
-// Code from Collective Rewiring by pseudopulse
-// TODO: Add a few configuration settings so that each turret can use this singular component
-// Also handle equipment, somehow.
+// Original code from Collective Rewiring by pseudopulse; rewritten by .score
 namespace SnowtimeToybox.Components
 {
+    [RequireComponent(typeof(CharacterMaster))]
     public class FriendlyTurretInheritance : MonoBehaviour
     {
+        private int[] previouslyProvidedItemBuffer;
         public Inventory ownerInventory;
         public CharacterMaster self;
         public string turretType;
-        private List<ItemInfo> LastOwnerInventoryState = new();
-        public string turret;
+        public string whitelistedTag;
 
-        public void Start()
-        {
-            self = GetComponent<CharacterMaster>();
-            turret = self.GetBody().baseNameToken;
-            FriendlyTurretMirrorInventory();
-        }
         public void Awake()
         {
             enabled = NetworkServer.active;
+            self = GetComponent<CharacterMaster>();
+            previouslyProvidedItemBuffer = ItemCatalog.PerItemBufferPool.Request<int>();
         }
 
         public void FixedUpdate()
         {
+            if (!ownerInventory)
+            {
+                if (self.minionOwnership && self.minionOwnership.ownerMaster)
+                {
+                    ownerInventory = self.minionOwnership.ownerMaster.inventory;
+                    ownerInventory.onInventoryChanged += FriendlyTurretMirrorInventory;
+                    FriendlyTurretMirrorInventory();
+                }
+            }
             if (self.inventory.GetItemCountPermanent(RoR2Content.Items.MinionLeash) > 0) return;
             self.inventory.GiveItemPermanent(RoR2Content.Items.MinionLeash);
         }
+
+        public void OnDestroy()
+        {
+            if (!ReferenceEquals(ownerInventory, null))
+            {
+                ownerInventory.onInventoryChanged -= FriendlyTurretMirrorInventory;
+            }
+        }
+
         public void FriendlyTurretMirrorInventory()
         {
-            if (self?.inventory == null)
+            if (!self?.inventory || !ownerInventory)
                 return;
 
-            var ownerInventory = self.minionOwnership?.ownerMaster?.inventory;
-            if (ownerInventory == null)
-                return;
-
-            ChannelOwnerInventory(self, ownerInventory);
+            Log.Debug("starting channel");
+            ChannelOwnerInventory();
 
             EquipmentIndex ownerEquipment = ownerInventory.currentEquipmentIndex;
             if (!SnowtimeToyboxMod.eliteDefsEquipInherit.Contains(ownerEquipment))
@@ -65,22 +66,25 @@ namespace SnowtimeToybox.Components
             }
         }
 
-        public void ChannelOwnerInventory(CharacterMaster self, Inventory ownerInventory)
+        public void ChannelOwnerInventory()
         {
             int combinedItemsCount = 0;
             using var _1 = ItemCatalog.PerItemBufferPool.RequestTemp<ItemIndex>(out var combinedItemsAcquired);
             using var _2 = ItemCatalog.PerItemBufferPool.RequestTemp<bool>(out var indicesToUpdateSet);
             using var _3 = new Inventory.InventoryChangeScope(self.inventory);
+            Log.Debug("Running ChannelOwnerInventory");
 
-            var selfIndicies = self.inventory.channeledItemStacks.GetNonZeroIndicesSpan();
+            var selfIndicies = self.inventory.permanentItemStacks.GetNonZeroIndicesSpan();
             for (int i = 0; i < selfIndicies.Length; i++)
             {
+                Log.Debug("selfindicies " + selfIndicies[i]);
                 AddItem(selfIndicies[i]);
             }
 
-            var ownerIndicies = self.inventory.permanentItemStacks.GetNonZeroIndicesSpan();
+            var ownerIndicies = ownerInventory.permanentItemStacks.GetNonZeroIndicesSpan();
             for (int i = 0; i < ownerIndicies.Length; i++)
             {
+                Log.Debug("ownerindicies " + ownerIndicies[i]);
                 AddItem(ownerIndicies[i]);
             }
 
@@ -88,59 +92,52 @@ namespace SnowtimeToybox.Components
             for (int i = 0; i < itemsAcquiredSpan.Length; i++)
             {
                 var itemIndex = itemsAcquiredSpan[i];
+                Log.Debug("for iteration " + i + " : item index " + itemIndex);
 
-                // this is your running count of given items
-                // but i cant add an instance field, so im not bothering with covering this edgecase
-                // 
-                // private int[] previouslyProvidedItemBuffer = ItemCatalog.PerItemBufferPool.Request<int>();
-                // ...
-                int providedCount = self.inventory.GetItemCountChanneled(itemIndex);
-                // ref int providedCount = ref previouslyProvidedItemBuffer[(int)itemIndex];
+                ref int providedCount = ref previouslyProvidedItemBuffer[(int)itemIndex];
+                Log.Debug("providedCount " + providedCount);
 
                 int targetProvidedCount = ItemFilter(itemIndex) ? ownerInventory.GetItemCountPermanent(itemIndex) : 0;
+                Log.Debug("targetProvidedCount " + targetProvidedCount);
+
                 int itemCountToProvide = targetProvidedCount - providedCount;
-
-                // for whatever reason, GiveItemChanneledImpl has an immutable property to allow negative item stacks.
-                // fuck that. clamp above zero.
-                int actualItemCount = self.inventory.GetItemCountChanneled(itemIndex);
-                itemCountToProvide = Math.Max(0, actualItemCount + itemCountToProvide) - actualItemCount;
-
                 if (itemCountToProvide != 0)
                 {
-                    self.inventory.ChangeItemStacksCount(new Inventory.GiveItemChanneledImpl
+                    Log.Debug("Giving " + itemCountToProvide + " of " + ItemCatalog.GetItemDef(itemIndex).nameToken);
+
+                    self.inventory.ChangeItemStacksCount(new Inventory.GiveItemPermanentImpl
                     {
                         inventory = self.inventory
                     }, itemIndex, itemCountToProvide);
+
                     providedCount = targetProvidedCount;
+                    Log.Debug("Provided a total of " + providedCount + " of item " + ItemCatalog.GetItemDef(itemIndex).nameToken);
                 }
             }
-
-            void AddItem(ItemIndex itemIndex)
+            void AddItem(ItemIndex idx)
             {
-                if (!indicesToUpdateSet[(int)itemIndex])
+                Log.Debug("AddItem");
+                if (!indicesToUpdateSet[(int)idx])
                 {
-                    indicesToUpdateSet[(int)itemIndex] = true;
-                    combinedItemsAcquired[combinedItemsCount++] = itemIndex;
+                    indicesToUpdateSet[(int)idx] = true;
+                    combinedItemsAcquired[combinedItemsCount++] = idx;
                 }
             }
         }
-
-        private bool ItemFilter(ItemIndex index)
+        public bool ItemFilter(ItemIndex index)
         {
+            Log.Debug("Running ItemFilter");
             ItemDef item = ItemCatalog.GetItemDef(index);
+            Log.Debug("Item Token: " + item.nameToken);
             if (item.tier == ItemTier.NoTier) return false;
-            if (item.ContainsTag(ItemAPI.FindItemTagByName("turretShortcakeWhitelist")))
+            Log.Debug("Item Token: " + item.nameToken + " Has Whitelisted Tag: " + item.ContainsTag(ItemAPI.FindItemTagByName(whitelistedTag)));
+            if (item.ContainsTag(ItemAPI.FindItemTagByName(whitelistedTag)) || item.ContainsTag(ItemAPI.FindItemTagByName("GlobalFriendTurret_Whitelist")))
             {
+                Log.Debug("Item Token: " + item.nameToken + " passed check for Shortcake whitelist");
                 return true;
             }
 
             return false;
-        }
-
-    private class ItemInfo
-        {
-            public ItemIndex index;
-            public int count;
         }
     }
 }

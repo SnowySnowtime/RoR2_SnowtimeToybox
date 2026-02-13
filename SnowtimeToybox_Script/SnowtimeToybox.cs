@@ -45,7 +45,7 @@ namespace SnowtimeToybox
     [BepInDependency(R2API.DifficultyAPI.PluginGUID)]
     [BepInDependency("com.RiskOfBrainrot.RiskierRain", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.RiskOfBrainrot.SwanSongExtended", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInDependency(SeekingTheVoid.SeekingTheVoid.PluginGUID, BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("acanthi.SeekingTheVoid", BepInDependency.DependencyFlags.SoftDependency)]
     public class SnowtimeToyboxMod : BaseUnityPlugin
     {
         public const string Author = "SnowySnowtime";
@@ -71,6 +71,8 @@ namespace SnowtimeToybox
         public static SkillDef FriendlyTurretBorboUtilSkillDef;
         public static SkillFamily FriendlyTurretShortcakeUtilSkillFamily;
         public static SkillDef FriendlyTurretShortcakeUtilSkillDef;
+        public static SkillFamily FriendlyTurretSnowtimeUtilSkillFamily;
+        public static SkillDef FriendlyTurretSnowtimeUtilSkillDef;
         // borbo turret
         public static DroneDef FriendlyTurretBorboDef;
         public static InteractableSpawnCard FriendlyTurretBorboIsc;
@@ -87,6 +89,15 @@ namespace SnowtimeToybox
         public static GameObject FriendlyTurretShortcakeBody;
         public static GameObject FriendlyTurretShortcakeMaster;
         public static GameObject FriendlyTurretShortcakeBroken;
+        // snowtime turret
+        // Strawberry Shortcake Turret
+        public static DroneDef FriendlyTurretSnowtimeDef;
+        public static InteractableSpawnCard FriendlyTurretSnowtimeIsc;
+        public static SkillFamily FriendlyTurretSnowtimeSkillFamily;
+        public static SkillDef FriendlyTurretSnowtimeSkillDef;
+        public static GameObject FriendlyTurretSnowtimeBody;
+        public static GameObject FriendlyTurretSnowtimeMaster;
+        public static GameObject FriendlyTurretSnowtimeBroken;
         //public static DroneDef FriendlyTurretTestDroneDef;
 
         public static List<GameObject> friendlyTurretList = [];
@@ -97,6 +108,12 @@ namespace SnowtimeToybox
         public static bool ModLoaded(string modGuid) { return !string.IsNullOrEmpty(modGuid) && BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey(modGuid); }
         public static bool riskierLoaded => ModLoaded("com.RiskOfBrainrot.RiskierRain");
         public static bool acanthivoidLoaded => ModLoaded("acanthi.SeekingTheVoid");
+
+        public static String assetDirectory;
+        public static AssetBundle _stdifficultyAssetBundle;
+        public static AssetBundle _stcharacterAssetBundle;
+        internal const string _stdifficultyAssetBundleName = "snowtimetoybox_difficulty";
+        internal const string _stcharacterAssetBundleName = "snowtimetoybox_characters";
 
         public void Awake()
         {
@@ -127,33 +144,28 @@ namespace SnowtimeToybox
             
             On.RoR2.SceneDirector.Start += SceneDirectorOnStart;
             On.RoR2.CharacterBody.FixedUpdate += ShortcakeTurretHandler;
-            On.RoR2.CharacterMaster.Start += AddInheritanceToFriendlyTurrets;
         }
 
-        private void AddInheritanceToFriendlyTurrets(On.RoR2.CharacterMaster.orig_Start orig, CharacterMaster self)
+        private void Start()
         {
-            orig(self);
+            instance = this;
 
-            if (!self) return;
-            if (!self.GetBody()) return;
+            var assetsFolderFullPath = Path.Combine(Path.GetDirectoryName(typeof(SnowtimeToyboxMod).Assembly.Location), "assetbundles");
+            assetDirectory = assetsFolderFullPath;
+            Debug.Log("Ran Start!");
+            _stcharacterAssetBundle = AssetBundle.LoadFromFile(Path.Combine(assetsFolderFullPath, _stcharacterAssetBundleName));
+            base.StartCoroutine(_stcharacterAssetBundle.UpgradeStubbedShadersAsync());
+            _stdifficultyAssetBundle = AssetBundle.LoadFromFile(Path.Combine(assetsFolderFullPath, _stdifficultyAssetBundleName));
+            Debug.Log(_stcharacterAssetBundle);
+            Debug.Log(_stdifficultyAssetBundle);
 
-            if (!self.GetBody().baseNameToken.Contains("FRIENDLYTURRET")) return;
-
-            if (!self.bodyPrefab.GetComponent<EquipmentSlot>())
-            {
-                self.bodyPrefab.AddComponent<EquipmentSlot>();
-                Log.Debug("Added EquipmentSlot to: " + self.GetBody().baseNameToken);
-            }
-            if (self.GetBody().baseNameToken.Contains("FRIENDLYTURRET_SHORTCAKE"))
-            {
-                self.gameObject.AddComponent<FriendlyTurretInheritanceShortcake>();
-                Log.Debug("Added Inheritance(Shortcake) to: " + self.GetBody().baseNameToken);
-            }
-            if (self.GetBody().baseNameToken.Contains("FRIENDLYTURRET_BORBO"))
-            {
-                self.gameObject.AddComponent<FriendlyTurretInheritanceBorbo>();
-                Log.Debug("Added Inheritance(Borbo) to: " + self.GetBody().baseNameToken);
-            }
+            AddDifficulty();
+            //AddEffectDef();
+            AddCustomSkills();
+            AddCustomAllies();
+            AddCustomBuffs();
+            ItemCatalog.availability.CallWhenAvailable(AddCustomTagsToItems);
+            EquipmentCatalog.availability.CallWhenAvailable(AddElitesToList);
         }
 
         // KEEP YOURSELF SAFE
@@ -474,46 +486,22 @@ namespace SnowtimeToybox
             NetworkServer.Spawn(term);
         }
 
-        public static String assetDirectory;
-        public static AssetBundle _stdifficultyAssetBundle;
-        public static AssetBundle _stcharacterAssetBundle;
-        internal const string _stdifficultyAssetBundleName = "snowtimetoybox_difficulty";
-        internal const string _stcharacterAssetBundleName = "snowtimetoybox_characters";
-
-        private void Start()
-        {
-            instance = this;
-
-            var assetsFolderFullPath = Path.Combine(Path.GetDirectoryName(typeof(SnowtimeToyboxMod).Assembly.Location), "assetbundles");
-            assetDirectory = assetsFolderFullPath;
-            Debug.Log("Ran Start!");
-            _stcharacterAssetBundle = AssetBundle.LoadFromFile(Path.Combine(assetsFolderFullPath, _stcharacterAssetBundleName));
-            base.StartCoroutine(_stcharacterAssetBundle.UpgradeStubbedShadersAsync());
-            _stdifficultyAssetBundle = AssetBundle.LoadFromFile(Path.Combine(assetsFolderFullPath, _stdifficultyAssetBundleName));
-            Debug.Log(_stcharacterAssetBundle);
-            Debug.Log(_stdifficultyAssetBundle);
-
-            AddDifficulty();
-            //AddEffectDef();
-            AddCustomSkills();
-            AddCustomAllies();
-            AddCustomBuffs();
-            ItemCatalog.availability.CallWhenAvailable(AddCustomTagsToItems);
-            EquipmentCatalog.availability.CallWhenAvailable(AddElitesToList);
-        }
-
         public void AddCustomTagsToItems()
         {
             Log.Debug("SnowtimeToybox is adding custom tags to items for Friendly Turrets/Drones...");
-            ItemAPI.AddItemTag("turretShortcakeWhitelist");
-            ItemAPI.AddItemTag("turretBorboWhitelist");
+            ItemAPI.AddItemTag("FriendTurret_Borbo_Whitelist");
+            ItemAPI.AddItemTag("FriendTurret_Shortcake_Whitelist");
+            ItemAPI.AddItemTag("FriendTurret_Snowtime_Whitelist");
+            ItemAPI.AddItemTag("GlobalFriendTurret_Whitelist");
+            ItemDef[] whitelistGlobalTurret = [
+                RoR2Content.Items.Pearl,
+                RoR2Content.Items.ShinyPearl,
+                RoR2Content.Items.FallBoots,
+            ];
             ItemDef[] whitelistBorboVars = [
                 // Base
                 RoR2Content.Items.Syringe,
                 RoR2Content.Items.BossDamageBonus,
-                RoR2Content.Items.Pearl,
-                RoR2Content.Items.ShinyPearl,
-                RoR2Content.Items.FallBoots,
                 // DLC1
                 DLC1Content.Items.PermanentDebuffOnHit,
                 // DLC2
@@ -535,10 +523,7 @@ namespace SnowtimeToybox
                 RoR2Content.Items.Plant,
                 RoR2Content.Items.BounceNearby,
                 RoR2Content.Items.ShockNearby,
-                RoR2Content.Items.Pearl,
-                RoR2Content.Items.ShinyPearl,
                 RoR2Content.Items.Knurl,
-                RoR2Content.Items.FallBoots,
                 // DLC1
                 DLC1Content.Items.OutOfCombatArmor,
                 DLC1Content.Items.HalfSpeedDoubleHealth,
@@ -550,20 +535,40 @@ namespace SnowtimeToybox
                 DLC3Content.Items.ShieldBooster,
                 DLC3Content.Items.ShockDamageAura,
             ];
+            ItemDef[] whitelistSnowtimeVars = [
+                // Base
+                RoR2Content.Items.IceRing,
+                RoR2Content.Items.PersonalShield,
+                RoR2Content.Items.Infusion,
+                // DLC1
+                // DLC2
+                // DLC3
+                DLC3Content.Items.ShieldBooster,
+            ];
+            foreach (ItemDef item in whitelistGlobalTurret)
+            {
+                Log.Debug("Added " + item.name + " to global friendly turret item whitelist");
+                ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", item);
+            }
             foreach (ItemDef item in whitelistBorboVars)
             {
                 Log.Debug("Added " + item.name + " to borbo turret's item whitelist");
-                ItemAPI.ApplyTagToItem("turretBorboWhitelist", item);
+                ItemAPI.ApplyTagToItem("FriendTurret_Borbo_Whitelist", item);
             }
             foreach (ItemDef item in whitelistShortcakeVars)
             {
                 Log.Debug("Added " + item.name + " to Strawberry Shortcake Turret's item whitelist");
-                ItemAPI.ApplyTagToItem("turretShortcakeWhitelist", item);
+                ItemAPI.ApplyTagToItem("FriendTurret_Shortcake_Whitelist", item);
             }
-            if(acanthivoidLoaded)
+            foreach (ItemDef item in whitelistSnowtimeVars)
+            {
+                Log.Debug("Added " + item.name + " to Snowtime Turret's item whitelist");
+                ItemAPI.ApplyTagToItem("FriendTurret_Snowtime_Whitelist", item);
+            }
+            if (acanthivoidLoaded)
             {
                 if (!SeekingTheVoid.SeekingTheVoid.isPairyEnabled) return;
-                ItemAPI.ApplyTagToItem("turretShortcakeWhitelist", SeekingTheVoid.StrawPairy.StrawPairyDef);
+                ItemAPI.ApplyTagToItem("FriendTurret_Shortcake_Whitelist", SeekingTheVoid.StrawPairy.StrawPairyDef);
             }
         }
 
@@ -633,26 +638,67 @@ namespace SnowtimeToybox
             ContentAddition.AddEffect(SnowtimeOrbs.orbShortcakeRetaliateFriendlyImpactObject);
             ContentAddition.AddEffect(SnowtimeOrbs.orbShortcakeTauntImpactObject);
 
+            // add snowtime turret
+            Log.Debug("Defining Friendly Turret based on Snowy Snowtime (hi :3)");
+            FriendlyTurretSnowtimeBody = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Snowtime/_FriendlyTurretSnowtimeBody.prefab");
+            FriendlyTurretSnowtimeMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Snowtime/_FriendlyTurretSnowtimeMaster.prefab");
+            FriendlyTurretSnowtimeSkillFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Snowtime/Skills/SnowtimePrimaryFamily.asset");
+            FriendlyTurretSnowtimeSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Snowtime/Skills/SnowtimeCryoGauss.asset");
+            FriendlyTurretSnowtimeUtilSkillFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Snowtime/Skills/SnowtimeUtilityFamily.asset");
+            FriendlyTurretSnowtimeUtilSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Snowtime/Skills/SnowtimeShenanigans.asset");
+            // I am being PEDANTIC but i dont care!
+            FriendlyTurretSnowtimeSkillDef.activationState = new SerializableEntityStateType(typeof(SnowtimeCryoGaussFire));
+            FriendlyTurretSnowtimeUtilSkillDef.activationState = new SerializableEntityStateType(typeof(Shenanigans));
+            FriendlyTurretSnowtimeDef = _stcharacterAssetBundle.LoadAsset<DroneDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Snowtime/_FriendlyTurretSnowtime.asset");
+            ContentAddition.AddEntityState(typeof(SnowtimeCryoGaussFire), out _);
+            ContentAddition.AddBody(FriendlyTurretSnowtimeBody);
+            ContentAddition.AddMaster(FriendlyTurretSnowtimeMaster);
+            ContentAddition.AddSkillFamily(FriendlyTurretSnowtimeSkillFamily);
+            ContentAddition.AddSkillDef(FriendlyTurretSnowtimeSkillDef);
+            ContentAddition.AddEffect(SnowtimeCryoGaussFire.muzzleflashEffectObject);
+            ContentAddition.AddProjectile(SnowtimeCryoGaussFire.projectileObject);
+            ContentAddition.AddEffect(SnowtimeCryoGaussFire.projectileGhostObject);
+            ContentAddition.AddEffect(SnowtimeCryoGaussFire.projectileExplosionObject);
+
             ContentAddition.AddEntityState(typeof(Shenanigans), out _);
 
             // Friendly Turret Interactables
             Log.Debug("Adding Friendly Turrets Interactables to Stages");
             FriendlyTurretBorboBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/_mdlFriendlyTurretBorboBroken.prefab");
             FriendlyTurretShortcakeBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Shortcake/_mdlFriendlyTurretShortcakeBroken.prefab");
+            FriendlyTurretSnowtimeBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Snowtime/_mdlFriendlyTurretSnowtimeBroken.prefab");
             BorboCheck borbocheck = FriendlyTurretBorboBroken.AddComponent<BorboCheck>();
             BorboCheck shortcakecheck = FriendlyTurretShortcakeBroken.AddComponent<BorboCheck>();
+            BorboCheck snowtimecheck = FriendlyTurretSnowtimeBroken.AddComponent<BorboCheck>();
             PurchaseInteraction borbointeraction = FriendlyTurretBorboBroken.GetComponent<PurchaseInteraction>();
             PurchaseInteraction shortcakeinteraction = FriendlyTurretShortcakeBroken.GetComponent<PurchaseInteraction>();
+            PurchaseInteraction snowtimeinteraction = FriendlyTurretSnowtimeBroken.GetComponent<PurchaseInteraction>();
             borbocheck.purchaseInteraction = borbointeraction;
             shortcakecheck.purchaseInteraction = shortcakeinteraction;
+            snowtimecheck.purchaseInteraction = snowtimeinteraction;
+
+            // Add Prefabs
+            // TODO: Add these to the prefabs directly (so we dont have to add them here)
+            FriendlyTurretBorboBody.AddComponent<EquipmentSlot>();
+            FriendlyTurretShortcakeBody.AddComponent<EquipmentSlot>();
+            FriendlyTurretSnowtimeBody.AddComponent<EquipmentSlot>();
+
+            var borboInheritance = FriendlyTurretBorboMaster.AddComponent<FriendlyTurretInheritance>();
+            var shortcakeInheritance = FriendlyTurretShortcakeMaster.AddComponent<FriendlyTurretInheritance>();
+            var snowtimeInheritance = FriendlyTurretSnowtimeMaster.AddComponent<FriendlyTurretInheritance>();
+            borboInheritance.whitelistedTag = "FriendTurret_Borbo_Whitelist";
+            shortcakeInheritance.whitelistedTag = "FriendTurret_Shortcake_Whitelist";
+            snowtimeInheritance.whitelistedTag = "FriendTurret_Snowtime_Whitelist";
 
             On.RoR2.PurchaseInteraction.GetInteractability += GetInteractabilityFriendlyTurrets;
             // i want die
             ContentAddition.AddNetworkedObject(FriendlyTurretBorboBroken);
             ContentAddition.AddNetworkedObject(FriendlyTurretShortcakeBroken);
+            ContentAddition.AddNetworkedObject(FriendlyTurretSnowtimeBroken);
             ContentAddition.AddEffect(BorboCheck.turretUseEffect);
             friendlyTurretList.Add(FriendlyTurretBorboBroken);
             friendlyTurretList.Add(FriendlyTurretShortcakeBroken);
+            friendlyTurretList.Add(FriendlyTurretSnowtimeBroken);
             Log.Debug(friendlyTurretList);
             
             friendlyTurretListNames = new string[friendlyTurretList.Count];
@@ -685,7 +731,7 @@ namespace SnowtimeToybox
                     continue;
                 }
 
-                //Log.Debug("Minion: " + body.baseNameToken);
+                Log.Debug("Minion: " + body.baseNameToken);
                 interactablesmaster = self.GetComponent<SummonMasterBehavior>().masterPrefab.gameObject.ToString();
                 if (interactablesmaster.EndsWith(interactablesuffering))
                 {
@@ -696,12 +742,12 @@ namespace SnowtimeToybox
                 {
                     charactersmaster = charactersmaster.Substring(0, charactersmaster.LastIndexOf(charactersuffering));
                 }
-                //Log.Debug("Interactable: " + self.displayNameToken + " Minion CharacterBody: " + body.baseNameToken);
-                //Log.Debug("Cleaned Interactable Summonable: " + interactablesmaster + " Minion Master: " + charactersmaster);
-                //Log.Debug("Does Interactable Summon Master match CharacterBody Master?");
+                Log.Debug("Interactable: " + self.displayNameToken + " Minion CharacterBody: " + body.baseNameToken);
+                Log.Debug("Cleaned Interactable Summonable: " + interactablesmaster + " Minion Master: " + charactersmaster);
+                Log.Debug("Does Interactable Summon Master match CharacterBody Master?");
                 if (charactersmaster.Contains(interactablesmaster))
                 {
-                    //Log.Debug("Previous query returned true");
+                    Log.Debug("Previous query returned true");
                     return Interactability.Disabled;
                 }
             }
