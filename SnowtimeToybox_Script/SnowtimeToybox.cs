@@ -680,7 +680,7 @@ namespace SnowtimeToybox
             
             foreach (CharacterBody body in minionBodies)
             {
-                if (body.baseNameToken.StartsWith("FRIENDLYTURRET_"))
+                if (!body.baseNameToken.StartsWith("FRIENDLYTURRET_"))
                 {
                     continue;
                 }
