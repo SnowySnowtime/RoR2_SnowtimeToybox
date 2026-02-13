@@ -1,6 +1,6 @@
 `1.1.4`
 <details>
-<summary>Update Summary</summary>
+<summary>Update Summary (includes summary of commits by users)</summary>
 
 Snowy Snowtime
 ---
@@ -9,6 +9,7 @@ Snowy Snowtime
 icebro
 ---
 - Fixed an issue where the friendly turrets did not disallow purchasing a duplicate turret.
+- helped debug an issue with itemtags for turret whitelists (it was partially r2api being outdated though).
 
 .score
 ---
@@ -28,6 +29,7 @@ icebro
 `1.1.2`
 <details>
 <summary>Update Summary</summary>
+
 - Fixed an issue where if any equipment had an ID of 0, it would be given to a turret if there was no valid equipment on the owner to give the turrets.
 - added icon. whoops.
 </details>
