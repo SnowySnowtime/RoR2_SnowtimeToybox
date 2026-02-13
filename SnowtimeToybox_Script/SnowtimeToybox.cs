@@ -144,10 +144,7 @@ namespace SnowtimeToybox
             
             On.RoR2.SceneDirector.Start += SceneDirectorOnStart;
             On.RoR2.CharacterBody.FixedUpdate += ShortcakeTurretHandler;
-        }
-
-        private void Start()
-        {
+            
             instance = this;
 
             var assetsFolderFullPath = Path.Combine(Path.GetDirectoryName(typeof(SnowtimeToyboxMod).Assembly.Location), "assetbundles");
@@ -164,8 +161,42 @@ namespace SnowtimeToybox
             AddCustomSkills();
             AddCustomAllies();
             AddCustomBuffs();
+            
+            On.RoR2.ItemCatalog.Init += ItemCatalogOnInit;
+
             ItemCatalog.availability.CallWhenAvailable(AddCustomTagsToItems);
             EquipmentCatalog.availability.CallWhenAvailable(AddElitesToList);
+        }
+
+        private void ItemCatalogOnInit(On.RoR2.ItemCatalog.orig_Init orig)
+        {
+            ItemTag FriendTurret_Borbo_Whitelist = ItemAPI.AddItemTag("FriendTurret_Borbo_Whitelist");
+            Log.Debug(FriendTurret_Borbo_Whitelist);
+            
+            ItemTag FriendTurret_Shortcake_Whitelist = ItemAPI.AddItemTag("FriendTurret_Shortcake_Whitelist");
+            Log.Debug(FriendTurret_Shortcake_Whitelist);
+            
+            ItemTag FriendTurret_Snowtime_Whitelist = ItemAPI.AddItemTag("FriendTurret_Snowtime_Whitelist");
+            Log.Debug(FriendTurret_Snowtime_Whitelist);
+            
+            ItemTag globalWhitelist = ItemAPI.AddItemTag("GlobalFriendTurret_Whitelist");
+            Log.Debug(globalWhitelist);
+            
+            ItemTag globalWhitelist1 = ItemAPI.AddItemTag("1");
+            Log.Debug(globalWhitelist1);
+            ItemTag globalWhitelist2 = ItemAPI.AddItemTag("2");
+            Log.Debug(globalWhitelist2);
+            ItemTag globalWhitelist3 = ItemAPI.AddItemTag("3");
+            Log.Debug(globalWhitelist3);
+            ItemTag globalWhitelist4 = ItemAPI.AddItemTag("4");
+            Log.Debug(globalWhitelist4);
+
+            orig();
+        }
+
+        private void Start()
+        {
+            
         }
 
         // KEEP YOURSELF SAFE
@@ -489,10 +520,7 @@ namespace SnowtimeToybox
         public void AddCustomTagsToItems()
         {
             Log.Debug("SnowtimeToybox is adding custom tags to items for Friendly Turrets/Drones...");
-            ItemAPI.AddItemTag("FriendTurret_Borbo_Whitelist");
-            ItemAPI.AddItemTag("FriendTurret_Shortcake_Whitelist");
-            ItemAPI.AddItemTag("FriendTurret_Snowtime_Whitelist");
-            ItemAPI.AddItemTag("GlobalFriendTurret_Whitelist");
+            
             ItemDef[] whitelistGlobalTurret = [
                 RoR2Content.Items.Pearl,
                 RoR2Content.Items.ShinyPearl,
