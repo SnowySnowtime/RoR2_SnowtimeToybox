@@ -93,6 +93,4 @@ adds skins for my friends and I. also adds one skill, difficulty, and a friendly
 - Bard Drone/Turret
 - T0AST3R Turret
 - "Throw Turret"
-- ANKLE Turret# SnowtimeToybox
-adds skins for my friends and I. also adds one skill, difficulty, and a friendly turret! still working on other stuff.
-- please direct any feedback to snowysnowtime in the risk of rain 2 modding discord
+- ANKLE Turret

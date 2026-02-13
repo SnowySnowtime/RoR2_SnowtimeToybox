@@ -35,11 +35,11 @@
 		"FRIENDLYTURRET_SNOWTIME_SUBTITLE": "not so friendlies now...",
 		"FRIENDLYTURRET_SNOWTIME_FUNCTION": "Highly resilient Walking Turret, attacking enemies with high-speed ice spears.",
 		"FRIENDLYTURRET_SNOWTIME_DESCRIPTION": "Highly resilient Walking Turret, attacking enemies with high-speed ice spears.",
-		"FRIENDLYTURRET_SNOWTIME_SKILL_DESCRIPTION": "Attacks <style=cIsDamage>all nearby enemies</style> within <style=cIsUtility>45m</style> for <style=cIsDamage>100% damage</style>. \nWhen attacked, retaliate; firing <style=cDeath>strawberries </style>at <style=cIsDamage>all nearby enemies</style> within <style=cIsUtility>45m</style> for <style=cIsDamage>300% damage</style>. <style=cDeath>Does not retaliate against damage dealt by debuffs</style>.",
+		"FRIENDLYTURRET_SNOWTIME_SKILL_DESCRIPTION": "Fires high-velocity <style=cIsUtility>Ice Spears</style> for <style=cIsDamage>400% damage</style> which inflicts <style=cIsDamage>Slow</style> and <style=cIsDamage>Frost</style>.",
 		
-		"FRIENDLYTURRET_SNOWTIME_BROKEN_NAME": "Broken Strawberry Shortcake Turret",
-		"FRIENDLYTURRET_SNOWTIME_BROKEN_CONTEXT": "Repair Strawberry Shortcake Turret",
-		"FRIENDLYTURRET_SNOWTIME_BROKEN_DESCRIPTION": "<style=cEvent>uwaah! please repair me!! it hurt...</style>\nAttacks <style=cIsDamage>all nearby enemies</style> within <style=cIsUtility>45m</style> for <style=cIsDamage>100% damage</style>. \nWhen attacked, retaliate; firing <style=cDeath>strawberries </style>at <style=cIsDamage>all nearby enemies</style> within <style=cIsUtility>45m</style> for <style=cIsDamage>300% damage</style>. <style=cDeath>Does not retaliate against damage dealt by debuffs</style>.\n<style=cIsUtility>Inherits</style> a curated set of items and <style=cIsDamage>any Elite Equipment</style> from the owner.",
+		"FRIENDLYTURRET_SNOWTIME_BROKEN_NAME": "Broken Snowtime Turret",
+		"FRIENDLYTURRET_SNOWTIME_BROKEN_CONTEXT": "Repair Snowtime Turret",
+		"FRIENDLYTURRET_SNOWTIME_BROKEN_DESCRIPTION": "<style=cEvent>bwaaaa! please repair me!! it hurt...</style>\nFires high-velocity <style=cIsUtility>Ice Spears</style> for <style=cIsDamage>400% damage</style> which inflicts <style=cIsDamage>Slow</style> and <style=cIsDamage>Frost</style>.\n<style=cIsUtility>Inherits</style> a curated set of items and <style=cIsDamage>any Elite Equipment</style> from the owner.",
 	
 	}
 }
