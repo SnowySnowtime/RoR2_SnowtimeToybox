@@ -51,7 +51,7 @@ namespace SnowtimeToybox
     {
         public const string Author = "SnowySnowtime";
         public const string Name = nameof(SnowtimeToyboxMod);
-        public const string Version = "1.1.1";
+        public const string Version = "1.1.4";
         public const string GUID = Author + "." + Name;
         public static ConfigEntry<bool> ToggleSpawnMessages { get; set; }
 
@@ -188,6 +188,7 @@ namespace SnowtimeToybox
                 RoR2Content.Items.Pearl,
                 RoR2Content.Items.ShinyPearl,
                 RoR2Content.Items.FallBoots,
+                RoR2Content.Items.BonusGoldPackOnKill,
             ];
             ItemDef[] whitelistBorboVars = [
                 // Base
@@ -231,7 +232,12 @@ namespace SnowtimeToybox
                 RoR2Content.Items.IceRing,
                 RoR2Content.Items.PersonalShield,
                 RoR2Content.Items.Infusion,
+                RoR2Content.Items.Behemoth,
+                RoR2Content.Items.SlowOnHit,
+                RoR2Content.Items.Crowbar,
                 // DLC1
+                DLC1Content.Items.ElementalRingVoid,
+                DLC1Content.Items.SlowOnHitVoid,
                 // DLC2
                 // DLC3
                 DLC3Content.Items.ShieldBooster,

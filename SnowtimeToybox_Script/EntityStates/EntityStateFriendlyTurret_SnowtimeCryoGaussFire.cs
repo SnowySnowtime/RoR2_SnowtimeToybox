@@ -57,7 +57,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                     position = ray.origin,
                     rotation = Util.QuaternionSafeLookRotation(ray.direction),
                     owner = base.gameObject,
-                    damage = damageCoefficient * damageStat,
+                    damage = damageCoefficient * (damageStat + (attackSpeedStat - 1)),
                     force = force,
                     crit = Util.CheckRoll(critStat, base.characterBody.master),
                     damageTypeOverride = new DamageTypeCombo(DamageType.SlowOnHit, DamageTypeExtended.Frost, DamageSource.Primary)
