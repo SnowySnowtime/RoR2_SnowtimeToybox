@@ -6,6 +6,8 @@ Snowy Snowtime
 ---
 - Added Snowtime Turret
 - Added Golden Apple and Heavy Boots from RobItems to the Global Friendly Turret Whitelist
+- nautilus support too but whatever
+- theres like 15 junk tags temporarily to fix the itemtag issues until itemapi is updated
 
 icebro
 ---

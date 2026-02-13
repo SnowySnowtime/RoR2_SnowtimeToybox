@@ -130,7 +130,7 @@ namespace SnowtimeToybox.Components
             //Log.Debug("Item Token: " + item.nameToken);
             if (item.tier == ItemTier.NoTier) return false;
             ItemTag specificTag = (ItemAPI.FindItemTagByName(whitelistedTag));
-            ItemTag globalTag = ItemAPI.FindItemTagByName("FriendlyTurretWhitelist");
+            ItemTag globalTag = ItemAPI.FindItemTagByName("GlobalFriendTurret_Whitelist");
             Log.Debug("Item Token: " + item.nameToken + " Has Whitelisted Tag: " + item.ContainsTag(ItemAPI.FindItemTagByName(whitelistedTag)));
             Log.Debug("specificTag: " + specificTag + " globalTag: " + globalTag);
             if (item.ContainsTag(specificTag) || item.ContainsTag(globalTag))

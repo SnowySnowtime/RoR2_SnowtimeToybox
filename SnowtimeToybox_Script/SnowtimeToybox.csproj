@@ -61,6 +61,9 @@
 	  <Reference Include="RobItems">
 	    <HintPath>_modsupportbins\RobItems.dll</HintPath>
 	  </Reference>
+	  <Reference Include="Nautilus">
+	    <HintPath>_modsupportbins\Nautilus-nstrip.dll</HintPath>
+	  </Reference>
 	  <Reference Include="UnityHotReload">
 	    <HintPath>lib\UnityHotReload.dll</HintPath>
 	  </Reference>

@@ -4,6 +4,7 @@ using BepInEx.Configuration;
 using EntityStates;
 using EntityStates.SnowtimeToybox_FireHaloWeapon;
 using EntityStates.SnowtimeToybox_FriendlyTurret;
+using Nautilus.Items;
 using On.RoR2.UI;
 using R2API;
 using Rewired.ComponentControls.Data;
@@ -47,6 +48,7 @@ namespace SnowtimeToybox
     [BepInDependency("com.RiskOfBrainrot.SwanSongExtended", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("acanthi.SeekingTheVoid", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.rob.RobItems", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.Hex3.Nautilus", BepInDependency.DependencyFlags.SoftDependency)]
     public class SnowtimeToyboxMod : BaseUnityPlugin
     {
         public const string Author = "SnowySnowtime";
@@ -111,6 +113,7 @@ namespace SnowtimeToybox
         public static bool riskierLoaded => ModLoaded("com.RiskOfBrainrot.RiskierRain");
         public static bool acanthivoidLoaded => ModLoaded("acanthi.SeekingTheVoid");
         public static bool robItemsLoaded => ModLoaded("com.rob.RobItems");
+        public static bool hex3NautilusLoaded => ModLoaded("com.Hex3.Nautilus");
 
         public static String assetDirectory;
         public static AssetBundle _stdifficultyAssetBundle;
@@ -163,6 +166,23 @@ namespace SnowtimeToybox
             AddCustomSkills();
             AddCustomAllies();
             AddCustomBuffs();
+
+            // junk tags
+            ItemTag rbrBPdatfmiMRDgSgQcHglph = ItemAPI.AddItemTag("rbrBPdatfmiMRDgSgQcHglph");
+            ItemTag AOmTCRkvMWlrmqXZROumLlYd = ItemAPI.AddItemTag("AOmTCRkvMWlrmqXZROumLlYd");
+            ItemTag aSZcARlEfpIKQhReDKrxeMed = ItemAPI.AddItemTag("aSZcARlEfpIKQhReDKrxeMed");
+            ItemTag hErGamuHrKAqzQFhqeliZuUi = ItemAPI.AddItemTag("hErGamuHrKAqzQFhqeliZuUi");
+            ItemTag KJSveOUxHaoyAFtJMDBgdfHX = ItemAPI.AddItemTag("KJSveOUxHaoyAFtJMDBgdfHX");
+            ItemTag caClLulfCTxpquuFayFmMPQq = ItemAPI.AddItemTag("caClLulfCTxpquuFayFmMPQq");
+            ItemTag FqTxBsMoSnqftpfusYfvOzDF = ItemAPI.AddItemTag("FqTxBsMoSnqftpfusYfvOzDF");
+            ItemTag OclwzhFuIjwmPIBRbNwQYvbl = ItemAPI.AddItemTag("OclwzhFuIjwmPIBRbNwQYvbl");
+            ItemTag fwIlitEaQZzPphtiDxuFAFSV = ItemAPI.AddItemTag("fwIlitEaQZzPphtiDxuFAFSV");
+            ItemTag tNoUsPtoIhJVsArRHFhzbZPm = ItemAPI.AddItemTag("tNoUsPtoIhJVsArRHFhzbZPm");
+            ItemTag VUdkNQkISpxThtOVfdRzrcXN = ItemAPI.AddItemTag("VUdkNQkISpxThtOVfdRzrcXN");
+            ItemTag uPHTLIbFNwOrDlEBTbycqCxe = ItemAPI.AddItemTag("uPHTLIbFNwOrDlEBTbycqCxe");
+            ItemTag lXDuiqZfFNvKePnLPdlonZOc = ItemAPI.AddItemTag("lXDuiqZfFNvKePnLPdlonZOc");
+            ItemTag sGxgNLQPkGqqPEeZBOAKnXKK = ItemAPI.AddItemTag("sGxgNLQPkGqqPEeZBOAKnXKK");
+            ItemTag JQxocyWSALYmSBHDCYvcmIbG = ItemAPI.AddItemTag("JQxocyWSALYmSBHDCYvcmIbG");
 
             ItemTag FriendTurret_Borbo_Whitelist = ItemAPI.AddItemTag("FriendTurret_Borbo_Whitelist");
             Log.Debug("FriendTurret_Borbo_Whitelist: " + FriendTurret_Borbo_Whitelist);
@@ -264,20 +284,37 @@ namespace SnowtimeToybox
             }
             if (acanthivoidLoaded)
             {
-                if (!SeekingTheVoid.SeekingTheVoid.isPairyEnabled) return;
-                ItemAPI.ApplyTagToItem("FriendTurret_Shortcake_Whitelist", SeekingTheVoid.StrawPairy.StrawPairyDef);
+                if (SeekingTheVoid.SeekingTheVoid.isPairyEnabled)
+                {
+                    ItemAPI.ApplyTagToItem("FriendTurret_Shortcake_Whitelist", SeekingTheVoid.StrawPairy.StrawPairyDef);
+                }
+                if (SeekingTheVoid.SeekingTheVoid.isCoralEnabled)
+                {
+                    ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", SeekingTheVoid.CoastalCoral.CoastalCoralDef);
+                }
+            }
+            if (hex3NautilusLoaded)
+            {
+                if (MotherOfPearl.MotherOfPearl_Enabled.Value)
+                {
+                    ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", Nautilus.Items.ItemInit.MotherOfPearl.ItemDef);
+                }
+                if (ViscousPot.ViscousPot_Enabled.Value)
+                {
+                    ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", Nautilus.Items.ItemInit.ViscousPot.ItemDef);
+                }
             }
             if (robItemsLoaded)
             {
-                if (RobItems.Content.GoldenApple.instance?.ItemDef)
+                if (RobItems.Content.GoldenApple.instance.ItemDef)
                 {
                     ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", RobItems.Content.GoldenApple.instance.ItemDef);
                 }
-                if (RobItems.Content.HeavyBoot.instance?.ItemDef)
+                if (RobItems.Content.HeavyBoot.instance.ItemDef)
                 {
                     ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", RobItems.Content.HeavyBoot.instance.ItemDef);
                 }
-                if (RobItems.Content.PerfectApple.instance?.ItemDef)
+                if (RobItems.Content.PerfectApple.instance.ItemDef)
                 {
                     ItemAPI.ApplyTagToItem("FriendTurret_Shortcake_Whitelist", RobItems.Content.PerfectApple.instance.ItemDef);
                 }
