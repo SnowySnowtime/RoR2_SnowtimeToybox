@@ -13,7 +13,6 @@ namespace SnowtimeToybox.Components
         private int[] previouslyProvidedItemBuffer;
         public Inventory ownerInventory;
         public CharacterMaster self;
-        public string turretType;
         public string whitelistedTag;
 
         public void Awake()
@@ -51,7 +50,7 @@ namespace SnowtimeToybox.Components
             if (!self?.inventory || !ownerInventory)
                 return;
 
-            Log.Debug("starting channel");
+            //Log.Debug("starting channel");
             ChannelOwnerInventory();
 
             EquipmentIndex ownerEquipment = ownerInventory.currentEquipmentIndex;
@@ -72,19 +71,19 @@ namespace SnowtimeToybox.Components
             using var _1 = ItemCatalog.PerItemBufferPool.RequestTemp<ItemIndex>(out var combinedItemsAcquired);
             using var _2 = ItemCatalog.PerItemBufferPool.RequestTemp<bool>(out var indicesToUpdateSet);
             using var _3 = new Inventory.InventoryChangeScope(self.inventory);
-            Log.Debug("Running ChannelOwnerInventory");
+            //Log.Debug("Running ChannelOwnerInventory");
 
             var selfIndicies = self.inventory.permanentItemStacks.GetNonZeroIndicesSpan();
             for (int i = 0; i < selfIndicies.Length; i++)
             {
-                Log.Debug("selfindicies " + selfIndicies[i]);
+                //Log.Debug("selfindicies " + selfIndicies[i]);
                 AddItem(selfIndicies[i]);
             }
 
             var ownerIndicies = ownerInventory.permanentItemStacks.GetNonZeroIndicesSpan();
             for (int i = 0; i < ownerIndicies.Length; i++)
             {
-                Log.Debug("ownerindicies " + ownerIndicies[i]);
+                //Log.Debug("ownerindicies " + ownerIndicies[i]);
                 AddItem(ownerIndicies[i]);
             }
 
@@ -92,18 +91,18 @@ namespace SnowtimeToybox.Components
             for (int i = 0; i < itemsAcquiredSpan.Length; i++)
             {
                 var itemIndex = itemsAcquiredSpan[i];
-                Log.Debug("for iteration " + i + " : item index " + itemIndex);
+                //Log.Debug("for iteration " + i + " : item index " + itemIndex);
 
                 ref int providedCount = ref previouslyProvidedItemBuffer[(int)itemIndex];
-                Log.Debug("providedCount " + providedCount);
+                //Log.Debug("providedCount " + providedCount);
 
                 int targetProvidedCount = ItemFilter(itemIndex) ? ownerInventory.GetItemCountPermanent(itemIndex) : 0;
-                Log.Debug("targetProvidedCount " + targetProvidedCount);
+                //Log.Debug("targetProvidedCount " + targetProvidedCount);
 
                 int itemCountToProvide = targetProvidedCount - providedCount;
                 if (itemCountToProvide != 0)
                 {
-                    Log.Debug("Giving " + itemCountToProvide + " of " + ItemCatalog.GetItemDef(itemIndex).nameToken);
+                    //Log.Debug("Giving " + itemCountToProvide + " of " + ItemCatalog.GetItemDef(itemIndex).nameToken);
 
                     self.inventory.ChangeItemStacksCount(new Inventory.GiveItemPermanentImpl
                     {
@@ -111,12 +110,12 @@ namespace SnowtimeToybox.Components
                     }, itemIndex, itemCountToProvide);
 
                     providedCount = targetProvidedCount;
-                    Log.Debug("Provided a total of " + providedCount + " of item " + ItemCatalog.GetItemDef(itemIndex).nameToken);
+                    //Log.Debug("Provided a total of " + providedCount + " of item " + ItemCatalog.GetItemDef(itemIndex).nameToken);
                 }
             }
             void AddItem(ItemIndex idx)
             {
-                Log.Debug("AddItem");
+                //Log.Debug("AddItem");
                 if (!indicesToUpdateSet[(int)idx])
                 {
                     indicesToUpdateSet[(int)idx] = true;
@@ -126,14 +125,14 @@ namespace SnowtimeToybox.Components
         }
         public bool ItemFilter(ItemIndex index)
         {
-            Log.Debug("Running ItemFilter");
+            //Log.Debug("Running ItemFilter");
             ItemDef item = ItemCatalog.GetItemDef(index);
-            Log.Debug("Item Token: " + item.nameToken);
+            //Log.Debug("Item Token: " + item.nameToken);
             if (item.tier == ItemTier.NoTier) return false;
-            Log.Debug("Item Token: " + item.nameToken + " Has Whitelisted Tag: " + item.ContainsTag(ItemAPI.FindItemTagByName(whitelistedTag)));
+            //Log.Debug("Item Token: " + item.nameToken + " Has Whitelisted Tag: " + item.ContainsTag(ItemAPI.FindItemTagByName(whitelistedTag)));
             if (item.ContainsTag(ItemAPI.FindItemTagByName(whitelistedTag)) || item.ContainsTag(ItemAPI.FindItemTagByName("GlobalFriendTurret_Whitelist")))
             {
-                Log.Debug("Item Token: " + item.nameToken + " passed check for Shortcake whitelist");
+                //Log.Debug("Item Token: " + item.nameToken + " passed check for Shortcake whitelist");
                 return true;
             }
 
