@@ -158,7 +158,6 @@ namespace SnowtimeToybox
             Debug.Log(_stdifficultyAssetBundle);
 
             AddDifficulty();
-            //AddEffectDef();
             AddCustomSkills();
             AddCustomAllies();
             AddCustomBuffs();
