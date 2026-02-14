@@ -10,6 +10,7 @@ using R2API;
 using Rewired.ComponentControls.Data;
 using RoR2;
 using RoR2.Skills;
+using RoR2BepInExPack.GameAssetPaths;
 using ShaderSwapper;
 using SnowtimeToybox.Buffs;
 using SnowtimeToybox.Components;
@@ -55,7 +56,6 @@ namespace SnowtimeToybox
         public const string Name = nameof(SnowtimeToyboxMod);
         public const string Version = "1.1.4";
         public const string GUID = Author + "." + Name;
-        public static ConfigEntry<bool> ToggleSpawnMessages { get; set; }
 
         public static SnowtimeToyboxMod instance;
 
@@ -121,6 +121,11 @@ namespace SnowtimeToybox
         internal const string _stdifficultyAssetBundleName = "snowtimetoybox_difficulty";
         internal const string _stcharacterAssetBundleName = "snowtimetoybox_characters";
 
+        public static ConfigEntry<bool> ToggleSpawnMessages { get; set; }
+        public static ConfigEntry<bool> FriendlyTurretImmuneVoidDeath { get; set; }
+        public static ConfigEntry<bool> FriendlyTurretFallImmunity { get; set; }
+        public static ConfigEntry<bool> FriendlyTurretDrone { get; set; }
+
         public void Awake()
         {
             instance = this;
@@ -128,6 +133,9 @@ namespace SnowtimeToybox
             Log.Init(Logger);
 
             ToggleSpawnMessages = Config.Bind("Friendly Turret Functions", "Spawn Message", true, "If true, the Friendly Turrets will give a message on every stage they spawn on, for insight on if and which turret spawned. Otherwise, friendly turrets are shy, and are also sad!");
+            FriendlyTurretImmuneVoidDeath = Config.Bind("Friendly Turret Flags", "Void Death Immunity", true, "If true, Friendly Turrets are immune to Void Death (Void Reaver implosions), this is because they are awful at avoiding them even with mods to make allies avoid them, and we get sad when they are detained.");
+            FriendlyTurretFallImmunity = Config.Bind("Friendly Turret Flags", "Fall Damage Immunity", true, "If true, Friendly Turrets are immune to fall damage, as navigating some maps can be a little difficult for them. Prevents any unexpected turret deaths, as we cant simply 'replace' them like Engineer can.");
+            FriendlyTurretDrone = Config.Bind("Friendly Turret Flags", "Drone", false, "If true, Friendly Turrets are flagged as drones. Probably comes with some oddities.");
             Language.collectLanguageRootFolders += CollectLanguageRootFolders;
 
             Run.onRunStartGlobal += (Run run) =>
@@ -166,23 +174,6 @@ namespace SnowtimeToybox
             AddCustomSkills();
             AddCustomAllies();
             AddCustomBuffs();
-
-            // junk tags
-            ItemTag rbrBPdatfmiMRDgSgQcHglph = ItemAPI.AddItemTag("rbrBPdatfmiMRDgSgQcHglph");
-            ItemTag AOmTCRkvMWlrmqXZROumLlYd = ItemAPI.AddItemTag("AOmTCRkvMWlrmqXZROumLlYd");
-            ItemTag aSZcARlEfpIKQhReDKrxeMed = ItemAPI.AddItemTag("aSZcARlEfpIKQhReDKrxeMed");
-            ItemTag hErGamuHrKAqzQFhqeliZuUi = ItemAPI.AddItemTag("hErGamuHrKAqzQFhqeliZuUi");
-            ItemTag KJSveOUxHaoyAFtJMDBgdfHX = ItemAPI.AddItemTag("KJSveOUxHaoyAFtJMDBgdfHX");
-            ItemTag caClLulfCTxpquuFayFmMPQq = ItemAPI.AddItemTag("caClLulfCTxpquuFayFmMPQq");
-            ItemTag FqTxBsMoSnqftpfusYfvOzDF = ItemAPI.AddItemTag("FqTxBsMoSnqftpfusYfvOzDF");
-            ItemTag OclwzhFuIjwmPIBRbNwQYvbl = ItemAPI.AddItemTag("OclwzhFuIjwmPIBRbNwQYvbl");
-            ItemTag fwIlitEaQZzPphtiDxuFAFSV = ItemAPI.AddItemTag("fwIlitEaQZzPphtiDxuFAFSV");
-            ItemTag tNoUsPtoIhJVsArRHFhzbZPm = ItemAPI.AddItemTag("tNoUsPtoIhJVsArRHFhzbZPm");
-            ItemTag VUdkNQkISpxThtOVfdRzrcXN = ItemAPI.AddItemTag("VUdkNQkISpxThtOVfdRzrcXN");
-            ItemTag uPHTLIbFNwOrDlEBTbycqCxe = ItemAPI.AddItemTag("uPHTLIbFNwOrDlEBTbycqCxe");
-            ItemTag lXDuiqZfFNvKePnLPdlonZOc = ItemAPI.AddItemTag("lXDuiqZfFNvKePnLPdlonZOc");
-            ItemTag sGxgNLQPkGqqPEeZBOAKnXKK = ItemAPI.AddItemTag("sGxgNLQPkGqqPEeZBOAKnXKK");
-            ItemTag JQxocyWSALYmSBHDCYvcmIbG = ItemAPI.AddItemTag("JQxocyWSALYmSBHDCYvcmIbG");
 
             ItemTag FriendTurret_Borbo_Whitelist = ItemAPI.AddItemTag("FriendTurret_Borbo_Whitelist");
             Log.Debug("FriendTurret_Borbo_Whitelist: " + FriendTurret_Borbo_Whitelist);
@@ -756,6 +747,49 @@ namespace SnowtimeToybox
             borboInheritance.whitelistedTag = "FriendTurret_Borbo_Whitelist";
             shortcakeInheritance.whitelistedTag = "FriendTurret_Shortcake_Whitelist";
             snowtimeInheritance.whitelistedTag = "FriendTurret_Snowtime_Whitelist";
+
+            if (FriendlyTurretImmuneVoidDeath.Value)
+            {
+                FriendlyTurretBorboBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
+                FriendlyTurretShortcakeBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
+                FriendlyTurretSnowtimeBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
+            }
+            if (FriendlyTurretFallImmunity.Value)
+            {
+                FriendlyTurretBorboBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
+                FriendlyTurretShortcakeBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
+                FriendlyTurretSnowtimeBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
+            }
+            if (FriendlyTurretDrone.Value)
+            {
+                FriendlyTurretBorboBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.Drone;
+                FriendlyTurretShortcakeBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.Drone;
+                FriendlyTurretSnowtimeBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.Drone;
+            }
+
+            if(riskierLoaded)
+            {
+                // Update stats for Friendly Turrets
+                FriendlyTurretBorboBody.GetComponent<CharacterBody>().baseDamage = 25f;
+                FriendlyTurretBorboBody.GetComponent<CharacterBody>().baseRegen = 20f;
+                FriendlyTurretBorboBody.GetComponent<CharacterBody>().baseArmor = 35f;
+                FriendlyTurretShortcakeBody.GetComponent<CharacterBody>().baseDamage = 20f;
+                FriendlyTurretShortcakeBody.GetComponent<CharacterBody>().baseRegen = 25f;
+                FriendlyTurretShortcakeBody.GetComponent<CharacterBody>().baseArmor = 60f;
+                FriendlyTurretSnowtimeBody.GetComponent<CharacterBody>().baseDamage = 25f;
+                FriendlyTurretSnowtimeBody.GetComponent<CharacterBody>().baseRegen = 21f;
+                FriendlyTurretSnowtimeBody.GetComponent<CharacterBody>().baseArmor = 30f;
+                // Scaling Stats
+                FriendlyTurretBorboBody.GetComponent<CharacterBody>().levelDamage = 5f;
+                FriendlyTurretBorboBody.GetComponent<CharacterBody>().levelRegen = 4f;
+                FriendlyTurretBorboBody.GetComponent<CharacterBody>().levelArmor = 3f;
+                FriendlyTurretShortcakeBody.GetComponent<CharacterBody>().levelDamage = 4f;
+                FriendlyTurretShortcakeBody.GetComponent<CharacterBody>().levelRegen = 5f;
+                FriendlyTurretShortcakeBody.GetComponent<CharacterBody>().levelArmor = 15f;
+                FriendlyTurretSnowtimeBody.GetComponent<CharacterBody>().levelDamage = 5f;
+                FriendlyTurretSnowtimeBody.GetComponent<CharacterBody>().levelRegen = 5f;
+                FriendlyTurretSnowtimeBody.GetComponent<CharacterBody>().levelArmor = 2f;
+            }
 
             On.RoR2.PurchaseInteraction.GetInteractability += GetInteractabilityFriendlyTurrets;
             // i want die

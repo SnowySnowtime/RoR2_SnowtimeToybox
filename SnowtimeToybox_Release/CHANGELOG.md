@@ -1,3 +1,15 @@
+`1.1.6`
+<details>
+<summary>Update Summary (includes summary of commits by users)</summary>
+
+Snowy Snowtime
+---
+- Removed junk custom tags since ItemAPI is now updated
+- Added configs to enable or disable certain flags on the Friendly Turrets
+- Adjusted the stats of Friendly Turrets if 2R4R is installed
+- Fixed an issue with the Snowtime Turret's interactable, you can now ping it
+</details>
+
 `1.1.5`
 - forgot to update the readme with the preview of the new turret.... actual readme update after itemapi update
 
