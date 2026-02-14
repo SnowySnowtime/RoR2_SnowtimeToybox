@@ -11,7 +11,7 @@ Snowy Snowtime
 </details>
 
 `1.1.5`
-- forgot to update the readme with the preview of the new turret.... actual readme update after itemapi update
+- forgot to update the readme with the preview of the new turret.... actual readme update after tuesday
 
 `1.1.4`
 <details>
