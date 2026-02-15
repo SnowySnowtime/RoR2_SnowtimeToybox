@@ -18,7 +18,7 @@
 		
 		"FRIENDLYTURRET_BORBO_BROKEN_NAME": "broken borbo turret",
 		"FRIENDLYTURRET_BORBO_BROKEN_CONTEXT": "repair borbo turret...",
-		"FRIENDLYTURRET_BORBO_BROKEN_DESCRIPTION": "<style=cEvent>please repair me! it hurt...</style>\n[<style="cIsUtility">SUPPORT</style>: <style=cDeath>COMBAT</style>] <style=cIsUtility>Prioritizes</style> attacking <style="cDeath">High Value Targets</style> with the <style="cIsHealth">largest max health</style>.\nCharges a <style=cIsDamage>massively debuffing</style> <style=cIsUtility>laser blast</style> for <style=cIsDamage>1500% damage</style>.\n<style=cIsDamage>Debuffs</style>: Reduces <style=cIsDamage>armor</style> by <style=cIsDamage>120</style>, <style=cIsDamage>movement</style> and <style=cIsDamage>damage</style> by <style=cIsDamage>-80%</style>, and <style=cIsDamage>prevents jumping</style>.\n<style=cIsUtility>Inherits</style> a curated set of items and <style=cIsDamage>any Elite Equipment</style> from the owner.",
+		"FRIENDLYTURRET_BORBO_BROKEN_DESCRIPTION": "<style=cEvent>please repair me! it hurt...</style>\n[<style="cIsUtility">SUPPORT</style>: <style=cDeath>COMBAT</style>] <style=cIsUtility>Prioritizes</style> attacking <style="cDeath">High Value Targets</style> with the <style="cIsHealth">highest max health</style>.\nCharges a <style=cIsDamage>massively debuffing</style> <style=cIsUtility>laser blast</style> for <style=cIsDamage>1500% damage</style>.\n<style=cIsDamage>Debuffs</style>: Reduces <style=cIsDamage>armor</style> by <style=cIsDamage>120</style>, <style=cIsDamage>movement</style> and <style=cIsDamage>damage</style> by <style=cIsDamage>-80%</style>, and <style=cIsDamage>prevents jumping</style>.\n<style=cIsUtility>Inherits</style> a curated set of items and <style=cIsDamage>any Elite Equipment</style> from the owner.",
 		
 		"FRIENDLYTURRET_SHORTCAKE_NAME": "Strawberry Shortcake Turret",
 		"FRIENDLYTURRET_SHORTCAKE_SUBTITLE": "not so friendlies now...",
@@ -39,7 +39,7 @@
 		
 		"FRIENDLYTURRET_SNOWTIME_BROKEN_NAME": "Broken Snowtime Turret",
 		"FRIENDLYTURRET_SNOWTIME_BROKEN_CONTEXT": "Repair Snowtime Turret",
-		"FRIENDLYTURRET_SNOWTIME_BROKEN_DESCRIPTION": "<style=cEvent>bwaaaa! please repair me!! it hurt...</style>\n[<style=cDeath>COMBAT</style>] <style=cIsUtility>Prioritizes</style> attacking <style="cDeath">High Value Targets</style> with the <style="cIsHealth">largest max health</style>.\nFires high-velocity <style=cIsUtility>Ice Spears</style> for <style=cIsDamage>400% damage</style> which inflicts <style=cIsDamage>Slow</style> and <style=cIsDamage>Frost</style>.\n<style=cIsUtility>Inherits</style> a curated set of items and <style=cIsDamage>any Elite Equipment</style> from the owner.",
+		"FRIENDLYTURRET_SNOWTIME_BROKEN_DESCRIPTION": "<style=cEvent>bwaaaa! please repair me!! it hurt...</style>\n[<style=cDeath>COMBAT</style>] <style=cIsUtility>Prioritizes</style> attacking <style="cDeath">High Value Targets</style> with the <style="cIsHealth">highest max health</style>.\nFires high-velocity <style=cIsUtility>Ice Spears</style> for <style=cIsDamage>400% damage</style> which inflicts <style=cIsDamage>Slow</style> and <style=cIsDamage>Frost</style>.\n<style=cIsUtility>Inherits</style> a curated set of items and <style=cIsDamage>any Elite Equipment</style> from the owner.",
 	
 	}
 }
