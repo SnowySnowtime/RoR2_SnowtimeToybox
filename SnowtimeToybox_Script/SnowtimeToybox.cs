@@ -4,6 +4,7 @@ using BepInEx.Configuration;
 using EntityStates;
 using EntityStates.SnowtimeToybox_FireHaloWeapon;
 using EntityStates.SnowtimeToybox_FriendlyTurret;
+using On.RoR2.CharacterAI;
 using Nautilus.Items;
 using On.RoR2.UI;
 using R2API;
@@ -806,6 +807,52 @@ namespace SnowtimeToybox
             for(int i = 0; i < friendlyTurretList.Count; i++)
             {
                 friendlyTurretListNames[i] = friendlyTurretList[i].GetComponent<SummonMasterBehavior>().masterPrefab.GetComponent<CharacterMaster>().name;
+            }
+
+            // update friendly turret targeting
+            BaseAI.UpdateTargets += TargetHighestHealthCombined;
+        }
+
+        private void TargetHighestHealthCombined(BaseAI.orig_UpdateTargets orig, RoR2.CharacterAI.BaseAI self)
+        {
+            orig(self);
+            CharacterBody body = self.body;
+            string bodyname = body.baseNameToken;
+            Log.Debug(bodyname);
+            if (bodyname.Contains("FRIENDLYTURRET_BORBO") || bodyname.Contains("FRIENDLYTURRET_BORBO"))
+            {
+                Log.Debug("Found appropriate turret AI: " + bodyname);
+                InputBankTest inputBank = body.inputBank;
+                TeamComponent teamComponent = body.teamComponent;
+                if (body == null || inputBank == null || teamComponent == null)
+                {
+                    return;
+                }
+                BullseyeSearch bullseyeSearch = new BullseyeSearch
+                {
+                    searchOrigin = body.corePosition,
+                    searchDirection = inputBank.aimDirection,
+                    teamMaskFilter = TeamMask.GetEnemyTeams(teamComponent.teamIndex),
+                    maxDistanceFilter = 250f,
+                    filterByLoS = true,
+                    sortMode = BullseyeSearch.SortMode.None
+                };
+                bullseyeSearch.RefreshCandidates();
+                HurtBox hurtBox = null;
+                float num = float.NegativeInfinity;
+                foreach (HurtBox result in bullseyeSearch.GetResults())
+                {
+                    float combinedHealth = result.healthComponent.combinedHealth;
+                    if (combinedHealth > num)
+                    {
+                        num = combinedHealth;
+                        hurtBox = result;
+                    }
+                }
+                if ((bool)hurtBox)
+                {
+                    self.currentEnemy.bestHurtBox = hurtBox;
+                }
             }
         }
 
