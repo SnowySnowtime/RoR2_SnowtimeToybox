@@ -30,6 +30,7 @@ using UnityEngine.SceneManagement;
 using UnityHotReloadNS;
 using Path = System.IO.Path;
 using SceneDirector = On.RoR2.SceneDirector;
+using Ror2AggroTools;
 
 [module: UnverifiableCode]
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -126,6 +127,7 @@ namespace SnowtimeToybox
         public static ConfigEntry<bool> FriendlyTurretImmuneVoidDeath { get; set; }
         public static ConfigEntry<bool> FriendlyTurretFallImmunity { get; set; }
         public static ConfigEntry<bool> FriendlyTurretDrone { get; set; }
+        public static ConfigEntry<bool> FriendlyTurretShortcakeAggroType { get; set; }
 
         public void Awake()
         {
@@ -134,6 +136,7 @@ namespace SnowtimeToybox
             Log.Init(Logger);
 
             ToggleSpawnMessages = Config.Bind("Friendly Turret Functions", "Spawn Message", true, "If true, the Friendly Turrets will give a message on every stage they spawn on, for insight on if and which turret spawned. Otherwise, friendly turrets are shy, and are also sad!");
+            FriendlyTurretShortcakeAggroType = Config.Bind("Friendly Turret Functions", "Strawberry Shortcake Aggro Method", false, "If true, the Strawberry Shortcake Turret will spawn with a native increase to its aggro. Else, it only gains aggro for ~0.5s when its main skill fires.");
             FriendlyTurretImmuneVoidDeath = Config.Bind("Friendly Turret Flags", "Void Death Immunity", true, "If true, Friendly Turrets are immune to Void Death (Void Reaver implosions), this is because they are awful at avoiding them even with mods to make allies avoid them, and we get sad when they are detained.");
             FriendlyTurretFallImmunity = Config.Bind("Friendly Turret Flags", "Fall Damage Immunity", true, "If true, Friendly Turrets are immune to fall damage, as navigating some maps can be a little difficult for them. Prevents any unexpected turret deaths, as we cant simply 'replace' them like Engineer can.");
             FriendlyTurretDrone = Config.Bind("Friendly Turret Flags", "Drone", false, "If true, Friendly Turrets are flagged as drones. Probably comes with some oddities.");
@@ -353,6 +356,10 @@ namespace SnowtimeToybox
                     if (!self.HasBuff(ShortcakeTurretBuff))
                     {
                         self.AddBuff(ShortcakeTurretBuff);
+                        if(FriendlyTurretShortcakeAggroType.Value)
+                        {
+                            self.AddBuff(AggroToolsPlugin.priorityAggro);
+                        }
                     }
                 }
             }
@@ -821,7 +828,7 @@ namespace SnowtimeToybox
             string bodyname = body.baseNameToken;
             //Log.Debug(bodyname);
             // Target High Value Targets (enemies with greatest combinedhealth)
-            if (bodyname.Contains("FRIENDLYTURRET_BORBO") || bodyname.Contains("FRIENDLYTURRET_BORBO"))
+            if (bodyname.Contains("FRIENDLYTURRET_BORBO") || bodyname.Contains("FRIENDLYTURRET_SNOWTIME"))
             {
                 //Log.Debug("Found appropriate turret AI: " + bodyname);
                 InputBankTest inputBank = body.inputBank;

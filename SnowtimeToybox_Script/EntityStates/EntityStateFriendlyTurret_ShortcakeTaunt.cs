@@ -1,7 +1,8 @@
 using RoR2;
+using RoR2.Orbs;
+using Ror2AggroTools;
 using SnowtimeToybox;
 using UnityEngine;
-using RoR2.Orbs;
 
 namespace EntityStates.SnowtimeToybox_FriendlyTurret
 {
@@ -13,7 +14,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
 
         public static GameObject tracerEffectPrefab;
 
-        public static float damageCoefficient = 1f;
+        public static float damageCoefficient = 0.7f;
 
         public static float radius = 45f;
 
@@ -26,6 +27,10 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         public override void OnEnter()
         {
             base.OnEnter();
+            if (!SnowtimeToyboxMod.FriendlyTurretShortcakeAggroType.Value)
+            {
+                base.characterBody.AddTimedBuff(AggroToolsPlugin.priorityAggro, 0.5f);
+            }
             duration = baseDuration / attackSpeedStat;
             TeamIndex teamIndex2 = base.gameObject.GetComponent<TeamComponent>().teamIndex;
             HurtBox[] hurtBoxes = new SphereSearch

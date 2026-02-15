@@ -64,6 +64,9 @@
 	  <Reference Include="Nautilus">
 	    <HintPath>_modsupportbins\Nautilus-nstrip.dll</HintPath>
 	  </Reference>
+	  <Reference Include="Ror2AggroTools">
+	    <HintPath>lib\Ror2AggroTools</HintPath>
+	  </Reference>
 	  <Reference Include="UnityHotReload">
 	    <HintPath>lib\UnityHotReload.dll</HintPath>
 	  </Reference>

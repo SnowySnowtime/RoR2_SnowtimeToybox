@@ -1,3 +1,18 @@
+`1.1.7`
+<details>
+<summary>Update Summary (includes summary of commits by users)</summary>
+
+Snowy Snowtime
+---
+- Borbo/Snowtime Turrets now target the highest combined health enemy
+- Updated the description of each turret with its intended role, and removed some unnecessary banter
+- Reduced damage coefficient of Strawberry Shortcake turret from 1 to 0.7 (100% to 70%)
+- the skill was always meant to specifically be used to taunt and aggro enemies, and i left its damage too high after testing it on release	
+- Strawberry Shortcake turret has a (configurable) way of gaining aggro; change it to however you may prefer in the config
+- Added RoR2AggroTools as a dependency (RATS) for Strawberry Shortcake Turret
+- its made for ralsei but it seems to be fine to use as a general library so i dont care
+</details>
+
 `1.1.6`
 <details>
 <summary>Update Summary (includes summary of commits by users)</summary>

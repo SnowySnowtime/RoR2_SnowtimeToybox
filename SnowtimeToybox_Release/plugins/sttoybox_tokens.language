@@ -18,17 +18,17 @@
 		
 		"FRIENDLYTURRET_BORBO_BROKEN_NAME": "broken borbo turret",
 		"FRIENDLYTURRET_BORBO_BROKEN_CONTEXT": "repair borbo turret...",
-		"FRIENDLYTURRET_BORBO_BROKEN_DESCRIPTION": "<style=cEvent>please repair me! it hurt...</style>\nCharges a <style=cIsDamage>massively debuffing</style> <style=cIsUtility>laser blast</style> for <style=cIsDamage>1500% damage</style>.\n<style=cIsDamage>Debuffs</style>: Reduces <style=cIsDamage>armor</style> by <style=cIsDamage>120</style>, <style=cIsDamage>movement</style> and <style=cIsDamage>damage</style> by <style=cIsDamage>-80%</style>, and <style=cIsDamage>prevents jumping</style>.\n<style=cIsUtility>Inherits</style> a curated set of items and <style=cIsDamage>any Elite Equipment</style> from the owner.",
+		"FRIENDLYTURRET_BORBO_BROKEN_DESCRIPTION": "<style=cEvent>please repair me! it hurt...</style>\n[<style="cIsUtility">SUPPORT</style>: <style=cDeath>COMBAT</style>] <style=cIsUtility>Prioritizes</style> attacking <style="cDeath">High Value Targets</style> with the <style="cIsHealth">largest max health</style>.\nCharges a <style=cIsDamage>massively debuffing</style> <style=cIsUtility>laser blast</style> for <style=cIsDamage>1500% damage</style>.\n<style=cIsDamage>Debuffs</style>: Reduces <style=cIsDamage>armor</style> by <style=cIsDamage>120</style>, <style=cIsDamage>movement</style> and <style=cIsDamage>damage</style> by <style=cIsDamage>-80%</style>, and <style=cIsDamage>prevents jumping</style>.\n<style=cIsUtility>Inherits</style> a curated set of items and <style=cIsDamage>any Elite Equipment</style> from the owner.",
 		
 		"FRIENDLYTURRET_SHORTCAKE_NAME": "Strawberry Shortcake Turret",
 		"FRIENDLYTURRET_SHORTCAKE_SUBTITLE": "not so friendlies now...",
 		"FRIENDLYTURRET_SHORTCAKE_FUNCTION": "Highly resilient Walking Turret which taunts and retaliates against enemy attacks.",
 		"FRIENDLYTURRET_SHORTCAKE_DESCRIPTION": "Highly resilient Walking Turret which taunts and retaliates against enemy attacks.",
-		"FRIENDLYTURRET_SHORTCAKE_SKILL_DESCRIPTION": "Attacks <style=cIsDamage>all nearby enemies</style> within <style=cIsUtility>45m</style> for <style=cIsDamage>100% damage</style>. \nWhen attacked, retaliate; firing <style=cDeath>strawberries </style>at <style=cIsDamage>all nearby enemies</style> within <style=cIsUtility>45m</style> for <style=cIsDamage>300% damage</style>. <style=cDeath>Does not retaliate against damage dealt by debuffs</style>.",
+		"FRIENDLYTURRET_SHORTCAKE_SKILL_DESCRIPTION": "Attacks <style=cIsDamage>all nearby enemies</style> within <style=cIsUtility>45m</style> for <style=cIsDamage>70% damage</style>. \nWhen directly attacked, <style=cIsDamage>retaliate</style>; firing <style=cDeath>strawberries </style>at <style=cIsDamage>all nearby enemies</style> within <style=cIsUtility>45m</style> for <style=cIsDamage>300% damage</style>.",
 		
 		"FRIENDLYTURRET_SHORTCAKE_BROKEN_NAME": "Broken Strawberry Shortcake Turret",
 		"FRIENDLYTURRET_SHORTCAKE_BROKEN_CONTEXT": "Repair Strawberry Shortcake Turret",
-		"FRIENDLYTURRET_SHORTCAKE_BROKEN_DESCRIPTION": "<style=cEvent>uwaah! please repair me!! it hurt...</style>\nAttacks <style=cIsDamage>all nearby enemies</style> within <style=cIsUtility>45m</style> for <style=cIsDamage>100% damage</style>. \nWhen attacked, retaliate; firing <style=cDeath>strawberries </style>at <style=cIsDamage>all nearby enemies</style> within <style=cIsUtility>45m</style> for <style=cIsDamage>300% damage</style>. <style=cDeath>Does not retaliate against damage dealt by debuffs</style>.\n<style=cIsUtility>Inherits</style> a curated set of items and <style=cIsDamage>any Elite Equipment</style> from the owner.",
+		"FRIENDLYTURRET_SHORTCAKE_BROKEN_DESCRIPTION": "<style=cEvent>uwaah! please repair me!! it hurt...</style>\n[<style=cIsUtility>SUPPORT</style>: <style=cIsUtility>DEFENSE</style>] This turret smells sweet with <style=cDeath>strawberries</style>, enticing enemies to<style=cIsUtility> prioritize attacking it</style>.\nAttacks <style=cIsDamage>all nearby enemies</style> within <style=cIsUtility>45m</style> for <style=cIsDamage>70% damage</style>. \nWhen directly attacked, <style=cIsDamage>retaliate</style>; firing <style=cDeath>strawberries </style>at <style=cIsDamage>all nearby enemies</style> within <style=cIsUtility>45m</style> for <style=cIsDamage>300% damage</style>.\n<style=cIsUtility>Inherits</style> a curated set of items and <style=cIsDamage>any Elite Equipment</style> from the owner.",
 		
 		
 		"FRIENDLYTURRET_SNOWTIME_NAME": "Snowtime Turret",
@@ -39,7 +39,7 @@
 		
 		"FRIENDLYTURRET_SNOWTIME_BROKEN_NAME": "Broken Snowtime Turret",
 		"FRIENDLYTURRET_SNOWTIME_BROKEN_CONTEXT": "Repair Snowtime Turret",
-		"FRIENDLYTURRET_SNOWTIME_BROKEN_DESCRIPTION": "<style=cEvent>bwaaaa! please repair me!! it hurt...</style>\nFires high-velocity <style=cIsUtility>Ice Spears</style> for <style=cIsDamage>400% damage</style> which inflicts <style=cIsDamage>Slow</style> and <style=cIsDamage>Frost</style>.\n<style=cIsUtility>Inherits</style> a curated set of items and <style=cIsDamage>any Elite Equipment</style> from the owner.",
+		"FRIENDLYTURRET_SNOWTIME_BROKEN_DESCRIPTION": "<style=cEvent>bwaaaa! please repair me!! it hurt...</style>\n[<style=cDeath>COMBAT</style>] <style=cIsUtility>Prioritizes</style> attacking <style="cDeath">High Value Targets</style> with the <style="cIsHealth">largest max health</style>.\nFires high-velocity <style=cIsUtility>Ice Spears</style> for <style=cIsDamage>400% damage</style> which inflicts <style=cIsDamage>Slow</style> and <style=cIsDamage>Frost</style>.\n<style=cIsUtility>Inherits</style> a curated set of items and <style=cIsDamage>any Elite Equipment</style> from the owner.",
 	
 	}
 }

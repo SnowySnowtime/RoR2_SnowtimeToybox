@@ -1,6 +1,6 @@
 {
   "name": "SnowtimeToybox",
-  "version_number": "1.1.6",
+  "version_number": "1.1.7",
   "website_url": "",
   "description": "Skills, Difficulty, and Skin(s) for friends(eventually) and myself. Friendly Turret update!!!",
   "dependencies": [
@@ -16,6 +16,7 @@
     "RiskofThunder-R2API_Skills-1.0.4",
     "RiskofThunder-R2API_Skins-1.4.4",
     "RiskofThunder-R2API_Sound-1.0.3",
+    "RiskOfBrainrot-RATS-0.1.1",
 	"Smooth_Salad-ShaderSwapper-1.0.1",
     "mwmw-DynamicSkinsFix-1.0.9"
   ]
