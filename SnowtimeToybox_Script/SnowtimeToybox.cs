@@ -360,6 +360,8 @@ namespace SnowtimeToybox
         {
             if (self.teamComponent.teamIndex == TeamIndex.Player)
             {
+                if (!self.baseNameToken.Contains("FRIENDLYTURRET_")) return;
+
                 if (self.baseNameToken.Contains("FRIENDLYTURRET_SHORTCAKE"))
                 {
                     if (!self.HasBuff(ShortcakeTurretBuff))
@@ -369,6 +371,14 @@ namespace SnowtimeToybox
                         {
                             self.AddBuff(AggroToolsPlugin.priorityAggro);
                         }
+                    }
+                }
+
+                if (self.baseNameToken.Contains("FRIENDLYTURRET_ACANTHI"))
+                {
+                    if (!self.HasBuff(AcanthiTurretBuff))
+                    {
+                        self.AddBuff(AcanthiTurretBuff);
                     }
                 }
             }
@@ -872,23 +882,11 @@ namespace SnowtimeToybox
             orig(self);
             CharacterBody body = self.body;
             string bodyname = body.baseNameToken;
-            float target_maxdist = 100f;
+            float target_maxdist = 250f;
             //Log.Debug(bodyname);
             // Target High Value Targets (enemies with greatest combinedhealth)
             if (bodyname.Contains("FRIENDLYTURRET_BORBO") || bodyname.Contains("FRIENDLYTURRET_SNOWTIME") || bodyname.Contains("FRIENDLYTURRET_ACANTHI"))
             {
-                if (bodyname.Contains("FRIENDLYTURRET_BORBO"))
-                {
-                    target_maxdist = 250f;
-                }
-                if (bodyname.Contains("FRIENDLYTURRET_SNOWTIME"))
-                {
-                    target_maxdist = 125f;
-                }
-                if (bodyname.Contains("FRIENDLYTURRET_ACANTHI"))
-                {
-                    target_maxdist = 80f;
-                }
                 //Log.Debug("Found appropriate turret AI: " + bodyname);
                 InputBankTest inputBank = body.inputBank;
                 TeamComponent teamComponent = body.teamComponent;
@@ -1042,12 +1040,16 @@ namespace SnowtimeToybox
 
         public static BuffDef BorboTurretDebuff;
         public static BuffDef ShortcakeTurretBuff;
+        public static BuffDef AcanthiTurretBuff;
+        public static BuffDef AcanthiTurretDebuff;
 
         public void AddCustomBuffs()
         {
             Log.Debug("Adding SnowtimeToybox Custom BuffDefs...");
             BorboTurretDebuff = _stcharacterAssetBundle.LoadAsset<BuffDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/Buff/BorboTurretDebuff.asset");
             ShortcakeTurretBuff = _stcharacterAssetBundle.LoadAsset<BuffDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Shortcake/Buff/ShortcakeTurretBuff.asset");
+            AcanthiTurretBuff = _stcharacterAssetBundle.LoadAsset<BuffDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Acanthi/Buff/VampiricDesires.asset");
+            AcanthiTurretDebuff = _stcharacterAssetBundle.LoadAsset<BuffDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Acanthi/Buff/VampiricBleeding.asset");
             Log.Debug(BorboTurretDebuff);
             Log.Debug(ShortcakeTurretBuff);
             

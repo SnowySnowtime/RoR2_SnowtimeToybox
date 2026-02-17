@@ -3,6 +3,8 @@
 using EntityStates;
 using EntityStates.EngiTurret.EngiTurretWeapon;
 using HG;
+using System;
+using R2API;
 using RoR2;
 using SnowtimeToybox;
 using UnityEngine;
@@ -59,7 +61,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         public string attackSoundPlayString = "Play_HWLocust_Fire";
         public string attackSoundStopString = "Stop_HWLocust_Fire";
 
-        public float damageCoefficient = 2f;
+        public float damageCoefficient = 1f;
 
         public float procCoefficient = 0.4f;
 
@@ -104,11 +106,13 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         private static int FireLaserStateHash = Animator.StringToHash("acanthi_firing7s");
         private static int FireLaser1StateHash = Animator.StringToHash("acanthi_firingloop");
         private static int FireLaser2StateHash = Animator.StringToHash("acanthi_firingend");
+        private float firingTime;
 
         public override void Reset()
         {
             base.Reset();
             fireStopwatch = 0f;
+            firingTime = 0f;
             newestRaycastHitPoint = null;
             previousRaycastHitPoint = null;
             modelTransform = null;
@@ -129,6 +133,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             Util.PlaySound(attackSoundPlayString, base.gameObject);
             PlayAnimation("Gesture", FireLaserStateHash);
             fireStopwatch = 0f;
+            firingTime = 0f;
             modelTransform = GetModelTransform();
             if (!modelTransform)
             {
@@ -144,7 +149,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             {
                 if (!EffectManager.ShouldUsePooledEffect(laserPrefab))
                 {
-                    laserVfxInstance = Object.Instantiate(laserPrefab, transform.position, transform.rotation);
+                    laserVfxInstance = UnityEngine.Object.Instantiate(laserPrefab, transform.position, transform.rotation);
                 }
                 else
                 {
@@ -206,8 +211,15 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             {
                 laserRay = GetLaserRay();
                 fireStopwatch += Time.fixedDeltaTime;
+                firingTime += Time.fixedDeltaTime;
+                if (firingTime > 7f)
+                {
+                    firingTime = 7f;
+                }
+                float numfirefreq = Math.Clamp((0.7f / (1f + (firingTime / 7f))), 0.35f, 0.6f);
+                procCoefficient = Math.Clamp((firingTime / 14f), 0.05f, 0.5f);
                 float num = fireFrequency;
-                float num2 = 0.3f / num;
+                float num2 = numfirefreq / num;
                 if (fireStopwatch > num2)
                 {
                     fireStopwatch = 0f;
@@ -217,6 +229,9 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 {
                     outer.SetNextState(GetNextState());
                 }
+                //Log.Debug(firingTime);
+                //Log.Debug("Potential procCoefficient: " + (Math.Clamp((firingTime / 21f), 0.05f, 0.33f) ) );
+                //Log.Debug("Potential fireFrequency:" + (Math.Clamp((0.6f / ( 1f + (firingTime/10f) ) ), 0.36f, 0.6f) ) );
             }
         }
 
@@ -238,12 +253,6 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         public override InterruptPriority GetMinimumInterruptPriority()
         {
             return InterruptPriority.Skill;
-        }
-
-        public virtual void ModifyBullet(BulletAttack bulletAttack)
-        {
-            bulletAttack.damageType |= (DamageTypeCombo)DamageType.SlowOnHit;
-            bulletAttack.damageType.damageSource = DamageSource.Primary;
         }
 
         public virtual bool ShouldFireLaser()
@@ -281,8 +290,8 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 bulletAttack.minSpread = minSpread;
                 bulletAttack.maxSpread = maxSpread;
                 bulletAttack.bulletCount = 1u;
-                bulletAttack.damage = damageCoefficient * damageStat / fireFrequency;
-                bulletAttack.procCoefficient = procCoefficient / fireFrequency;
+                bulletAttack.damage = damageCoefficient * damageStat + attackSpeedStat;
+                bulletAttack.procCoefficient = procCoefficient;
                 bulletAttack.force = force;
                 bulletAttack.muzzleName = targetMuzzle;
                 bulletAttack.hitEffectPrefab = null;
@@ -291,7 +300,9 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 bulletAttack.radius = 0f;
                 bulletAttack.maxDistance = maxDistance;
                 bulletAttack.hitCallback = hitCallback;
-                ModifyBullet(bulletAttack);
+                bulletAttack.damageType = (DamageTypeCombo)DamageType.Generic;
+                bulletAttack.damageType.damageSource = DamageSource.Primary;
+                bulletAttack.AddModdedDamageType(SnowtimeToybox.Buffs.AcanthiBleeding.Acanthi_ButHeresTheBleeder);
                 bulletAttack.Fire();
                 newestRaycastHitPoint = bulletEndPos;
                 bulletEndPos = null;
