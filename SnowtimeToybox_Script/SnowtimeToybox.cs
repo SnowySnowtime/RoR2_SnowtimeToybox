@@ -877,17 +877,17 @@ namespace SnowtimeToybox
             // Target High Value Targets (enemies with greatest combinedhealth)
             if (bodyname.Contains("FRIENDLYTURRET_BORBO") || bodyname.Contains("FRIENDLYTURRET_SNOWTIME") || bodyname.Contains("FRIENDLYTURRET_ACANTHI"))
             {
-                switch (bodyname)
+                if (bodyname.Contains("FRIENDLYTURRET_BORBO"))
                 {
-                    case "FRIENDLYTURRET_BORBO_NAME": // Borbo Turret Selected
-                        target_maxdist = 250f;
-                        break;
-                    case "FRIENDLYTURRET_SNOWTIME_NAME": // Snowtime Turret Selected
-                        target_maxdist = 125f;
-                        break;
-                    case "FRIENDLYTURRET_ACANTHI_NAME": // Snowtime Turret Selected
-                        target_maxdist = 80f;
-                        break;
+                    target_maxdist = 250f;
+                }
+                if (bodyname.Contains("FRIENDLYTURRET_SNOWTIME"))
+                {
+                    target_maxdist = 125f;
+                }
+                if (bodyname.Contains("FRIENDLYTURRET_ACANTHI"))
+                {
+                    target_maxdist = 80f;
                 }
                 //Log.Debug("Found appropriate turret AI: " + bodyname);
                 InputBankTest inputBank = body.inputBank;
