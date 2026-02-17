@@ -37,16 +37,18 @@ namespace SnowtimeToybox.FriendlyTurretChecks
                 switch (purchaseInteraction.displayNameToken)
                 {
                     case "FRIENDLYTURRET_BORBO_BROKEN_NAME": // Borbo Turret Selected
-                        Chat.SendBroadcastChat(new Chat.SimpleChatMessage() { baseToken = "<style=cEvent><color=#A8D3FF>Friendly Turret: pleas repair me, i will update 2r4r if you do..!</color></style>" });
+                        Chat.SendBroadcastChat(new Chat.SimpleChatMessage() { baseToken = "<style=cEvent><color=#A8B1FF>Friendly Turret: pleas repair me, i will update 2r4r if you do..!</color></style>" });
                         break;  
                     case "FRIENDLYTURRET_SHORTCAKE_BROKEN_NAME": // Strawberry Shortcake Turret Selected
-                        Chat.SendBroadcastChat(new Chat.SimpleChatMessage() { baseToken = "<style=cEvent><color=#A8D3FF>Friendly Turret: uwaah! pleas repair me, i have a cake for you if you do..!</color></style>" });
+                        Chat.SendBroadcastChat(new Chat.SimpleChatMessage() { baseToken = "<style=cEvent><color=#D3A8FF>Friendly Turret: uwaah! pleas repair me, i have a cake for you if you do..!</color></style>" });
                         break;
-                    case "FRIENDLYTURRET_SNOWTIME_BROKEN_NAME": // Strawberry Shortcake Turret Selected
-                        Chat.SendBroadcastChat(new Chat.SimpleChatMessage() { baseToken = "<style=cEvent><color=#A8D3FF>Friendly Turret: bwaaaa! pleas repair me, i have some ice for you if you do..!</color></style>" });
+                    case "FRIENDLYTURRET_SNOWTIME_BROKEN_NAME": // Snowtime Turret Selected
+                        Chat.SendBroadcastChat(new Chat.SimpleChatMessage() { baseToken = "<style=cEvent><color=#A8D3FF>Friendly Turret: bwaaaa! pleas repair me, i have a snowcone for you if you do..!</color></style>" });
+                        break;
+                    case "FRIENDLYTURRET_ACANTHI_BROKEN_NAME": // Snowtime Turret Selected
+                        Chat.SendBroadcastChat(new Chat.SimpleChatMessage() { baseToken = "<style=cEvent><color=#FF9C9C>Friendly Turret: hjelp! pleas repair me, i have a flower for you if you do..!</color></style>" });
                         break;
                 }
-                
             }
         }
 
@@ -54,7 +56,24 @@ namespace SnowtimeToybox.FriendlyTurretChecks
         public void OnDetailedPurchase(CostTypeDef.PayCostContext payCostContext, CostTypeDef.PayCostResults payCostResult)
         {
             purchaseInteraction.SetAvailable(false);
-            Chat.SendBroadcastChat(new Chat.SimpleChatMessage() { baseToken = "<style=cEvent><color=#30ff78>Thank you! We are friends now!</color></style>" });
+            if (SnowtimeToyboxMod.ToggleSpawnMessages.Value)
+            {
+                switch (purchaseInteraction.displayNameToken)
+                {
+                    case "FRIENDLYTURRET_BORBO_BROKEN_NAME": // Borbo Turret Selected
+                        Chat.SendBroadcastChat(new Chat.SimpleChatMessage() { baseToken = "<style=cEvent><color=#30ff78>borbo turret: Thank you! We are friends now!</color></style>" });
+                        break;
+                    case "FRIENDLYTURRET_SHORTCAKE_BROKEN_NAME": // Strawberry Shortcake Turret Selected
+                        Chat.SendBroadcastChat(new Chat.SimpleChatMessage() { baseToken = "<style=cEvent><color=#30ff78>Strawberry Shortcake Turret: Thank you friend! Let's take ibuprofen together? No? Aw. I'll defend you instead!</color></style>" });
+                        break;
+                    case "FRIENDLYTURRET_SNOWTIME_BROKEN_NAME": // Snowtime Turret Selected
+                        Chat.SendBroadcastChat(new Chat.SimpleChatMessage() { baseToken = "<style=cEvent><color=#30ff78>Snowtime Turret: Thank you! We are friends now!</color></style>" });
+                        break;
+                    case "FRIENDLYTURRET_ACANTHI_BROKEN_NAME": // Acanthi Turret Selected
+                        Chat.SendBroadcastChat(new Chat.SimpleChatMessage() { baseToken = "<style=cEvent><color=#30ff78>Acanthi Turret: Thank you! We are friends now! :soyeyes:</color></style>" });
+                        break;
+                }
+            }
             EffectManager.SpawnEffect(turretUseEffect, new EffectData()
             {
                 origin = gameObject.transform.position,

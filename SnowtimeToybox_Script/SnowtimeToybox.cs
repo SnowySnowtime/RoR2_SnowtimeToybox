@@ -78,6 +78,8 @@ namespace SnowtimeToybox
         public static SkillDef FriendlyTurretShortcakeUtilSkillDef;
         public static SkillFamily FriendlyTurretSnowtimeUtilSkillFamily;
         public static SkillDef FriendlyTurretSnowtimeUtilSkillDef;
+        public static SkillFamily FriendlyTurretAcanthiUtilSkillFamily;
+        public static SkillDef FriendlyTurretAcanthiUtilSkillDef;
         // borbo turret
         public static DroneDef FriendlyTurretBorboDef;
         public static InteractableSpawnCard FriendlyTurretBorboIsc;
@@ -95,7 +97,6 @@ namespace SnowtimeToybox
         public static GameObject FriendlyTurretShortcakeMaster;
         public static GameObject FriendlyTurretShortcakeBroken;
         // snowtime turret
-        // Strawberry Shortcake Turret
         public static DroneDef FriendlyTurretSnowtimeDef;
         public static InteractableSpawnCard FriendlyTurretSnowtimeIsc;
         public static SkillFamily FriendlyTurretSnowtimeSkillFamily;
@@ -103,6 +104,14 @@ namespace SnowtimeToybox
         public static GameObject FriendlyTurretSnowtimeBody;
         public static GameObject FriendlyTurretSnowtimeMaster;
         public static GameObject FriendlyTurretSnowtimeBroken;
+        // acanthi turret
+        public static DroneDef FriendlyTurretAcanthiDef;
+        public static InteractableSpawnCard FriendlyTurretAcanthiIsc;
+        public static SkillFamily FriendlyTurretAcanthiSkillFamily;
+        public static SkillDef FriendlyTurretAcanthiSkillDef;
+        public static GameObject FriendlyTurretAcanthiBody;
+        public static GameObject FriendlyTurretAcanthiMaster;
+        public static GameObject FriendlyTurretAcanthiBroken;
         //public static DroneDef FriendlyTurretTestDroneDef;
 
         public static List<GameObject> friendlyTurretList = [];
@@ -726,6 +735,25 @@ namespace SnowtimeToybox
             ContentAddition.AddEffect(SnowtimeCryoGaussFire.projectileGhostObject);
             ContentAddition.AddEffect(SnowtimeCryoGaussFire.projectileExplosionObject);
 
+            // add snowtime turret
+            Log.Debug("Defining Friendly Turret based on Acanthi (Awesome Person!)");
+            FriendlyTurretAcanthiBody = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Acanthi/_FriendlyTurretAcanthiBody.prefab");
+            FriendlyTurretAcanthiMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Acanthi/_FriendlyTurretAcanthiMaster.prefab");
+            FriendlyTurretAcanthiSkillFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Acanthi/Skills/AcanthiPrimaryFamily.asset");
+            FriendlyTurretAcanthiSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Acanthi/Skills/AcanthiLaser.asset");
+            FriendlyTurretAcanthiUtilSkillFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Acanthi/Skills/AcanthiUtilityFamily.asset");
+            FriendlyTurretAcanthiUtilSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Acanthi/Skills/AcanthiShenanigans.asset");
+            // I am being PEDANTIC but i dont care!
+            FriendlyTurretAcanthiSkillDef.activationState = new SerializableEntityStateType(typeof(FireAcanthiBeam));
+            FriendlyTurretAcanthiUtilSkillDef.activationState = new SerializableEntityStateType(typeof(Shenanigans));
+            FriendlyTurretAcanthiDef = _stcharacterAssetBundle.LoadAsset<DroneDef>(@"Assets/AcanthiMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Acanthi/_FriendlyTurretAcanthi.asset");
+            ContentAddition.AddEntityState(typeof(FireAcanthiBeam), out _);
+            ContentAddition.AddBody(FriendlyTurretAcanthiBody);
+            ContentAddition.AddMaster(FriendlyTurretAcanthiMaster);
+            ContentAddition.AddSkillFamily(FriendlyTurretAcanthiSkillFamily);
+            ContentAddition.AddSkillDef(FriendlyTurretAcanthiSkillDef);
+            ContentAddition.AddEffect(FireAcanthiBeam.laserObject);
+
             ContentAddition.AddEntityState(typeof(Shenanigans), out _);
 
             // Friendly Turret Interactables
@@ -733,46 +761,56 @@ namespace SnowtimeToybox
             FriendlyTurretBorboBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/_mdlFriendlyTurretBorboBroken.prefab");
             FriendlyTurretShortcakeBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Shortcake/_mdlFriendlyTurretShortcakeBroken.prefab");
             FriendlyTurretSnowtimeBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Snowtime/_mdlFriendlyTurretSnowtimeBroken.prefab");
+            FriendlyTurretAcanthiBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Acanthi/_mdlFriendlyTurretAcanthiBroken.prefab");
             BorboCheck borbocheck = FriendlyTurretBorboBroken.AddComponent<BorboCheck>();
             BorboCheck shortcakecheck = FriendlyTurretShortcakeBroken.AddComponent<BorboCheck>();
             BorboCheck snowtimecheck = FriendlyTurretSnowtimeBroken.AddComponent<BorboCheck>();
+            BorboCheck acanthicheck = FriendlyTurretAcanthiBroken.AddComponent<BorboCheck>();
             PurchaseInteraction borbointeraction = FriendlyTurretBorboBroken.GetComponent<PurchaseInteraction>();
             PurchaseInteraction shortcakeinteraction = FriendlyTurretShortcakeBroken.GetComponent<PurchaseInteraction>();
             PurchaseInteraction snowtimeinteraction = FriendlyTurretSnowtimeBroken.GetComponent<PurchaseInteraction>();
+            PurchaseInteraction acanthiinteraction = FriendlyTurretAcanthiBroken.GetComponent<PurchaseInteraction>();
             borbocheck.purchaseInteraction = borbointeraction;
             shortcakecheck.purchaseInteraction = shortcakeinteraction;
             snowtimecheck.purchaseInteraction = snowtimeinteraction;
+            acanthicheck.purchaseInteraction = acanthiinteraction;
 
             // Add Prefabs
             // TODO: Add these to the prefabs directly (so we dont have to add them here)
             FriendlyTurretBorboBody.AddComponent<EquipmentSlot>();
             FriendlyTurretShortcakeBody.AddComponent<EquipmentSlot>();
             FriendlyTurretSnowtimeBody.AddComponent<EquipmentSlot>();
+            FriendlyTurretAcanthiBody.AddComponent<EquipmentSlot>();
 
             var borboInheritance = FriendlyTurretBorboMaster.AddComponent<FriendlyTurretInheritance>();
             var shortcakeInheritance = FriendlyTurretShortcakeMaster.AddComponent<FriendlyTurretInheritance>();
             var snowtimeInheritance = FriendlyTurretSnowtimeMaster.AddComponent<FriendlyTurretInheritance>();
+            var acanthiInheritance = FriendlyTurretAcanthiMaster.AddComponent<FriendlyTurretInheritance>();
             borboInheritance.whitelistedTag = "FriendTurret_Borbo_Whitelist";
             shortcakeInheritance.whitelistedTag = "FriendTurret_Shortcake_Whitelist";
             snowtimeInheritance.whitelistedTag = "FriendTurret_Snowtime_Whitelist";
+            acanthiInheritance.whitelistedTag = "FriendTurret_Snowtime_Whitelist";
 
             if (FriendlyTurretImmuneVoidDeath.Value)
             {
                 FriendlyTurretBorboBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
                 FriendlyTurretShortcakeBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
                 FriendlyTurretSnowtimeBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
+                FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
             }
             if (FriendlyTurretFallImmunity.Value)
             {
                 FriendlyTurretBorboBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
                 FriendlyTurretShortcakeBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
                 FriendlyTurretSnowtimeBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
+                FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
             }
             if (FriendlyTurretDrone.Value)
             {
                 FriendlyTurretBorboBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.Drone;
                 FriendlyTurretShortcakeBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.Drone;
                 FriendlyTurretSnowtimeBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.Drone;
+                FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.Drone;
             }
 
             if(riskierLoaded)
@@ -787,6 +825,9 @@ namespace SnowtimeToybox
                 FriendlyTurretSnowtimeBody.GetComponent<CharacterBody>().baseDamage = 25f;
                 FriendlyTurretSnowtimeBody.GetComponent<CharacterBody>().baseRegen = 21f;
                 FriendlyTurretSnowtimeBody.GetComponent<CharacterBody>().baseArmor = 30f;
+                FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().baseDamage = 25f;
+                FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().baseRegen = 21f;
+                FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().baseArmor = 30f;
                 // Scaling Stats
                 FriendlyTurretBorboBody.GetComponent<CharacterBody>().levelDamage = 5f;
                 FriendlyTurretBorboBody.GetComponent<CharacterBody>().levelRegen = 4f;
@@ -797,6 +838,9 @@ namespace SnowtimeToybox
                 FriendlyTurretSnowtimeBody.GetComponent<CharacterBody>().levelDamage = 5f;
                 FriendlyTurretSnowtimeBody.GetComponent<CharacterBody>().levelRegen = 5f;
                 FriendlyTurretSnowtimeBody.GetComponent<CharacterBody>().levelArmor = 2f;
+                FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().levelDamage = 5f;
+                FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().levelRegen = 5f;
+                FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().levelArmor = 2f;
             }
 
             On.RoR2.PurchaseInteraction.GetInteractability += GetInteractabilityFriendlyTurrets;
@@ -804,10 +848,12 @@ namespace SnowtimeToybox
             ContentAddition.AddNetworkedObject(FriendlyTurretBorboBroken);
             ContentAddition.AddNetworkedObject(FriendlyTurretShortcakeBroken);
             ContentAddition.AddNetworkedObject(FriendlyTurretSnowtimeBroken);
+            ContentAddition.AddNetworkedObject(FriendlyTurretAcanthiBroken);
             ContentAddition.AddEffect(BorboCheck.turretUseEffect);
             friendlyTurretList.Add(FriendlyTurretBorboBroken);
             friendlyTurretList.Add(FriendlyTurretShortcakeBroken);
             friendlyTurretList.Add(FriendlyTurretSnowtimeBroken);
+            friendlyTurretList.Add(FriendlyTurretAcanthiBroken);
             Log.Debug(friendlyTurretList);
             
             friendlyTurretListNames = new string[friendlyTurretList.Count];
@@ -826,10 +872,23 @@ namespace SnowtimeToybox
             orig(self);
             CharacterBody body = self.body;
             string bodyname = body.baseNameToken;
+            float target_maxdist = 100f;
             //Log.Debug(bodyname);
             // Target High Value Targets (enemies with greatest combinedhealth)
-            if (bodyname.Contains("FRIENDLYTURRET_BORBO") || bodyname.Contains("FRIENDLYTURRET_SNOWTIME"))
+            if (bodyname.Contains("FRIENDLYTURRET_BORBO") || bodyname.Contains("FRIENDLYTURRET_SNOWTIME") || bodyname.Contains("FRIENDLYTURRET_ACANTHI"))
             {
+                switch (bodyname)
+                {
+                    case "FRIENDLYTURRET_BORBO_NAME": // Borbo Turret Selected
+                        target_maxdist = 250f;
+                        break;
+                    case "FRIENDLYTURRET_SNOWTIME_NAME": // Snowtime Turret Selected
+                        target_maxdist = 125f;
+                        break;
+                    case "FRIENDLYTURRET_ACANTHI_NAME": // Snowtime Turret Selected
+                        target_maxdist = 80f;
+                        break;
+                }
                 //Log.Debug("Found appropriate turret AI: " + bodyname);
                 InputBankTest inputBank = body.inputBank;
                 TeamComponent teamComponent = body.teamComponent;
@@ -842,7 +901,7 @@ namespace SnowtimeToybox
                     searchOrigin = body.corePosition,
                     searchDirection = inputBank.aimDirection,
                     teamMaskFilter = TeamMask.GetEnemyTeams(teamComponent.teamIndex),
-                    maxDistanceFilter = 250f,
+                    maxDistanceFilter = target_maxdist,
                     filterByLoS = true,
                     sortMode = BullseyeSearch.SortMode.None
                 };
