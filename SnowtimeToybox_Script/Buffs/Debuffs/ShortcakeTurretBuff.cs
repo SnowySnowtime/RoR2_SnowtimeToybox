@@ -54,7 +54,7 @@ namespace SnowtimeToybox.Buffs
                     //Log.Debug("Shortcake Turret Retaliation Targeting Enemy!");
                     SnowtimeOrbs snowtimeOrb = new SnowtimeOrbs();
                     snowtimeOrb.attacker = pookie.gameObject;
-                    snowtimeOrb.speed = 300f;
+                    snowtimeOrb.speed = 180f;
                     snowtimeOrb.snowtimeOrbType = SnowtimeOrbs.OrbTypes.ShortcakeRetaliate;
                     snowtimeOrb.damageValue = damageValue;
                     snowtimeOrb.isCrit = isCrit;
@@ -69,9 +69,9 @@ namespace SnowtimeToybox.Buffs
                     //Log.Debug("Shortcake Turret Retaliation Targeting Ally!");
                     SnowtimeOrbs snowtimeOrb = new SnowtimeOrbs();
                     snowtimeOrb.attacker = pookie.gameObject;
-                    snowtimeOrb.speed = 300f;
+                    snowtimeOrb.speed = 180f;
                     snowtimeOrb.snowtimeOrbType = SnowtimeOrbs.OrbTypes.ShortcakeRetaliateFriendly;
-                    snowtimeOrb.damageValue = damageValue / 3f;
+                    snowtimeOrb.damageValue = damageValue / 10f;
                     snowtimeOrb.isCrit = false;
                     snowtimeOrb.origin = damageInfo.position;
                     snowtimeOrb.range = 45f;

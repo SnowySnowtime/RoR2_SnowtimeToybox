@@ -70,7 +70,7 @@ namespace SnowtimeToybox
                     isElectric = false;
                     break;
                 case OrbTypes.ShortcakeRetaliateFriendly:
-                    orbasset = orbShortcakeRetaliatePrefab;
+                    orbasset = orbShortcakeRetaliateFriendlyPrefab;
                     isHealing = true;
                     isElectric = false;
                     break;
@@ -100,7 +100,7 @@ namespace SnowtimeToybox
                 }
                 else
                 {
-                    healthComponent.Heal(damageValue, procChainMask);
+                    healthComponent.Heal( (target.healthComponent.fullHealth * 0.025f) + damageValue, procChainMask);
                 }
                 damageInfo.attacker = attacker;
                 damageInfo.inflictor = inflictor;
