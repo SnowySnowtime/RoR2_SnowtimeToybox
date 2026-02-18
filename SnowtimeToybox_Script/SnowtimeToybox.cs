@@ -824,7 +824,7 @@ namespace SnowtimeToybox
             borboInheritance.whitelistedTag = "FriendTurret_Borbo_Whitelist";
             shortcakeInheritance.whitelistedTag = "FriendTurret_Shortcake_Whitelist";
             snowtimeInheritance.whitelistedTag = "FriendTurret_Snowtime_Whitelist";
-            acanthiInheritance.whitelistedTag = "FriendTurret_Snowtime_Whitelist";
+            acanthiInheritance.whitelistedTag = "FriendTurret_Acanthi_Whitelist";
 
             if (FriendlyTurretImmuneVoidDeath.Value)
             {
