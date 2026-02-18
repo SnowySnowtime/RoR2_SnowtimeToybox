@@ -60,6 +60,10 @@ adds skins for my friends and I. also adds one skill, difficulty, and a friendly
 ## Snowtime Turret
 ![snowtime waow](https://github.com/SnowySnowtime/RoR2_SnowtimeToybox/blob/main/snowtimeturretpreview.jpg?raw=true)
 
+
+## Acanthi Turret
+![acanthi waow](https://github.com/SnowySnowtime/RoR2_SnowtimeToybox/blob/main/acanthiturretpreview.jpg?raw=true)
+
 # Features
 
 - Custom Skill for Operator
@@ -85,7 +89,6 @@ adds skins for my friends and I. also adds one skill, difficulty, and a friendly
 - additional friendly turrets based on individuals (not sorted):
 - Anartoast | "Seeker Turret"
 - Lukas | "Lukas Turret"
-- Acanthi | "Acanthi Turret"
 - Icebro | "bread turret"
 - PlNK | "PlNK Turret"
 - HIFU | "HIFU Turret"
