@@ -49,6 +49,7 @@ namespace SnowtimeToybox.Buffs
                 .GetHurtBoxes();
             for (int m = 0; m < Mathf.Min(a, hurtBoxes.Length); m++)
             {
+                if (hurtBoxes[m] == null) return;
                 if (hurtBoxes[m].teamIndex != pookie.teamComponent.teamIndex)
                 {
                     //Log.Debug("Shortcake Turret Retaliation Targeting Enemy!");
@@ -71,7 +72,7 @@ namespace SnowtimeToybox.Buffs
                     snowtimeOrb.attacker = pookie.gameObject;
                     snowtimeOrb.speed = 180f;
                     snowtimeOrb.snowtimeOrbType = SnowtimeOrbs.OrbTypes.ShortcakeRetaliateFriendly;
-                    snowtimeOrb.damageValue = damageValue / 10f;
+                    snowtimeOrb.damageValue = damageValue * 0.16f;
                     snowtimeOrb.isCrit = false;
                     snowtimeOrb.origin = damageInfo.position;
                     snowtimeOrb.range = 45f;
