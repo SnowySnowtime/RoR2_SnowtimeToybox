@@ -6,6 +6,10 @@ Snowy Snowtime
 ---
 - Added Acanthi Turret
 - Shortcake turret now sends healing orbs to nearby allies
+
+icebro
+---
+- Pointed Snowy in the right direction for fixing a few NREs and implementing proc coefficient chance on Acanthi Turret debuff
 </details>
 
 

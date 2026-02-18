@@ -308,7 +308,7 @@ namespace SnowtimeToybox
             foreach (ItemDef item in whitelistAcanthiVars)
             {
                 Log.Debug("Added " + item.name + " to Acanthi Turret's item whitelist");
-                ItemAPI.ApplyTagToItem("FriendTurret_Snowtime_Whitelist", item);
+                ItemAPI.ApplyTagToItem("FriendTurret_Acanthi_Whitelist", item);
             }
             if (acanthivoidLoaded)
             {
