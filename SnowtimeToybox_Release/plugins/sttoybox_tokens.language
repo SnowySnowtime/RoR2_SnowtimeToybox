@@ -45,7 +45,7 @@
 		"FRIENDLYTURRET_ACANTHI_SUBTITLE": "not so friendlies now...",
 		"FRIENDLYTURRET_ACANTHI_FUNCTION": "Highly resilient Walking Turret, attacking enemies with a lacerating beam.",
 		"FRIENDLYTURRET_ACANTHI_DESCRIPTION": "Highly resilient Walking Turret, attacking enemies with a lacerating beam.",
-		"FRIENDLYTURRET_ACANTHI_SKILL_DESCRIPTION": "Fires a <style=cDeath>lascerating</style> <style=cIsUtility>beam</style> for <style=cIsDamage>60% damage</style> which inflicts <style=cIsDamage>Vampiric Wounds</style>, making the enemy bleed for <style=cIsDamage>25% TOTAL damage</style>.",
+		"FRIENDLYTURRET_ACANTHI_SKILL_DESCRIPTION": "Fires a <style=cDeath>lascerating</style> <style=cIsUtility>beam</style> for <style=cIsDamage>60% damage</style> which inflicts <style=cIsDamage>Vampiric Wounds</style>, making the enemy bleed for <style=cIsDamage>25% base damage</style>.",
 		
 		"FRIENDLYTURRET_ACANTHI_BROKEN_NAME": "Broken Acanthi Turret",
 		"FRIENDLYTURRET_ACANTHI_BROKEN_CONTEXT": "Repair Acanthi Turret",

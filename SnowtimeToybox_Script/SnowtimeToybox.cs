@@ -56,7 +56,7 @@ namespace SnowtimeToybox
     {
         public const string Author = "SnowySnowtime";
         public const string Name = nameof(SnowtimeToyboxMod);
-        public const string Version = "1.1.4";
+        public const string Version = "1.1.8";
         public const string GUID = Author + "." + Name;
 
         public static SnowtimeToyboxMod instance;
@@ -195,7 +195,10 @@ namespace SnowtimeToybox
             Log.Debug("FriendTurret_Shortcake_Whitelist: " + FriendTurret_Shortcake_Whitelist);
 
             ItemTag FriendTurret_Snowtime_Whitelist = ItemAPI.AddItemTag("FriendTurret_Snowtime_Whitelist");
-            Log.Debug("FriendTurret_Snowtime_Whitelist: " + FriendTurret_Snowtime_Whitelist);  
+            Log.Debug("FriendTurret_Snowtime_Whitelist: " + FriendTurret_Snowtime_Whitelist);
+
+            ItemTag FriendTurret_Acanthi_Whitelist = ItemAPI.AddItemTag("FriendTurret_Acanthi_Whitelist");
+            Log.Debug("FriendTurret_Acanthi_Whitelist: " + FriendTurret_Acanthi_Whitelist);
 
             ItemTag globalWhitelist = ItemAPI.AddItemTag("GlobalFriendTurret_Whitelist");
             Log.Debug("GlobalFriendTurret_Whitelist: " + globalWhitelist);
@@ -213,6 +216,10 @@ namespace SnowtimeToybox
                 RoR2Content.Items.ShinyPearl,
                 RoR2Content.Items.FallBoots,
                 RoR2Content.Items.BonusGoldPackOnKill,
+                RoR2Content.Items.FlatHealth,
+                RoR2Content.Items.Knurl,
+                // DLC3
+                DLC3Content.Items.CookedSteak,
             ];
             ItemDef[] whitelistBorboVars = [
                 // Base
@@ -229,7 +236,6 @@ namespace SnowtimeToybox
                 // Base
                 RoR2Content.Items.Thorns,
                 RoR2Content.Items.BarrierOnKill,
-                RoR2Content.Items.FlatHealth,
                 RoR2Content.Items.HealWhileSafe,
                 RoR2Content.Items.ArmorPlate,
                 RoR2Content.Items.PersonalShield,
@@ -239,7 +245,6 @@ namespace SnowtimeToybox
                 RoR2Content.Items.Plant,
                 RoR2Content.Items.BounceNearby,
                 RoR2Content.Items.ShockNearby,
-                RoR2Content.Items.Knurl,
                 // DLC1
                 DLC1Content.Items.OutOfCombatArmor,
                 DLC1Content.Items.HalfSpeedDoubleHealth,
@@ -247,24 +252,38 @@ namespace SnowtimeToybox
                 DLC1Content.Items.ChainLightningVoid,
                 // DLC2
                 // DLC3
-                DLC3Content.Items.CookedSteak,
                 DLC3Content.Items.ShieldBooster,
                 DLC3Content.Items.ShockDamageAura,
             ];
             ItemDef[] whitelistSnowtimeVars = [
                 // Base
+                RoR2Content.Items.Syringe,
                 RoR2Content.Items.IceRing,
                 RoR2Content.Items.PersonalShield,
                 RoR2Content.Items.Infusion,
-                RoR2Content.Items.Behemoth,
                 RoR2Content.Items.SlowOnHit,
-                RoR2Content.Items.Crowbar,
                 // DLC1
                 DLC1Content.Items.ElementalRingVoid,
                 DLC1Content.Items.SlowOnHitVoid,
                 // DLC2
                 // DLC3
                 DLC3Content.Items.ShieldBooster,
+            ];
+            ItemDef[] whitelistAcanthiVars = [
+                // Base
+                RoR2Content.Items.Tooth,
+                RoR2Content.Items.BleedOnHit,
+                RoR2Content.Items.Syringe,
+                RoR2Content.Items.Clover,
+                RoR2Content.Items.LunarBadLuck,
+                RoR2Content.Items.DeathMark,
+                RoR2Content.Items.Seed,
+                // DLC1
+                DLC1Content.Items.BleedOnHitVoid,
+                // DLC2
+                DLC2Content.Items.TriggerEnemyDebuffs,
+                // DLC3
+                DLC3Content.Items.UltimateMeal,
             ];
             foreach (ItemDef item in whitelistGlobalTurret)
             {
@@ -286,11 +305,17 @@ namespace SnowtimeToybox
                 Log.Debug("Added " + item.name + " to Snowtime Turret's item whitelist");
                 ItemAPI.ApplyTagToItem("FriendTurret_Snowtime_Whitelist", item);
             }
+            foreach (ItemDef item in whitelistAcanthiVars)
+            {
+                Log.Debug("Added " + item.name + " to Acanthi Turret's item whitelist");
+                ItemAPI.ApplyTagToItem("FriendTurret_Snowtime_Whitelist", item);
+            }
             if (acanthivoidLoaded)
             {
                 if (SeekingTheVoid.SeekingTheVoid.isPairyEnabled)
                 {
                     ItemAPI.ApplyTagToItem("FriendTurret_Shortcake_Whitelist", SeekingTheVoid.StrawPairy.StrawPairyDef);
+                    ItemAPI.ApplyTagToItem("FriendTurret_Acanthi_Whitelist", SeekingTheVoid.StrawPairy.StrawPairyDef);
                 }
                 if (SeekingTheVoid.SeekingTheVoid.isCoralEnabled)
                 {

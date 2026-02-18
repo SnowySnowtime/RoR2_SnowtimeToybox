@@ -1,3 +1,14 @@
+`1.1.8`
+<details>
+<summary>Update Summary (includes summary of commits by users)</summary>
+
+Snowy Snowtime
+---
+- Added Acanthi Turret
+- Shortcake turret now sends healing orbs to nearby allies
+</details>
+
+
 `1.1.7`
 <details>
 <summary>Update Summary (includes summary of commits by users)</summary>
