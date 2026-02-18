@@ -18,7 +18,8 @@ namespace SnowtimeToybox.Buffs
         {
             orig(self, damageInfo, victim);
             //Log.Debug("Running Lifesteal!");
-            CharacterBody acanthi = damageInfo.attacker.GetComponent<CharacterBody>();
+            CharacterBody acanthi = damageInfo.attacker?.GetComponent<CharacterBody>();
+            if (acanthi == null) return;
             if (acanthi != null)
             {
                 if (!acanthi.HasBuff(SnowtimeToyboxMod.AcanthiTurretBuff))

@@ -71,7 +71,7 @@ namespace SnowtimeToybox
                     break;
                 case OrbTypes.ShortcakeRetaliateFriendly:
                     orbasset = orbShortcakeRetaliatePrefab;
-                    isHealing = false;
+                    isHealing = true;
                     isElectric = false;
                     break;
             }

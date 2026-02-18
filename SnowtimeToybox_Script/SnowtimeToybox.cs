@@ -835,9 +835,9 @@ namespace SnowtimeToybox
                 FriendlyTurretSnowtimeBody.GetComponent<CharacterBody>().baseDamage = 25f;
                 FriendlyTurretSnowtimeBody.GetComponent<CharacterBody>().baseRegen = 21f;
                 FriendlyTurretSnowtimeBody.GetComponent<CharacterBody>().baseArmor = 30f;
-                FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().baseDamage = 25f;
-                FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().baseRegen = 21f;
-                FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().baseArmor = 30f;
+                FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().baseDamage = 5f;
+                FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().baseRegen = 7f;
+                FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().baseArmor = 40f;
                 // Scaling Stats
                 FriendlyTurretBorboBody.GetComponent<CharacterBody>().levelDamage = 5f;
                 FriendlyTurretBorboBody.GetComponent<CharacterBody>().levelRegen = 4f;
@@ -848,9 +848,9 @@ namespace SnowtimeToybox
                 FriendlyTurretSnowtimeBody.GetComponent<CharacterBody>().levelDamage = 5f;
                 FriendlyTurretSnowtimeBody.GetComponent<CharacterBody>().levelRegen = 5f;
                 FriendlyTurretSnowtimeBody.GetComponent<CharacterBody>().levelArmor = 2f;
-                FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().levelDamage = 5f;
-                FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().levelRegen = 5f;
-                FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().levelArmor = 2f;
+                FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().levelDamage = 1.25f;
+                FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().levelRegen = 1.5f;
+                FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().levelArmor = 4f;
             }
 
             On.RoR2.PurchaseInteraction.GetInteractability += GetInteractabilityFriendlyTurrets;

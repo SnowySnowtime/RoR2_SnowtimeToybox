@@ -37,6 +37,12 @@ and then make those allies minions of it and give them the leash component/item 
 like a funnier happiest mask
 cooldown probably at least 30s? wouldn't work on bosses or final bosses
 
+score turret maybe
+
+JAMES Turret -
+Paladin Melee/Dash
+i kinda want to make it like a little mini-paladin where it has the melee/dash, and it can get blessing on barrier for the projectile attack like paladin 
+
 Other Purchaseable Turrets/Walking Turrets/Drones
 
 Hoarder Turret (PlNK IDEA) -

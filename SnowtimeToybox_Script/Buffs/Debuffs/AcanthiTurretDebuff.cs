@@ -18,7 +18,7 @@ namespace SnowtimeToybox.Buffs
             AcanthiDot = new();
             AcanthiDot.associatedBuff = Buff;
             AcanthiDot.interval = 0.2f;
-            AcanthiDot.damageCoefficient = 0.1f;
+            AcanthiDot.damageCoefficient = 0.25f;
             AcanthiDot.terminalTimedBuff = Buff;
             AcanthiDot.terminalTimedBuffDuration = 1f;
             AcanthiDotIndex = DotAPI.RegisterDotDef(AcanthiDot);
@@ -30,18 +30,23 @@ namespace SnowtimeToybox.Buffs
         private void AcanthiApplyDebuff(On.RoR2.GlobalEventManager.orig_OnHitEnemy orig, GlobalEventManager self, DamageInfo damageInfo, GameObject victim)
         {
             orig(self, damageInfo, victim);
+            CharacterBody characterBody = (damageInfo.attacker ? damageInfo.attacker.GetComponent<CharacterBody>() : null);
+            CharacterMaster master = characterBody.master;
+            bool bleedRoll = Util.CheckRoll(damageInfo.procCoefficient*100, master.luck, master);
 
             if (damageInfo.attacker && damageInfo.HasModdedDamageType(Acanthi_ButHeresTheBleeder))
             {
+                if (!bleedRoll) return;
                 InflictDotInfo info = new();
                 info.damageMultiplier = 1f;
-                info.totalDamage = damageInfo.attacker.GetComponent<CharacterBody>().damage / 2f;
+                info.totalDamage = damageInfo.attacker.GetComponent<CharacterBody>().damage;
                 info.duration = 3f;
                 info.victimObject = victim;
                 info.attackerObject = damageInfo.attacker;
                 info.preUpgradeDotIndex = AcanthiDotIndex;
                 info.dotIndex = AcanthiDotIndex;
 
+                // make it double dip beyond 1 luck
                 DotController.InflictDot(ref info);
             }
         }

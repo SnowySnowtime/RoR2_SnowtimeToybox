@@ -19,7 +19,8 @@ namespace SnowtimeToybox.Buffs
         private void ShortcakeDamaged(On.RoR2.GlobalEventManager.orig_OnHitEnemy orig, GlobalEventManager self, DamageInfo damageInfo, GameObject victim)
         {
             orig(self, damageInfo, victim);
-            CharacterBody pookie = victim.GetComponent<CharacterBody>();
+            CharacterBody pookie = victim?.GetComponent<CharacterBody>();
+            if (pookie == null) return;
             if(pookie != null)
             {
                 if (!pookie.HasBuff(SnowtimeToyboxMod.ShortcakeTurretBuff))
@@ -40,22 +41,41 @@ namespace SnowtimeToybox.Buffs
                 radius = radius,
                 mask = LayerIndex.entityPrecise.mask,
                 queryTriggerInteraction = QueryTriggerInteraction.UseGlobal
-            }.RefreshCandidates().FilterCandidatesByHurtBoxTeam(TeamMask.GetEnemyTeams(teamIndex2)).OrderCandidatesByDistance()
+            }.RefreshCandidates().FilterCandidatesByHurtBoxTeam(TeamMask.all).OrderCandidatesByDistance()
                 .FilterCandidatesByDistinctHurtBoxEntities()
                 .GetHurtBoxes();
             for (int m = 0; m < Mathf.Min(a, hurtBoxes.Length); m++)
             {
-                SnowtimeOrbs snowtimeOrb = new SnowtimeOrbs();
-                snowtimeOrb.attacker = pookie.gameObject;
-                snowtimeOrb.speed = 220f;
-                snowtimeOrb.snowtimeOrbType = SnowtimeOrbs.OrbTypes.ShortcakeRetaliate;
-                snowtimeOrb.damageValue = damageValue;
-                snowtimeOrb.isCrit = isCrit;
-                snowtimeOrb.origin = damageInfo.position;
-                snowtimeOrb.range = 45f;
-                snowtimeOrb.teamIndex = teamIndex2;
-                snowtimeOrb.target = hurtBoxes[m];
-                OrbManager.instance.AddOrb(snowtimeOrb);
+                if (hurtBoxes[m].teamIndex != pookie.teamComponent.teamIndex)
+                {
+                    //Log.Debug("Shortcake Turret Retaliation Targeting Enemy!");
+                    SnowtimeOrbs snowtimeOrb = new SnowtimeOrbs();
+                    snowtimeOrb.attacker = pookie.gameObject;
+                    snowtimeOrb.speed = 300f;
+                    snowtimeOrb.snowtimeOrbType = SnowtimeOrbs.OrbTypes.ShortcakeRetaliate;
+                    snowtimeOrb.damageValue = damageValue;
+                    snowtimeOrb.isCrit = isCrit;
+                    snowtimeOrb.origin = damageInfo.position;
+                    snowtimeOrb.range = 45f;
+                    snowtimeOrb.teamIndex = teamIndex2;
+                    snowtimeOrb.target = hurtBoxes[m];
+                    OrbManager.instance.AddOrb(snowtimeOrb);
+                }
+                else if (!hurtBoxes[m].healthComponent.gameObject.GetComponent<CharacterBody>().baseNameToken.Contains("FRIENDLYTURRET_SHORTCAKE") && hurtBoxes[m].teamIndex == pookie.teamComponent.teamIndex)
+                {
+                    //Log.Debug("Shortcake Turret Retaliation Targeting Ally!");
+                    SnowtimeOrbs snowtimeOrb = new SnowtimeOrbs();
+                    snowtimeOrb.attacker = pookie.gameObject;
+                    snowtimeOrb.speed = 300f;
+                    snowtimeOrb.snowtimeOrbType = SnowtimeOrbs.OrbTypes.ShortcakeRetaliateFriendly;
+                    snowtimeOrb.damageValue = damageValue / 3f;
+                    snowtimeOrb.isCrit = false;
+                    snowtimeOrb.origin = damageInfo.position;
+                    snowtimeOrb.range = 45f;
+                    snowtimeOrb.teamIndex = teamIndex2;
+                    snowtimeOrb.target = hurtBoxes[m];
+                    OrbManager.instance.AddOrb(snowtimeOrb);
+                }
             }
         }
     }
