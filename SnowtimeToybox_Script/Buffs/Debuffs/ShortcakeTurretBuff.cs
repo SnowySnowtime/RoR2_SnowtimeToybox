@@ -19,6 +19,9 @@ namespace SnowtimeToybox.Buffs
         private void ShortcakeDamaged(On.RoR2.GlobalEventManager.orig_OnHitEnemy orig, GlobalEventManager self, DamageInfo damageInfo, GameObject victim)
         {
             orig(self, damageInfo, victim);
+
+            if (damageInfo.attacker == null) return;
+            if (victim == null) return;
             CharacterBody pookie = victim?.GetComponent<CharacterBody>();
             if (pookie == null) return;
             if(pookie != null)

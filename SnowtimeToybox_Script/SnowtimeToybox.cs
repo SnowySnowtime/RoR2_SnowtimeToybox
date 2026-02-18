@@ -345,6 +345,7 @@ namespace SnowtimeToybox
         {
             orig(self, damageInfo, victim);
 
+            if (victim == null) return;
             if (damageInfo.HasModdedDamageType(HaloRicochetOnHit))
             {
                 //Log.Debug("OnHitEnemy DamageInfo: " + damageInfo + " Attacker: " + damageInfo.attacker + " Attacker Team: " + damageInfo.attacker.GetComponent<TeamComponent>().teamIndex + " Victim Body: " + victim.GetComponent<CharacterBody>());

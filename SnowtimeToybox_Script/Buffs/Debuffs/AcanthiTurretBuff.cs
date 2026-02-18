@@ -17,7 +17,9 @@ namespace SnowtimeToybox.Buffs
         private void VampiricLifeSteal(On.RoR2.GlobalEventManager.orig_ProcessHitEnemy orig, GlobalEventManager self, DamageInfo damageInfo, GameObject victim)
         {
             orig(self, damageInfo, victim);
+            if (victim == null) return;
             //Log.Debug("Running Lifesteal!");
+            if (damageInfo.attacker == null) return;
             CharacterBody acanthi = damageInfo.attacker?.GetComponent<CharacterBody>();
             if (acanthi == null) return;
             if (acanthi != null)

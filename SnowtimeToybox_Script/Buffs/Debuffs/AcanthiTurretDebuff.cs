@@ -30,6 +30,10 @@ namespace SnowtimeToybox.Buffs
         private void AcanthiApplyDebuff(On.RoR2.GlobalEventManager.orig_OnHitEnemy orig, GlobalEventManager self, DamageInfo damageInfo, GameObject victim)
         {
             orig(self, damageInfo, victim);
+            if (damageInfo == null) return;
+            if (victim == null) return;
+            if (damageInfo.attacker == null) return;
+
             CharacterBody characterBody = (damageInfo.attacker ? damageInfo.attacker.GetComponent<CharacterBody>() : null);
             CharacterMaster master = characterBody.master;
             bool bleedRoll = Util.CheckRoll(damageInfo.procCoefficient*100, master.luck, master);
