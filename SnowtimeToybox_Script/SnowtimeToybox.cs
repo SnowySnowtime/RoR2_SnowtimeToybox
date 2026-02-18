@@ -359,6 +359,8 @@ namespace SnowtimeToybox
 
         private void ShortcakeTurretHandler(On.RoR2.CharacterBody.orig_FixedUpdate orig, RoR2.CharacterBody self)
         {
+            orig(self);
+
             if (self.teamComponent.teamIndex == TeamIndex.Player)
             {
                 if (!self.baseNameToken.Contains("FRIENDLYTURRET_")) return;
@@ -383,8 +385,6 @@ namespace SnowtimeToybox
                     }
                 }
             }
-
-            orig(self);
         }
 
         private void SceneDirectorOnStart(SceneDirector.orig_Start orig, RoR2.SceneDirector self)
@@ -763,7 +763,6 @@ namespace SnowtimeToybox
             ContentAddition.AddMaster(FriendlyTurretAcanthiMaster);
             ContentAddition.AddSkillFamily(FriendlyTurretAcanthiSkillFamily);
             ContentAddition.AddSkillDef(FriendlyTurretAcanthiSkillDef);
-            ContentAddition.AddEffect(FireAcanthiBeam.laserObject);
 
             ContentAddition.AddEntityState(typeof(Shenanigans), out _);
 
