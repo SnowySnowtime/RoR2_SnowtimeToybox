@@ -35,6 +35,7 @@ namespace SnowtimeToybox.Buffs
             if (damageInfo.attacker == null) return;
 
             CharacterBody characterBody = (damageInfo.attacker ? damageInfo.attacker.GetComponent<CharacterBody>() : null);
+            if (characterBody == null) return;
             CharacterMaster master = characterBody.master;
             if(master == null) return;
             bool bleedRoll = Util.CheckRoll(damageInfo.procCoefficient*100, master.luck, master);
