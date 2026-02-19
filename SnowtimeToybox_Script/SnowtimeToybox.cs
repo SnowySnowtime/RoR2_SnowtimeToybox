@@ -512,6 +512,11 @@ namespace SnowtimeToybox
                     ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", itemDef);
                     Log.Debug("Added " + itemDef.name + " to global friendly turret item whitelist");
                 }
+                if (itemDef.nameToken.Contains("HeavyBoot"))
+                {
+                    ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", itemDef);
+                    Log.Debug("Added " + itemDef.name + " to global friendly turret item whitelist");
+                }
                 // swansong
                 if (itemDef.nameToken.Contains("ITEM_EGG"))
                 {
@@ -533,12 +538,7 @@ namespace SnowtimeToybox
                 {
                     ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", itemDef);
                     Log.Debug("Added " + itemDef.name + " to global friendly turret item whitelist");
-                }
-                if (itemDef.nameToken.Contains("ITEM_GAMMAKNIFESTATBOOST"))
-                {
-                    ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", itemDef);
-                    Log.Debug("I dont think butter is supposed to be green...");
-                    Log.Debug("Added " + itemDef.name + " to global friendly turret item whitelist");
+                    Log.Debug("...I dont think butter is supposed to be green...");
                 }
                 if (itemDef.nameToken.Contains("ITEM_FROZENSHELL"))
                 {

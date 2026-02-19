@@ -1,3 +1,26 @@
+`1.1.9`
+<details>
+<summary>Update Summary (includes summary of commits by users)</summary>
+
+Snowy Snowtime
+---
+- Adjusted modded item inheritance for all turrets
+- Increased max health of Acanthi Turret, reduced regeneration
+- turret was getting one tapped a little too much. made it have high hp, but it can only reasonably heal from attacking
+### Turrets can now inherit a few items, globally or turret specific; from these mods...
+| Mod |
+| --- |
+| [LoLItems](https://thunderstore.io/package/Debo/LoLItems/) |
+| [LunarSoap](https://thunderstore.io/package/Wolfo/LunarSoap/) |
+| [Nautilus](https://thunderstore.io/package/hex3/Nautilus/) |
+| [RobItems](https://thunderstore.io/package/rob/RobItems/) |
+| [Sandswept](https://thunderstore.io/package/SandsweptTeam/Sandswept/) |
+| [SeekingTheVoid](https://thunderstore.io/package/acanthic/SeekingTheVoid/) |
+| [Starstorm 2](https://thunderstore.io/package/TeamMoonstorm/Starstorm2/) |
+| [Swansong (2R4R)](https://thunderstore.io/package/RiskOfBrainrot/2R4R/) |
+| [VanillaVoid](https://thunderstore.io/package/Zenithrium/VanillaVoid/) |
+</details>
+
 `1.1.8`
 <details>
 <summary>Update Summary (includes summary of commits by users)</summary>
