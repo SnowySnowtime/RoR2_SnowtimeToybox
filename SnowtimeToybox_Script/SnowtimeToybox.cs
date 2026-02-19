@@ -604,14 +604,6 @@ namespace SnowtimeToybox
                 eliteDefsEquipInherit.Add(eliteDef.eliteEquipmentDef.equipmentIndex);
                 Log.Debug("Elite Equipment: " + eliteDef.eliteEquipmentDef + " Index: " + eliteDef.eliteEquipmentDef.equipmentIndex);
             }
-            foreach (var equipmentDef in EquipmentCatalog.equipmentDefs)
-            {
-               if (equipmentDef.nameToken.Contains("RisingTides") || equipmentDef.nameToken.Contains("EliteVariety"))
-               {
-                    eliteDefsEquipInherit.Add(equipmentDef.equipmentIndex);
-                    Log.Debug("Elite Equipment: " + equipmentDef + " Index: " + equipmentDef.equipmentIndex);
-                }
-            }
         }
 
         // KEEP YOURSELF SAFE
