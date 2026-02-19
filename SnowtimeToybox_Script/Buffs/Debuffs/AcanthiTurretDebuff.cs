@@ -21,6 +21,7 @@ namespace SnowtimeToybox.Buffs
             AcanthiDot.damageCoefficient = 0.25f;
             AcanthiDot.terminalTimedBuff = Buff;
             AcanthiDot.terminalTimedBuffDuration = 1f;
+            AcanthiDot.damageColorIndex = DamageColorIndex.SuperBleed;
             AcanthiDotIndex = DotAPI.RegisterDotDef(AcanthiDot);
 
             On.RoR2.CharacterBody.FixedUpdate += AcanthiDebuffOverlayManager;
