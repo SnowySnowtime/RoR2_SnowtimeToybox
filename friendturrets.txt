@@ -24,7 +24,16 @@ Summons Bread Turret.
 beam that tethers the two turrets (visual)
 
 Icebro (bread) Turret - [PINK]
-Always Target Acanthi Turret, fires a beam that increases luck by 1
+[SUPPORT: BUFF] Targets and follows the owner.
+All allies within 30m will be given [buffname], increasing attack speed by 20% and reducing barrier decay by W%
+Attacks with a guarding beam, increasing the barrier of the target by [X% of targets Max Combined Health + Y% of bread turrets total damage], and inflicting Breads Fortune, giving +1 luck.
+
+[SYNERGY: ACANTHI]
+Activates when the minion’s owner has an Acanthi Turret minion.
+
+Swap its target to Acanthi Turret and follow it.
+Bread Turret will heal for 25% of all healing received by Acanthi Turret while it has Breads Fortune.
+While Breads Fortune is active, double the infliction of Vampiric Bleeding and increase base damage by Z% of Bread Turrets base damage.
 
 Strawberry Shortcake Turret -
 Fires strawberries (razorwire) at enemies that attack the turret
@@ -37,7 +46,21 @@ and then make those allies minions of it and give them the leash component/item 
 like a funnier happiest mask
 cooldown probably at least 30s? wouldn't work on bosses or final bosses
 
-score turret maybe
+score turret -
+starts shreddin it (its a turret on a skateboard)
+
+variant 1
+level 3 tf2 sentry-like that shreds the gnar.
+
+variant 2
+weapon swapping turret (driver) that shreds the gnar.
+
+[SHARED]
+Has a utility skill that lets it hit some radical tricks, giving it +X% attack speed for Y% seconds.
+
+[personality]
+makes fun of the modpack
+sends !nullcheck whenever an NRE occurs
 
 JAMES Turret -
 Paladin Melee/Dash
