@@ -25,7 +25,7 @@ beam that tethers the two turrets (visual)
 
 Icebro (bread) Turret - [PINK]
 [SUPPORT: BUFF] Targets and follows the owner.
-All allies within 30m will be given [buffname], increasing attack speed by 20% and reducing barrier decay by W%
+All allies within 30m will be given [buffname], increasing attack speed by 20% and reducing barrier decay by 60%
 Attacks with a guarding beam, increasing the barrier of the target by [X% of targets Max Combined Health + Y% of bread turrets total damage], and inflicting Breads Fortune, giving +1 luck.
 
 [SYNERGY: ACANTHI]
@@ -33,7 +33,7 @@ Activates when the minion’s owner has an Acanthi Turret minion.
 
 Swap its target to Acanthi Turret and follow it.
 Bread Turret will heal for 25% of all healing received by Acanthi Turret while it has Breads Fortune.
-While Breads Fortune is active, double the infliction of Vampiric Bleeding and increase base damage by Z% of Bread Turrets base damage.
+While Breads Fortune is active, double the infliction of Vampiric Bleeding and increase base damage by 25% of Bread Turrets base damage.
 
 Strawberry Shortcake Turret -
 Fires strawberries (razorwire) at enemies that attack the turret

@@ -1321,6 +1321,8 @@ namespace SnowtimeToybox
         public static BuffDef ShortcakeTurretBuff;
         public static BuffDef AcanthiTurretBuff;
         public static BuffDef AcanthiTurretDebuff;
+        public static BuffDef BreadTurretBuffFortune;
+        public static BuffDef BreadTurretBuffNearbyAllies;
 
         public void AddCustomBuffs()
         {
@@ -1329,6 +1331,10 @@ namespace SnowtimeToybox
             ShortcakeTurretBuff = _stcharacterAssetBundle.LoadAsset<BuffDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Shortcake/Buff/ShortcakeTurretBuff.asset");
             AcanthiTurretBuff = _stcharacterAssetBundle.LoadAsset<BuffDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Acanthi/Buff/VampiricDesires.asset");
             AcanthiTurretDebuff = _stcharacterAssetBundle.LoadAsset<BuffDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Acanthi/Buff/VampiricBleeding.asset");
+            // Assets not implemented yet
+            BreadTurretBuffFortune = _stcharacterAssetBundle.LoadAsset<BuffDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Acanthi/Buff/VampiricBleeding.asset");
+            BreadTurretBuffNearbyAllies = _stcharacterAssetBundle.LoadAsset<BuffDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Acanthi/Buff/VampiricBleeding.asset");
+            // END
             Log.Debug(BorboTurretDebuff);
             Log.Debug(ShortcakeTurretBuff);
             
