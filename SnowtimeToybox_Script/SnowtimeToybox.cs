@@ -1187,10 +1187,10 @@ namespace SnowtimeToybox
                 float num = float.NegativeInfinity;
                 foreach (HurtBox result in bullseyeSearch.GetResults())
                 {
-                    float combinedHealth = result.healthComponent.combinedHealth;
-                    if (combinedHealth > num)
+                    float maxCombinedHealth = result.healthComponent.fullCombinedHealth;
+                    if (maxCombinedHealth > num)
                     {
-                        num = combinedHealth;
+                        num = maxCombinedHealth;
                         hurtBox = result;
                     }
                 }
