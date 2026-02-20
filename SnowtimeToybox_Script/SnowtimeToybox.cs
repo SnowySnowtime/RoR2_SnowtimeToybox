@@ -601,6 +601,8 @@ namespace SnowtimeToybox
             eliteDefsEquipInherit = [];
             foreach (var eliteDef in EliteCatalog.eliteDefs)
             {
+                if (eliteDef.eliteEquipmentDef == null) return;
+                if (eliteDef.eliteEquipmentDef?.equipmentIndex == null) return;
                 eliteDefsEquipInherit.Add(eliteDef.eliteEquipmentDef.equipmentIndex);
                 Log.Debug("Elite Equipment: " + eliteDef.eliteEquipmentDef + " Index: " + eliteDef.eliteEquipmentDef.equipmentIndex);
             }
