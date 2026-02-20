@@ -66,6 +66,11 @@ JAMES Turret -
 Paladin Melee/Dash
 i kinda want to make it like a little mini-paladin where it has the melee/dash, and it can get blessing on barrier for the projectile attack like paladin 
 
+Skelly Turret -
+Turret that fires bones at enemies
+when firing it plays a xylophone
+taking damage or walking = minecraft sounds
+
 Other Purchaseable Turrets/Walking Turrets/Drones
 
 Hoarder Turret (PlNK IDEA) -
