@@ -56,15 +56,6 @@
 	  <Reference Include="ShaderSwapper">
 	    <HintPath>_modsupportbins\ShaderSwapper.dll</HintPath>
 	  </Reference>
-	  <Reference Include="SeekingTheVoid">
-	    <HintPath>_modsupportbins\SeekingTheVoid.dll</HintPath>
-	  </Reference>
-	  <Reference Include="RobItems">
-	    <HintPath>_modsupportbins\RobItems.dll</HintPath>
-	  </Reference>
-	  <Reference Include="Nautilus">
-	    <HintPath>_modsupportbins\Nautilus-nstrip.dll</HintPath>
-	  </Reference>
 	  <Reference Include="Ror2AggroTools">
 	    <HintPath>lib\Ror2AggroTools</HintPath>
 	  </Reference>

@@ -76,6 +76,8 @@ namespace SnowtimeToybox
         public static SkillDef FriendlyTurretSnowtimeUtilSkillDef;
         public static SkillFamily FriendlyTurretAcanthiUtilSkillFamily;
         public static SkillDef FriendlyTurretAcanthiUtilSkillDef;
+        public static SkillFamily FriendlyTurretBreadUtilSkillFamily;
+        public static SkillDef FriendlyTurretBreadUtilSkillDef;
         // borbo turret
         public static DroneDef FriendlyTurretBorboDef;
         public static InteractableSpawnCard FriendlyTurretBorboIsc;
@@ -108,6 +110,14 @@ namespace SnowtimeToybox
         public static GameObject FriendlyTurretAcanthiBody;
         public static GameObject FriendlyTurretAcanthiMaster;
         public static GameObject FriendlyTurretAcanthiBroken;
+        // bread turret
+        public static DroneDef FriendlyTurretBreadDef;
+        public static InteractableSpawnCard FriendlyTurretBreadIsc;
+        public static SkillFamily FriendlyTurretBreadSkillFamily;
+        public static SkillDef FriendlyTurretBreadSkillDef;
+        public static GameObject FriendlyTurretBreadBody;
+        public static GameObject FriendlyTurretBreadMaster;
+        public static GameObject FriendlyTurretBreadBroken;
         //public static DroneDef FriendlyTurretTestDroneDef;
 
         public static List<GameObject> friendlyTurretList = [];
@@ -130,6 +140,7 @@ namespace SnowtimeToybox
         public static ConfigEntry<bool> FriendlyTurretFallImmunity { get; set; }
         public static ConfigEntry<bool> FriendlyTurretDrone { get; set; }
         public static ConfigEntry<bool> FriendlyTurretShortcakeAggroType { get; set; }
+        public static ConfigEntry<bool> FriendlyTurretReducedCostForPartnersOrSelf { get; set; }
 
         public void Awake()
         {
@@ -139,6 +150,7 @@ namespace SnowtimeToybox
 
             ToggleSpawnMessages = Config.Bind("Friendly Turret Functions", "Spawn Message", true, "If true, the Friendly Turrets will give a message on every stage they spawn on, for insight on if and which turret spawned. Otherwise, friendly turrets are shy, and are also sad!");
             FriendlyTurretShortcakeAggroType = Config.Bind("Friendly Turret Functions", "Strawberry Shortcake Aggro Method", false, "If true, the Strawberry Shortcake Turret will spawn with a native increase to its aggro. Else, it only gains aggro for ~0.5s when its main skill fires.");
+            FriendlyTurretReducedCostForPartnersOrSelf = Config.Bind("Friendly Turret Functions", "Reduced Cost...", false, "[This does not reduce cost for EVERYONE] If true, Friendly Turrets have their costs reduced by half for: Individuals referenced by the turret / Significant Other of referenced individual by the turret. It felt necessary to have as an option to prevent favoritism or issues with using steamids to determine costs of the interactable. This was added by majority request.");
             FriendlyTurretImmuneVoidDeath = Config.Bind("Friendly Turret Flags", "Void Death Immunity", true, "If true, Friendly Turrets are immune to Void Death (Void Reaver implosions), this is because they are awful at avoiding them even with mods to make allies avoid them, and we get sad when they are detained.");
             FriendlyTurretFallImmunity = Config.Bind("Friendly Turret Flags", "Fall Damage Immunity", true, "If true, Friendly Turrets are immune to fall damage, as navigating some maps can be a little difficult for them. Prevents any unexpected turret deaths, as we cant simply 'replace' them like Engineer can.");
             FriendlyTurretDrone = Config.Bind("Friendly Turret Flags", "Drone", false, "If true, Friendly Turrets are flagged as drones. Probably comes with some oddities.");
@@ -331,12 +343,12 @@ namespace SnowtimeToybox
                 }
 
                 // nautilus
-                if (itemDef.nameToken.Contains("HydraTooth"))
+                if (itemDef.nameToken.Contains("NT_ITEM_HYDRATOOTH_NAME"))
                 {
                     ItemAPI.ApplyTagToItem("FriendTurret_Acanthi_Whitelist", itemDef);
                     Log.Debug("Added " + itemDef.name + " to Acanthi Turret's item whitelist");
                 }
-                if (itemDef.nameToken.Contains("ShimmeringNautilus"))
+                if (itemDef.nameToken.Contains("NT_ITEM_SHIMMERINGNAUTILUS_NAME"))
                 {
                     ItemAPI.ApplyTagToItem("FriendTurret_Shortcake_Whitelist", itemDef);
                     Log.Debug("Added " + itemDef.name + " to Strawberry Shortcake Turret's item whitelist");
@@ -445,7 +457,7 @@ namespace SnowtimeToybox
                     Log.Debug("Added " + itemDef.name + " to Snowtime Turret's item whitelist");
                 }
                 // ss2
-                if (itemDef.nameToken.Contains("ArmedBackpack"))
+                if (itemDef.nameToken.Contains("SS2_ITEM_ARMEDBACKPACK_NAME"))
                 {
                     ItemAPI.ApplyTagToItem("FriendTurret_Shortcake_Whitelist", itemDef);
                     Log.Debug("Added " + itemDef.name + " to Strawberry Shortcake Turret's item whitelist");
@@ -471,22 +483,22 @@ namespace SnowtimeToybox
                 }
 
                 // nautilus
-                if (itemDef.nameToken.Contains("ViscousPot"))
+                if (itemDef.nameToken.Contains("NT_ITEM_VISCOUSPOT_NAME"))
                 {
                     ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", itemDef);
                     Log.Debug("Added " + itemDef.name + " to global friendly turret item whitelist");
                 }
-                if (itemDef.nameToken.Contains("MotherOfPearl"))
+                if (itemDef.nameToken.Contains("NT_ITEM_MOTHEROFPEARL_NAME"))
                 {
                     ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", itemDef);
                     Log.Debug("Added " + itemDef.name + " to global friendly turret item whitelist");
                 }
-                if (itemDef.nameToken.Contains("MobiusNode"))
+                if (itemDef.nameToken.Contains("NT_ITEM_MOBIUSNODE_NAME"))
                 {
                     ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", itemDef);
                     Log.Debug("Added " + itemDef.name + " to global friendly turret item whitelist");
                 }
-                if (itemDef.nameToken.Contains("OsmiumShackles"))
+                if (itemDef.nameToken.Contains("NT_ITEM_OSMIUMSHACKLES_NAME"))
                 {
                     ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", itemDef);
                     Log.Debug("Added " + itemDef.name + " to global friendly turret item whitelist");
@@ -653,6 +665,14 @@ namespace SnowtimeToybox
                     if (!self.HasBuff(AcanthiTurretBuff))
                     {
                         self.AddBuff(AcanthiTurretBuff);
+                    }
+                }
+
+                if (self.baseNameToken.Contains("FRIENDLYTURRET_BREAD"))
+                {
+                    if (!self.HasBuff(BreadTurretBuffPassive))
+                    {
+                        self.AddBuff(BreadTurretBuffPassive);
                     }
                 }
             }
@@ -1017,7 +1037,7 @@ namespace SnowtimeToybox
             ContentAddition.AddEffect(SnowtimeCryoGaussFire.projectileGhostObject);
             ContentAddition.AddEffect(SnowtimeCryoGaussFire.projectileExplosionObject);
 
-            // add snowtime turret
+            // add acanthi turret
             Log.Debug("Defining Friendly Turret based on Acanthi (Awesome Person!)");
             FriendlyTurretAcanthiBody = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Acanthi/_FriendlyTurretAcanthiBody.prefab");
             FriendlyTurretAcanthiMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Acanthi/_FriendlyTurretAcanthiMaster.prefab");
@@ -1034,6 +1054,24 @@ namespace SnowtimeToybox
             ContentAddition.AddMaster(FriendlyTurretAcanthiMaster);
             ContentAddition.AddSkillFamily(FriendlyTurretAcanthiSkillFamily);
             ContentAddition.AddSkillDef(FriendlyTurretAcanthiSkillDef);
+
+            // add Bread turret
+            Log.Debug("Defining Friendly Turret based on Bread/icebro (Awesome Person!)");
+            FriendlyTurretBreadBody = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Bread/_FriendlyTurretBreadBody.prefab");
+            FriendlyTurretBreadMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Bread/_FriendlyTurretBreadMaster.prefab");
+            FriendlyTurretBreadSkillFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Bread/Skills/BreadPrimaryFamily.asset");
+            FriendlyTurretBreadSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Bread/Skills/BreadBeam.asset");
+            FriendlyTurretBreadUtilSkillFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Bread/Skills/BreadUtilityFamily.asset");
+            FriendlyTurretBreadUtilSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Bread/Skills/BreadShenanigans.asset");
+            // I am being PEDANTIC but i dont care!
+            FriendlyTurretBreadSkillDef.activationState = new SerializableEntityStateType(typeof(FireBreadBeam));
+            FriendlyTurretBreadUtilSkillDef.activationState = new SerializableEntityStateType(typeof(Shenanigans));
+            FriendlyTurretBreadDef = _stcharacterAssetBundle.LoadAsset<DroneDef>(@"Assets/BreadMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Bread/_FriendlyTurretBread.asset");
+            ContentAddition.AddEntityState(typeof(FireBreadBeam), out _);
+            ContentAddition.AddBody(FriendlyTurretBreadBody);
+            ContentAddition.AddMaster(FriendlyTurretBreadMaster);
+            ContentAddition.AddSkillFamily(FriendlyTurretBreadSkillFamily);
+            ContentAddition.AddSkillDef(FriendlyTurretBreadSkillDef);
 
             ContentAddition.AddEntityState(typeof(Shenanigans), out _);
 
@@ -1242,6 +1280,7 @@ namespace SnowtimeToybox
         string charactersuffering = "(Clone) (UnityEngine.GameObject)";
         string interactablesmaster;
         string charactersmaster;
+        float initialprice = 0f;
 
         private Interactability GetInteractabilityFriendlyTurrets(On.RoR2.PurchaseInteraction.orig_GetInteractability orig, PurchaseInteraction self, Interactor activator)
         {
@@ -1280,6 +1319,16 @@ namespace SnowtimeToybox
                     //Log.Debug("Previous query returned true");
                     return Interactability.Disabled;
                 }
+                // Implement cost reduction later.
+                //networkUser.id.steamId
+
+                //if (FriendlyTurretReducedCostForPartnersOrSelf.Value)
+                //{
+                //    if (initialprice == 0f)
+                //    {
+                //        initialprice = (self.cost / 2);
+                //    }
+                //}
             }
 
             return orig(self, activator);
@@ -1321,6 +1370,7 @@ namespace SnowtimeToybox
         public static BuffDef ShortcakeTurretBuff;
         public static BuffDef AcanthiTurretBuff;
         public static BuffDef AcanthiTurretDebuff;
+        public static BuffDef BreadTurretBuffPassive;
         public static BuffDef BreadTurretBuffFortune;
         public static BuffDef BreadTurretBuffNearbyAllies;
 
@@ -1332,11 +1382,17 @@ namespace SnowtimeToybox
             AcanthiTurretBuff = _stcharacterAssetBundle.LoadAsset<BuffDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Acanthi/Buff/VampiricDesires.asset");
             AcanthiTurretDebuff = _stcharacterAssetBundle.LoadAsset<BuffDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Acanthi/Buff/VampiricBleeding.asset");
             // Assets not implemented yet
-            BreadTurretBuffFortune = _stcharacterAssetBundle.LoadAsset<BuffDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Acanthi/Buff/VampiricBleeding.asset");
-            BreadTurretBuffNearbyAllies = _stcharacterAssetBundle.LoadAsset<BuffDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Acanthi/Buff/VampiricBleeding.asset");
+            BreadTurretBuffPassive = _stcharacterAssetBundle.LoadAsset<BuffDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Bread/Buff/BreadsPassive.asset");
+            BreadTurretBuffFortune = _stcharacterAssetBundle.LoadAsset<BuffDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Bread/Buff/BreadsFortune.asset");
+            BreadTurretBuffNearbyAllies = _stcharacterAssetBundle.LoadAsset<BuffDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Bread/Buff/BreadsGrace.asset");
             // END
             Log.Debug(BorboTurretDebuff);
             Log.Debug(ShortcakeTurretBuff);
+            Log.Debug(AcanthiTurretBuff);
+            Log.Debug(AcanthiTurretDebuff);
+            Log.Debug(BreadTurretBuffPassive);
+            Log.Debug(BreadTurretBuffFortune);
+            Log.Debug(BreadTurretBuffNearbyAllies);
             
             IEnumerable<Type> buffTypes = Assembly.GetExecutingAssembly().GetTypes().Where(type => !type.IsAbstract && type.IsSubclassOf(typeof(BuffBase)));
             foreach (Type buffType in buffTypes)
