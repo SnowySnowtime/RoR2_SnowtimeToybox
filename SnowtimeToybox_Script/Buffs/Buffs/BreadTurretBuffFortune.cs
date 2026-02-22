@@ -32,7 +32,7 @@ namespace SnowtimeToybox.Buffs
             args.luckAdd += 1f;
             if (!buffedSelf) return;
             if (!buffedSelf.HasBuff(SnowtimeToyboxMod.AcanthiTurretBuff)) return;
-            args.damageMultAdd += (damageIncrease * 0.25f);
+            args.damageTotalMult += (damageIncrease * 0.25f);
         }
 
         // aetherium being based again
@@ -47,7 +47,7 @@ namespace SnowtimeToybox.Buffs
                 temporaryOverlay.animateShaderAlpha = true;
                 temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(1f, 1f, 2f, 0f);
                 temporaryOverlay.destroyComponentOnEnd = true;
-                temporaryOverlay.originalMaterial = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<Material>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/borboturretdebuffoverlay.mat");
+                temporaryOverlay.originalMaterial = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<Material>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Bread/matBreadFortune.mat");
                 temporaryOverlay.inspectorCharacterModel = waow;
                 temporaryOverlay.AddToCharacterModel(waow);
             }

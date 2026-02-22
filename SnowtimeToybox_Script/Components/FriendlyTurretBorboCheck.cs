@@ -45,8 +45,11 @@ namespace SnowtimeToybox.FriendlyTurretChecks
                     case "FRIENDLYTURRET_SNOWTIME_BROKEN_NAME": // Snowtime Turret Selected
                         Chat.SendBroadcastChat(new Chat.SimpleChatMessage() { baseToken = "<style=cEvent><color=#A8D3FF>Friendly Turret: bwaaaa! pleas repair me, i have a snowcone for you if you do..!</color></style>" });
                         break;
-                    case "FRIENDLYTURRET_ACANTHI_BROKEN_NAME": // Snowtime Turret Selected
+                    case "FRIENDLYTURRET_ACANTHI_BROKEN_NAME": // Acanthi Turret Selected
                         Chat.SendBroadcastChat(new Chat.SimpleChatMessage() { baseToken = "<style=cEvent><color=#FF9C9C>Friendly Turret: hjelp! pleas repair me, i have a flower for you if you do..!</color></style>" });
+                        break;
+                    case "FRIENDLYTURRET_BREAD_BROKEN_NAME": // Bread Turret Selected
+                        Chat.SendBroadcastChat(new Chat.SimpleChatMessage() { baseToken = "<style=cEvent><color=#F3D2F7>Friendly Turret: bleh ! p .,., pleas repair me ;!;;!!!,.,., i hav es.,., um,,.,., plead react if you do !!!!,,,!,!!!,!!!!!,.,.,,</color></style>" });
                         break;
                 }
             }
@@ -71,6 +74,9 @@ namespace SnowtimeToybox.FriendlyTurretChecks
                         break;
                     case "FRIENDLYTURRET_ACANTHI_BROKEN_NAME": // Acanthi Turret Selected
                         Chat.SendBroadcastChat(new Chat.SimpleChatMessage() { baseToken = "<style=cEvent><color=#30ff78>Acanthi Turret: Thank you! We are friends now! :soyeyes:</color></style>" });
+                        break;
+                    case "FRIENDLYTURRET_BREAD_BROKEN_NAME": // Bread Turret Selected
+                        Chat.SendBroadcastChat(new Chat.SimpleChatMessage() { baseToken = "<style=cEvent><color=#30ff78>bread turret: t ,.,., thank yo ubestie !!!!!!!!!!!!! :uppies : !!!!!!!!!!!!!!!!</color></style>" });
                         break;
                 }
             }

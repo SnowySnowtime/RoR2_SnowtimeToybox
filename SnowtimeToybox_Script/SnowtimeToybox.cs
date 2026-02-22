@@ -1081,18 +1081,22 @@ namespace SnowtimeToybox
             FriendlyTurretShortcakeBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Shortcake/_mdlFriendlyTurretShortcakeBroken.prefab");
             FriendlyTurretSnowtimeBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Snowtime/_mdlFriendlyTurretSnowtimeBroken.prefab");
             FriendlyTurretAcanthiBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Acanthi/_mdlFriendlyTurretAcanthiBroken.prefab");
+            FriendlyTurretBreadBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Bread/_mdlFriendlyTurretBreadBroken.prefab");
             BorboCheck borbocheck = FriendlyTurretBorboBroken.AddComponent<BorboCheck>();
             BorboCheck shortcakecheck = FriendlyTurretShortcakeBroken.AddComponent<BorboCheck>();
             BorboCheck snowtimecheck = FriendlyTurretSnowtimeBroken.AddComponent<BorboCheck>();
             BorboCheck acanthicheck = FriendlyTurretAcanthiBroken.AddComponent<BorboCheck>();
+            BorboCheck breadcheck = FriendlyTurretBreadBroken.AddComponent<BorboCheck>();
             PurchaseInteraction borbointeraction = FriendlyTurretBorboBroken.GetComponent<PurchaseInteraction>();
             PurchaseInteraction shortcakeinteraction = FriendlyTurretShortcakeBroken.GetComponent<PurchaseInteraction>();
             PurchaseInteraction snowtimeinteraction = FriendlyTurretSnowtimeBroken.GetComponent<PurchaseInteraction>();
             PurchaseInteraction acanthiinteraction = FriendlyTurretAcanthiBroken.GetComponent<PurchaseInteraction>();
+            PurchaseInteraction breadinteraction = FriendlyTurretBreadBroken.GetComponent<PurchaseInteraction>();
             borbocheck.purchaseInteraction = borbointeraction;
             shortcakecheck.purchaseInteraction = shortcakeinteraction;
             snowtimecheck.purchaseInteraction = snowtimeinteraction;
             acanthicheck.purchaseInteraction = acanthiinteraction;
+            breadcheck.purchaseInteraction = breadinteraction;
 
             // Add Prefabs
             // TODO: Add these to the prefabs directly (so we dont have to add them here)
@@ -1168,11 +1172,13 @@ namespace SnowtimeToybox
             ContentAddition.AddNetworkedObject(FriendlyTurretShortcakeBroken);
             ContentAddition.AddNetworkedObject(FriendlyTurretSnowtimeBroken);
             ContentAddition.AddNetworkedObject(FriendlyTurretAcanthiBroken);
+            ContentAddition.AddNetworkedObject(FriendlyTurretBreadBroken);
             ContentAddition.AddEffect(BorboCheck.turretUseEffect);
             friendlyTurretList.Add(FriendlyTurretBorboBroken);
             friendlyTurretList.Add(FriendlyTurretShortcakeBroken);
             friendlyTurretList.Add(FriendlyTurretSnowtimeBroken);
             friendlyTurretList.Add(FriendlyTurretAcanthiBroken);
+            friendlyTurretList.Add(FriendlyTurretBreadBroken);
             Log.Debug(friendlyTurretList);
             
             friendlyTurretListNames = new string[friendlyTurretList.Count];
