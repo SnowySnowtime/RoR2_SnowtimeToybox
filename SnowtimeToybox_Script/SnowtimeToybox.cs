@@ -1016,7 +1016,7 @@ namespace SnowtimeToybox
             ContentAddition.AddEffect(SnowtimeOrbs.orbShortcakeTauntImpactObject);
 
             // add snowtime turret
-            Log.Debug("Defining Friendly Turret based on Snowy Snowtime (hi :3)");
+            Log.Debug("Defining Friendly Turret based on Snowy Snowtime (hi :3) <- bread - awesomersauce person !!! ");
             FriendlyTurretSnowtimeBody = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Snowtime/_FriendlyTurretSnowtimeBody.prefab");
             FriendlyTurretSnowtimeMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Snowtime/_FriendlyTurretSnowtimeMaster.prefab");
             FriendlyTurretSnowtimeSkillFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Snowtime/Skills/SnowtimePrimaryFamily.asset");
@@ -1470,6 +1470,36 @@ namespace SnowtimeToybox
             Log.Debug($"case \"{SceneManager.GetActiveScene().name}\":");
             Log.Debug($"    stagePositions.Add(new Vector3({args.senderBody.footPosition.x}f, {args.senderBody.footPosition.y}f, {args.senderBody.footPosition.z}f), Quaternion.Euler({args.senderBody.modelLocator.modelTransform.rotation.eulerAngles.x}f, {args.senderBody.modelLocator.modelTransform.rotation.eulerAngles.y}f, {args.senderBody.modelLocator.modelTransform.rotation.eulerAngles.z}f));");
             Log.Debug($"    break;");
+        }
+        
+        [ConCommand(commandName = "spawn_turret", flags = ConVarFlags.None, helpText = "spawn a turret !!!")]
+        public static void spawnturret(ConCommandArgs args)
+        {
+            Log.Info($"tryings to find {args[0]}.,,. ");
+            int indexTurret = -1;
+            
+            for (int i = 0; i < friendlyTurretListNames.Length; i++)
+            {
+                if (args[0] != friendlyTurretListNames[i]) continue;
+                indexTurret = i;
+                break;
+            }
+
+            if (indexTurret == -1)
+            {
+                Log.Info($"failed to find {args[0]}!! run list_turret silly ,.,.");
+            }
+            
+            Instantiate(friendlyTurretList[indexTurret], args.senderBody.footPosition, args.senderBody.transform.rotation);
+        }
+        
+        [ConCommand(commandName = "list_turret", flags = ConVarFlags.None, helpText = "list available turrets !!!")]
+        public static void listturret(ConCommandArgs args)
+        {
+            foreach (string turretName in friendlyTurretListNames)
+            {
+                Log.Info(turretName);
+            }
         }
     }
 }
