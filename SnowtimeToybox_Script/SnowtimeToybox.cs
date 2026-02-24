@@ -118,6 +118,9 @@ namespace SnowtimeToybox
         public static GameObject FriendlyTurretBreadBody;
         public static GameObject FriendlyTurretBreadMaster;
         public static GameObject FriendlyTurretBreadBroken;
+        public static GameObject FriendlyTurretBreadBeamL;
+        public static GameObject FriendlyTurretBreadBeamR;
+        
         //public static DroneDef FriendlyTurretTestDroneDef;
 
         public static List<GameObject> friendlyTurretList = [];
@@ -1067,6 +1070,10 @@ namespace SnowtimeToybox
             FriendlyTurretBreadSkillDef.activationState = new SerializableEntityStateType(typeof(FireBreadBeam));
             FriendlyTurretBreadUtilSkillDef.activationState = new SerializableEntityStateType(typeof(Shenanigans));
             FriendlyTurretBreadDef = _stcharacterAssetBundle.LoadAsset<DroneDef>(@"Assets/BreadMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Bread/_FriendlyTurretBread.asset");
+            FriendlyTurretBreadBeamL = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Bread/Skills/BreadFortuneBeamL.prefab");
+            FriendlyTurretBreadBeamR = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Bread/Skills/BreadFortuneBeamR.prefab");
+            FriendlyTurretBreadBeamL.RegisterNetworkPrefab();
+            FriendlyTurretBreadBeamR.RegisterNetworkPrefab();
             ContentAddition.AddEntityState(typeof(FireBreadBeam), out _);
             ContentAddition.AddBody(FriendlyTurretBreadBody);
             ContentAddition.AddMaster(FriendlyTurretBreadMaster);
@@ -1480,7 +1487,7 @@ namespace SnowtimeToybox
             
             for (int i = 0; i < friendlyTurretListNames.Length; i++)
             {
-                if (args[0] != friendlyTurretListNames[i]) continue;
+                if (!friendlyTurretListNames[i].ToUpper().Contains(args[0].ToUpper())) continue;
                 indexTurret = i;
                 break;
             }

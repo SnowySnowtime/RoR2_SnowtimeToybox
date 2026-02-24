@@ -19,7 +19,7 @@ namespace SnowtimeToybox.Buffs
         public override void PostCreation()
         {
             RecalculateStatsAPI.GetStatCoefficients += AddBreadTurretBuff;
-            On.RoR2.CharacterBody.FixedUpdate += BreadBuffFortuneOverlayManager;
+            //On.RoR2.CharacterBody.FixedUpdate += BreadBuffFortuneOverlayManager;
         }
 
         // I want the damage increase to only occur if the victim has a specific buff. I dont know if this code even works.
