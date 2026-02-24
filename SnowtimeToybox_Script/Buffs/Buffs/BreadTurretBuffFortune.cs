@@ -19,7 +19,7 @@ namespace SnowtimeToybox.Buffs
         public override void PostCreation()
         {
             RecalculateStatsAPI.GetStatCoefficients += AddBreadTurretBuff;
-            //On.RoR2.CharacterBody.FixedUpdate += BreadBuffFortuneOverlayManager;
+            On.RoR2.CharacterBody.FixedUpdate += BreadBuffFortuneOverlayManager;
         }
 
         // I want the damage increase to only occur if the victim has a specific buff. I dont know if this code even works.
@@ -42,6 +42,17 @@ namespace SnowtimeToybox.Buffs
             {
                 CharacterModel waow = self.modelLocator?.modelTransform?.GetComponent<CharacterModel>(); // this had an nre somewhere .,,.. 
 
+                foreach (TemporaryOverlayInstance overlay in TemporaryOverlayManager.overlayArray)
+                {
+                    if (overlay == null) continue;
+                    if (overlay.assignedCharacterModel != waow) continue;
+                    if (overlay.materialInstance.name != "matBreadFortune") continue;
+
+                    overlay.stopwatch = 0.5f;
+                    orig(self);
+                    return;
+                }
+                
                 var temporaryOverlay = TemporaryOverlayManager.AddOverlay(self.modelLocator.modelTransform.gameObject);
                 temporaryOverlay.duration = 0.5f;
                 temporaryOverlay.animateShaderAlpha = true;

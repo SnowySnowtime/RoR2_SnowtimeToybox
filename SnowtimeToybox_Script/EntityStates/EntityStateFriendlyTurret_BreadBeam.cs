@@ -249,13 +249,14 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                         targetBody.AddTimedBuff(SnowtimeToyboxMod.BreadTurretBuffFortune, 0.5f);
                     }
                     
-                    FriendlyTurretOverlayManager overlayManager = targetBody.gameObject.GetComponent<FriendlyTurretOverlayManager>();
+                    /*FriendlyTurretOverlayManager overlayManager = targetBody.gameObject.GetComponent<FriendlyTurretOverlayManager>();
                     if (overlayManager == null)
                     {
                         overlayManager = targetBody.gameObject.AddComponent<FriendlyTurretOverlayManager>();
                         overlayManager.Body = targetBody;
                     }
                     CharacterModel waow = targetBody.modelLocator?.modelTransform?.GetComponent<CharacterModel>();
+                    
                     var temporaryOverlay = TemporaryOverlayManager.AddOverlay(targetBody.modelLocator.modelTransform.gameObject);
                     temporaryOverlay.duration = Single.PositiveInfinity;
                     temporaryOverlay.animateShaderAlpha = true;
@@ -265,7 +266,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                     temporaryOverlay.inspectorCharacterModel = waow;
                     temporaryOverlay.AddToCharacterModel(waow);
                     overlayManager.Overlay.Add(temporaryOverlay);
-                    Log.Debug("addings overlay !!");
+                    Log.Debug("addings overlay !!");*/
                 }
             }
         }

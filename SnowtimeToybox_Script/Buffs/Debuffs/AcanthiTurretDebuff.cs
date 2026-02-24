@@ -67,6 +67,17 @@ namespace SnowtimeToybox.Buffs
             {
                 CharacterModel waow = self.modelLocator?.modelTransform?.GetComponent<CharacterModel>(); // this had an nre somewhere .,,.. 
 
+                foreach (TemporaryOverlayInstance overlay in TemporaryOverlayManager.overlayArray)
+                {
+                    if (overlay == null) continue;
+                    if (overlay.assignedCharacterModel != waow) continue;
+                    if (overlay.materialInstance.name != "acanthidebuffoverlay") continue;
+
+                    overlay.stopwatch = 0.5f;
+                    orig(self);
+                    return;
+                }
+                
                 var temporaryOverlay = TemporaryOverlayManager.AddOverlay(self.modelLocator.modelTransform.gameObject);
                 temporaryOverlay.duration = 0.5f;
                 temporaryOverlay.animateShaderAlpha = true;
