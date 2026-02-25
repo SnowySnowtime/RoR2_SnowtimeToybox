@@ -1262,6 +1262,23 @@ namespace SnowtimeToybox
                     temporaryOverlay.AddToCharacterModel(self);
                     friendlyTurretOverlayManager.Overlay.Add(temporaryOverlay);
                 }
+
+                if (self.body.HasBuff(BreadTurretBuffNearbyAllies))
+                {
+                    FriendlyTurretOverlayManager friendlyTurretOverlayManager = self.body.GetComponent<FriendlyTurretOverlayManager>();
+                    if (!friendlyTurretOverlayManager) friendlyTurretOverlayManager = self.body.gameObject.AddComponent<FriendlyTurretOverlayManager>();
+                    else return;
+
+                    friendlyTurretOverlayManager.Body = self.body;
+                    var temporaryOverlay = TemporaryOverlayManager.AddOverlay(self.gameObject);
+                    temporaryOverlay.duration = float.PositiveInfinity;
+                    temporaryOverlay.animateShaderAlpha = true;
+                    temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(1f, 1f, 2f, 0f);
+                    temporaryOverlay.destroyComponentOnEnd = true;
+                    temporaryOverlay.originalMaterial = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<Material>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Bread/matBreadGraceOverlay.mat");
+                    temporaryOverlay.AddToCharacterModel(self);
+                    friendlyTurretOverlayManager.Overlay.Add(temporaryOverlay);
+                }
             }
         }
 

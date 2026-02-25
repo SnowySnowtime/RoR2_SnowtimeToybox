@@ -37,7 +37,15 @@ namespace SnowtimeToybox.FriendlyTurretChecks
                             overlayInstance.Destroy();
                         }
                         break;
-                    
+
+                    case "matBreadGraceOverlay":
+                        if (!Body.HasBuff(SnowtimeToyboxMod.BreadTurretBuffNearbyAllies))
+                        {
+                            Overlay.Remove(overlayInstance);
+                            overlayInstance.Destroy();
+                        }
+                        break;
+
                     case "borboturretdebuffoverlay":
                         if (!Body.HasBuff(SnowtimeToyboxMod.BorboTurretDebuff))
                         {
