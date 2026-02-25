@@ -55,7 +55,9 @@ namespace SnowtimeToybox.Buffs
                 // waow...
                 DotController.InflictDot(ref info);
                 // Inflict it a second time if bread turret is buffing acanthi...
-                if (!characterBody.HasBuff(SnowtimeToyboxMod.BreadTurretBuffFortune)) return;
+                // Synergies arent implemented.
+                //if (!characterBody.HasBuff(SnowtimeToyboxMod.BreadTurretBuffFortune)) return;
+                if (!characterBody.HasBuff(SnowtimeToyboxMod.BreadTurretBuffNearbyAllies)) return;
                 DotController.InflictDot(ref info);
             }
         }

@@ -1,8 +1,8 @@
 using R2API;
 using RoR2;
-using SnowtimeToybox;
 using UnityEngine;
 using RoR2.Orbs;
+using MonoMod.Cil;
 
 namespace SnowtimeToybox.Buffs
 {
@@ -72,6 +72,7 @@ namespace SnowtimeToybox.Buffs
                     snowtimeOrb.attacker = pookie.gameObject;
                     snowtimeOrb.speed = 180f;
                     snowtimeOrb.snowtimeOrbType = SnowtimeOrbs.OrbTypes.ShortcakeRetaliateFriendly;
+                    snowtimeOrb.procCoefficient = 0f;
                     snowtimeOrb.damageValue = damageValue * 0.16f;
                     snowtimeOrb.isCrit = false;
                     snowtimeOrb.origin = damageInfo.position;

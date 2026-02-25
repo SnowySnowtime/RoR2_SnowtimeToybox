@@ -97,17 +97,18 @@ namespace SnowtimeToybox
                 if (!isHealing)
                 {
                     damageInfo.damage = damageValue;
+                    damageInfo.procChainMask = procChainMask;
+                    damageInfo.procCoefficient = procCoefficient;
                 }
                 else
                 {
                     healthComponent.Heal( (target.healthComponent.fullHealth * 0.025f) + damageValue, procChainMask);
+                    damageInfo.procCoefficient = 0f;
                 }
                 damageInfo.attacker = attacker;
                 damageInfo.inflictor = inflictor;
                 damageInfo.force = Vector3.zero;
                 damageInfo.crit = isCrit;
-                damageInfo.procChainMask = procChainMask;
-                damageInfo.procCoefficient = procCoefficient;
                 damageInfo.position = target.transform.position;
                 damageInfo.damageColorIndex = damageColorIndex;
                 damageInfo.damageType = damageType;
