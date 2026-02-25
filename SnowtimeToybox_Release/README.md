@@ -1,5 +1,5 @@
 # SnowtimeToybox
-adds skins for my friends and I. also adds one skill, difficulty, and a friendly turret! still working on other stuff.
+adds skins for my friends and I. also adds one skill, difficulty, and a few friendly turrets! still working on other stuff.
 - please direct any feedback to snowysnowtime in the risk of rain 2 modding discord
 
 
@@ -61,8 +61,13 @@ adds skins for my friends and I. also adds one skill, difficulty, and a friendly
 ![snowtime waow](https://github.com/SnowySnowtime/RoR2_SnowtimeToybox/blob/main/snowtimeturretpreview.jpg?raw=true)
 
 
-## Acanthi Turret
+## acanthi turret
 ![acanthi waow](https://github.com/SnowySnowtime/RoR2_SnowtimeToybox/blob/main/acanthiturretpreview.jpg?raw=true)
+
+
+## bread turret
+![bread waow](https://github.com/SnowySnowtime/RoR2_SnowtimeToybox/blob/main/breadturretpreview.jpg?raw=true)
+
 
 # Features
 

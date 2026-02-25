@@ -1,3 +1,26 @@
+`1.2.0`
+<details>
+<summary>Update Summary (includes summary of commits by users)</summary>
+
+Snowy Snowtime
+---
+- fixed inheritance for nautilus items
+- added bread turret
+- fixed shortcake turret proccing against allies it heals
+- combat turrets with "targets highest health enemy" now does just that, instead of attacking currently high health enemy overall
+- they were meant to target high value targets entirely (like bosses), this makes them no longer target beetles and vaporizing them (that fucking beetle that i hate.)
+- remove risingtides/elitevariety support
+- i suck at coding, aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+- i am now taking a 1-2 week break from working on mods
+
+icebro
+---
+- thats just how the cookie crumbles ,.., ,.,
+- fixed literally everything about bread turret (made it actually work)
+- stuff like its skill/overlays, basically made their turret functional
+- updated overlays so they arent as silly (no longer stacks, perf improvement!)
+</details>
+
 `1.1.9`
 <details>
 <summary>Update Summary (includes summary of commits by users)</summary>
