@@ -1216,7 +1216,7 @@ namespace SnowtimeToybox
                 {
                     FriendlyTurretOverlayManager friendlyTurretOverlayManager = self.body.GetComponent<FriendlyTurretOverlayManager>();
                     if (!friendlyTurretOverlayManager) friendlyTurretOverlayManager = self.body.gameObject.AddComponent<FriendlyTurretOverlayManager>();
-                    else return;
+                    if (friendlyTurretOverlayManager.hasOverlay("matBreadFortune")) return;
 
                     friendlyTurretOverlayManager.Body = self.body;
                     var temporaryOverlay = TemporaryOverlayManager.AddOverlay(self.gameObject);
@@ -1233,7 +1233,7 @@ namespace SnowtimeToybox
                 {
                     FriendlyTurretOverlayManager friendlyTurretOverlayManager = self.body.GetComponent<FriendlyTurretOverlayManager>();
                     if (!friendlyTurretOverlayManager) friendlyTurretOverlayManager = self.body.gameObject.AddComponent<FriendlyTurretOverlayManager>();
-                    else return;
+                    if (friendlyTurretOverlayManager.hasOverlay("acanthidebuffoverlay")) return;
 
                     friendlyTurretOverlayManager.Body = self.body;
                     var temporaryOverlay = TemporaryOverlayManager.AddOverlay(self.gameObject);
@@ -1250,7 +1250,7 @@ namespace SnowtimeToybox
                 {
                     FriendlyTurretOverlayManager friendlyTurretOverlayManager = self.body.GetComponent<FriendlyTurretOverlayManager>();
                     if (!friendlyTurretOverlayManager) friendlyTurretOverlayManager = self.body.gameObject.AddComponent<FriendlyTurretOverlayManager>();
-                    else return;
+                    if (friendlyTurretOverlayManager.hasOverlay("borboturretdebuffoverlay")) return;
 
                     friendlyTurretOverlayManager.Body = self.body;
                     var temporaryOverlay = TemporaryOverlayManager.AddOverlay(self.gameObject);
@@ -1267,8 +1267,8 @@ namespace SnowtimeToybox
                 {
                     FriendlyTurretOverlayManager friendlyTurretOverlayManager = self.body.GetComponent<FriendlyTurretOverlayManager>();
                     if (!friendlyTurretOverlayManager) friendlyTurretOverlayManager = self.body.gameObject.AddComponent<FriendlyTurretOverlayManager>();
-                    else return;
-
+                    if (friendlyTurretOverlayManager.hasOverlay("matBreadGraceOverlay")) return;
+                    
                     friendlyTurretOverlayManager.Body = self.body;
                     var temporaryOverlay = TemporaryOverlayManager.AddOverlay(self.gameObject);
                     temporaryOverlay.duration = float.PositiveInfinity;

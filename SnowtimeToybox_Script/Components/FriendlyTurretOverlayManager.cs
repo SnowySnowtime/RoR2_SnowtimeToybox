@@ -24,6 +24,19 @@ namespace SnowtimeToybox.FriendlyTurretChecks
             
         }
 
+        public bool hasOverlay(string matName)
+        {
+            foreach (TemporaryOverlayInstance overlayInstance in Overlay)
+            {
+                if (matName == overlayInstance.materialInstance.name)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public void FixedUpdate()
         {
             foreach (TemporaryOverlayInstance overlayInstance in Overlay.ToList())
