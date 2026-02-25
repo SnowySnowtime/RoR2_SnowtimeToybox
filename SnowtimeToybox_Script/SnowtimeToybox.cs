@@ -209,6 +209,9 @@ namespace SnowtimeToybox
             ItemTag FriendTurret_Acanthi_Whitelist = ItemAPI.AddItemTag("FriendTurret_Acanthi_Whitelist");
             Log.Debug("FriendTurret_Acanthi_Whitelist: " + FriendTurret_Acanthi_Whitelist);
 
+            ItemTag FriendTurret_Bread_Whitelist = ItemAPI.AddItemTag("FriendTurret_Bread_Whitelist");
+            Log.Debug("FriendTurret_Acanthi_Whitelist: " + FriendTurret_Bread_Whitelist);
+
             ItemTag globalWhitelist = ItemAPI.AddItemTag("GlobalFriendTurret_Whitelist");
             Log.Debug("GlobalFriendTurret_Whitelist: " + globalWhitelist);
 
@@ -296,6 +299,20 @@ namespace SnowtimeToybox
                 // DLC3
                 DLC3Content.Items.UltimateMeal,
             ];
+            ItemDef[] whitelistBreadVars = [
+                // Base
+                RoR2Content.Items.WardOnLevel,
+                RoR2Content.Items.Medkit,
+                RoR2Content.Items.BarrierOnKill,
+                RoR2Content.Items.BarrierOnOverHeal,
+                RoR2Content.Items.SprintArmor,
+                RoR2Content.Items.ArmorReductionOnHit,
+                RoR2Content.Items.IncreaseHealing,
+                // DLC1
+                // DLC2
+                DLC2Content.Items.BoostAllStats,
+                // DLC3
+            ];
             foreach (ItemDef item in whitelistGlobalTurret)
             {
                 Log.Debug("Added " + item.name + " to global friendly turret item whitelist");
@@ -318,8 +335,13 @@ namespace SnowtimeToybox
             }
             foreach (ItemDef item in whitelistAcanthiVars)
             {
-                Log.Debug("Added " + item.name + " to Acanthi Turret's item whitelist");
+                Log.Debug("Added " + item.name + " to acanthi turret's item whitelist");
                 ItemAPI.ApplyTagToItem("FriendTurret_Acanthi_Whitelist", item);
+            }
+            foreach (ItemDef item in whitelistBreadVars)
+            {
+                Log.Debug("Added " + item.name + " to bread turret's item whitelist");
+                ItemAPI.ApplyTagToItem("FriendTurret_Bread_Whitelist", item);
             }
             AddCustomTagsToModdedItems();
         }
@@ -476,6 +498,12 @@ namespace SnowtimeToybox
                     ItemAPI.ApplyTagToItem("FriendTurret_Snowtime_Whitelist", itemDef);
                     Log.Debug("Added " + itemDef.name + " to Snowtime Turret's item whitelist");
                 }
+                // bnr
+                if (itemDef.nameToken.Contains("ITEM_WoodenToolKit_Name"))
+                {
+                    ItemAPI.ApplyTagToItem("FriendTurret_Bread_Whitelist", itemDef);
+                    Log.Debug("Added " + itemDef.name + " to bread turret's item whitelist");
+                }
 
                 //// Global Turret Whitelists
 
@@ -605,7 +633,6 @@ namespace SnowtimeToybox
                     ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", itemDef);
                     Log.Debug("Added " + itemDef.name + " to global friendly turret item whitelist");
                 }
-
             }
         }
 
@@ -1116,15 +1143,18 @@ namespace SnowtimeToybox
             FriendlyTurretShortcakeBody.AddComponent<EquipmentSlot>();
             FriendlyTurretSnowtimeBody.AddComponent<EquipmentSlot>();
             FriendlyTurretAcanthiBody.AddComponent<EquipmentSlot>();
+            FriendlyTurretBreadBody.AddComponent<EquipmentSlot>();
 
             var borboInheritance = FriendlyTurretBorboMaster.AddComponent<FriendlyTurretInheritance>();
             var shortcakeInheritance = FriendlyTurretShortcakeMaster.AddComponent<FriendlyTurretInheritance>();
             var snowtimeInheritance = FriendlyTurretSnowtimeMaster.AddComponent<FriendlyTurretInheritance>();
             var acanthiInheritance = FriendlyTurretAcanthiMaster.AddComponent<FriendlyTurretInheritance>();
+            var breadInheritance = FriendlyTurretBreadMaster.AddComponent<FriendlyTurretInheritance>();
             borboInheritance.whitelistedTag = "FriendTurret_Borbo_Whitelist";
             shortcakeInheritance.whitelistedTag = "FriendTurret_Shortcake_Whitelist";
             snowtimeInheritance.whitelistedTag = "FriendTurret_Snowtime_Whitelist";
             acanthiInheritance.whitelistedTag = "FriendTurret_Acanthi_Whitelist";
+            breadInheritance.whitelistedTag = "FriendTurret_Bread_Whitelist";
 
             if (FriendlyTurretImmuneVoidDeath.Value)
             {
@@ -1132,6 +1162,7 @@ namespace SnowtimeToybox
                 FriendlyTurretShortcakeBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
                 FriendlyTurretSnowtimeBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
                 FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
+                FriendlyTurretBreadBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
             }
             if (FriendlyTurretFallImmunity.Value)
             {
@@ -1139,6 +1170,7 @@ namespace SnowtimeToybox
                 FriendlyTurretShortcakeBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
                 FriendlyTurretSnowtimeBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
                 FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
+                FriendlyTurretBreadBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
             }
             if (FriendlyTurretDrone.Value)
             {
@@ -1146,6 +1178,7 @@ namespace SnowtimeToybox
                 FriendlyTurretShortcakeBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.Drone;
                 FriendlyTurretSnowtimeBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.Drone;
                 FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.Drone;
+                FriendlyTurretBreadBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.Drone;
             }
 
             if(riskierLoaded)
@@ -1163,6 +1196,9 @@ namespace SnowtimeToybox
                 FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().baseDamage = 5f;
                 FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().baseRegen = 7f;
                 FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().baseArmor = 40f;
+                FriendlyTurretBreadBody.GetComponent<CharacterBody>().baseDamage = 20f;
+                FriendlyTurretBreadBody.GetComponent<CharacterBody>().baseRegen = 25f;
+                FriendlyTurretBreadBody.GetComponent<CharacterBody>().baseArmor = 60f;
                 // Scaling Stats
                 FriendlyTurretBorboBody.GetComponent<CharacterBody>().levelDamage = 5f;
                 FriendlyTurretBorboBody.GetComponent<CharacterBody>().levelRegen = 4f;
@@ -1176,6 +1212,9 @@ namespace SnowtimeToybox
                 FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().levelDamage = 1.25f;
                 FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().levelRegen = 1.5f;
                 FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().levelArmor = 4f;
+                FriendlyTurretBreadBody.GetComponent<CharacterBody>().levelDamage = 4f;
+                FriendlyTurretBreadBody.GetComponent<CharacterBody>().levelRegen = 5f;
+                FriendlyTurretBreadBody.GetComponent<CharacterBody>().levelArmor = 15f;
             }
 
             On.RoR2.PurchaseInteraction.GetInteractability += GetInteractabilityFriendlyTurrets;
