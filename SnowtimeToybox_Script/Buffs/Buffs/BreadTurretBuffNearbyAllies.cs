@@ -24,7 +24,7 @@ namespace SnowtimeToybox.Buffs
         {
             if (!sender.HasBuff(Buff)) return;
 
-            args.attackSpeedMultAdd *= 1.2f;
+            args.attackSpeedMultAdd += 0.2f;
             args.barrierDecayMult *= 0.33f;
         }
     }
