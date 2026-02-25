@@ -16,8 +16,7 @@ namespace SnowtimeToybox.Buffs
         public override void PostCreation()
         {
             RecalculateStatsAPI.GetStatCoefficients += AddBreadTurretBuffNearby;
-            //On.RoR2.CharacterBody.AddBuff_BuffDef += BreadSpawnGraceWard;
-            On.RoR2.CharacterBody.FixedUpdate += BreadSpawnGraceWard;
+            //On.RoR2.CharacterBody.FixedUpdate += BreadSpawnGraceWard;
         }
 
         private void AddBreadTurretBuffNearby(CharacterBody sender, StatHookEventArgs args)
@@ -27,36 +26,27 @@ namespace SnowtimeToybox.Buffs
             //args.barrierDecayMult += 0.4f;
         }
 
-        private void BreadSpawnGraceWard(On.RoR2.CharacterBody.orig_FixedUpdate orig, RoR2.CharacterBody self)
-        {
-            if (!NetworkServer.active) return;
-            if (self == null) return;
-            if (self.HasBuff(Buff))
-            {
-                //BreadGraceWardInstance = PrefabAPI.InstantiateClone(BreadGraceWard, self.baseNameToken + "_BreadGraceWard");
-                if (BreadGraceWardInstance == null)
-                {
-                    BreadGraceWardInstance = Object.Instantiate(BreadGraceWard);
-                    BreadGraceWardInstance.GetComponent<TeamFilter>().teamIndex = self.teamComponent.teamIndex;
-                    BreadGraceWardInstance.GetComponent<BuffWard>().Networkradius = 20f + self.radius;
-                    BreadGraceWardInstance.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(self.gameObject);
-                }
-            }
-            else
-            {
-                Object.Destroy(BreadGraceWardInstance);
-                BreadGraceWardInstance = null;
-            }
-            orig(self);
-        }
-
-        public void OnDisable()
-        {
-            if (BreadGraceWardInstance)
-            {
-                Object.Destroy(BreadGraceWardInstance);
-                BreadGraceWardInstance = null;
-            }
-        }
+        //private void BreadSpawnGraceWard(On.RoR2.CharacterBody.orig_FixedUpdate orig, RoR2.CharacterBody self)
+        //{
+        //    if (!NetworkServer.active) return;
+        //    if (self == null) return;
+        //    if (self.HasBuff(Buff))
+        //    {
+        //        //BreadGraceWardInstance = PrefabAPI.InstantiateClone(BreadGraceWard, self.baseNameToken + "_BreadGraceWard");
+        //        if (BreadGraceWardInstance == null)
+        //        {
+        //            BreadGraceWardInstance = Object.Instantiate(BreadGraceWard);
+        //            BreadGraceWardInstance.GetComponent<TeamFilter>().teamIndex = self.teamComponent.teamIndex;
+        //            BreadGraceWardInstance.GetComponent<BuffWard>().Networkradius = 20f + self.radius;
+        //            BreadGraceWardInstance.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(self.gameObject);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Object.Destroy(BreadGraceWardInstance);
+        //        BreadGraceWardInstance = null;
+        //    }
+        //    orig(self);
+        //}
     }
 }

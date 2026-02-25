@@ -180,7 +180,7 @@ namespace SnowtimeToybox
             
             On.RoR2.SceneDirector.Start += SceneDirectorOnStart;
             On.RoR2.CharacterBody.FixedUpdate += ShortcakeTurretHandler;
-            
+
             instance = this;
 
             var assetsFolderFullPath = Path.Combine(Path.GetDirectoryName(typeof(SnowtimeToyboxMod).Assembly.Location), "assetbundles");
@@ -1109,6 +1109,8 @@ namespace SnowtimeToybox
             breadcheck.purchaseInteraction = breadinteraction;
 
             // Add Prefabs
+            // Bread Turret has a custom component for its ward (add it here)
+            FriendlyTurretBreadBody.AddComponent<BreadTurretWard>();
             // TODO: Add these to the prefabs directly (so we dont have to add them here)
             FriendlyTurretBorboBody.AddComponent<EquipmentSlot>();
             FriendlyTurretShortcakeBody.AddComponent<EquipmentSlot>();
