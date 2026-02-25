@@ -41,15 +41,24 @@
 		"FRIENDLYTURRET_SNOWTIME_BROKEN_CONTEXT": "Repair Snowtime Turret",
 		"FRIENDLYTURRET_SNOWTIME_BROKEN_DESCRIPTION": "<style=cEvent>bwaaaa! please repair me!! it hurt...</style>\n[<style=cDeath>COMBAT</style>] <style=cIsUtility>Prioritizes</style> attacking <style="cDeath">High Value Targets</style> with the <style="cIsHealth">highest max health</style>.\nFires high-velocity <style=cIsUtility>Ice Spears</style> for <style=cIsDamage>400% damage</style> which inflicts <style=cIsDamage>Slow</style> and <style=cIsDamage>Frost</style>.\n<style=cIsUtility>Inherits</style> a curated set of items and <style=cIsDamage>any Elite Equipment</style> from the owner.",
 	
-		"FRIENDLYTURRET_ACANTHI_NAME": "Acanthi Turret",
+		"FRIENDLYTURRET_ACANTHI_NAME": "acanthi turret",
 		"FRIENDLYTURRET_ACANTHI_SUBTITLE": "not so friendlies now...",
 		"FRIENDLYTURRET_ACANTHI_FUNCTION": "Highly resilient Walking Turret, attacking enemies with a lacerating beam.",
 		"FRIENDLYTURRET_ACANTHI_DESCRIPTION": "Highly resilient Walking Turret, attacking enemies with a lacerating beam.",
-		"FRIENDLYTURRET_ACANTHI_SKILL_DESCRIPTION": "Fires a <style=cDeath>lascerating</style> <style=cIsUtility>beam</style> for <style=cIsDamage>60% damage</style> which inflicts <style=cIsDamage>Vampiric Wounds</style>, making the enemy bleed for <style=cIsDamage>25% base damage</style>.",
+		"FRIENDLYTURRET_ACANTHI_SKILL_DESCRIPTION": "Fires a <style=cDeath>lascerating</style> <style=cIsUtility>beam</style> for <style=cIsDamage>60% damage</style> which inflicts <style=cIsDamage>Vampiric Wounds</style>, making the enemy bleed for <style=cIsDamage>25% TOTAL damage</style>.",
 		
-		"FRIENDLYTURRET_ACANTHI_BROKEN_NAME": "Broken Acanthi Turret",
-		"FRIENDLYTURRET_ACANTHI_BROKEN_CONTEXT": "Repair Acanthi Turret",
+		"FRIENDLYTURRET_ACANTHI_BROKEN_NAME": "broken acanthi turret",
+		"FRIENDLYTURRET_ACANTHI_BROKEN_CONTEXT": "repair acanthi turret",
 		"FRIENDLYTURRET_ACANTHI_BROKEN_DESCRIPTION": "<style=cEvent>hjelp! please repair me!! it hurt...</style>\n[<style=cDeath>COMBAT</style>: <style=cIsHealth>DEBUFF</style>] <style=cIsUtility>Prioritizes</style> attacking <style="cDeath">High Value Targets</style> with the <style="cIsHealth">highest max health</style>.\nThis turret has <style=cIsHealing>Vampiric Desires</style>, healing itself for the <style=cDeath>damage it dealt directly to enemies</style>.\nFires a <style=cDeath>lascerating</style> <style=cIsUtility>beam</style> for <style=cIsDamage>60% damage</style> which inflicts <style=cIsDamage>Vampiric Wounds</style>, making the enemy bleed for <style=cIsDamage>25% TOTAL damage</style>.\n<style=cIsUtility>Inherits</style> a curated set of items and <style=cIsDamage>any Elite Equipment</style> from the owner.",
 	
+		"FRIENDLYTURRET_BREAD_NAME": "bread turret",
+		"FRIENDLYTURRET_BREAD_SUBTITLE": "not so friendlies now...",
+		"FRIENDLYTURRET_BREAD_FUNCTION": "Highly resilient Walking Turret, buffing nearby allies and the owner with a lucky beam.",
+		"FRIENDLYTURRET_BREAD_DESCRIPTION": "Highly resilient Walking Turret, buffing nearby allies and the owner with a lucky beam.",
+		"FRIENDLYTURRET_BREAD_SKILL_DESCRIPTION": "Fires two <style=cIsHealing>lucky beams</style> at the <style=cIsUtility>target</style>, increasing <style=cIsHealing>luck </style>by <style=cIsHealing>1</style>.",
+		
+		"FRIENDLYTURRET_BREAD_BROKEN_NAME": "broken bread turret",
+		"FRIENDLYTURRET_BREAD_BROKEN_CONTEXT": "repair bread turret ,,...,.,.,.,.",
+		"FRIENDLYTURRET_BREAD_BROKEN_DESCRIPTION": "<style=cEvent>h ,,help !! please !!!! youre right ther e!!!!!!!!!! help me !!!!!!!!!!!!!!!!!!!!!!!!! please ,,..,,. ,.., .,, ,:pleading :.,.,,.,.,.</style>\n[<style=cIsUtility>SUPPORT</style>: <style=cIsDamage>BUFF</style>] <style=cIsUtility>Prioritizes</style> <style=cIsDamage>buffing </style>the <style=cIsHealing>owner</style>.\nBuffs nearby allies within 40m with <style=cIsDamage>+20% attack speed</style> and <style=cIsHealing>x0.33 barrier decay</style>\nFires two <style=cIsHealing>lucky beams</style> at the <style=cIsUtility>target</style>, increasing <style=cIsHealing>luck </style>by <style=cIsHealing>1</style>.\n<style=cIsUtility>Inherits</style> a curated set of items and <style=cIsDamage>any Elite Equipment</style> from the owner.",
 	}
 }
