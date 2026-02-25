@@ -26,7 +26,6 @@ namespace SnowtimeToybox.FriendlyTurretChecks
 
         public void FixedUpdate()
         {
-            
             foreach (TemporaryOverlayInstance overlayInstance in Overlay.ToList())
             {
                 switch (overlayInstance.originalMaterial.name)
@@ -34,7 +33,22 @@ namespace SnowtimeToybox.FriendlyTurretChecks
                     case "matBreadFortune":
                         if (!Body.HasBuff(SnowtimeToyboxMod.BreadTurretBuffFortune))
                         {
-                            //Log.Debug("remving ,.,.");
+                            Overlay.Remove(overlayInstance);
+                            overlayInstance.Destroy();
+                        }
+                        break;
+                    
+                    case "borboturretdebuffoverlay":
+                        if (!Body.HasBuff(SnowtimeToyboxMod.BorboTurretDebuff))
+                        {
+                            Overlay.Remove(overlayInstance);
+                            overlayInstance.Destroy();
+                        }
+                        break;
+                    
+                    case "acanthidebuffoverlay":
+                        if (!Body.HasBuff(SnowtimeToyboxMod.AcanthiTurretDebuff))
+                        {
                             Overlay.Remove(overlayInstance);
                             overlayInstance.Destroy();
                         }
@@ -43,7 +57,6 @@ namespace SnowtimeToybox.FriendlyTurretChecks
             }
             if (Overlay.Count == 0)
             {
-                //Log.Debug("no more overlay manger !");
                 Destroy(this);
                 return;
             }
