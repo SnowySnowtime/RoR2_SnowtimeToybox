@@ -24,7 +24,6 @@ namespace SnowtimeToybox.Buffs
             AcanthiDot.damageColorIndex = DamageColorIndex.SuperBleed;
             AcanthiDotIndex = DotAPI.RegisterDotDef(AcanthiDot);
 
-            On.RoR2.CharacterBody.FixedUpdate += AcanthiDebuffOverlayManager;
             On.RoR2.GlobalEventManager.OnHitEnemy += AcanthiApplyDebuff;
         }
 
@@ -59,35 +58,6 @@ namespace SnowtimeToybox.Buffs
                 if (!characterBody.HasBuff(SnowtimeToyboxMod.BreadTurretBuffFortune)) return;
                 DotController.InflictDot(ref info);
             }
-        }
-
-        private void AcanthiDebuffOverlayManager(On.RoR2.CharacterBody.orig_FixedUpdate orig, RoR2.CharacterBody self)
-        {
-            if (self.modelLocator && self.modelLocator.modelTransform && self.HasBuff(Buff))
-            {
-                CharacterModel waow = self.modelLocator?.modelTransform?.GetComponent<CharacterModel>(); // this had an nre somewhere .,,.. 
-
-                foreach (TemporaryOverlayInstance overlay in TemporaryOverlayManager.overlayArray)
-                {
-                    if (overlay == null) continue;
-                    if (overlay.assignedCharacterModel != waow) continue;
-                    if (overlay.materialInstance.name != "acanthidebuffoverlay") continue;
-
-                    overlay.stopwatch = 0.5f;
-                    orig(self);
-                    return;
-                }
-                
-                var temporaryOverlay = TemporaryOverlayManager.AddOverlay(self.modelLocator.modelTransform.gameObject);
-                temporaryOverlay.duration = 0.5f;
-                temporaryOverlay.animateShaderAlpha = true;
-                temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(1f, 1f, 2f, 0f);
-                temporaryOverlay.destroyComponentOnEnd = true;
-                temporaryOverlay.originalMaterial = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<Material>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Acanthi/acanthidebuffoverlay.mat");
-                temporaryOverlay.inspectorCharacterModel = waow;
-                temporaryOverlay.AddToCharacterModel(waow);
-            }
-            orig(self);
         }
     }
 }

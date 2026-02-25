@@ -8,6 +8,7 @@ using static R2API.RecalculateStatsAPI;
 using EntityStates.BrotherMonster;
 using EntityStates.AffixVoid;
 using R2API.AddressReferencedAssets;
+using SnowtimeToybox.FriendlyTurretChecks;
 
 namespace SnowtimeToybox.Buffs
 {
@@ -19,7 +20,6 @@ namespace SnowtimeToybox.Buffs
         public override void PostCreation()
         {
             RecalculateStatsAPI.GetStatCoefficients += AddBreadTurretBuff;
-            On.RoR2.CharacterBody.FixedUpdate += BreadBuffFortuneOverlayManager;
         }
 
         // I want the damage increase to only occur if the victim has a specific buff. I dont know if this code even works.
@@ -33,37 +33,6 @@ namespace SnowtimeToybox.Buffs
             if (!buffedSelf) return;
             if (!buffedSelf.HasBuff(SnowtimeToyboxMod.AcanthiTurretBuff)) return;
             args.damageTotalMult += (damageIncrease * 0.25f);
-        }
-
-        // aetherium being based again
-        private void BreadBuffFortuneOverlayManager(On.RoR2.CharacterBody.orig_FixedUpdate orig, RoR2.CharacterBody self)
-        {
-            if(self.modelLocator && self.modelLocator.modelTransform && self.HasBuff(Buff))
-            {
-                CharacterModel waow = self.modelLocator?.modelTransform?.GetComponent<CharacterModel>(); // this had an nre somewhere .,,.. 
-
-                foreach (TemporaryOverlayInstance overlay in TemporaryOverlayManager.overlayArray)
-                {
-                    if (overlay == null) continue;
-                    if (overlay.assignedCharacterModel != waow) continue;
-                    if (overlay.materialInstance.name != "matBreadFortune") continue;
-
-                    overlay.stopwatch = 0.5f;
-                    orig(self);
-                    return;
-                }
-                
-                var temporaryOverlay = TemporaryOverlayManager.AddOverlay(self.modelLocator.modelTransform.gameObject);
-                temporaryOverlay.duration = 0.5f;
-                temporaryOverlay.animateShaderAlpha = true;
-                temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(1f, 1f, 2f, 0f);
-                temporaryOverlay.destroyComponentOnEnd = true;
-                temporaryOverlay.originalMaterial = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<Material>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Bread/matBreadFortune.mat");
-                temporaryOverlay.inspectorCharacterModel = waow;
-                temporaryOverlay.AddToCharacterModel(waow);
-            }
-            buffedSelf = self;
-            orig(self);
         }
     }
 }
