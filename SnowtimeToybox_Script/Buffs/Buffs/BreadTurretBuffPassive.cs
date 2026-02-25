@@ -1,14 +1,8 @@
 using R2API;
 using RoR2;
-using RoR2BepInExPack.GameAssetPaths.Version_1_39_0;
-using R2API.ContentManagement;
 using SnowtimeToybox;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using static R2API.RecalculateStatsAPI;
-using EntityStates.BrotherMonster;
-using EntityStates.AffixVoid;
-using R2API.AddressReferencedAssets;
 using UnityEngine.Networking;
 
 namespace SnowtimeToybox.Buffs
