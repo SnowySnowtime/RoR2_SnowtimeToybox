@@ -1216,68 +1216,72 @@ namespace SnowtimeToybox
                 {
                     FriendlyTurretOverlayManager friendlyTurretOverlayManager = self.body.GetComponent<FriendlyTurretOverlayManager>();
                     if (!friendlyTurretOverlayManager) friendlyTurretOverlayManager = self.body.gameObject.AddComponent<FriendlyTurretOverlayManager>();
-                    if (friendlyTurretOverlayManager.hasOverlay("matBreadFortune")) return;
-
-                    friendlyTurretOverlayManager.Body = self.body;
-                    var temporaryOverlay = TemporaryOverlayManager.AddOverlay(self.gameObject);
-                    temporaryOverlay.duration = float.PositiveInfinity;
-                    temporaryOverlay.animateShaderAlpha = true;
-                    temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(1f, 1f, 2f, 0f);
-                    temporaryOverlay.destroyComponentOnEnd = true;
-                    temporaryOverlay.originalMaterial = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<Material>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Bread/matBreadFortune.mat");
-                    temporaryOverlay.AddToCharacterModel(self);
-                    friendlyTurretOverlayManager.Overlay.Add(temporaryOverlay);
+                    if (!friendlyTurretOverlayManager.hasOverlay("matBreadFortune"))
+                    {
+                        friendlyTurretOverlayManager.Body = self.body;
+                        var temporaryOverlay = TemporaryOverlayManager.AddOverlay(self.gameObject);
+                        temporaryOverlay.duration = float.PositiveInfinity;
+                        temporaryOverlay.animateShaderAlpha = true;
+                        temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(1f, 1f, 2f, 0f);
+                        temporaryOverlay.destroyComponentOnEnd = true;
+                        temporaryOverlay.originalMaterial = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<Material>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Bread/matBreadFortune.mat");
+                        temporaryOverlay.AddToCharacterModel(self);
+                        friendlyTurretOverlayManager.Overlay.Add(temporaryOverlay);
+                    }
                 }
                 
                 if (self.body.HasBuff(AcanthiTurretDebuff))
                 {
                     FriendlyTurretOverlayManager friendlyTurretOverlayManager = self.body.GetComponent<FriendlyTurretOverlayManager>();
                     if (!friendlyTurretOverlayManager) friendlyTurretOverlayManager = self.body.gameObject.AddComponent<FriendlyTurretOverlayManager>();
-                    if (friendlyTurretOverlayManager.hasOverlay("acanthidebuffoverlay")) return;
-
-                    friendlyTurretOverlayManager.Body = self.body;
-                    var temporaryOverlay = TemporaryOverlayManager.AddOverlay(self.gameObject);
-                    temporaryOverlay.duration = float.PositiveInfinity;
-                    temporaryOverlay.animateShaderAlpha = true;
-                    temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(1f, 1f, 2f, 0f);
-                    temporaryOverlay.destroyComponentOnEnd = true;
-                    temporaryOverlay.originalMaterial = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<Material>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Acanthi/acanthidebuffoverlay.mat");
-                    temporaryOverlay.AddToCharacterModel(self);
-                    friendlyTurretOverlayManager.Overlay.Add(temporaryOverlay);
+                    if (!friendlyTurretOverlayManager.hasOverlay("acanthidebuffoverlay"))
+                    {
+                        friendlyTurretOverlayManager.Body = self.body;
+                        var temporaryOverlay = TemporaryOverlayManager.AddOverlay(self.gameObject);
+                        temporaryOverlay.duration = float.PositiveInfinity;
+                        temporaryOverlay.animateShaderAlpha = true;
+                        temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(1f, 1f, 2f, 0f);
+                        temporaryOverlay.destroyComponentOnEnd = true;
+                        temporaryOverlay.originalMaterial = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<Material>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Acanthi/acanthidebuffoverlay.mat");
+                        temporaryOverlay.AddToCharacterModel(self);
+                        friendlyTurretOverlayManager.Overlay.Add(temporaryOverlay);
+                    }
                 }
                 
                 if (self.body.HasBuff(BorboTurretDebuff))
                 {
                     FriendlyTurretOverlayManager friendlyTurretOverlayManager = self.body.GetComponent<FriendlyTurretOverlayManager>();
                     if (!friendlyTurretOverlayManager) friendlyTurretOverlayManager = self.body.gameObject.AddComponent<FriendlyTurretOverlayManager>();
-                    if (friendlyTurretOverlayManager.hasOverlay("borboturretdebuffoverlay")) return;
-
-                    friendlyTurretOverlayManager.Body = self.body;
-                    var temporaryOverlay = TemporaryOverlayManager.AddOverlay(self.gameObject);
-                    temporaryOverlay.duration = float.PositiveInfinity;
-                    temporaryOverlay.animateShaderAlpha = true;
-                    temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(1f, 1f, 2f, 0f);
-                    temporaryOverlay.destroyComponentOnEnd = true;
-                    temporaryOverlay.originalMaterial = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<Material>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/borboturretdebuffoverlay.mat");
-                    temporaryOverlay.AddToCharacterModel(self);
-                    friendlyTurretOverlayManager.Overlay.Add(temporaryOverlay);
+                    if (!friendlyTurretOverlayManager.hasOverlay("borboturretdebuffoverlay"))
+                    {
+                        friendlyTurretOverlayManager.Body = self.body;
+                        var temporaryOverlay = TemporaryOverlayManager.AddOverlay(self.gameObject);
+                        temporaryOverlay.duration = float.PositiveInfinity;
+                        temporaryOverlay.animateShaderAlpha = true;
+                        temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(1f, 1f, 2f, 0f);
+                        temporaryOverlay.destroyComponentOnEnd = true;
+                        temporaryOverlay.originalMaterial = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<Material>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/borboturretdebuffoverlay.mat");
+                        temporaryOverlay.AddToCharacterModel(self);
+                        friendlyTurretOverlayManager.Overlay.Add(temporaryOverlay);
+                    }
                 }
 
                 if (self.body.HasBuff(BreadTurretBuffNearbyAllies))
                 {
                     FriendlyTurretOverlayManager friendlyTurretOverlayManager = self.body.GetComponent<FriendlyTurretOverlayManager>();
                     if (!friendlyTurretOverlayManager) friendlyTurretOverlayManager = self.body.gameObject.AddComponent<FriendlyTurretOverlayManager>();
-                    if (friendlyTurretOverlayManager.hasOverlay("matBreadGraceOverlay")) return;
-                    
-                    friendlyTurretOverlayManager.Body = self.body;
-                    var temporaryOverlay = TemporaryOverlayManager.AddOverlay(self.gameObject);
-                    temporaryOverlay.duration = float.PositiveInfinity;
-                    temporaryOverlay.animateShaderAlpha = true;
-                    temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(1f, 1f, 2f, 0f);
-                    temporaryOverlay.destroyComponentOnEnd = true;
-                    temporaryOverlay.originalMaterial = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<Material>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Bread/matBreadGraceOverlay.mat");
-                    temporaryOverlay.AddToCharacterModel(self);
-                    friendlyTurretOverlayManager.Overlay.Add(temporaryOverlay);
+                    if (!friendlyTurretOverlayManager.hasOverlay("matBreadGraceOverlay"))
+                    {
+                        friendlyTurretOverlayManager.Body = self.body;
+                        var temporaryOverlay = TemporaryOverlayManager.AddOverlay(self.gameObject);
+                        temporaryOverlay.duration = float.PositiveInfinity;
+                        temporaryOverlay.animateShaderAlpha = true;
+                        temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(1f, 1f, 2f, 0f);
+                        temporaryOverlay.destroyComponentOnEnd = true;
+                        temporaryOverlay.originalMaterial = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<Material>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Bread/matBreadGraceOverlay.mat");
+                        temporaryOverlay.AddToCharacterModel(self);
+                        friendlyTurretOverlayManager.Overlay.Add(temporaryOverlay);
+                    }
                 }
             }
         }
