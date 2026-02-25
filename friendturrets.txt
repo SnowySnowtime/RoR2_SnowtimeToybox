@@ -7,6 +7,17 @@ fires a fucking laser beam that heavily debuffs a target
 
 Snowtime Turret -
 halo 3 gauss hog turret
+(add an additional skinnedmesh with multiplied cloudremap for color gradient which is defined in childlocator to disable when any elitebuff is present)
+
+Strawberry Shortcake Turret -
+Fires strawberries (razorwire) at enemies that attack the turret
+Visuals: Turret that has one plate of a slice of cake on it, which has a strawberry on it
+COMMAND: Fire strawberries at all nearby targets
+
+[SYNERGY: SNOWTIME]
+Applies a defensive buff to Snowtime Turret; reducing damage dealt by half and increasing its damage by ~15%
+The reduced damage is redirected to shortcake, whom then retaliates
+
 
 anartoast turret - [MAGENTA]
 seeker.
@@ -34,11 +45,6 @@ Activates when the minion’s owner has an Acanthi Turret minion.
 Swap its target to Acanthi Turret and follow it.
 Bread Turret will heal for 25% of all healing received by Acanthi Turret while it has Breads Fortune.
 While Breads Fortune is active, double the infliction of Vampiric Bleeding and increase base damage by 25% of Bread Turrets base damage.
-
-Strawberry Shortcake Turret -
-Fires strawberries (razorwire) at enemies that attack the turret
-Visuals: Turret that has one plate of a slice of cake on it, which has a strawberry on it
-COMMAND: Fire strawberries at all nearby targets
 
 HIFU Turret - [WHITE/PINK, REFER TO PICTURE SENT IN DM, PORTAL TURRET WITH HEART]
 uhh maybe let them charm nearby enemies, making them invincible and bringing them in with its beam/stunning them, then converting them into allies with some damage boost, with tangibility but without health decay
