@@ -86,6 +86,9 @@ Tiny turret that roots and bites its enemies
 Bard Turret/Drone -
 Turret that is a walking warbanner, playing music audible only within its zone
 
+LUNAR Turret -
+Fires a lunar flamethrower
+
 Halo Stuff (Purchaseable)
 Halo Wars Locust -
 tank turret, pulls aggro, slowest turret but is built for survivability

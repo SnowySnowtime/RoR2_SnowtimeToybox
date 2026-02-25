@@ -120,6 +120,7 @@ namespace SnowtimeToybox
         public static GameObject FriendlyTurretBreadBroken;
         public static GameObject FriendlyTurretBreadBeamL;
         public static GameObject FriendlyTurretBreadBeamR;
+        public static GameObject FriendlyTurretBreadGraceWard;
         
         //public static DroneDef FriendlyTurretTestDroneDef;
 
@@ -1074,6 +1075,8 @@ namespace SnowtimeToybox
             FriendlyTurretBreadBeamR = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Bread/Skills/BreadFortuneBeamR.prefab");
             FriendlyTurretBreadBeamL.RegisterNetworkPrefab();
             FriendlyTurretBreadBeamR.RegisterNetworkPrefab();
+            FriendlyTurretBreadGraceWard = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Bread/Buff/BreadsGraceWard.prefab");
+            FriendlyTurretBreadGraceWard.RegisterNetworkPrefab();
             ContentAddition.AddEntityState(typeof(FireBreadBeam), out _);
             ContentAddition.AddBody(FriendlyTurretBreadBody);
             ContentAddition.AddMaster(FriendlyTurretBreadMaster);
