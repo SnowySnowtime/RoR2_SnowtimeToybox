@@ -10,6 +10,16 @@ adds skins for my friends and I. also adds one skill, difficulty, and a few frie
 - You are only allowed to have one type of Friendly Turret per player.
 - Once all players collect all available Friendly Turret types, the Friendly Turrets no longer spawn until one meets a woeful end.
 - Their balancing is open to discussion! If you feel it is underwhelming/overpowered, or have other suggestions for tuning or general feedback, let me know!
+- Can also spawn on these community stages:
+- [SnowtimeStages](https://thunderstore.io/package/winterwonderland/SnowtimeStages/)
+- [WORMSWORMS' Hollow/Frozen Summit Summit](https://thunderstore.io/package/wormsworms/Hollow_Summit/)
+- [WORMSWORMS' Sunset/Midnight Tropics](https://thunderstore.io/package/wormsworms/Sunset_Tropics/)
+- [WORMSWORMS' Broadcast Perch](https://thunderstore.io/package/wormsworms/Broadcast_Perch/)
+- [WORMSWORMS' Ancient Observatory](https://thunderstore.io/package/wormsworms/Ancient_Observatory/)
+- [WORMSWORMS' Wetland Downpour](https://thunderstore.io/package/wormsworms/Wetland_Downpour/)
+- [viliger's Bobomb Battlefield](https://thunderstore.io/package/viliger/BobombBattlefield/)
+- [viliger's Catacombs](https://thunderstore.io/package/viliger/Catacombs/)
+- [Jace's Fogbound Lagoon](https://thunderstore.io/package/JaceDaDorito/FogboundLagoon/)
 
 
 ## Implemented Friendly Turrets:

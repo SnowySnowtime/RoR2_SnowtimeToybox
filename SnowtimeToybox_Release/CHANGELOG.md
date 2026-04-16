@@ -1,3 +1,25 @@
+`1.2.2`
+<details>
+<summary>Update Summary (includes summary of commits by users)</summary>
+
+Snowy Snowtime
+---
+- fixed friendly turret spawns on Pretender's Precipice
+- added turret spawns for these maps... (read below)
+- Disturbed Impact
+- [WORMSWORMS' Hollow/Frozen Summit Summit](https://thunderstore.io/package/wormsworms/Hollow_Summit/)
+- [WORMSWORMS' Sunset/Midnight Tropics](https://thunderstore.io/package/wormsworms/Sunset_Tropics/)
+- [WORMSWORMS' Broadcast Perch](https://thunderstore.io/package/wormsworms/Broadcast_Perch/)
+- [WORMSWORMS' Ancient Observatory](https://thunderstore.io/package/wormsworms/Ancient_Observatory/)
+- [WORMSWORMS' Wetland Downpour](https://thunderstore.io/package/wormsworms/Wetland_Downpour/)
+- Gold Shores
+- Commencement (Old)
+- Commencement (New)
+- Prime Meridian
+- Solutational Haunt
+</details>
+
+
 `1.2.1`
 - emergency release; snowtime projectile upgrade attempt went poorly (i do not understand unparenting and projectile ghosts)
 
