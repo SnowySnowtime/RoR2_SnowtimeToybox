@@ -752,6 +752,10 @@ namespace SnowtimeToybox
                     stagePositions.Add(new Vector3(-116.2186f, -4.684125f, -248.0959f), Quaternion.Euler(0f, 47.27631f, 0f));
                     stagePositions.Add(new Vector3(234.6463f, 48.88169f, 22.69479f), Quaternion.Euler(0f, 232.9216f, 0f));
                     break;
+                case "villagenight":
+                    stagePositions.Add(new Vector3(-116.2186f, -4.684125f, -248.0959f), Quaternion.Euler(0f, 47.27631f, 0f));
+                    stagePositions.Add(new Vector3(234.6463f, 48.88169f, 22.69479f), Quaternion.Euler(0f, 232.9216f, 0f));
+                    break;
                 // Stage 2
                 case "goolake":
                     stagePositions.Add(new Vector3(116.9908f, -91.04021f, -7.358109f), Quaternion.Euler(0f, 170.321f, 0f));
@@ -766,8 +770,9 @@ namespace SnowtimeToybox
                     stagePositions.Add(new Vector3(-71.81654f, 27.19449f, 83.8267f), Quaternion.Euler(0f, 93.52406f, 0f));
                     break;
                 case "nest":
-                    stagePositions.Add(new Vector3(-7.882278f, 166.7073f, -109.7369f), Quaternion.Euler(0f, 175.1611f, 0f));
-                    stagePositions.Add(new Vector3(-301.5674f, 104.5605f, -12.576f), Quaternion.Euler(0f, 37.47514f, 0f));
+                    stagePositions.Add(new Vector3(-188.9024f, 10.64726f, 30.56748f), Quaternion.Euler(0f, 201.877f, 0f));
+                    stagePositions.Add(new Vector3(-129.1165f, 128.4458f, -108.6409f), Quaternion.Euler(0f, 185.5041f, 0f));
+                    stagePositions.Add(new Vector3(-85.97453f, 173.3482f, 99.71858f), Quaternion.Euler(0f, 78.47749f, 0f));
                     break;
                 case "lemuriantemple":
                     stagePositions.Add(new Vector3(-4.580923f, 27.38782f, 3.959016f), Quaternion.Euler(0f, 9.96745f, 0f));
@@ -834,6 +839,22 @@ namespace SnowtimeToybox
                     stagePositions.Add(new Vector3(-569.6815f, -148.7018f, 337.3586f), Quaternion.Euler(0f, 269.8808f, 0f));
                     stagePositions.Add(new Vector3(-397.3075f, 118.8055f, -55.87037f), Quaternion.Euler(0f, 123.3015f, 0f));
                     break;
+                // Stage - SPECIAL
+                case "goldshores":
+                    stagePositions.Add(new Vector3(49.76122f, -7.326298f, -37.93284f), Quaternion.Euler(0f, 180.3956f, 0f));
+                    break;
+                case "moon":
+                    stagePositions.Add(new Vector3(274.709f, 329.6422f, 110.5199f), Quaternion.Euler(0f, 145.1531f, 0f));
+                    break;
+                case "moon2":
+                    stagePositions.Add(new Vector3(705.5821f, -157.1221f, 858.8436f), Quaternion.Euler(0f, 79.45797f, 0f));
+                    break;
+                case "meridian":
+                    stagePositions.Add(new Vector3(101.4198f, 102.1784f, -54.02138f), Quaternion.Euler(0f, 209.4111f, 0f));
+                    break;
+                case "solutionalhaunt":
+                    stagePositions.Add(new Vector3(96.6469f, -555.6259f, -107.9996f), Quaternion.Euler(0f, 245.2375f, 0f));
+                    break;
                 // Custom Stages
                 // Fogbound Lagoon - Jace
                 case "FBLScene":
@@ -848,6 +869,27 @@ namespace SnowtimeToybox
                 case "foggyswampdownpour":
                     stagePositions.Add(new Vector3(-749.5313f, 91.3914f, -2025.714f), Quaternion.Euler(0f, 227.2804f, 0f));
                     stagePositions.Add(new Vector3(-1018.735f, 76.65155f, -2313.54f), Quaternion.Euler(0f, 334.4469f, 0f));
+                    break;
+                case "broadcastperch_wormsworms":
+                    stagePositions.Add(new Vector3(50.9431f, 280.1794f, 136.6628f), Quaternion.Euler(0f, 176.2385f, 0f));
+                    stagePositions.Add(new Vector3(-126.8886f, 270.8356f, 53.03748f), Quaternion.Euler(0f, 109.5885f, 0f));
+                    stagePositions.Add(new Vector3(12.31855f, 305.7722f, -138.1022f), Quaternion.Euler(0f, 285.201f, 0f));
+                    break;
+                case "tropics_wormsworms":
+                    stagePositions.Add(new Vector3(-199.3958f, -31.72103f, -170.7593f), Quaternion.Euler(0f, 338.8611f, 0f));
+                    stagePositions.Add(new Vector3(127.7805f, 38.15013f, 158.8848f), Quaternion.Euler(0f, 121.6468f, 0f));
+                    break;
+                case "tropicsnight_wormsworms":
+                    stagePositions.Add(new Vector3(-199.3958f, -31.72103f, -170.7593f), Quaternion.Euler(0f, 338.8611f, 0f));
+                    stagePositions.Add(new Vector3(127.7805f, 38.15013f, 158.8848f), Quaternion.Euler(0f, 121.6468f, 0f));
+                    break;
+                case "hollowsummit_wormsworms":
+                    stagePositions.Add(new Vector3(-37.58895f, 106.0261f, 108.1745f), Quaternion.Euler(0f, 24.11862f, 0f));
+                    stagePositions.Add(new Vector3(160.7567f, 55.26473f, -70.89723f), Quaternion.Euler(0f, 87.57731f, 0f));
+                    break;
+                case "hollowsummitnight_wormsworms":
+                    stagePositions.Add(new Vector3(-37.58895f, 106.0261f, 108.1745f), Quaternion.Euler(0f, 24.11862f, 0f));
+                    stagePositions.Add(new Vector3(160.7567f, 55.26473f, -70.89723f), Quaternion.Euler(0f, 87.57731f, 0f));
                     break;
                 // Bobomb Battlefield - viliger
                 case "sm64_bbf_SM64_BBF":

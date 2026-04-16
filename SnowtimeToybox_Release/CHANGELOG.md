@@ -1,3 +1,7 @@
+`1.2.1`
+- emergency release; snowtime projectile upgrade attempt went poorly (i do not understand unparenting and projectile ghosts)
+
+
 `1.2.0`
 <details>
 <summary>Update Summary (includes summary of commits by users)</summary>
