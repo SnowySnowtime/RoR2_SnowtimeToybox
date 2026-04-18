@@ -244,6 +244,59 @@ namespace SnowtimeToybox
             ItemCatalog.availability.CallWhenAvailable(AddCustomTagsToItems);
             EquipmentCatalog.availability.CallWhenAvailable(AddElitesToList);
         }
+        
+        Dictionary<string, string> itemStuff = new()
+        {
+            {"ITEM_LUNARSOAP_NAME", "FriendTurret_Acanthi_Whitelist"},
+            {"SEEKINTHEVOID_STRAWPAIRY_NAME", "FriendTurret_Shortcake_Whitelist,FriendTurret_Acanthi_Whitelist"}, //seeking it ,.,.
+            {"NT_ITEM_HYDRATOOTH_NAME", "FriendTurret_Acanthi_Whitelist"}, // nautilus
+            {"NT_ITEM_SHIMMERINGNAUTILUS_NAME", "FriendTurret_Shortcake_Whitelist"},
+            {"ROB_ITEM_FIRST_AID_SPRAY_NAME", "FriendTurret_Shortcake_Whitelist"}, // rob
+            {"ROB_ITEM_PERFECT_APPLE_NAME", "FriendTurret_Shortcake_Whitelist"}, 
+            {"ITEM_BORBOFUSE", "FriendTurret_Shortcake_Whitelist,FriendTurret_Snowtime_Whitelist"}, // swansong
+            {"ITEM_CHOCYCOIN", "FriendTurret_Acanthi_Whitelist"}, 
+            {"ITEM_REWORKRACK", "FriendTurret_Acanthi_Whitelist"}, 
+            {"ITEM_ICHORVIOLET", "FriendTurret_Shortcake_Whitelist"}, 
+            {"ITEM_DESIGNANOMALY", "FriendTurret_Shortcake_Whitelist"}, 
+            {"ITEM_VOIDLASERTURBINE", "FriendTurret_Borbo_Whitelist"}, 
+            {"ITEM_GOODEXECUTIONITEM", "FriendTurret_Snowtime_Whitelist"}, 
+            {"ITEM_SANDSWEPT_AMBER_KNIFE", "FriendTurret_Acanthi_Whitelist"}, // sands, ,..,swept ,.,. 
+            {"ITEM_SANDSWEPT_BLEEDING_WITNESS", "FriendTurret_Acanthi_Whitelist"},
+            {"ITEM_SANDSWEPT_PRESERVED_ATOLL", "FriendTurret_Shortcake_Whitelist"},
+            {"ITEM_SANDSWEPT_SMOULDERING_DOCUMENT", "FriendTurret_Acanthi_Whitelist"},
+            {"Bork", "FriendTurret_Borbo_Whitelist,FriendTurret_Shortcake_Whitelist,FriendTurret_Acanthi_Whitelist"}, // idk ,.
+            {"GuinsoosRageblade", "FriendTurret_Acanthi_Whitelist"},
+            {"ImperialMandate", "FriendTurret_Acanthi_Whitelist"},
+            {"KrakenSlayer", "FriendTurret_Acanthi_Whitelist,FriendTurret_Snowtime_Whitelist"},
+            {"VV_ITEM_CRYOCANISTER_ITEM", "FriendTurret_Snowtime_Whitelist"}, //vanillas boi d.,
+            {"SS2_ITEM_ARMEDBACKPACK_NAME", "FriendTurret_Shortcake_Whitelist"}, //star my storm ,.. 
+            {"SS2_ITEM_STRANGECAN_NAME", "FriendTurret_Acanthi_Whitelist"},
+            {"SS2_ITEM_ICETOOL_NAME", "FriendTurret_Snowtime_Whitelist"},
+            {"ITEM_WoodenToolKit_Name", "FriendTurret_Bread_Whitelist"}, //bnr :plead
+            {"SEEKINTHEVOID_COASTALCORAL_NAME", "GlobalFriendTurret_Whitelist"}, // globals - seekings itt ,..
+            {"NT_ITEM_VISCOUSPOT_NAME", "GlobalFriendTurret_Whitelist"}, // globals - nauting it .,.,
+            {"NT_ITEM_MOTHEROFPEARL_NAME", "GlobalFriendTurret_Whitelist"}, 
+            {"NT_ITEM_MOBIUSNODE_NAME", "GlobalFriendTurret_Whitelist"}, 
+            {"NT_ITEM_OSMIUMSHACKLES_NAME", "GlobalFriendTurret_Whitelist"}, 
+            {"ROB_ITEM_GREENHERB_NAME", "GlobalFriendTurret_Whitelist"}, // globals - rob ,,.
+            {"ROB_ITEM_REDHERB_NAME", "GlobalFriendTurret_Whitelist"}, 
+            {"ROB_ITEM_MIXEDHERB_NAME", "GlobalFriendTurret_Whitelist"}, 
+            {"ROB_ITEM_GOLDEN_APPLE_NAME", "GlobalFriendTurret_Whitelist"}, 
+            {"ROB_ITEM_HEAVY_BOOT_NAME", "GlobalFriendTurret_Whitelist"}, 
+            {"ITEM_EGG", "GlobalFriendTurret_Whitelist"}, // globals - swan ,.,
+            {"ITEM_CUCKLER", "GlobalFriendTurret_Whitelist"}, 
+            {"ITEM_DANGERCRIT", "GlobalFriendTurret_Whitelist"}, 
+            {"ITEM_GAMMAKNIFE", "GlobalFriendTurret_Whitelist"}, 
+            {"ITEM_FROZENSHELL", "GlobalFriendTurret_Whitelist"}, 
+            {"ITEM_MASSANOMALY", "GlobalFriendTurret_Whitelist"}, 
+            {"ITEM_BLOODANOMALY", "GlobalFriendTurret_Whitelist"}, 
+            {"ITEM_BORBOBIGBATTERY", "GlobalFriendTurret_Whitelist"}, 
+            {"ITEM_BORBOMANAFLOWER", "GlobalFriendTurret_Whitelist"}, 
+            {"ITEM_SANDSWEPT_CROWNS_DIAMOND", "GlobalFriendTurret_Whitelist"}, // globals - sand my swpet, ,..
+            {"Rabadons", "GlobalFriendTurret_Whitelist"}, // globals - idk ,.
+            {"VV_ITEM_ADZE_ITEM", "GlobalFriendTurret_Whitelist"}, // globals - vanillas ,,. boid .,.
+            {"SS2_ITEM_HUNTERSSIGIL_NAME", "GlobalFriendTurret_Whitelist"}, // globals - stasrsing it ,,. by it ,.,. storm ,.,.
+        };
 
         public void AddCustomTagsToItems()
         {
@@ -377,287 +430,27 @@ namespace SnowtimeToybox
 
             foreach (ItemDef itemDef in ItemCatalog.itemDefs)
             {
-                //// turret specific whitelists
-
-                // lunar soap singleton
-                if (itemDef.nameToken.Contains("ITEM_LUNARSOAP_NAME"))
+                string whitelistKey = "";
+                
+                if (itemStuff.TryGetValue(itemDef.nameToken, out string nameToken))
                 {
-                    ItemAPI.ApplyTagToItem("FriendTurret_Acanthi_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to Acanthi Turret's item whitelist");
+                    whitelistKey = nameToken;
+                } 
+                else if (itemStuff.TryGetValue(itemDef.nameToken[..^5], out string nameTokenNoName)) // without _NAME since some are weird .,.,
+                {
+                    whitelistKey = nameTokenNoName;
                 }
-                // seeking the void
-                if (itemDef.nameToken.Contains("SEEKINTHEVOID_STRAWPAIRY_NAME"))
+                else if (itemStuff.TryGetValue(itemDef.name, out string itemDefName)) // base name since some use that ,.,.
                 {
-                    ItemAPI.ApplyTagToItem("FriendTurret_Shortcake_Whitelist", itemDef);
-                    ItemAPI.ApplyTagToItem("FriendTurret_Acanthi_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to Strawberry Shortcake Turret's item whitelist");
-                    Log.Debug("Added " + itemDef.name + " to Acanthi Turret's item whitelist");
+                    whitelistKey = itemDefName;
                 }
 
-                // nautilus
-                if (itemDef.nameToken.Contains("NT_ITEM_HYDRATOOTH_NAME"))
+                if (whitelistKey.IsNullOrWhiteSpace()) continue;
+                
+                foreach (string whitelist in whitelistKey.Split(','))
                 {
-                    ItemAPI.ApplyTagToItem("FriendTurret_Acanthi_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to Acanthi Turret's item whitelist");
-                }
-                if (itemDef.nameToken.Contains("NT_ITEM_SHIMMERINGNAUTILUS_NAME"))
-                {
-                    ItemAPI.ApplyTagToItem("FriendTurret_Shortcake_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to Strawberry Shortcake Turret's item whitelist");
-                }
-                // robitems
-                if (itemDef.nameToken.Contains("FirstAidSpray"))
-                {
-                    ItemAPI.ApplyTagToItem("FriendTurret_Shortcake_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to Strawberry Shortcake Turret's item whitelist");
-                }
-                if (itemDef.nameToken.Contains("PerfectApple"))
-                {
-                    ItemAPI.ApplyTagToItem("FriendTurret_Shortcake_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to Strawberry Shortcake Turret's item whitelist");
-                }
-                // swansong
-                if (itemDef.nameToken.Contains("ITEM_BORBOFUSE"))
-                {
-                    ItemAPI.ApplyTagToItem("FriendTurret_Shortcake_Whitelist", itemDef);
-                    ItemAPI.ApplyTagToItem("FriendTurret_Snowtime_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to Strawberry Shortcake Turret's item whitelist");
-                    Log.Debug("Added " + itemDef.name + " to Snowtime Turret's item whitelist");
-                }
-                if (itemDef.nameToken.Contains("ITEM_CHOCYCOIN"))
-                {
-                    ItemAPI.ApplyTagToItem("FriendTurret_Acanthi_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to Acanthi Turret's item whitelist");
-                }
-                if (itemDef.nameToken.Contains("ITEM_REWORKRACK"))
-                {
-                    ItemAPI.ApplyTagToItem("FriendTurret_Acanthi_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to Acanthi Turret's item whitelist");
-                }
-                if (itemDef.nameToken.Contains("ITEM_ICHORVIOLET"))
-                {
-                    ItemAPI.ApplyTagToItem("FriendTurret_Shortcake_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to Strawberry Shortcake Turret's item whitelist");
-                }
-                if (itemDef.nameToken.Contains("ITEM_DESIGNANOMALY"))
-                {
-                    ItemAPI.ApplyTagToItem("FriendTurret_Shortcake_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to Strawberry Shortcake Turret's item whitelist");
-                }
-                if (itemDef.nameToken.Contains("ITEM_VOIDLASERTURBINE"))
-                {
-                    ItemAPI.ApplyTagToItem("FriendTurret_Borbo_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to borbo turret's item whitelist");
-                }
-                if (itemDef.nameToken.Contains("ITEM_GOODEXECUTIONITEM"))
-                {
-                    ItemAPI.ApplyTagToItem("FriendTurret_Snowtime_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to Snowtime Turret's item whitelist");
-                }
-                // sandswept
-                if (itemDef.nameToken.Contains("ITEM_SANDSWEPT_AMBER_KNIFE"))
-                {
-                    ItemAPI.ApplyTagToItem("FriendTurret_Acanthi_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to Acanthi Turret's item whitelist");
-                }
-                if (itemDef.nameToken.Contains("ITEM_SANDSWEPT_BLEEDING_WITNESS"))
-                {
-                    ItemAPI.ApplyTagToItem("FriendTurret_Acanthi_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to Acanthi Turret's item whitelist");
-                }
-                if (itemDef.nameToken.Contains("ITEM_SANDSWEPT_PRESERVED_ATOLL"))
-                {
-                    ItemAPI.ApplyTagToItem("FriendTurret_Shortcake_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to Strawberry Shortcake Turret's item whitelist");
-                }
-                if (itemDef.nameToken.Contains("ITEM_SANDSWEPT_SMOULDERING_DOCUMENT"))
-                {
-                    ItemAPI.ApplyTagToItem("FriendTurret_Acanthi_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to Acanthi Turret's item whitelist");
-                }
-                // lol
-                if (itemDef.nameToken.Contains("Bork"))
-                {
-                    ItemAPI.ApplyTagToItem("FriendTurret_Borbo_Whitelist", itemDef);
-                    ItemAPI.ApplyTagToItem("FriendTurret_Snowtime_Whitelist", itemDef);
-                    ItemAPI.ApplyTagToItem("FriendTurret_Acanthi_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to borbo turret's item whitelist");
-                    Log.Debug("Added " + itemDef.name + " to Snowtime Turret's item whitelist");
-                    Log.Debug("Added " + itemDef.name + " to Acanthi Turret's item whitelist");
-                }
-                if (itemDef.nameToken.Contains("GuinsoosRageblade"))
-                {
-                    ItemAPI.ApplyTagToItem("FriendTurret_Acanthi_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to Acanthi Turret's item whitelist");
-                }
-                if (itemDef.nameToken.Contains("ImperialMandate"))
-                {
-                    ItemAPI.ApplyTagToItem("FriendTurret_Acanthi_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to Acanthi Turret's item whitelist");
-                }
-                if (itemDef.nameToken.Contains("KrakenSlayer"))
-                {
-                    ItemAPI.ApplyTagToItem("FriendTurret_Acanthi_Whitelist", itemDef);
-                    ItemAPI.ApplyTagToItem("FriendTurret_Snowtime_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to Acanthi Turret's item whitelist");
-                    Log.Debug("Added " + itemDef.name + " to Snowtime Turret's item whitelist");
-                }
-                // vanillavoid
-                if (itemDef.nameToken.Contains("VV_ITEM_CRYOCANISTER_ITEM"))
-                {
-                    ItemAPI.ApplyTagToItem("FriendTurret_Snowtime_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to Snowtime Turret's item whitelist");
-                }
-                // ss2
-                if (itemDef.nameToken.Contains("SS2_ITEM_ARMEDBACKPACK_NAME"))
-                {
-                    ItemAPI.ApplyTagToItem("FriendTurret_Shortcake_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to Strawberry Shortcake Turret's item whitelist");
-                }
-                if (itemDef.nameToken.Contains("SS2_ITEM_STRANGECAN_NAME"))
-                {
-                    ItemAPI.ApplyTagToItem("FriendTurret_Acanthi_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to Acanthi Turret's item whitelist");
-                }
-                if (itemDef.nameToken.Contains("SS2_ITEM_ICETOOL_NAME"))
-                {
-                    ItemAPI.ApplyTagToItem("FriendTurret_Snowtime_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to Snowtime Turret's item whitelist");
-                }
-                // bnr
-                if (itemDef.nameToken.Contains("ITEM_WoodenToolKit_Name"))
-                {
-                    ItemAPI.ApplyTagToItem("FriendTurret_Bread_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to bread turret's item whitelist");
-                }
-
-                //// Global Turret Whitelists
-
-                // seeking the void
-                if (itemDef.nameToken.Contains("SEEKINTHEVOID_COASTALCORAL_NAME"))
-                {
-                    ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to global friendly turret item whitelist");
-                }
-
-                // nautilus
-                if (itemDef.nameToken.Contains("NT_ITEM_VISCOUSPOT_NAME"))
-                {
-                    ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to global friendly turret item whitelist");
-                }
-                if (itemDef.nameToken.Contains("NT_ITEM_MOTHEROFPEARL_NAME"))
-                {
-                    ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to global friendly turret item whitelist");
-                }
-                if (itemDef.nameToken.Contains("NT_ITEM_MOBIUSNODE_NAME"))
-                {
-                    ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to global friendly turret item whitelist");
-                }
-                if (itemDef.nameToken.Contains("NT_ITEM_OSMIUMSHACKLES_NAME"))
-                {
-                    ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to global friendly turret item whitelist");
-                }
-                // robitems
-                if (itemDef.nameToken.Contains("GreenHerb"))
-                {
-                    ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to global friendly turret item whitelist");
-                }
-                if (itemDef.nameToken.Contains("RedHerb"))
-                {
-                    ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to global friendly turret item whitelist");
-                }
-                if (itemDef.nameToken.Contains("MixedHerb"))
-                {
-                    ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to global friendly turret item whitelist");
-                }
-                if (itemDef.nameToken.Contains("GoldenApple"))
-                {
-                    ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to global friendly turret item whitelist");
-                }
-                if (itemDef.nameToken.Contains("HeavyBoot"))
-                {
-                    ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to global friendly turret item whitelist");
-                }
-                // swansong
-                if (itemDef.nameToken.Contains("ITEM_EGG"))
-                {
-                    ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", itemDef);
-                    Log.Debug("let the swansong egg hunt begin...");
-                    Log.Debug("Added " + itemDef.name + " to global friendly turret item whitelist");
-                }
-                if (itemDef.nameToken.Contains("ITEM_CUCKLER"))
-                {
-                    ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to global friendly turret item whitelist");
-                }
-                if (itemDef.nameToken.Contains("ITEM_DANGERCRIT"))
-                {
-                    ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to global friendly turret item whitelist");
-                }
-                if (itemDef.nameToken.Contains("ITEM_GAMMAKNIFE"))
-                {
-                    ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to global friendly turret item whitelist");
-                    Log.Debug("...I dont think butter is supposed to be green...");
-                }
-                if (itemDef.nameToken.Contains("ITEM_FROZENSHELL"))
-                {
-                    ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to global friendly turret item whitelist");
-                }
-                if (itemDef.nameToken.Contains("ITEM_MASSANOMALY"))
-                {
-                    ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to global friendly turret item whitelist");
-                }
-                if (itemDef.nameToken.Contains("ITEM_BLOODANOMALY"))
-                {
-                    ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to global friendly turret item whitelist");
-                }
-                if (itemDef.nameToken.Contains("ITEM_BORBOBIGBATTERY"))
-                {
-                    ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to global friendly turret item whitelist");
-                }
-                if (itemDef.nameToken.Contains("ITEM_BORBOMANAFLOWER"))
-                {
-                    ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to global friendly turret item whitelist");
-                }
-                // sandswept
-                if (itemDef.nameToken.Contains("ITEM_SANDSWEPT_CROWNS_DIAMOND"))
-                {
-                    ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to global friendly turret item whitelist");
-                }
-                // lol
-                if (itemDef.nameToken.Contains("Rabadons"))
-                {
-                    ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to global friendly turret item whitelist");
-                }
-                // vanilla void
-                if (itemDef.nameToken.Contains("VV_ITEM_ADZE_ITEM"))
-                {
-                    ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to global friendly turret item whitelist");
-                }
-                // ss2
-                if (itemDef.nameToken.Contains("SS2_ITEM_HUNTERSSIGIL_NAME"))
-                {
-                    ItemAPI.ApplyTagToItem("GlobalFriendTurret_Whitelist", itemDef);
-                    Log.Debug("Added " + itemDef.name + " to global friendly turret item whitelist");
+                    ItemAPI.ApplyTagToItem(itemStuff[whitelist], itemDef);
+                    Log.Debug($"Added {itemDef.nameToken} to {itemStuff[whitelist]} whitelist");
                 }
             }
         }
