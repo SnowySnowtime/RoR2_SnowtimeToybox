@@ -13,7 +13,8 @@ namespace SnowtimeToybox
         {
             ShortcakeTaunt,
             ShortcakeRetaliate,
-            ShortcakeRetaliateFriendly
+            ShortcakeRetaliateFriendly,
+            TurretlingMissile
         }
 
         public float speed = 200f;
@@ -53,6 +54,10 @@ namespace SnowtimeToybox
         public static GameObject orbShortcakeTauntImpactObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Shortcake/Skills/shortcaketaunt_impacteffect.prefab");
         public GameObject orbShortcakeTauntPrefab = orbShortcakeTauntObject;
 
+        public static GameObject orbTurretlingMissileObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/turretling_orbeffect.prefab");
+        public static GameObject orbTurretlingMissileImpactObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/turretling_impacteffect.prefab");
+        public GameObject orbTurretlingMissilePrefab = orbTurretlingMissileObject;
+
         public override void Begin()
         {
             base.duration = Mathf.Max(this.distanceToTarget / this.speed, 0.1f);;
@@ -72,6 +77,11 @@ namespace SnowtimeToybox
                 case OrbTypes.ShortcakeRetaliateFriendly:
                     orbasset = orbShortcakeRetaliateFriendlyPrefab;
                     isHealing = true;
+                    isElectric = false;
+                    break;
+                case OrbTypes.TurretlingMissile:
+                    orbasset = orbTurretlingMissilePrefab;
+                    isHealing = false;
                     isElectric = false;
                     break;
             }

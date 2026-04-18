@@ -121,7 +121,19 @@ namespace SnowtimeToybox
         public static GameObject FriendlyTurretBreadBeamL;
         public static GameObject FriendlyTurretBreadBeamR;
         public static GameObject FriendlyTurretBreadGraceWard;
-        
+        // turretlings
+        public static DroneDef FriendlyTurretTurretlingDef;
+        public static InteractableSpawnCard FriendlyTurretTurretlingIsc;
+        public static SkillFamily FriendlyTurretTurretlingPrimarySkillFamily;
+        public static SkillFamily FriendlyTurretTurretlingSecondarySkillFamily;
+        public static SkillFamily FriendlyTurretTurretlingUtilSkillFamily;
+        public static SkillDef FriendlyTurretTurretlingPrimarySkillDef;
+        public static SkillDef FriendlyTurretTurretlingSecondarySkillDef;
+        public static SkillDef FriendlyTurretTurretlingUtilSkillDef;
+        public static GameObject FriendlyTurretTurretlingBody;
+        public static GameObject FriendlyTurretTurretlingMaster;
+        public static GameObject FriendlyTurretTurretlingBroken;
+
         //public static DroneDef FriendlyTurretTestDroneDef;
 
         public static List<GameObject> friendlyTurretList = [];
@@ -1152,7 +1164,76 @@ namespace SnowtimeToybox
             ContentAddition.AddSkillFamily(FriendlyTurretBreadSkillFamily);
             ContentAddition.AddSkillDef(FriendlyTurretBreadSkillDef);
 
+            // add turretling
+            Log.Debug("Defining Turretling(s)...");
+            FriendlyTurretTurretlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/_TurretlingBody.prefab");
+            FriendlyTurretTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/_TurretlingMaster.prefab");
+            FriendlyTurretTurretlingPrimarySkillFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/TurretlingPrimaryFamily.asset");
+            FriendlyTurretTurretlingPrimarySkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/Turretling_Primary.asset");
+            FriendlyTurretTurretlingPrimarySkillDef.activationState = new SerializableEntityStateType(typeof(TurretlingBlaster));
+            FriendlyTurretTurretlingSecondarySkillFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/TurretlingSecondaryFamily.asset");
+            FriendlyTurretTurretlingSecondarySkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/Turretling_Secondary.asset");
+            FriendlyTurretTurretlingSecondarySkillDef.activationState = new SerializableEntityStateType(typeof(TurretlingMissile));
+            FriendlyTurretTurretlingUtilSkillFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/TurretlingUtilityFamily.asset");
+            FriendlyTurretTurretlingUtilSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/TurretlingShenanigans.asset");
+            FriendlyTurretTurretlingUtilSkillDef.activationState = new SerializableEntityStateType(typeof(Shenanigans));
+            FriendlyTurretTurretlingDef = _stcharacterAssetBundle.LoadAsset<DroneDef>(@"Assets/BreadMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/_FriendlyTurretling.asset");
+            ContentAddition.AddEntityState(typeof(TurretlingBlaster), out _);
+            ContentAddition.AddEntityState(typeof(TurretlingMissile), out _);
+            ContentAddition.AddBody(FriendlyTurretTurretlingBody);
+            ContentAddition.AddMaster(FriendlyTurretTurretlingMaster);
+            ContentAddition.AddSkillFamily(FriendlyTurretTurretlingPrimarySkillFamily);
+            ContentAddition.AddSkillDef(FriendlyTurretTurretlingPrimarySkillDef);
+            ContentAddition.AddSkillFamily(FriendlyTurretTurretlingSecondarySkillFamily);
+            ContentAddition.AddSkillDef(FriendlyTurretTurretlingSecondarySkillDef);
+            ContentAddition.AddEffect(SnowtimeOrbs.orbTurretlingMissileObject);
+            ContentAddition.AddEffect(SnowtimeOrbs.orbTurretlingMissileImpactObject);
+
             ContentAddition.AddEntityState(typeof(Shenanigans), out _);
+
+            // Add the Turretling to stages interactable spawncards, as it is a standard walking turret and NOT a Friendly Turret, as its internal name may imply
+            FriendlyTurretTurretlingBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/_mdlTurretlingBroken.prefab");
+            FriendlyTurretTurretlingIsc = _stcharacterAssetBundle.LoadAsset<InteractableSpawnCard>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/_iscBrokenTurretling.asset");
+            ContentAddition.AddNetworkedObject(FriendlyTurretTurretlingBroken);
+            var directorCardFriendlyTurretTurretling = new DirectorCard // Borbo Turret Interactable
+            {
+                spawnCard = FriendlyTurretTurretlingIsc,
+                selectionWeight = 1000, // the higher it is, the more common it is
+                spawnDistance = DirectorCore.MonsterSpawnDistance.Standard,
+                minimumStageCompletions = 0,
+                preventOverhead = false
+            };
+            Log.Debug("Borbo Turret Director Card Info");
+            Log.Debug("spawnCard = " + directorCardFriendlyTurretTurretling.spawnCard);
+            Log.Debug("selectionWeight = " + directorCardFriendlyTurretTurretling.selectionWeight);
+            Log.Debug("spawnDistance = " + directorCardFriendlyTurretTurretling.spawnDistance);
+            Log.Debug("minimumStageCompletions = " + directorCardFriendlyTurretTurretling.minimumStageCompletions);
+            Log.Debug("preventOverhead = " + directorCardFriendlyTurretTurretling.preventOverhead);
+            var directorCardHolderFriendlyTurretTurretling = new DirectorAPI.DirectorCardHolder
+            {
+                Card = directorCardFriendlyTurretTurretling,
+                //CustomInteractableCategory = "SnowtimeFriendlyTurrets",
+                InteractableCategory = DirectorAPI.InteractableCategory.Drones
+                //InteractableCategorySelectionWeight = 1000,
+            };
+
+            List<DirectorAPI.Stage> turretlingStageList = new List<DirectorAPI.Stage>();
+
+            turretlingStageList.Add(DirectorAPI.Stage.TitanicPlains);
+            turretlingStageList.Add(DirectorAPI.Stage.AbandonedAqueduct);
+            turretlingStageList.Add(DirectorAPI.Stage.WetlandAspect);
+            turretlingStageList.Add(DirectorAPI.Stage.AphelianSanctuary);
+            turretlingStageList.Add(DirectorAPI.Stage.RallypointDelta);
+            turretlingStageList.Add(DirectorAPI.Stage.ScorchedAcres);
+            turretlingStageList.Add(DirectorAPI.Stage.SirensCall);
+            turretlingStageList.Add(DirectorAPI.Stage.ConduitCanyon);
+            turretlingStageList.Add(DirectorAPI.Stage.SkyMeadow);
+
+            foreach (DirectorAPI.Stage stage in turretlingStageList)
+            {
+                Log.Debug("Adding Friendly Turrets to stage: " + stage);
+                DirectorAPI.Helpers.AddNewInteractableToStage(directorCardHolderFriendlyTurretTurretling, stage);
+            }
 
             // Friendly Turret Interactables
             Log.Debug("Adding Friendly Turrets Interactables to Stages");
@@ -1186,17 +1267,20 @@ namespace SnowtimeToybox
             FriendlyTurretSnowtimeBody.AddComponent<EquipmentSlot>();
             FriendlyTurretAcanthiBody.AddComponent<EquipmentSlot>();
             FriendlyTurretBreadBody.AddComponent<EquipmentSlot>();
+            FriendlyTurretTurretlingBody.AddComponent<TurretlingMissileTracker>();
 
             var borboInheritance = FriendlyTurretBorboMaster.AddComponent<FriendlyTurretInheritance>();
             var shortcakeInheritance = FriendlyTurretShortcakeMaster.AddComponent<FriendlyTurretInheritance>();
             var snowtimeInheritance = FriendlyTurretSnowtimeMaster.AddComponent<FriendlyTurretInheritance>();
             var acanthiInheritance = FriendlyTurretAcanthiMaster.AddComponent<FriendlyTurretInheritance>();
             var breadInheritance = FriendlyTurretBreadMaster.AddComponent<FriendlyTurretInheritance>();
+            var turretlingInheritance = FriendlyTurretTurretlingMaster.AddComponent<FriendlyTurretInheritance>();
             borboInheritance.whitelistedTag = "FriendTurret_Borbo_Whitelist";
             shortcakeInheritance.whitelistedTag = "FriendTurret_Shortcake_Whitelist";
             snowtimeInheritance.whitelistedTag = "FriendTurret_Snowtime_Whitelist";
             acanthiInheritance.whitelistedTag = "FriendTurret_Acanthi_Whitelist";
             breadInheritance.whitelistedTag = "FriendTurret_Bread_Whitelist";
+            turretlingInheritance.whitelistedTag = "FriendTurret_Turretling_Whitelist";
 
             if (FriendlyTurretImmuneVoidDeath.Value)
             {
@@ -1205,6 +1289,7 @@ namespace SnowtimeToybox
                 FriendlyTurretSnowtimeBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
                 FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
                 FriendlyTurretBreadBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
+                FriendlyTurretTurretlingBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
             }
             if (FriendlyTurretFallImmunity.Value)
             {
@@ -1213,6 +1298,7 @@ namespace SnowtimeToybox
                 FriendlyTurretSnowtimeBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
                 FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
                 FriendlyTurretBreadBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
+                FriendlyTurretTurretlingBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
             }
             if (FriendlyTurretDrone.Value)
             {
@@ -1221,6 +1307,7 @@ namespace SnowtimeToybox
                 FriendlyTurretSnowtimeBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.Drone;
                 FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.Drone;
                 FriendlyTurretBreadBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.Drone;
+                FriendlyTurretTurretlingBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.Drone;
             }
 
             if(riskierLoaded)
