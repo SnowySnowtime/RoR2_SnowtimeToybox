@@ -293,7 +293,7 @@ namespace SnowtimeToybox
             {"ITEM_BORBOBIGBATTERY", "GlobalFriendTurret_Whitelist"}, 
             {"ITEM_BORBOMANAFLOWER", "GlobalFriendTurret_Whitelist"}, 
             {"ITEM_SANDSWEPT_CROWNS_DIAMOND", "GlobalFriendTurret_Whitelist"}, // globals - sand my swpet, ,..
-            {"Rabadons", "GlobalFriendTurret_Whitelist"}, // globals - idk ,.
+            {"Rabadons", "GlobalFriendTurret_Whitelist"}, // globals - idk ,. -- this is league of legends items :wilted_rose:
             {"VV_ITEM_ADZE_ITEM", "GlobalFriendTurret_Whitelist"}, // globals - vanillas ,,. boid .,.
             {"SS2_ITEM_HUNTERSSIGIL_NAME", "GlobalFriendTurret_Whitelist"}, // globals - stasrsing it ,,. by it ,.,. storm ,.,.
         };
@@ -1008,14 +1008,37 @@ namespace SnowtimeToybox
             SnowtimeTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/_TurretlingMaster_Snowtime.prefab");
             ContentAddition.AddBody(AcanthiTurretlingBody);
             ContentAddition.AddMaster(AcanthiTurretlingMaster);
+            ContentAddition.AddEffect(TurretlingBlaster.muzzlefx_acanthi);
+            ContentAddition.AddEffect(TurretlingBlaster.hitfx_acanthi);
+            ContentAddition.AddEffect(TurretlingBlaster.tracerfx_acanthi);
+            ContentAddition.AddEffect(SnowtimeOrbs.orbAcanthilingMissileObject);
+            ContentAddition.AddEffect(SnowtimeOrbs.orbAcanthilingMissileImpactObject);
             ContentAddition.AddBody(BorboTurretlingBody);
             ContentAddition.AddMaster(BorboTurretlingMaster);
+            ContentAddition.AddEffect(TurretlingBlaster.muzzlefx_borbo);
+            ContentAddition.AddEffect(TurretlingBlaster.hitfx_borbo);
+            ContentAddition.AddEffect(TurretlingBlaster.tracerfx_borbo);
+            ContentAddition.AddEffect(SnowtimeOrbs.orbBorbolingMissileObject);
+            ContentAddition.AddEffect(SnowtimeOrbs.orbBorbolingMissileImpactObject);
             ContentAddition.AddBody(BreadTurretlingBody);
             ContentAddition.AddMaster(BreadTurretlingMaster);
+            ContentAddition.AddEffect(TurretlingBlaster.hitfx_bread);
+            ContentAddition.AddEffect(SnowtimeOrbs.orbBreadlingMissileObject);
+            ContentAddition.AddEffect(SnowtimeOrbs.orbBreadlingMissileImpactObject);
             ContentAddition.AddBody(ShortcakeTurretlingBody);
             ContentAddition.AddMaster(ShortcakeTurretlingMaster);
+            ContentAddition.AddEffect(TurretlingBlaster.muzzlefx_shortcake);
+            ContentAddition.AddEffect(TurretlingBlaster.hitfx_shortcake);
+            ContentAddition.AddEffect(TurretlingBlaster.tracerfx_shortcake);
+            ContentAddition.AddEffect(SnowtimeOrbs.orbShortcakelingMissileObject);
+            ContentAddition.AddEffect(SnowtimeOrbs.orbShortcakelingMissileImpactObject);
             ContentAddition.AddBody(SnowtimeTurretlingBody);
             ContentAddition.AddMaster(SnowtimeTurretlingMaster);
+            ContentAddition.AddEffect(TurretlingBlaster.muzzlefx_snowtime);
+            ContentAddition.AddEffect(TurretlingBlaster.hitfx_snowtime);
+            ContentAddition.AddEffect(TurretlingBlaster.tracerfx_snowtime);
+            ContentAddition.AddEffect(SnowtimeOrbs.orbSnowtimelingMissileObject);
+            ContentAddition.AddEffect(SnowtimeOrbs.orbSnowtimelingMissileImpactObject);
 
             ContentAddition.AddEntityState(typeof(Shenanigans), out _);
 
@@ -1115,7 +1138,13 @@ namespace SnowtimeToybox
             FriendlyTurretSnowtimeBody.AddComponent<EquipmentSlot>();
             FriendlyTurretAcanthiBody.AddComponent<EquipmentSlot>();
             FriendlyTurretBreadBody.AddComponent<EquipmentSlot>();
+            // turretlings
             FriendlyTurretTurretlingBody.AddComponent<TurretlingMissileTracker>();
+            AcanthiTurretlingBody.AddComponent<TurretlingMissileTracker>();
+            BorboTurretlingBody.AddComponent<TurretlingMissileTracker>();
+            BreadTurretlingBody.AddComponent<TurretlingMissileTracker>();
+            ShortcakeTurretlingBody.AddComponent<TurretlingMissileTracker>();
+            SnowtimeTurretlingBody.AddComponent<TurretlingMissileTracker>();
 
             var borboInheritance = FriendlyTurretBorboMaster.AddComponent<FriendlyTurretInheritance>();
             var shortcakeInheritance = FriendlyTurretShortcakeMaster.AddComponent<FriendlyTurretInheritance>();

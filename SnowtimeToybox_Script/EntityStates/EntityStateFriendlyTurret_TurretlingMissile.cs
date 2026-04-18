@@ -65,7 +65,30 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             if (NetworkServer.active)
             {
                 SnowtimeOrbs snowtimeOrb = new SnowtimeOrbs();
-                snowtimeOrb.snowtimeOrbType = SnowtimeOrbs.OrbTypes.TurretlingMissile;
+                if(base.gameObject.name.Contains("Acanthi"))
+                {
+                    snowtimeOrb.snowtimeOrbType = SnowtimeOrbs.OrbTypes.TurretlingMissile_Acanthi;
+                }
+                else if (base.gameObject.name.Contains("Borbo"))
+                {
+                    snowtimeOrb.snowtimeOrbType = SnowtimeOrbs.OrbTypes.TurretlingMissile_Borbo;
+                }
+                else if (base.gameObject.name.Contains("Bread"))
+                {
+                    snowtimeOrb.snowtimeOrbType = SnowtimeOrbs.OrbTypes.TurretlingMissile_Bread;
+                }
+                else if (base.gameObject.name.Contains("Shortcake"))
+                {
+                    snowtimeOrb.snowtimeOrbType = SnowtimeOrbs.OrbTypes.TurretlingMissile_Shortcake;
+                }
+                else if (base.gameObject.name.Contains("Snowtime"))
+                {
+                    snowtimeOrb.snowtimeOrbType = SnowtimeOrbs.OrbTypes.TurretlingMissile_Snowtime;
+                }
+                else
+                {
+                    snowtimeOrb.snowtimeOrbType = SnowtimeOrbs.OrbTypes.TurretlingMissile;
+                }
                 snowtimeOrb.damageValue = base.characterBody.damage * orbDamageCoefficient;
                 snowtimeOrb.isCrit = isCrit;
                 snowtimeOrb.teamIndex = TeamComponent.GetObjectTeam(base.gameObject);

@@ -14,7 +14,12 @@ namespace SnowtimeToybox
             ShortcakeTaunt,
             ShortcakeRetaliate,
             ShortcakeRetaliateFriendly,
-            TurretlingMissile
+            TurretlingMissile,
+            TurretlingMissile_Acanthi,
+            TurretlingMissile_Borbo,
+            TurretlingMissile_Bread,
+            TurretlingMissile_Shortcake,
+            TurretlingMissile_Snowtime
         }
 
         public float speed = 200f;
@@ -58,6 +63,26 @@ namespace SnowtimeToybox
         public static GameObject orbTurretlingMissileImpactObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/turretling_impacteffect.prefab");
         public GameObject orbTurretlingMissilePrefab = orbTurretlingMissileObject;
 
+        public static GameObject orbAcanthilingMissileObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx__Missile_Orb_Acanthiling.prefab");
+        public static GameObject orbAcanthilingMissileImpactObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx__Missile_Impact_Acanthiling.prefab");
+        public GameObject orbAcanthilingMissilePrefab = orbAcanthilingMissileObject;
+
+        public static GameObject orbBorbolingMissileObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx__Missile_Orb_Borboling.prefab");
+        public static GameObject orbBorbolingMissileImpactObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx__Missile_Impact_Borboling.prefab");
+        public GameObject orbBorbolingMissilePrefab = orbBorbolingMissileObject;
+
+        public static GameObject orbBreadlingMissileObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx__Missile_Orb_Breadling.prefab");
+        public static GameObject orbBreadlingMissileImpactObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx__Missile_Impact_Breadling.prefab");
+        public GameObject orbBreadlingMissilePrefab = orbBreadlingMissileObject;
+
+        public static GameObject orbShortcakelingMissileObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx__Missile_Orb_Shortcakeling.prefab");
+        public static GameObject orbShortcakelingMissileImpactObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx__Missile_Impact_Shortcakeling.prefab");
+        public GameObject orbShortcakelingMissilePrefab = orbShortcakelingMissileObject;
+
+        public static GameObject orbSnowtimelingMissileObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx__Missile_Orb_Snowtimeling.prefab");
+        public static GameObject orbSnowtimelingMissileImpactObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx__Missile_Impact_Snowtimeling.prefab");
+        public GameObject orbSnowtimelingMissilePrefab = orbSnowtimelingMissileObject;
+
         public override void Begin()
         {
             base.duration = Mathf.Max(this.distanceToTarget / this.speed, 0.1f);;
@@ -81,6 +106,31 @@ namespace SnowtimeToybox
                     break;
                 case OrbTypes.TurretlingMissile:
                     orbasset = orbTurretlingMissilePrefab;
+                    isHealing = false;
+                    isElectric = false;
+                    break;
+                case OrbTypes.TurretlingMissile_Acanthi:
+                    orbasset = orbAcanthilingMissilePrefab;
+                    isHealing = false;
+                    isElectric = false;
+                    break;
+                case OrbTypes.TurretlingMissile_Borbo:
+                    orbasset = orbBorbolingMissilePrefab;
+                    isHealing = false;
+                    isElectric = false;
+                    break;
+                case OrbTypes.TurretlingMissile_Bread:
+                    orbasset = orbBreadlingMissilePrefab;
+                    isHealing = false;
+                    isElectric = false;
+                    break;
+                case OrbTypes.TurretlingMissile_Shortcake:
+                    orbasset = orbShortcakelingMissilePrefab;
+                    isHealing = false;
+                    isElectric = false;
+                    break;
+                case OrbTypes.TurretlingMissile_Snowtime:
+                    orbasset = orbSnowtimelingMissilePrefab;
                     isHealing = false;
                     isElectric = false;
                     break;
