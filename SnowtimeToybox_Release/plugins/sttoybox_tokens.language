@@ -60,5 +60,45 @@
 		"FRIENDLYTURRET_BREAD_BROKEN_NAME": "broken bread turret",
 		"FRIENDLYTURRET_BREAD_BROKEN_CONTEXT": "repair bread turret ,,...,.,.,.,.",
 		"FRIENDLYTURRET_BREAD_BROKEN_DESCRIPTION": "<style=cEvent>h ,,help !! please !!!! youre right ther e!!!!!!!!!! help me !!!!!!!!!!!!!!!!!!!!!!!!! please ,,..,,. ,.., .,, ,:pleading :.,.,,.,.,.</style>\n[<style=cIsUtility>SUPPORT</style>: <style=cIsDamage>BUFF</style>] <style=cIsUtility>Prioritizes</style> <style=cIsDamage>buffing </style>the <style=cIsHealing>owner</style>.\nBuffs nearby allies within 40m with <style=cIsDamage>+20% attack speed</style> and <style=cIsHealing>x0.33 barrier decay</style>\nFires two <style=cIsHealing>lucky beams</style> at the <style=cIsUtility>target</style>, increasing <style=cIsHealing>luck </style>by <style=cIsHealing>1</style>.\n<style=cIsUtility>Inherits</style> a curated set of items and <style=cIsDamage>any Elite Equipment</style> from the owner.",
+	
+		"TURRETLING_NAME": "Turretling",
+		"TURRETLING_SUBTITLE": "not so cute now...",
+		"TURRETLING_FUNCTION": "Tiny walking turret which assists the user in damage.",
+		"TURRETLING_DESCRIPTION": "Tiny, distracting, walking turret which assists the user in damage.",
+		"TURRETLING_SKILL_DESCRIPTION": "Fires a blaster for <style=cIsDamage>100% damage</style>.\nOccassionally fires its pixi launcher for <style=cIsDamage>200% damage</style>.",
+		
+		"TURRETLING_BROKEN_NAME": "Broken Turretling",
+		"TURRETLING_BROKEN_CONTEXT": "Repair the cute Turretling...",
+		"TURRETLING_BROKEN_DESCRIPTION": "[<style="cIsUtility">SUPPORT</style>: <style=cDeath>COMBAT</style>] Uses the standard targeting system; attacking its nearest enemy.\nFires a blaster for <style=cIsDamage>100% damage</style>.\nOccassionally fires its pixi launcher for <style=cIsDamage>200% damage</style>.\n<style=cIsUtility>Inherits</style> <style=cIsDamage>any Elite Equipment</style> from the owner.",
+		
+		"ACANTHI_TURRETLING_NAME": "Canthiling Turret",
+		"ACANTHI_TURRETLING_SUBTITLE": "not so cute now...",
+		"ACANTHI_TURRETLING_FUNCTION": "Tiny walking turret which assists the user in damage.",
+		"ACANTHI_TURRETLING_DESCRIPTION": "Tiny, distracting, walking turret which assists the user in damage.",
+		"ACANTHI_TURRETLING_SKILL_DESCRIPTION": "Fires a blaster for <style=cIsDamage>100% damage</style>.\nOccassionally fires its pixi launcher for <style=cIsDamage>200% damage</style>.",
+		
+		"BORBO_TURRETLING_NAME": "Borboling Turret",
+		"BORBO_TURRETLING_SUBTITLE": "not so cute now...",
+		"BORBO_TURRETLING_FUNCTION": "Tiny walking turret which assists the user in damage.",
+		"BORBO_TURRETLING_DESCRIPTION": "Tiny, distracting, walking turret which assists the user in damage.",
+		"BORBO_TURRETLING_SKILL_DESCRIPTION": "Fires a blaster for <style=cIsDamage>100% damage</style>.\nOccassionally fires its pixi launcher for <style=cIsDamage>200% damage</style>.",
+		
+		"BREAD_TURRETLING_NAME": "Breadling Turret",
+		"BREAD_TURRETLING_SUBTITLE": "not so cute now...",
+		"BREAD_TURRETLING_FUNCTION": "Tiny walking turret which assists the user in damage.",
+		"BREAD_TURRETLING_DESCRIPTION": "Tiny, distracting, walking turret which assists the user in damage.",
+		"BREAD_TURRETLING_SKILL_DESCRIPTION": "Fires a blaster for <style=cIsDamage>100% damage</style>.\nOccassionally fires its pixi launcher for <style=cIsDamage>200% damage</style>.",
+		
+		"SHORTCAKE_TURRETLING_NAME": "Cakeling Turret",
+		"SHORTCAKE_TURRETLING_SUBTITLE": "not so cute now...",
+		"SHORTCAKE_TURRETLING_FUNCTION": "Tiny walking turret which assists the user in damage.",
+		"SHORTCAKE_TURRETLING_DESCRIPTION": "Tiny, distracting, walking turret which assists the user in damage.",
+		"SHORTCAKE_TURRETLING_SKILL_DESCRIPTION": "Fires a blaster for <style=cIsDamage>100% damage</style>.\nOccassionally fires its pixi launcher for <style=cIsDamage>200% damage</style>.",
+		
+		"SNOWTIME_TURRETLING_NAME": "Snowtimeling Turret",
+		"SNOWTIME_TURRETLING_SUBTITLE": "not so cute now...",
+		"SNOWTIME_TURRETLING_FUNCTION": "Tiny walking turret which assists the user in damage.",
+		"SNOWTIME_TURRETLING_DESCRIPTION": "Tiny, distracting, walking turret which assists the user in damage.",
+		"SNOWTIME_TURRETLING_SKILL_DESCRIPTION": "Fires a shotgun blaster for <style=cIsDamage>20(x15)% damage</style>.\nOccassionally fires its pixi launcher for <style=cIsDamage>200% damage</style>.",
 	}
 }
