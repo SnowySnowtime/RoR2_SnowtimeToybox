@@ -164,6 +164,7 @@ namespace SnowtimeToybox
 
         public static ConfigEntry<bool> ToggleSpawnMessages { get; set; }
         public static ConfigEntry<bool> FriendlyTurretImmuneVoidDeath { get; set; }
+        public static ConfigEntry<bool> TurretlingImmuneVoidDeath { get; set; }
         public static ConfigEntry<bool> FriendlyTurretFallImmunity { get; set; }
         public static ConfigEntry<bool> FriendlyTurretDrone { get; set; }
         public static ConfigEntry<bool> FriendlyTurretShortcakeAggroType { get; set; }
@@ -179,6 +180,7 @@ namespace SnowtimeToybox
             FriendlyTurretShortcakeAggroType = Config.Bind("Friendly Turret Functions", "Strawberry Shortcake Aggro Method", false, "If true, the Strawberry Shortcake Turret will spawn with a native increase to its aggro. Else, it only gains aggro for ~0.5s when its main skill fires.");
             FriendlyTurretReducedCostForPartnersOrSelf = Config.Bind("Friendly Turret Functions", "Reduced Cost...", false, "[This does not reduce cost for EVERYONE] If true, Friendly Turrets have their costs reduced by half for: Individuals referenced by the turret / Significant Other of referenced individual by the turret. It felt necessary to have as an option to prevent favoritism or issues with using steamids to determine costs of the interactable. This was added by majority request.");
             FriendlyTurretImmuneVoidDeath = Config.Bind("Friendly Turret Flags", "Void Death Immunity", true, "If true, Friendly Turrets are immune to Void Death (Void Reaver implosions), this is because they are awful at avoiding them even with mods to make allies avoid them, and we get sad when they are detained.");
+            TurretlingImmuneVoidDeath = Config.Bind("Turretling Flags", "Void Death Immunity", false, "If true, All turretlings are immune to Void Death (Void Reaver implosions), this is because they are awful at avoiding them even with mods to make allies avoid them, and we get sad when they are detained.");
             FriendlyTurretFallImmunity = Config.Bind("Friendly Turret Flags", "Fall Damage Immunity", true, "If true, Friendly Turrets are immune to fall damage, as navigating some maps can be a little difficult for them. Prevents any unexpected turret deaths, as we cant simply 'replace' them like Engineer can.");
             FriendlyTurretDrone = Config.Bind("Friendly Turret Flags", "Drone", false, "If true, Friendly Turrets are flagged as drones. Probably comes with some oddities.");
             Language.collectLanguageRootFolders += CollectLanguageRootFolders;
@@ -1190,6 +1192,10 @@ namespace SnowtimeToybox
                 BreadTurretlingBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
                 ShortcakeTurretlingBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
                 SnowtimeTurretlingBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
+            }
+            if (TurretlingImmuneVoidDeath.Value)
+            {
+                FriendlyTurretTurretlingBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
             }
             if (FriendlyTurretFallImmunity.Value)
             {
