@@ -1140,11 +1140,17 @@ namespace SnowtimeToybox
             FriendlyTurretBreadBody.AddComponent<EquipmentSlot>();
             // turretlings
             FriendlyTurretTurretlingBody.AddComponent<TurretlingMissileTracker>();
+            FriendlyTurretTurretlingBody.AddComponent<EquipmentSlot>();
             AcanthiTurretlingBody.AddComponent<TurretlingMissileTracker>();
+            AcanthiTurretlingBody.AddComponent<EquipmentSlot>();
             BorboTurretlingBody.AddComponent<TurretlingMissileTracker>();
+            BorboTurretlingBody.AddComponent<EquipmentSlot>();
             BreadTurretlingBody.AddComponent<TurretlingMissileTracker>();
+            BreadTurretlingBody.AddComponent<EquipmentSlot>();
             ShortcakeTurretlingBody.AddComponent<TurretlingMissileTracker>();
+            ShortcakeTurretlingBody.AddComponent<EquipmentSlot>();
             SnowtimeTurretlingBody.AddComponent<TurretlingMissileTracker>();
+            SnowtimeTurretlingBody.AddComponent<EquipmentSlot>();
 
             var borboInheritance = FriendlyTurretBorboMaster.AddComponent<FriendlyTurretInheritance>();
             var shortcakeInheritance = FriendlyTurretShortcakeMaster.AddComponent<FriendlyTurretInheritance>();
@@ -1160,6 +1166,18 @@ namespace SnowtimeToybox
             // Regular Turretlings should not inherit unique items (Global should be fine)
             turretlingInheritance.whitelistedTag = "FriendTurret_None_Whitelist";
 
+
+            var acanthilingInheritance = FriendlyTurretTurretlingMaster.AddComponent<FriendlyTurretInheritance>();
+            acanthilingInheritance.whitelistedTag = "FriendTurret_Acanthi_Whitelist";
+            var borbolingInheritance = FriendlyTurretTurretlingMaster.AddComponent<FriendlyTurretInheritance>();
+            borbolingInheritance.whitelistedTag = "FriendTurret_Borbo_Whitelist";
+            var breadlingInheritance = FriendlyTurretTurretlingMaster.AddComponent<FriendlyTurretInheritance>();
+            breadlingInheritance.whitelistedTag = "FriendTurret_Acanthi_Whitelist";
+            var shortcakelingInheritance = FriendlyTurretTurretlingMaster.AddComponent<FriendlyTurretInheritance>();
+            shortcakelingInheritance.whitelistedTag = "FriendTurret_Borbo_Whitelist";
+            var snowtimelingInheritance = FriendlyTurretTurretlingMaster.AddComponent<FriendlyTurretInheritance>();
+            snowtimelingInheritance.whitelistedTag = "FriendTurret_Borbo_Whitelist";
+
             if (FriendlyTurretImmuneVoidDeath.Value)
             {
                 FriendlyTurretBorboBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
@@ -1167,7 +1185,11 @@ namespace SnowtimeToybox
                 FriendlyTurretSnowtimeBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
                 FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
                 FriendlyTurretBreadBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
-                FriendlyTurretTurretlingBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
+                AcanthiTurretlingBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
+                BorboTurretlingBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
+                BreadTurretlingBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
+                ShortcakeTurretlingBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
+                SnowtimeTurretlingBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
             }
             if (FriendlyTurretFallImmunity.Value)
             {
@@ -1177,6 +1199,11 @@ namespace SnowtimeToybox
                 FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
                 FriendlyTurretBreadBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
                 FriendlyTurretTurretlingBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
+                AcanthiTurretlingBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
+                BorboTurretlingBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
+                BreadTurretlingBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
+                ShortcakeTurretlingBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
+                SnowtimeTurretlingBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
             }
             if (FriendlyTurretDrone.Value)
             {
@@ -1186,6 +1213,11 @@ namespace SnowtimeToybox
                 FriendlyTurretAcanthiBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.Drone;
                 FriendlyTurretBreadBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.Drone;
                 FriendlyTurretTurretlingBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.Drone;
+                AcanthiTurretlingBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.Drone;
+                BorboTurretlingBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.Drone;
+                BreadTurretlingBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.Drone;
+                ShortcakeTurretlingBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.Drone;
+                SnowtimeTurretlingBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.Drone;
             }
 
             if(riskierLoaded)
