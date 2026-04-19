@@ -29,7 +29,7 @@ public class SnowtimeFriendlyTurret : FriendlyTurretBase<SnowtimeFriendlyTurret>
         cryoGuass.activationState = new SerializableEntityStateType(typeof(SnowtimeCryoGaussFire));
         skillDefs.Add(cryoGuass);
         
-        SkillDef silly = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<SkillDef>(friendDir + "Skills/SnowtimeCryoGauss.asset");
+        SkillDef silly = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<SkillDef>(friendDir + "Skills/SnowtimeShenanigans.asset");
         silly.activationState = new SerializableEntityStateType(typeof(Shenanigans));
         skillDefs.Add(silly);
         
