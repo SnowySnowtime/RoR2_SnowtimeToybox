@@ -15,38 +15,72 @@ namespace SnowtimeToybox.Components;
 public class TurretlingRainbow : NetworkBehaviour
 {
     [SyncVar]
-    private Color turretlingLights;
+    private float turretlingHue;
     [SyncVar]
-    private Color turretlingOther;
-
+    private float turretlingSat;
+    [SyncVar]
+    private float turretlingShade;
+    [SyncVar]
+    private bool turretlingEpicWin;
+    
     private CharacterMaster master;
     public void OnEnable()
     {
-        Log.Debug("turretling master spawned !! i think this one is kept through stages .,.,");
+        Log.Debug("turretling master spawned !!");
         
-        if (NetworkServer.active)
-        {
-            turretlingLights = new Color(Run.instance.runRNG.RangeFloat(0, 1), Run.instance.runRNG.RangeFloat(0, 1), Run.instance.runRNG.RangeFloat(0, 1), 1);
-            turretlingOther = new Color(Run.instance.runRNG.RangeFloat(0, 1), Run.instance.runRNG.RangeFloat(0, 1), Run.instance.runRNG.RangeFloat(0, 1), 1);
-        }
-
         master = gameObject.GetComponent<CharacterMaster>();
         master.onBodyStart += MasterOnonBodyStart;
+
+        if (NetworkServer.active)
+        {
+            turretlingHue = Run.instance.runRNG.RangeFloat(0, 1);
+            turretlingSat = Run.instance.runRNG.RangeFloat(0, 1);
+            turretlingShade = Run.instance.runRNG.RangeFloat(0, 1);
+            turretlingEpicWin = SnowtimeToyboxMod.TurretlingRainbowChance.Value >= Run.instance.runRNG.RangeFloat(0, 100);
+            
+            if (turretlingEpicWin)
+            {
+                try
+                {
+                    string[] bonusItems = SnowtimeToyboxMod.TurretlingRainbowBonusItems.Value.Split(",");
+                    for (int i = 0; i < bonusItems.Length; i += 2)
+                    {
+                        master.inventory.GiveItemPermanent(ItemCatalog.FindItemIndex(bonusItems[i]), int.Parse(bonusItems[i + 1]));
+                        Log.Debug($"gave turretling {bonusItems[i + 1]} {bonusItems[i]} !!!");
+                    }
+                }
+                catch (Exception e)
+                {
+                    Log.Error("something bad happened when giving turretlings extra items!!");
+                    Log.Error(e);
+                }
+            }
+        }
+
     }
 
     private void MasterOnonBodyStart(CharacterBody body)
     {
-        Log.Debug($"turretling body spawneds !! {turretlingLights} lights and {turretlingOther} other ,.,");
         ChildLocator childLocator = body.modelLocator.modelTransform.gameObject.GetComponent<ChildLocator>();
+        
         GameObject overlay = childLocator.FindChild("Turretling_Overlay").gameObject;
-        overlay.GetComponent<SkinnedMeshRenderer>().GetMaterial().color = turretlingOther;
+        Animator overlayAnimator = overlay.GetComponent<Animator>();
         GameObject light = childLocator.FindChild("Turretling_Light").gameObject;
-        Log.Debug(light);
-        Log.Debug(light.GetComponent<SkinnedMeshRenderer>());
-        Log.Debug(light.GetComponent<SkinnedMeshRenderer>().GetMaterial());
-        Log.Debug(light.GetComponent<SkinnedMeshRenderer>().GetMaterial().color);
-        light.GetComponent<SkinnedMeshRenderer>().GetMaterial().color = turretlingOther;
-        Log.Debug(light.GetComponent<SkinnedMeshRenderer>().GetMaterial().color);
-        //body.modelLocator.GetComponent<CharacterModel>().baseRendererInfos[0] // 0 = weapon, 1 = leg (base mat, 2 = base (borbolight mat 
+        Animator lightAnimator = light.GetComponent<Animator>();
+        
+        Animator[] animators =
+        [
+            overlayAnimator,
+            lightAnimator
+        ];
+        
+        //does this have to be like this? no ,.., but its silyl .,. ,
+        foreach (var animator in animators)
+        {
+            animator.SetFloat("hue", turretlingHue);
+            animator.SetFloat("sat", turretlingSat);
+            animator.SetFloat("shade", turretlingShade);
+            animator.SetBool("shift", turretlingEpicWin);
+        }
     }
 }

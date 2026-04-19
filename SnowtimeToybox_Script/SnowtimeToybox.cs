@@ -119,6 +119,8 @@ namespace SnowtimeToybox
         public static ConfigEntry<bool> FriendlyTurretShortcakeAggroType { get; set; }
         public static ConfigEntry<bool> FriendlyTurretReducedCostForPartnersOrSelf { get; set; }
         public static ConfigEntry<float> TurretlingSpawnChance { get; set; }
+        public static ConfigEntry<float> TurretlingRainbowChance { get; set; }
+        public static ConfigEntry<string> TurretlingRainbowBonusItems { get; set; }
 
         public void Awake()
         {
@@ -133,7 +135,9 @@ namespace SnowtimeToybox
             TurretlingImmuneVoidDeath = Config.Bind("Turretling Flags", "Void Death Immunity", false, "If true, All turretlings are immune to Void Death (Void Reaver implosions), this is because they are awful at avoiding them even with mods to make allies avoid them, and we get sad when they are detained.");
             FriendlyTurretFallImmunity = Config.Bind("Friendly Turret Flags", "Fall Damage Immunity", true, "If true, Friendly Turrets are immune to fall damage, as navigating some maps can be a little difficult for them. Prevents any unexpected turret deaths, as we cant simply 'replace' them like Engineer can.");
             FriendlyTurretDrone = Config.Bind("Friendly Turret Flags", "Drone", false, "If true, Friendly Turrets are flagged as drones. Probably comes with some oddities.");
-            TurretlingSpawnChance = Config.Bind("Turretlings", "Turretling Spawn Chance ,,.", 100f, "turretling spawn chance !!!");
+            TurretlingSpawnChance = Config.Bind("Turretlings", "Turretling Spawn Chance ,,.", 100f, "chance to get a turretling when buying a friendly turret !!!");
+            TurretlingRainbowChance = Config.Bind("Turretlings", "turretling rainbow chance ,,.", 1f, "chance to get a rainbow turretling ,.,.");
+            TurretlingRainbowBonusItems = Config.Bind("Turretlings", "turretling rainbow bonus items ,,.", "syringe,25,alienhead,2,extralife,1", "give rainbow turretlings bonus items !!! follows (internalitemname),(count)");
             Language.collectLanguageRootFolders += CollectLanguageRootFolders;
 
             Hooks.Hook();
