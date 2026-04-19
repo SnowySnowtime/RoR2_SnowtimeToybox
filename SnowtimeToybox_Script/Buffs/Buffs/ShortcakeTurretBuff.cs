@@ -3,12 +3,13 @@ using RoR2;
 using UnityEngine;
 using RoR2.Orbs;
 using MonoMod.Cil;
+using SnowtimeToybox.FriendlyTurrets;
 
 namespace SnowtimeToybox.Buffs
 {
     public class ShortcakeTurretBuff : BuffBase<ShortcakeTurretBuff>
     {
-        public override BuffDef Buff => SnowtimeToyboxMod.ShortcakeTurretBuff;
+        public override BuffDef Buff => ShortcakeFriendlyTurret.ShortcakeTurretBuff;
 
         public override void PostCreation()
         {
@@ -26,7 +27,7 @@ namespace SnowtimeToybox.Buffs
             if (pookie == null) return;
             if(pookie != null)
             {
-                if (!pookie.HasBuff(SnowtimeToyboxMod.ShortcakeTurretBuff))
+                if (!pookie.HasBuff(ShortcakeFriendlyTurret.ShortcakeTurretBuff))
                 {
                     return;
                 }

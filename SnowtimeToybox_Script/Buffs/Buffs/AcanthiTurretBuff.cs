@@ -1,13 +1,14 @@
 using R2API;
 using RoR2;
 using SnowtimeToybox;
+using SnowtimeToybox.FriendlyTurrets;
 using UnityEngine;
 
 namespace SnowtimeToybox.Buffs
 {
     public class AcanthiVampiricDesires : BuffBase<AcanthiVampiricDesires>
     {
-        public override BuffDef Buff => SnowtimeToyboxMod.AcanthiTurretBuff;
+        public override BuffDef Buff => AcanthiFriendlyTurret.AcanthiTurretBuff;
 
         public override void PostCreation()
         {
@@ -24,7 +25,7 @@ namespace SnowtimeToybox.Buffs
             if (acanthi == null) return;
             if (acanthi != null)
             {
-                if (!acanthi.HasBuff(SnowtimeToyboxMod.AcanthiTurretBuff))
+                if (!acanthi.HasBuff(AcanthiFriendlyTurret.AcanthiTurretBuff))
                 {
                     return;
                 }

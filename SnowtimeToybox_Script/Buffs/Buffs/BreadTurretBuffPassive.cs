@@ -1,6 +1,7 @@
 using R2API;
 using RoR2;
 using SnowtimeToybox;
+using SnowtimeToybox.FriendlyTurrets;
 using UnityEngine;
 using static R2API.RecalculateStatsAPI;
 using UnityEngine.Networking;
@@ -9,8 +10,8 @@ namespace SnowtimeToybox.Buffs
 {
     public class BreadTurretBuffPassively : BuffBase<BreadTurretBuffPassively>
     {
-        public override BuffDef Buff => SnowtimeToyboxMod.BreadTurretBuffPassive;
-        public GameObject BreadGraceWard = SnowtimeToyboxMod.FriendlyTurretBreadGraceWard;
+        public override BuffDef Buff => BreadFriendlyTurret.BreadTurretBuffPassive;
+        public GameObject BreadGraceWard = BreadFriendlyTurret.FriendlyTurretBreadGraceWard;
         public GameObject BreadGraceWardInstance;
 
         public override void PostCreation()

@@ -10,6 +10,7 @@ using SnowtimeToybox;
 using System.Linq;
 using System.Numerics;
 using SnowtimeToybox.FriendlyTurretChecks;
+using SnowtimeToybox.FriendlyTurrets;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UIElements;
@@ -60,8 +61,8 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
 
         public static float baseDuration = 0.5f;
 
-        public static GameObject healBeamPrefab = SnowtimeToyboxMod.FriendlyTurretBreadBeamL;
-        public static GameObject healBeamPrefabR = SnowtimeToyboxMod.FriendlyTurretBreadBeamR;
+        public static GameObject healBeamPrefab = BreadFriendlyTurret.FriendlyTurretBreadBeamL;
+        public static GameObject healBeamPrefabR = BreadFriendlyTurret.FriendlyTurretBreadBeamR;
 
         public HurtBox target;
 
@@ -230,11 +231,11 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 if (!target?.healthComponent?.body) return;
                 CharacterBody targetBody = target.healthComponent.body;
                 
-                if (targetBody.HasBuff(SnowtimeToyboxMod.BreadTurretBuffFortune) && NetworkServer.active)
+                if (targetBody.HasBuff(BreadFriendlyTurret.BreadTurretBuffFortune) && NetworkServer.active)
                 {
                     foreach (var timedBuff in target.healthComponent.body.timedBuffs)
                     {
-                        if (timedBuff.buffIndex != SnowtimeToyboxMod.BreadTurretBuffFortune.buffIndex)
+                        if (timedBuff.buffIndex != BreadFriendlyTurret.BreadTurretBuffFortune.buffIndex)
                         {
                             continue;
                         }
@@ -246,7 +247,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 {
                     if (NetworkServer.active)
                     {
-                        targetBody.AddTimedBuff(SnowtimeToyboxMod.BreadTurretBuffFortune, 0.5f);
+                        targetBody.AddTimedBuff(BreadFriendlyTurret.BreadTurretBuffFortune, 0.5f);
                     }
                     
                     /*FriendlyTurretOverlayManager overlayManager = targetBody.gameObject.GetComponent<FriendlyTurretOverlayManager>();

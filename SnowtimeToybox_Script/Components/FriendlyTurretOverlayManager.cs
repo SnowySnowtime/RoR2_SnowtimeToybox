@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using On.EntityStates.AffixVoid;
+using SnowtimeToybox.FriendlyTurrets;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
@@ -44,7 +45,7 @@ namespace SnowtimeToybox.FriendlyTurretChecks
                 switch (overlayInstance.originalMaterial.name)
                 {
                     case "matBreadFortune":
-                        if (!Body.HasBuff(SnowtimeToyboxMod.BreadTurretBuffFortune))
+                        if (!Body.HasBuff(BreadFriendlyTurret.BreadTurretBuffFortune))
                         {
                             Overlay.Remove(overlayInstance);
                             overlayInstance.Destroy();
@@ -52,7 +53,7 @@ namespace SnowtimeToybox.FriendlyTurretChecks
                         break;
 
                     case "matBreadGraceOverlay":
-                        if (!Body.HasBuff(SnowtimeToyboxMod.BreadTurretBuffNearbyAllies))
+                        if (!Body.HasBuff(BreadFriendlyTurret.BreadTurretBuffNearbyAllies))
                         {
                             Overlay.Remove(overlayInstance);
                             overlayInstance.Destroy();
@@ -60,7 +61,7 @@ namespace SnowtimeToybox.FriendlyTurretChecks
                         break;
 
                     case "borboturretdebuffoverlay":
-                        if (!Body.HasBuff(SnowtimeToyboxMod.BorboTurretDebuff))
+                        if (!Body.HasBuff(BorboFriendlyTurret.BorboTurretDebuff))
                         {
                             Overlay.Remove(overlayInstance);
                             overlayInstance.Destroy();
@@ -68,7 +69,7 @@ namespace SnowtimeToybox.FriendlyTurretChecks
                         break;
                     
                     case "acanthidebuffoverlay":
-                        if (!Body.HasBuff(SnowtimeToyboxMod.AcanthiTurretDebuff))
+                        if (!Body.HasBuff(AcanthiFriendlyTurret.AcanthiTurretDebuff))
                         {
                             Overlay.Remove(overlayInstance);
                             overlayInstance.Destroy();

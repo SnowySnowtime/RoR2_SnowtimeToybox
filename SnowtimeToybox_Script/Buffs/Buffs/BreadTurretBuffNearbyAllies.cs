@@ -8,12 +8,13 @@ using static R2API.RecalculateStatsAPI;
 using EntityStates.BrotherMonster;
 using EntityStates.AffixVoid;
 using R2API.AddressReferencedAssets;
+using SnowtimeToybox.FriendlyTurrets;
 
 namespace SnowtimeToybox.Buffs
 {
     public class BreadTurretBuffNearbyAllies : BuffBase<BreadTurretBuffNearbyAllies>
     {
-        public override BuffDef Buff => SnowtimeToyboxMod.BreadTurretBuffNearbyAllies;
+        public override BuffDef Buff => BreadFriendlyTurret.BreadTurretBuffNearbyAllies;
 
         public override void PostCreation()
         {

@@ -16,6 +16,7 @@ namespace SnowtimeToybox.FriendlyTurretChecks
         public static GameObject turretUseEffect = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/TurretUseEffect.prefab");
 
         SummonMasterBehavior summonMasterBehavior;
+        private SummonMasterBehavior turretlingSummon;
 
         public void Awake()
         {
@@ -88,8 +89,25 @@ namespace SnowtimeToybox.FriendlyTurretChecks
                 color = Color.white,
             }, true);
 
+            if (turretlingSummon)
+            {
+                Log.Debug($"tryings to spawn turretling {turretlingSummon}!! ");
+
+                if (SnowtimeToyboxMod.TurretlingSpawnChance.Value >= Run.instance.runRNG.RangeFloat(0, 100))
+                {
+                    turretlingSummon.OpenSummon(payCostContext.activator);
+                    Log.Debug($"spawned turretling !!!");
+                }
+            }
+            else
+            {
+                Log.Debug("turret had no turretling !!! bwa .,,.,.");
+            }            
+            
             summonMasterBehavior.OpenSummon(payCostContext.activator);
 
+            
+            
             EventFunctions.Destroy(purchaseInteraction);
         }
     }

@@ -6,12 +6,13 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using static R2API.RecalculateStatsAPI;
 using EntityStates.BrotherMonster;
+using SnowtimeToybox.FriendlyTurrets;
 
 namespace SnowtimeToybox.Buffs
 {
     public class BorboTurretDebuff : BuffBase<BorboTurretDebuff>
     {
-        public override BuffDef Buff => SnowtimeToyboxMod.BorboTurretDebuff;
+        public override BuffDef Buff => BorboFriendlyTurret.BorboTurretDebuff;
 
         public override void PostCreation()
         {

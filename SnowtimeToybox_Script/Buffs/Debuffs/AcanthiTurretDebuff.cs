@@ -2,13 +2,14 @@ using R2API;
 using RoR2;
 using SnowtimeToybox;
 using System;
+using SnowtimeToybox.FriendlyTurrets;
 using UnityEngine;
 
 namespace SnowtimeToybox.Buffs
 {
     public class AcanthiBleeding : BuffBase<AcanthiBleeding>
     {
-        public override BuffDef Buff => SnowtimeToyboxMod.AcanthiTurretDebuff;
+        public override BuffDef Buff => AcanthiFriendlyTurret.AcanthiTurretDebuff;
         public static DamageAPI.ModdedDamageType Acanthi_ButHeresTheBleeder = DamageAPI.ReserveDamageType();
         public DotController.DotDef AcanthiDot;
         public DotController.DotIndex AcanthiDotIndex;
@@ -57,7 +58,7 @@ namespace SnowtimeToybox.Buffs
                 // Inflict it a second time if bread turret is buffing acanthi...
                 // Synergies arent implemented.
                 //if (!characterBody.HasBuff(SnowtimeToyboxMod.BreadTurretBuffFortune)) return;
-                if (!characterBody.HasBuff(SnowtimeToyboxMod.BreadTurretBuffNearbyAllies)) return;
+                if (!characterBody.HasBuff(BreadFriendlyTurret.BreadTurretBuffNearbyAllies)) return;
                 DotController.InflictDot(ref info);
             }
         }

@@ -1,6 +1,7 @@
 using R2API;
 using RoR2;
 using System;
+using SnowtimeToybox.FriendlyTurrets;
 using UnityEngine;
 using UnityEngine.Networking;
 using Object = UnityEngine.Object;
@@ -11,7 +12,7 @@ namespace SnowtimeToybox.Components
     public class BreadTurretWard : MonoBehaviour
     {
         public CharacterBody self;
-        public GameObject BreadGraceWard = SnowtimeToyboxMod.FriendlyTurretBreadGraceWard;
+        public GameObject BreadGraceWard = BreadFriendlyTurret.FriendlyTurretBreadGraceWard;
         public GameObject BreadGraceWardInstance;
 
         public void Awake()
@@ -23,7 +24,7 @@ namespace SnowtimeToybox.Components
         public void FixedUpdate()
         {
             if (!NetworkServer.active) return;
-            if (self.HasBuff(SnowtimeToyboxMod.BreadTurretBuffPassive))
+            if (self.HasBuff(BreadFriendlyTurret.BreadTurretBuffPassive))
             {
                 //BreadGraceWardInstance = PrefabAPI.InstantiateClone(BreadGraceWard, self.baseNameToken + "_BreadGraceWard");
                 if (BreadGraceWardInstance == null)

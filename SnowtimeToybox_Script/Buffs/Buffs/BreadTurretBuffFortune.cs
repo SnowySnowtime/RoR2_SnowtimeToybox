@@ -9,12 +9,13 @@ using EntityStates.BrotherMonster;
 using EntityStates.AffixVoid;
 using R2API.AddressReferencedAssets;
 using SnowtimeToybox.FriendlyTurretChecks;
+using SnowtimeToybox.FriendlyTurrets;
 
 namespace SnowtimeToybox.Buffs
 {
     public class BreadTurretBuff : BuffBase<BreadTurretBuff>
     {
-        public override BuffDef Buff => SnowtimeToyboxMod.BreadTurretBuffFortune;
+        public override BuffDef Buff => BreadFriendlyTurret.BreadTurretBuffFortune;
         public CharacterBody buffedSelf;
 
         public override void PostCreation()
@@ -31,7 +32,7 @@ namespace SnowtimeToybox.Buffs
 
             args.luckAdd += 1f;
             if (!buffedSelf) return;
-            if (!buffedSelf.HasBuff(SnowtimeToyboxMod.AcanthiTurretBuff)) return;
+            if (!buffedSelf.HasBuff(AcanthiFriendlyTurret.AcanthiTurretBuff)) return;
             args.damageTotalMult += (damageIncrease * 0.25f);
         }
     }
