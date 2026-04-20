@@ -81,5 +81,10 @@ public class TurretlingRainbow : NetworkBehaviour
             animator.SetFloat("shade", turretlingShade);
             animator.SetBool("shift", turretlingEpicWin);
         }
+
+        if(turretlingEpicWin == true)
+        {
+            childLocator.FindChild("Turretling_RainbowFX").gameObject.SetActive(true);
+        }
     }
 }
