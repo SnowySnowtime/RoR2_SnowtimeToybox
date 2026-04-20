@@ -11,9 +11,9 @@ public class TurretlingKillNormalTurrets : MonoBehaviour
     {
         if (!SnowtimeToyboxMod.TurretlingKillOriginalTurrets.Value || !NetworkServer.active) return;
         
-        GameObject newTurretling = Instantiate(SnowtimeToyboxMod.FriendlyTurretTurretlingBroken, gameObject.transform.position, gameObject.transform.rotation);
-        newTurretling.GetComponent<PurchaseInteraction>().cost = Run.instance.GetDifficultyScaledCost(newTurretling.GetComponent<PurchaseInteraction>().cost);
-        NetworkServer.Spawn(newTurretling);
+        GameObject newReplacementTurretling = Instantiate(SnowtimeToyboxMod.FriendlyTurretTurretlingBroken, gameObject.transform.position, gameObject.transform.rotation);
+        newReplacementTurretling.GetComponent<PurchaseInteraction>().automaticallyScaleCostWithDifficulty = true;
+        NetworkServer.Spawn(newReplacementTurretling);
         Destroy(gameObject);
     }
 }
