@@ -62,9 +62,11 @@ public class TurretlingRainbow : NetworkBehaviour
 
     private void MasterOnonBodyDeath()
     {
-        if (master.GetBody())
+        if (master.GetBody() && NetworkServer.active)
         {
-            Object.Instantiate(SnowtimeToyboxMod.FriendlyTurretTurretlingBroken, master.GetBody().transform.position, master.GetBody().transform.rotation);
+            GameObject newTurretling = Object.Instantiate(SnowtimeToyboxMod.FriendlyTurretTurretlingBroken, master.GetBody().transform.position, master.GetBody().transform.rotation);
+            newTurretling.GetComponent<PurchaseInteraction>().cost = Run.instance.GetDifficultyScaledCost(newTurretling.GetComponent<PurchaseInteraction>().cost);
+            NetworkServer.Spawn(newTurretling);
         }
     }
 
