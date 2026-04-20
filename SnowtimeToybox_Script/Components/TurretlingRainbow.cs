@@ -35,6 +35,7 @@ public class TurretlingRainbow : NetworkBehaviour
             
             if (turretlingEpicWin)
             {
+                turretlingHue = 0f;
                 turretlingSat = 0f;
                 turretlingShade = 0f;
                 turretlingRainbow = true;
