@@ -1,7 +1,9 @@
 # SnowtimeToybox
-adds skins for my friends and I. also adds one skill, difficulty, and a few friendly turrets! still working on other stuff.
+adds skins for my friends and I. also adds one skill, difficulty, a new turret, and a few friendly turrets! still working on other stuff.
 - please direct any feedback to snowysnowtime in the risk of rain 2 modding discord
 
+# Turretlings!!!
+- Little scrungly walking turrets that try their absolute best!
 
 # Friendly Turrets!
 - Still a work in progress, but:
@@ -98,6 +100,7 @@ adds skins for my friends and I. also adds one skill, difficulty, and a few frie
 - anartoast | Custom Icon for the H4-L0 PL45 Rifle, ideas for balancing said skill
 - .score | Assistance with making the on-hit bounce work for H4-L0 PL45 Rifle
 - HIFU | Custom component for lingering tracers
+- [Astroflux](https://store.steampowered.com/app/489560/Astroflux/) | SFX used for the Turretling; game is now fully defunct though, which is unfortunate
 
 ## TODO
 

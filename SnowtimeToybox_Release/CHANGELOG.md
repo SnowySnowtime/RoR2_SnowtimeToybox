@@ -1,3 +1,25 @@
+`1.2.3`
+<details>
+<summary>Update Summary (includes summary of commits by users)</summary>
+
+Snowy Snowtime
+---
+- wow, what a week... what do you mean its been a few months?
+- Turretlings!
+- Turretling Model and VFX (lots of it is just reskinned base-game ones though)
+
+icebro
+---
+![0](https://media1.tenor.com/m/a4afusCyhnkAAAAd/hatsune-miku-hatsune-miku-fortnite.gif)
+- Refactored the mod; 1200+ line-long cs file scary
+- Rewrote the whitelist system for modded items
+- Turretling random colors...
+- Turretling interactable spawning...
+- Turretling variant spawning...
+- Assisted with fixing a lot of Snowy's broken code :wilted_rose:
+</details>
+
+
 `1.2.2`
 <details>
 <summary>Update Summary (includes summary of commits by users)</summary>
