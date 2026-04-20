@@ -4,6 +4,10 @@ adds skins for my friends and I. also adds one skill, difficulty, a new turret, 
 
 # Turretlings!!!
 - Little scrungly walking turrets that try their absolute best!
+- Turretlings come in a variety of colors; all syncronized in multiplayer as well!
+- There are special variants of turretlings for each Friendly Turret! These turretlings will follow their respective Friendly Turrets like ducklings.
+- These special variants also come with special (recolored) VFX, and have small stat differences between eachother.
+![turretlings](https://github.com/SnowySnowtime/RoR2_SnowtimeToybox/blob/main/turretlings_preview.jpg?raw=true)
 
 # Friendly Turrets!
 - Still a work in progress, but:
