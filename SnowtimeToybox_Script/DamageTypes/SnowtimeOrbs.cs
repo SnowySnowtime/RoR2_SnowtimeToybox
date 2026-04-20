@@ -19,7 +19,8 @@ namespace SnowtimeToybox
             TurretlingMissile_Borbo,
             TurretlingMissile_Bread,
             TurretlingMissile_Shortcake,
-            TurretlingMissile_Snowtime
+            TurretlingMissile_Snowtime,
+            TurretlingMissile_Rainbow
         }
 
         public float speed = 200f;
@@ -48,6 +49,7 @@ namespace SnowtimeToybox
 
         private bool isElectric;
         private bool isHealing;
+        private bool isRainbow;
 
         public static GameObject orbShortcakeRetaliateObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Shortcake/Skills/shortcakeretaliate_orbeffect.prefab");
         public static GameObject orbShortcakeRetaliateImpactObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Shortcake/Skills/shortcakeretaliate_impacteffect.prefab");
@@ -83,6 +85,10 @@ namespace SnowtimeToybox
         public static GameObject orbSnowtimelingMissileImpactObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx__Missile_Impact_Snowtimeling.prefab");
         public GameObject orbSnowtimelingMissilePrefab = orbSnowtimelingMissileObject;
 
+        public static GameObject orbRainbowMissileObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx__Missile_Orb__Rainbow.prefab");
+        public static GameObject orbRainbowMissileImpactObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx__Missile_Impact__Rainbow.prefab");
+        public GameObject orbRainbowMissilePrefab = orbRainbowMissileObject;
+
         public override void Begin()
         {
             base.duration = Mathf.Max(this.distanceToTarget / this.speed, 0.1f);;
@@ -93,46 +99,61 @@ namespace SnowtimeToybox
                     orbasset = orbShortcakeTauntPrefab;
                     isHealing = false;
                     isElectric = false;
+                    isRainbow = false;
                     break;
                 case OrbTypes.ShortcakeRetaliate:
                     orbasset = orbShortcakeRetaliatePrefab;
                     isHealing = false;
                     isElectric = false;
+                    isRainbow = false;
                     break;
                 case OrbTypes.ShortcakeRetaliateFriendly:
                     orbasset = orbShortcakeRetaliateFriendlyPrefab;
                     isHealing = true;
                     isElectric = false;
+                    isRainbow = false;
                     break;
                 case OrbTypes.TurretlingMissile:
                     orbasset = orbTurretlingMissilePrefab;
                     isHealing = false;
                     isElectric = false;
+                    isRainbow = false;
                     break;
                 case OrbTypes.TurretlingMissile_Acanthi:
                     orbasset = orbAcanthilingMissilePrefab;
                     isHealing = false;
                     isElectric = false;
+                    isRainbow = false;
                     break;
                 case OrbTypes.TurretlingMissile_Borbo:
                     orbasset = orbBorbolingMissilePrefab;
                     isHealing = false;
                     isElectric = false;
+                    isRainbow = false;
                     break;
                 case OrbTypes.TurretlingMissile_Bread:
                     orbasset = orbBreadlingMissilePrefab;
                     isHealing = false;
                     isElectric = false;
+                    isRainbow = false;
                     break;
                 case OrbTypes.TurretlingMissile_Shortcake:
                     orbasset = orbShortcakelingMissilePrefab;
                     isHealing = false;
                     isElectric = false;
+                    isRainbow = false;
                     break;
                 case OrbTypes.TurretlingMissile_Snowtime:
                     orbasset = orbSnowtimelingMissilePrefab;
                     isHealing = false;
                     isElectric = false;
+                    isRainbow = false;
+                    break;
+                case OrbTypes.TurretlingMissile_Rainbow:
+                    orbasset = orbRainbowMissilePrefab;
+                    isHealing = false;
+                    isElectric = true;
+                    isRainbow = true;
                     break;
             }
             EffectData effectData = new EffectData

@@ -2,6 +2,7 @@ using EntityStates;
 using RoR2;
 using RoR2.ContentManagement;
 using SnowtimeToybox;
+using SnowtimeToybox.Components;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -35,6 +36,10 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         public static GameObject muzzlefx_snowtime = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx_Muzzleflash_Snowtimeling.prefab");
         public static GameObject hitfx_snowtime = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx_Hitspark_Snowtimeling.prefab");
         public static GameObject tracerfx_snowtime = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx_Tracer_Snowtimeling.prefab");
+
+        public static GameObject muzzlefx_rainbow = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx_Muzzleflash__Rainbow.prefab");
+        public static GameObject hitfx_rainbow = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx_Hitspark__Rainbow.prefab");
+        public static GameObject tracerfx_rainbow = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx_Tracer__Rainbow.prefab");
 
         public static string attackSoundString = "Play_Turretling_Fire";
 
@@ -98,6 +103,12 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 hitEffectPrefab = hitfx_snowtime;
                 tracerEffectPrefab = tracerfx_snowtime;
             }
+            else if (base.GetComponent<TurretlingRainbow>().turretlingRainbow)
+            {
+                effectPrefab = muzzlefx_rainbow;
+                hitEffectPrefab = hitfx_rainbow;
+                tracerEffectPrefab = tracerfx_rainbow;
+            }
             else
             {
                 effectPrefab = muzzlefx;
@@ -125,7 +136,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                     bulletAttack.maxSpread = maxSpread;
                     bulletAttack.bulletCount = 1u;
                     bulletAttack.damage = damageCoefficient * damageStat;
-                }    
+                }
                 bulletAttack.owner = base.gameObject;
                 bulletAttack.weapon = base.gameObject;
                 bulletAttack.origin = aimRay.origin;

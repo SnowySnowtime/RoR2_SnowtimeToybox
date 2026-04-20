@@ -22,6 +22,7 @@ public class TurretlingRainbow : NetworkBehaviour
     private float turretlingShade;
     [SyncVar]
     private bool turretlingEpicWin;
+    public bool turretlingRainbow;
     
     private CharacterMaster master;
     public void OnEnable()
@@ -37,9 +38,13 @@ public class TurretlingRainbow : NetworkBehaviour
             turretlingSat = Run.instance.runRNG.RangeFloat(0, 1);
             turretlingShade = Run.instance.runRNG.RangeFloat(0, 1);
             turretlingEpicWin = SnowtimeToyboxMod.TurretlingRainbowChance.Value >= Run.instance.runRNG.RangeFloat(0, 100);
+            turretlingRainbow = false;
             
             if (turretlingEpicWin)
             {
+                turretlingSat = 0f;
+                turretlingShade = 0f;
+                turretlingRainbow = true;
                 try
                 {
                     string[] bonusItems = SnowtimeToyboxMod.TurretlingRainbowBonusItems.Value.Split(",");

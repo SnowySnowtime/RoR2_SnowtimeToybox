@@ -137,7 +137,7 @@ namespace SnowtimeToybox
             FriendlyTurretDrone = Config.Bind("Friendly Turret Flags", "Drone", false, "If true, Friendly Turrets are flagged as drones. Probably comes with some oddities.");
             TurretlingSpawnChance = Config.Bind("Turretlings", "Turretling Spawn Chance ,,.", 100f, "chance to get a turretling when buying a friendly turret !!!");
             TurretlingRainbowChance = Config.Bind("Turretlings", "turretling rainbow chance ,,.", 1f, "chance to get a rainbow turretling ,.,.");
-            TurretlingRainbowBonusItems = Config.Bind("Turretlings", "turretling rainbow bonus items ,,.", "syringe,25,alienhead,2,extralife,1", "give rainbow turretlings bonus items !!! follows (internalitemname),(count)");
+            TurretlingRainbowBonusItems = Config.Bind("Turretlings", "turretling rainbow bonus items ,,.", "syringe,50,alienhead,5,extralife,1", "give rainbow turretlings bonus items !!! follows (internalitemname),(count)");
             Language.collectLanguageRootFolders += CollectLanguageRootFolders;
 
             Hooks.Hook();
@@ -434,18 +434,19 @@ namespace SnowtimeToybox
 
             // add turretling
             Log.Debug("Defining Turretling(s)...");
-            FriendlyTurretTurretlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/_TurretlingBody.prefab");
-            FriendlyTurretTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/_TurretlingMaster.prefab");
-            FriendlyTurretTurretlingPrimarySkillFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/TurretlingPrimaryFamily.asset");
-            FriendlyTurretTurretlingPrimarySkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/Turretling_Primary.asset");
+            string turretlingPath = @"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/";
+            FriendlyTurretTurretlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "_TurretlingBody.prefab");
+            FriendlyTurretTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "_TurretlingMaster.prefab");
+            FriendlyTurretTurretlingPrimarySkillFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(turretlingPath + "Skills/TurretlingPrimaryFamily.asset");
+            FriendlyTurretTurretlingPrimarySkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(turretlingPath + "Skills/Turretling_Primary.asset");
             FriendlyTurretTurretlingPrimarySkillDef.activationState = new SerializableEntityStateType(typeof(TurretlingBlaster));
-            FriendlyTurretTurretlingSecondarySkillFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/TurretlingSecondaryFamily.asset");
-            FriendlyTurretTurretlingSecondarySkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/Turretling_Secondary.asset");
+            FriendlyTurretTurretlingSecondarySkillFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(turretlingPath + "Skills/TurretlingSecondaryFamily.asset");
+            FriendlyTurretTurretlingSecondarySkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(turretlingPath + "Skills/Turretling_Secondary.asset");
             FriendlyTurretTurretlingSecondarySkillDef.activationState = new SerializableEntityStateType(typeof(TurretlingMissile));
-            FriendlyTurretTurretlingUtilSkillFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/TurretlingUtilityFamily.asset");
-            FriendlyTurretTurretlingUtilSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/TurretlingShenanigans.asset");
+            FriendlyTurretTurretlingUtilSkillFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(turretlingPath + "Skills/TurretlingUtilityFamily.asset");
+            FriendlyTurretTurretlingUtilSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(turretlingPath + "Skills/TurretlingShenanigans.asset");
             FriendlyTurretTurretlingUtilSkillDef.activationState = new SerializableEntityStateType(typeof(Shenanigans));
-            FriendlyTurretTurretlingDef = _stcharacterAssetBundle.LoadAsset<DroneDef>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/_FriendlyTurretling.asset");
+            FriendlyTurretTurretlingDef = _stcharacterAssetBundle.LoadAsset<DroneDef>(turretlingPath + "_FriendlyTurretling.asset");
             FriendlyTurretTurretlingMaster.AddComponent<TurretlingRainbow>();
             ContentAddition.AddEntityState(typeof(TurretlingBlaster), out _);
             ContentAddition.AddEntityState(typeof(TurretlingMissile), out _);
@@ -458,16 +459,16 @@ namespace SnowtimeToybox
             ContentAddition.AddEffect(SnowtimeOrbs.orbTurretlingMissileObject);
             ContentAddition.AddEffect(SnowtimeOrbs.orbTurretlingMissileImpactObject);
             // add turretling variants (spawned with a friendly turret)
-            AcanthiTurretlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/_TurretlingBody_Acanthi.prefab");
-            AcanthiTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/_TurretlingMaster_Acanthi.prefab");
-            BorboTurretlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/_TurretlingBody_Borbo.prefab");
-            BorboTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/_TurretlingMaster_Borbo.prefab");
-            BreadTurretlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/_TurretlingBody_Bread.prefab");
-            BreadTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/_TurretlingMaster_Bread.prefab");
-            ShortcakeTurretlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/_TurretlingBody_Shortcake.prefab");
-            ShortcakeTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/_TurretlingMaster_Shortcake.prefab");
-            SnowtimeTurretlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/_TurretlingBody_Snowtime.prefab");
-            SnowtimeTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/_TurretlingMaster_Snowtime.prefab");
+            AcanthiTurretlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "Variants/_TurretlingBody_Acanthi.prefab");
+            AcanthiTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "Variants/_TurretlingMaster_Acanthi.prefab");
+            BorboTurretlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "Variants/_TurretlingBody_Borbo.prefab");
+            BorboTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "Variants/_TurretlingMaster_Borbo.prefab");
+            BreadTurretlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "Variants/_TurretlingBody_Bread.prefab");
+            BreadTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "Variants/_TurretlingMaster_Bread.prefab");
+            ShortcakeTurretlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "Variants/_TurretlingBody_Shortcake.prefab");
+            ShortcakeTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "Variants/_TurretlingMaster_Shortcake.prefab");
+            SnowtimeTurretlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "Variants/_TurretlingBody_Snowtime.prefab");
+            SnowtimeTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "Variants/_TurretlingMaster_Snowtime.prefab");
             ContentAddition.AddBody(AcanthiTurretlingBody);
             ContentAddition.AddMaster(AcanthiTurretlingMaster);
             ContentAddition.AddEffect(TurretlingBlaster.muzzlefx_acanthi);
@@ -501,6 +502,12 @@ namespace SnowtimeToybox
             ContentAddition.AddEffect(TurretlingBlaster.tracerfx_snowtime);
             ContentAddition.AddEffect(SnowtimeOrbs.orbSnowtimelingMissileObject);
             ContentAddition.AddEffect(SnowtimeOrbs.orbSnowtimelingMissileImpactObject);
+
+            ContentAddition.AddEffect(TurretlingBlaster.muzzlefx_rainbow);
+            ContentAddition.AddEffect(TurretlingBlaster.hitfx_rainbow);
+            ContentAddition.AddEffect(TurretlingBlaster.tracerfx_rainbow);
+            ContentAddition.AddEffect(SnowtimeOrbs.orbRainbowMissileObject);
+            ContentAddition.AddEffect(SnowtimeOrbs.orbRainbowMissileImpactObject);
 
             ContentAddition.AddEntityState(typeof(Shenanigans), out _);
             

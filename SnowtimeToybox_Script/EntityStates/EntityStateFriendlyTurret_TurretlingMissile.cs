@@ -17,7 +17,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
 
         public string muzzleString = "Muzzle_Secondary";
 
-        public float baseDuration = 0.25f;
+        public float baseDuration = 0.4f;
 
         private float duration;
 
@@ -34,10 +34,14 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         private static int fireMissileHash = Animator.StringToHash("turretling_missile_fire");
 
         private static int fireMissileParamHash = Animator.StringToHash("turretling_missile_fire.playbackRate");
+        private float firingTime;
+        private int missilesFired;
 
         public override void OnEnter()
         {
             base.OnEnter();
+            firingTime = 0f;
+            missilesFired = 0;
             Transform modelTransform = GetModelTransform();
             missileTracker = GetComponent<TurretlingMissileTracker>();
             if ((bool)modelTransform)
@@ -49,7 +53,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             {
                 initialOrbTarget = missileTracker.GetTrackingTarget();
             }
-            duration = baseDuration / attackSpeedStat;
+            duration = baseDuration;
             PlayAnimation("Gesture", fireMissileHash, fireMissileParamHash, duration);
             isCrit = Util.CheckRoll(base.characterBody.crit, base.characterBody.master);
             FireOrbMissile();
@@ -64,6 +68,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         {
             if (NetworkServer.active)
             {
+                missilesFired++;
                 SnowtimeOrbs snowtimeOrb = new SnowtimeOrbs();
                 if(base.gameObject.name.Contains("Acanthi"))
                 {
@@ -85,6 +90,10 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 {
                     snowtimeOrb.snowtimeOrbType = SnowtimeOrbs.OrbTypes.TurretlingMissile_Snowtime;
                 }
+                //else if (base.GetComponent<TurretlingRainbow>().turretlingRainbow)
+                //{
+                //    snowtimeOrb.snowtimeOrbType = SnowtimeOrbs.OrbTypes.TurretlingMissile_Rainbow;
+                //}
                 else
                 {
                     snowtimeOrb.snowtimeOrbType = SnowtimeOrbs.OrbTypes.TurretlingMissile;
@@ -109,6 +118,24 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+            firingTime += Time.fixedDeltaTime;
+            Inventory inventory = base.characterBody.inventory;
+            int itemCountEffective = inventory.GetItemCountEffective(DLC1Content.Items.MoreMissile);
+            if (itemCountEffective > 0)
+            {
+                if (firingTime > 0.1f && missilesFired < 2)
+                {
+                    FireOrbMissile();
+                }
+                if (firingTime > 0.2f && missilesFired < 3)
+                {
+                    FireOrbMissile();
+                }
+                if (firingTime > 0.3f && missilesFired < 4)
+                {
+                    FireOrbMissile();
+                }
+            }
             if (base.fixedAge > duration && base.isAuthority)
             {
                 outer.SetNextStateToMain();
