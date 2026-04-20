@@ -11,8 +11,8 @@ adds skins for my friends and I. also adds one skill, difficulty, a new turret, 
 - Special variants also come with special (recolored) VFX, and have small stat differences between eachother.
 ![turretlings](https://github.com/SnowySnowtime/RoR2_SnowtimeToybox/blob/main/turretlings_preview.jpg?raw=true)
 ![turretlings2](https://github.com/SnowySnowtime/RoR2_SnowtimeToybox/blob/main/turretlings2_preview.jpg?raw=true)
-- (Configurable) 1% chance for the legendary and fabled Rainbow Turretling to be acquired! Comes with a great increase to its power, alongside a missile barrage! Can't forget: it's a rainbow!
-![turretlings3](https://github.com/SnowySnowtime/RoR2_SnowtimeToybox/blob/main/turretlings3_preview.gif?raw=true)
+- (Configurable) 1% chance for the legendary and fabled Rainbow Turretling to be acquired! Comes with a great increase to its power.
+![turretlings3](https://github.com/SnowySnowtime/RoR2_SnowtimeToybox/blob/main/turretling3_preview.gif?raw=true)
 
 # Friendly Turrets!
 - Still a work in progress, but:
