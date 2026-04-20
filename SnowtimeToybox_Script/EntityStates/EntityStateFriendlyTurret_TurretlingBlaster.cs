@@ -49,7 +49,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
 
         public static float minSpread = 0f;
 
-        public static float maxSpread = 0.5f;
+        public static float maxSpread = 2f;
 
         public static int bulletCount = 1;
 
@@ -129,6 +129,13 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                     bulletAttack.maxSpread = 4f;
                     bulletAttack.bulletCount = 15u;
                     bulletAttack.damage = (damageCoefficient/5) * damageStat;
+                }
+                else if (characterBody.master.gameObject.TryGetComponent(out TurretlingRainbow rainbowCheck) && rainbowCheck.turretlingRainbow)
+                {
+                    bulletAttack.minSpread = minSpread;
+                    bulletAttack.maxSpread = maxSpread/4;
+                    bulletAttack.bulletCount = 1u;
+                    bulletAttack.damage = damageCoefficient * damageStat;
                 }
                 else
                 {
