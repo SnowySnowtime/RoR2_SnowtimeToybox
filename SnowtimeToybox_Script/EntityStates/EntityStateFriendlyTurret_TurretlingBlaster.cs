@@ -130,7 +130,8 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                     bulletAttack.bulletCount = 15u;
                     bulletAttack.damage = (damageCoefficient/5) * damageStat;
                 }
-                else if (characterBody.master.gameObject.TryGetComponent(out TurretlingRainbow rainbowCheck) && rainbowCheck.turretlingRainbow)
+                // Rainbow Turretling and Turretling Variants should be more accurate than default
+                else if (characterBody.master.gameObject.TryGetComponent(out TurretlingRainbow rainbowCheck) && rainbowCheck.turretlingRainbow || base.gameObject.name.Contains("Acanthi") || base.gameObject.name.Contains("Bread") || base.gameObject.name.Contains("Borbo") || base.gameObject.name.Contains("Shortcake"))
                 {
                     bulletAttack.minSpread = minSpread;
                     bulletAttack.maxSpread = maxSpread/4;
