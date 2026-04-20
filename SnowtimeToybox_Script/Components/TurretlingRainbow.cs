@@ -1,15 +1,8 @@
 using System;
 using UnityEngine;
 using UnityEngine.Networking;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using UnityEngine.AddressableAssets;
-using UnityEngine.Networking;
-using UnityEngine;
 using RoR2;
-using static RoR2.UI.CarouselController;
-using RoR2.Hologram;
+
 namespace SnowtimeToybox.Components;
 
 public class TurretlingRainbow : NetworkBehaviour

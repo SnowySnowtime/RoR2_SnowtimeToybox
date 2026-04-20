@@ -4,6 +4,7 @@
 		<TargetFramework>netstandard2.1</TargetFramework>
 		<LangVersion>preview</LangVersion>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<PatchDir>$(SolutionDir)UNetWeaver\</PatchDir>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -27,14 +28,11 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 
-		<PackageReference Include="BepInEx.Core" Version="5.4.21" />
+		<PackageReference Include="BepInEx.Core" Version="5.4.21" GeneratePathProperty="true" />
 
 		<PackageReference Include="R2API.Addressables" Version="1.1.3" />
-
 		<PackageReference Include="R2API.CharacterBody" Version="1.2.0" />
-
 		<PackageReference Include="R2API.Difficulty" Version="1.1.2" />
-
 		<PackageReference Include="R2API.Director" Version="2.3.8" />
 		<PackageReference Include="R2API.DamageType" Version="1.1.7" />
 		<PackageReference Include="R2API.DOT" Version="1.1.2" />
@@ -47,9 +45,9 @@
 		<PackageReference Include="R2API.Stages" Version="1.0.3" />
 		<PackageReference Include="R2API.Unlockable" Version="1.0.2" />
 
-		<PackageReference Include="UnityEngine.Modules" Version="2021.3.33" IncludeAssets="compile" />
-		<PackageReference Include="RiskOfRain2.GameLibs" Version="1.4.1-r.0" />
 		<PackageReference Include="MMHOOK.RoR2" Version="2025.12.9" NoWarn="NU1701" />
+		<PackageReference Include="UnityEngine.Modules" Version="2021.3.33" GeneratePathProperty="true" />
+		<PackageReference Include="RiskOfRain2.GameLibs" Version="1.4.1-r.0" GeneratePathProperty="true" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -67,5 +65,9 @@
 	<!--Target Name="PostBuild" AfterTargets="PostBuildEvent">
 	  <Exec Command="cp -r &quot;/run/media/icebrah/buh/github/RoR2_SnowtimeToybox/SnowtimeToybox_Script/bin/Debug/netstandard2.1/&quot; &quot;/run/media/icebrah/buh/gale/riskofrain2/profiles/debug 3/BepInEx/plugins/snowtimesnowysnowtimesnowsnowsnowsnowysnow/&quot;" />
 	</Target-->
+	
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	  <Exec Command="REM First we copy the from the output folder to the NetworkWeaver folder.&#xA;REM We store the output from robocopy in a file called robocopy which we'll delete at the end of the file.&#xA;robocopy &#xA;&quot;$(TargetDir) &quot; &quot;$(ProjectDir)NetworkWeaver&quot; &quot;$(TargetFileName)&quot; &gt; &quot;$(TargetDir)Robocopy&quot;&#xA;robocopy &#xA;&quot;$(TargetDir) &quot; &quot;$(ProjectDir)NetworkWeaver&quot; &quot;$(TargetName).pdb&quot; &gt; &quot;$(TargetDir)Robocopy&quot;&#xA;&#xA;REM Then we navigate our script to the NetworkWeaver folder to make the follow up line less verbose.&#xA;cd &quot;$(ProjectDir)\NetworkWeaver&quot;&#xA;&#xA;REM Unity.UNetWeaver.exe {path to Coremodule} {Path to Networking} {Path to output folder} {Path to the dll you want patched} {Path to all needed references for the to-be-patched dll}&#xA;Unity.UNetWeaver.exe &#xA;&quot;../libs/UnityEngine.CoreModule.dll&quot; &quot;../libs/com.unity.multiplayer-hlapi.Runtime.dll&quot; &quot;Patched/&quot;  $(TargetFileName) &quot;$(ProjectDir)/libs&quot;&#xA;&#xA;REM We store the prepatched dll disabled as a .prepatch so that you can check it if you want, but first we need to make sure that file doesn't exist already.&#xA;IF EXIST &quot;$(TargetFileName).prepatch&quot; (&#xA;DEL /F &quot;$(TargetFileName).prepatch&quot;&#xA;)&#xA;IF EXIST &quot;$(TargetFileName).prepatch&quot; (&#xA;DEL /F &quot;$(TargetFile).pdb.prepatch&quot;&#xA;)&#xA;&#xA;REM Then we rename the prepatched file to bla.dll.prepatch&#xA;ren &quot;$(TargetFileName)&quot; &quot;$(TargetFileName).prepatch&quot;&#xA;ren &quot;$(TargetName).pdb&quot; &quot;$(TargetName).pdb.prepatch&quot;&#xA;&#xA;REM move our script to the Patched Folder&#xA;cd Patched&#xA;&#xA;REM move from the current directory (.) to the projectDirectory and store the output once more to the Robocopy file.&#xA;robocopy &#xA;&quot;.&quot; &quot;$(ProjectDir) &quot; &quot;$(TargetFileName)&quot; &gt; &quot;$(TargetDir)Robocopy&quot;&#xA;robocopy &#xA;&quot;.&quot; &quot;$(ProjectDir) &quot; &quot;$(TargetName).pdb&quot; &gt; &quot;$(TargetDir)Robocopy&quot;&#xA;&#xA;REM Remove the patched file from the Patched folder, because the Weaver won't run if the file already exists.&#xA;del &quot;$(TargetFileName)&quot;&#xA;del &quot;$(TargetName).pdb&quot;&#xA;&#xA;REM Delete the holder for all robocopy output.&#xA;del &quot;$(TargetDir)Robocopy&quot;" />
+	</Target>
 
 </Project>
