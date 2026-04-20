@@ -138,8 +138,9 @@ namespace SnowtimeToybox
             FriendlyTurretDrone = Config.Bind("Friendly Turret Flags", "Drone", false, "If true, Friendly Turrets are flagged as drones. Probably comes with some oddities.");
             TurretlingSpawnChance = Config.Bind("Turretlings", "Turretling Spawn Chance ,,.", 100f, "chance to get a turretling when buying a friendly turret !!!");
             TurretlingRainbowChance = Config.Bind("Turretlings", "turretling rainbow chance ,,.", 1f, "chance to get a rainbow turretling ,.,.");
-            TurretlingRainbowBonusItems = Config.Bind("Turretlings", "turretling rainbow bonus items ,,.", "syringe,50,alienhead,5,extralife,1,moremissile,1", "give rainbow turretlings bonus items !!! follows (internalitemname),(count)");
+            TurretlingRainbowBonusItems = Config.Bind("Turretlings", "turretling rainbow bonus items ,,.", "syringe,50,alienhead,5,extralife,1,moremissile,1,adaptivearmor,1,powercube,1", "give rainbow turretlings bonus items !!! follows (internalitemname),(count)");
             TurretlingKillOriginalTurrets = Config.Bind("Turretlings", "kill original turrets .,,.", false, "kills normal turrets and replaces them with turretlings ,. ,.");
+            TurretlingRainbowBonusItems = Config.Bind("Turretlings", "turretling rainbow bonus items ,,.", "syringe,50,alienhead,5,extralife,1,moremissile,1", "give rainbow turretlings bonus items !!! follows (internalitemname),(count)");
             Language.collectLanguageRootFolders += CollectLanguageRootFolders;
 
             Hooks.Hook();
