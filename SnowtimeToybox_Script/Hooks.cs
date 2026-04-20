@@ -4,8 +4,10 @@ using Mono.Collections.Generic;
 using R2API;
 using RoR2;
 using Ror2AggroTools;
+using SnowtimeToybox.Components;
 using SnowtimeToybox.FriendlyTurrets;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using SceneDirector = On.RoR2.SceneDirector;
@@ -36,6 +38,11 @@ public class Hooks
             
         On.RoR2.SceneDirector.Start += SceneDirectorOnStart;
         On.RoR2.CharacterBody.FixedUpdate += ShortcakeTurretHandler;
+        
+        Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Drones/Turret1Broken.prefab").Completed += handle =>
+        {
+            handle.Result.AddComponent<TurretlingKillNormalTurrets>();
+        };
     }
 
     private static void JustLetMeDamageMyFoesPleaseThankYou(On.RoR2.GlobalEventManager.orig_OnHitEnemy orig, GlobalEventManager self, DamageInfo damageInfo, GameObject victim)

@@ -121,6 +121,7 @@ namespace SnowtimeToybox
         public static ConfigEntry<float> TurretlingSpawnChance { get; set; }
         public static ConfigEntry<float> TurretlingRainbowChance { get; set; }
         public static ConfigEntry<string> TurretlingRainbowBonusItems { get; set; }
+        public static ConfigEntry<bool> TurretlingKillOriginalTurrets { get; set; }
 
         public void Awake()
         {
@@ -138,6 +139,7 @@ namespace SnowtimeToybox
             TurretlingSpawnChance = Config.Bind("Turretlings", "Turretling Spawn Chance ,,.", 100f, "chance to get a turretling when buying a friendly turret !!!");
             TurretlingRainbowChance = Config.Bind("Turretlings", "turretling rainbow chance ,,.", 1f, "chance to get a rainbow turretling ,.,.");
             TurretlingRainbowBonusItems = Config.Bind("Turretlings", "turretling rainbow bonus items ,,.", "syringe,50,alienhead,5,extralife,1,moremissile,1", "give rainbow turretlings bonus items !!! follows (internalitemname),(count)");
+            TurretlingKillOriginalTurrets = Config.Bind("Turretlings", "kill original turrets .,,.", false, "kills normal turrets and replaces them with turretlings ,. ,.");
             Language.collectLanguageRootFolders += CollectLanguageRootFolders;
 
             Hooks.Hook();
