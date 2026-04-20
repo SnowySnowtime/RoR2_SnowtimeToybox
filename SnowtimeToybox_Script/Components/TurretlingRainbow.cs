@@ -62,7 +62,7 @@ public class TurretlingRainbow : NetworkBehaviour
 
     private void MasterOnonBodyDeath()
     {
-        if ( master.inventory.GetItemCountEffective(RoR2Content.Items.ExtraLife) < 1 && master.GetBody() && NetworkServer.active)
+        if ( master.inventory.GetItemCountEffective(RoR2Content.Items.ExtraLife) == 0 && master.GetBody() && NetworkServer.active)
         {
             GameObject newReviveTurretling = Object.Instantiate(SnowtimeToyboxMod.FriendlyTurretTurretlingBroken, master.GetBody().transform.position, master.GetBody().transform.rotation);
             newReviveTurretling.GetComponent<PurchaseInteraction>().automaticallyScaleCostWithDifficulty = true;
