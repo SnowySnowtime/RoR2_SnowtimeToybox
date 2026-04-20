@@ -137,7 +137,7 @@ namespace SnowtimeToybox
             FriendlyTurretDrone = Config.Bind("Friendly Turret Flags", "Drone", false, "If true, Friendly Turrets are flagged as drones. Probably comes with some oddities.");
             TurretlingSpawnChance = Config.Bind("Turretlings", "Turretling Spawn Chance ,,.", 100f, "chance to get a turretling when buying a friendly turret !!!");
             TurretlingRainbowChance = Config.Bind("Turretlings", "turretling rainbow chance ,,.", 1f, "chance to get a rainbow turretling ,.,.");
-            TurretlingRainbowBonusItems = Config.Bind("Turretlings", "turretling rainbow bonus items ,,.", "syringe,50,alienhead,5,extralife,1", "give rainbow turretlings bonus items !!! follows (internalitemname),(count)");
+            TurretlingRainbowBonusItems = Config.Bind("Turretlings", "turretling rainbow bonus items ,,.", "syringe,50,alienhead,5,extralife,1,moremissile,1", "give rainbow turretlings bonus items !!! follows (internalitemname),(count)");
             Language.collectLanguageRootFolders += CollectLanguageRootFolders;
 
             Hooks.Hook();
@@ -256,6 +256,7 @@ namespace SnowtimeToybox
                 RoR2Content.Items.BossDamageBonus,
                 // DLC1
                 DLC1Content.Items.PermanentDebuffOnHit,
+                DLC1Content.Items.MoreMissile,
                 // DLC2
                 DLC2Content.Items.MeteorAttackOnHighDamage,
                 DLC2Content.Items.AttackSpeedPerNearbyAllyOrEnemy,
@@ -279,6 +280,7 @@ namespace SnowtimeToybox
                 DLC1Content.Items.HalfSpeedDoubleHealth,
                 DLC1Content.Items.MissileVoid,
                 DLC1Content.Items.ChainLightningVoid,
+                DLC1Content.Items.MoreMissile,
                 // DLC2
                 // DLC3
                 DLC3Content.Items.ShieldBooster,
@@ -293,6 +295,7 @@ namespace SnowtimeToybox
                 // DLC1
                 DLC1Content.Items.ElementalRingVoid,
                 DLC1Content.Items.SlowOnHitVoid,
+                DLC1Content.Items.MoreMissile,
                 // DLC2
                 // DLC3
                 DLC3Content.Items.ShieldBooster,
@@ -311,6 +314,7 @@ namespace SnowtimeToybox
                 RoR2Content.Items.NovaOnHeal,
                 // DLC1
                 DLC1Content.Items.BleedOnHitVoid,
+                DLC1Content.Items.MoreMissile,
                 // DLC2
                 DLC2Content.Items.TriggerEnemyDebuffs,
                 // DLC3
@@ -326,6 +330,7 @@ namespace SnowtimeToybox
                 RoR2Content.Items.ArmorReductionOnHit,
                 RoR2Content.Items.IncreaseHealing,
                 // DLC1
+                DLC1Content.Items.MoreMissile,
                 // DLC2
                 DLC2Content.Items.BoostAllStats,
                 // DLC3

@@ -103,7 +103,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 hitEffectPrefab = hitfx_snowtime;
                 tracerEffectPrefab = tracerfx_snowtime;
             }
-            else if (base.GetComponent<TurretlingRainbow>().turretlingRainbow)
+            else if (characterBody.master.gameObject.TryGetComponent(out TurretlingRainbow rainbowCheck) && rainbowCheck.turretlingRainbow)
             {
                 effectPrefab = muzzlefx_rainbow;
                 hitEffectPrefab = hitfx_rainbow;

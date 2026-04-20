@@ -90,10 +90,10 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 {
                     snowtimeOrb.snowtimeOrbType = SnowtimeOrbs.OrbTypes.TurretlingMissile_Snowtime;
                 }
-                //else if (base.GetComponent<TurretlingRainbow>().turretlingRainbow)
-                //{
-                //    snowtimeOrb.snowtimeOrbType = SnowtimeOrbs.OrbTypes.TurretlingMissile_Rainbow;
-                //}
+                else if (characterBody.master.gameObject.TryGetComponent(out TurretlingRainbow rainbowCheck) && rainbowCheck.turretlingRainbow)
+                {
+                    snowtimeOrb.snowtimeOrbType = SnowtimeOrbs.OrbTypes.TurretlingMissile_Rainbow;
+                }
                 else
                 {
                     snowtimeOrb.snowtimeOrbType = SnowtimeOrbs.OrbTypes.TurretlingMissile;
