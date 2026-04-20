@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Networking;
 using RoR2;
+using Object = UnityEngine.Object;
 
 namespace SnowtimeToybox.Components;
 
@@ -24,6 +25,7 @@ public class TurretlingRainbow : NetworkBehaviour
         
         master = gameObject.GetComponent<CharacterMaster>();
         master.onBodyStart += MasterOnonBodyStart;
+        master.onBodyDeath.AddListener(MasterOnonBodyDeath);
 
         if (NetworkServer.active)
         {
@@ -56,6 +58,14 @@ public class TurretlingRainbow : NetworkBehaviour
             }
         }
 
+    }
+
+    private void MasterOnonBodyDeath()
+    {
+        if (master.GetBody())
+        {
+            Object.Instantiate(SnowtimeToyboxMod.FriendlyTurretTurretlingBroken, master.GetBody().transform.position, master.GetBody().transform.rotation);
+        }
     }
 
     private void MasterOnonBodyStart(CharacterBody body)
