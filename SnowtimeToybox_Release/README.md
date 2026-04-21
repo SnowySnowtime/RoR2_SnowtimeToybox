@@ -8,6 +8,7 @@ adds skins for my friends and I. also adds one skill, difficulty, a new turret, 
 - Comes in a variety of colors; all syncronized in multiplayer as well!
 - Special variants of turretlings for each Friendly Turret! These turretlings will follow their respective Friendly Turrets like ducklings.
 - Configurable chance for turretling variants to spawn when repairing Friendly Turrets. (Default: 100%)
+- (Opt-In) Replaces Gunner Turrets with turretlings! No need for that outdated gear.
 - Special variants also come with special (recolored) VFX, and have small stat differences between eachother.
 ![turretlings](https://github.com/SnowySnowtime/RoR2_SnowtimeToybox/blob/main/turretlings_preview.jpg?raw=true)
 ![turretlings2](https://github.com/SnowySnowtime/RoR2_SnowtimeToybox/blob/main/turretlings2_preview.jpg?raw=true)
@@ -16,7 +17,7 @@ adds skins for my friends and I. also adds one skill, difficulty, a new turret, 
 
 # Friendly Turrets!
 - Still a work in progress, but:
-- A purchaseable singleton walking turret with (eventually) a little bit of personality, inspired by the Best Buddy from Alloyed Collective.
+- Purchaseable singleton walking turrets with (eventually) a little bit of personality, inspired by the Best Buddy from Alloyed Collective.
 - Every stage, a random Friendly Turret is selected. Can you find and help them?
 - You are only allowed to have one type of Friendly Turret per player.
 - Once all players collect all available Friendly Turret types, the Friendly Turrets no longer spawn until one meets a woeful end.
