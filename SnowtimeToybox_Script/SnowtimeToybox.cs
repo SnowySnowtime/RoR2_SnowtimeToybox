@@ -117,12 +117,13 @@ namespace SnowtimeToybox
         public static ConfigEntry<bool> FriendlyTurretFallImmunity { get; set; }
         public static ConfigEntry<bool> FriendlyTurretDrone { get; set; }
         public static ConfigEntry<bool> FriendlyTurretShortcakeAggroType { get; set; }
-        public static ConfigEntry<bool> FriendlyTurretReducedCostForPartnersOrSelf { get; set; }
         public static ConfigEntry<float> TurretlingSpawnChance { get; set; }
         public static ConfigEntry<float> TurretlingRainbowChance { get; set; }
         public static ConfigEntry<string> TurretlingRainbowBonusItems { get; set; }
         public static ConfigEntry<bool> TurretlingKillOriginalTurrets { get; set; }
         public static ConfigEntry<float> TurretlingReviveCostMult { get; set; }
+        public static ConfigEntry<float> TurretlingBaseDamage { get; set; }
+        public static ConfigEntry<float> TurretlingBaseDamagePerLevel { get; set; }
 
         public void Awake()
         {
@@ -132,16 +133,17 @@ namespace SnowtimeToybox
 
             ToggleSpawnMessages = Config.Bind("Friendly Turret Functions", "Spawn Message", true, "If true, the Friendly Turrets will give a message on every stage they spawn on, for insight on if and which turret spawned. Otherwise, friendly turrets are shy, and are also sad!");
             FriendlyTurretShortcakeAggroType = Config.Bind("Friendly Turret Functions", "Strawberry Shortcake Aggro Method", false, "If true, the Strawberry Shortcake Turret will spawn with a native increase to its aggro. Else, it only gains aggro for ~0.5s when its main skill fires.");
-            FriendlyTurretReducedCostForPartnersOrSelf = Config.Bind("Friendly Turret Functions", "Reduced Cost...", false, "[This does not reduce cost for EVERYONE] If true, Friendly Turrets have their costs reduced by half for: Individuals referenced by the turret / Significant Other of referenced individual by the turret. It felt necessary to have as an option to prevent favoritism or issues with using steamids to determine costs of the interactable. This was added by majority request.");
             FriendlyTurretImmuneVoidDeath = Config.Bind("Friendly Turret Flags", "Void Death Immunity", true, "If true, Friendly Turrets are immune to Void Death (Void Reaver implosions), this is because they are awful at avoiding them even with mods to make allies avoid them, and we get sad when they are detained.");
-            FriendlyTurretFallImmunity = Config.Bind("Friendly Turret Flags", "Fall Damage Immunity", true, "If true, Friendly Turrets are immune to fall damage, as navigating some maps can be a little difficult for them. Prevents any unexpected turret deaths, as we cant simply 'replace' them like Engineer can.");
-            FriendlyTurretDrone = Config.Bind("Friendly Turret Flags", "Drone", false, "If true, Friendly Turrets are flagged as drones. Probably comes with some oddities.");
+            FriendlyTurretFallImmunity = Config.Bind("Friendly Turret Flags", "Fall Damage Immunity", true, "If true, Friendly Turrets (and turretlings) are immune to fall damage, as navigating some maps can be a little difficult for them. Prevents any unexpected turret deaths, as we cant simply 'replace' them like Engineer can.");
+            FriendlyTurretDrone = Config.Bind("Friendly Turret Flags", "Drone", false, "If true, Friendly Turrets (and turretlings) are flagged as drones. Probably comes with some oddities.");
             TurretlingSpawnChance = Config.Bind("Turretlings", "Turretling Variant Spawn Chance ,,.", 100f, "chance to get a turretling when buying a friendly turret !!!");
-            TurretlingImmuneVoidDeath = Config.Bind("Turretlings", "Void Death Immunity", false, "If true, All turretlings are immune to Void Death (Void Reaver implosions), this is because they are awful at avoiding them even with mods to make allies avoid them, and we get sad when they are detained.");
-            TurretlingRainbowChance = Config.Bind("Turretlings", "turretling rainbow chance ,,.", 1f, "chance to get a powerful and prideful rainbow turretling ,.,.");
-            TurretlingRainbowBonusItems = Config.Bind("Turretlings", "turretling rainbow bonus items ,,.", "syringe,50,alienhead,5,extralife,1,moremissile,1,adaptivearmor,1,powercube,1,shockdamageaura,1", "give rainbow turretlings bonus items !!! follows (internalitemname),(count)");
-            TurretlingKillOriginalTurrets = Config.Bind("Turretlings", "kill original turrets .,,.", false, "kills normal turrets and replaces them with turretlings ,. ,.");
+            TurretlingImmuneVoidDeath = Config.Bind("Turretlings", "Void Death Immunity", false, "If true, All turretlings are immune to Void Death (Void Reaver implosions). Keep the scrunglies safe.");
             TurretlingReviveCostMult = Config.Bind("Turretlings", "turretling revive cost mult .,.", 0.6f, "price multiplier for reviving turretlings ,.. ,.");
+            TurretlingKillOriginalTurrets = Config.Bind("Turretlings", "kill original turrets .,,.", false, "kills normal(gunner) turrets and replaces them with turretlings ,. ,.");
+            TurretlingRainbowChance = Config.Bind("Turretlings", "turretling rainbow chance ,,.", 1f, "% chance to get a powerful and prideful rainbow turretling ,.,.");
+            TurretlingRainbowBonusItems = Config.Bind("Turretlings", "turretling rainbow bonus items ,,.", "syringe,50,alienhead,5,extralife,1,moremissile,1,adaptivearmor,1,powercube,1,shockdamageaura,1", "give rainbow turretlings bonus items !!! follows (internalitemname),(count)");
+            TurretlingBaseDamage = Config.Bind("Turretling Stats", "Base Damage", 12f, "Damage the turretling deals. Blaster deals 100%(1x) base damage, Pixi Launcher deal 200%(2x) base damage. Does not affect Turretling variants.");
+            TurretlingBaseDamagePerLevel = Config.Bind("Turretling Stats", "Base Damage Per Level", 3f, "Base Damage increase per level. Does not affect Turretling variants.");
             Language.collectLanguageRootFolders += CollectLanguageRootFolders;
 
             Hooks.Hook();
@@ -445,6 +447,9 @@ namespace SnowtimeToybox
             Log.Debug("Defining Turretling(s)...");
             string turretlingPath = @"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/";
             FriendlyTurretTurretlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "_TurretlingBody.prefab");
+            // update stats
+            FriendlyTurretTurretlingBody.GetComponent<CharacterBody>().baseDamage = TurretlingBaseDamage.Value;
+            FriendlyTurretTurretlingBody.GetComponent<CharacterBody>().levelDamage = TurretlingBaseDamagePerLevel.Value;
             FriendlyTurretTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "_TurretlingMaster.prefab");
             FriendlyTurretTurretlingPrimarySkillFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(turretlingPath + "Skills/TurretlingPrimaryFamily.asset");
             FriendlyTurretTurretlingPrimarySkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(turretlingPath + "Skills/Turretling_Primary.asset");
@@ -542,15 +547,29 @@ namespace SnowtimeToybox
             List<DirectorAPI.Stage> turretlingStageList = new List<DirectorAPI.Stage>();
             List<String> turretlingCustomStageList = new List<String>();
 
+            // Stage 1
             turretlingStageList.Add(DirectorAPI.Stage.TitanicPlains);
+            turretlingStageList.Add(DirectorAPI.Stage.DistantRoost);
+            turretlingStageList.Add(DirectorAPI.Stage.SiphonedForest);
+            turretlingStageList.Add(DirectorAPI.Stage.VerdantFalls);
+            turretlingStageList.Add(DirectorAPI.Stage.ViscousFalls);
+            // Stage 2
             turretlingStageList.Add(DirectorAPI.Stage.AbandonedAqueduct);
-            turretlingStageList.Add(DirectorAPI.Stage.WetlandAspect);
             turretlingStageList.Add(DirectorAPI.Stage.AphelianSanctuary);
+            turretlingStageList.Add(DirectorAPI.Stage.PretendersPrecipice);
+            // Stage 3
             turretlingStageList.Add(DirectorAPI.Stage.RallypointDelta);
             turretlingStageList.Add(DirectorAPI.Stage.ScorchedAcres);
+            turretlingStageList.Add(DirectorAPI.Stage.IronAlluvium);
+            turretlingStageList.Add(DirectorAPI.Stage.IronAuroras);
+            // Stage 4
             turretlingStageList.Add(DirectorAPI.Stage.SirensCall);
+            turretlingStageList.Add(DirectorAPI.Stage.SunderedGrove);
+            turretlingStageList.Add(DirectorAPI.Stage.RepurposedCrater);
             turretlingStageList.Add(DirectorAPI.Stage.ConduitCanyon);
+            // Stage 5
             turretlingStageList.Add(DirectorAPI.Stage.SkyMeadow);
+            // Mods
             turretlingCustomStageList.Add("FBLScene");
             turretlingCustomStageList.Add("broadcastperch_wormsworms");
             turretlingCustomStageList.Add("tropics_wormsworms");

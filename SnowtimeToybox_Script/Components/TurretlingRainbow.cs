@@ -62,7 +62,13 @@ public class TurretlingRainbow : NetworkBehaviour
 
     private void MasterOnonBodyDeath()
     {
-        if ( master.inventory.GetItemCountEffective(RoR2Content.Items.ExtraLife) == 0 && master.GetBody() && NetworkServer.active)
+        int extralives = master.inventory.GetItemCountEffective(RoR2Content.Items.ExtraLife);
+        ChildLocator childLocator = master.GetBody().modelLocator.modelTransform.gameObject.GetComponent<ChildLocator>();
+        if (turretlingEpicWin == true && extralives == 0)
+        {
+            childLocator.FindChild("Turretling_RainbowFX").gameObject.SetActive(false);
+        }
+        if (extralives == 0 && master.GetBody() && NetworkServer.active)
         {
             GameObject newTurretling = Object.Instantiate(SnowtimeToyboxMod.FriendlyTurretTurretlingBroken, master.GetBody().transform.position, master.GetBody().transform.rotation);
             newTurretling.GetComponent<PurchaseInteraction>().cost = (int)(Run.instance.GetDifficultyScaledCost(newTurretling.GetComponent<PurchaseInteraction>().cost) * SnowtimeToyboxMod.TurretlingReviveCostMult.Value);
