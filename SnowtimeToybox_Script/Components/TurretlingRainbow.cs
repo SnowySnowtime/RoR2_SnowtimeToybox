@@ -18,11 +18,14 @@ public class TurretlingRainbow : NetworkBehaviour
     public bool turretlingRainbow;
     
     private CharacterMaster master;
+    private CharacterBody charbody;
     public void OnEnable()
     {
         Log.Debug("turretling master spawned !!");
-        
+        Log.Debug("Object Name: " + gameObject.name);
+        if (gameObject.name.Contains("Broken")) return;
         master = gameObject.GetComponent<CharacterMaster>();
+        Log.Debug(master);
         master.onBodyStart += MasterOnonBodyStart;
         master.onBodyDeath.AddListener(MasterOnonBodyDeath);
 
@@ -31,7 +34,7 @@ public class TurretlingRainbow : NetworkBehaviour
             turretlingHue = Run.instance.runRNG.RangeFloat(0, 1);
             turretlingSat = Run.instance.runRNG.RangeFloat(0, 1);
             turretlingShade = Run.instance.runRNG.RangeFloat(0, 1);
-            if(!master.name.Contains("_DT"))
+            if(!gameObject.name.Contains("_DT"))
             {
                 turretlingRainbow = SnowtimeToyboxMod.TurretlingRainbowChance.Value >= Run.instance.runRNG.RangeFloat(0, 100);
             }
@@ -49,6 +52,16 @@ public class TurretlingRainbow : NetworkBehaviour
 
     public void giveItems(bool takeRemove)
     {
+        // Do not give operator turretlings items, item is handled separately in the case it is in revive state.
+        // However, do remove the item in the case it dies during its rainbow powerup.
+        if (gameObject.name.Contains("Broken"))
+        {
+            if(master.inventory.GetItemCountEffective(RoR2Content.Items.ScrapRed) != 0)
+            {
+                master.inventory.RemoveItemPermanent(RoR2Content.Items.ScrapRed, master.inventory.GetItemCountEffective(RoR2Content.Items.ScrapRed));
+            }
+        }
+        if (gameObject.name.Contains("_DT")) return;
         try
         {
             string[] bonusItems = SnowtimeToyboxMod.TurretlingRainbowBonusItems.Value.Split(",");
@@ -75,6 +88,8 @@ public class TurretlingRainbow : NetworkBehaviour
 
     private void MasterOnonBodyDeath()
     {
+        // enough said.
+        if (gameObject.name.Contains("_DT") || gameObject.name.Contains("Broken")) return;
         int extralives = master.inventory.GetItemCountPermanent(RoR2Content.Items.ExtraLife);
         ChildLocator childLocator = master.GetBody().modelLocator.modelTransform.gameObject.GetComponent<ChildLocator>();
         if (turretlingRainbow && extralives != 0)
@@ -91,7 +106,11 @@ public class TurretlingRainbow : NetworkBehaviour
 
     public void MasterOnonBodyStart(CharacterBody body)
     {
+        charbody = body;
+        // dont run code if we're operator turretlings and we're being revived.
+        if (body.name.Contains("Broken")) return;
         ChildLocator childLocator = body.modelLocator.modelTransform.gameObject.GetComponent<ChildLocator>();
+        if (childLocator == null) return;
         GameObject overlay = childLocator.FindChild("Turretling_Overlay").gameObject;
         Animator overlayAnimator = overlay.GetComponent<Animator>();
         GameObject light = childLocator.FindChild("Turretling_Light").gameObject;
