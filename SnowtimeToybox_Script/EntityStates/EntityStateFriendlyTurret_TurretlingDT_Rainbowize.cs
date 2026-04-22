@@ -15,26 +15,51 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
 
         private float duration;
 
-        private string item = "ScrapRed";
+        private TurretlingRainbow rainbowComponent;
 
         public override void OnEnter()
         {
             base.OnEnter();
             duration = baseDuration;
-            base.characterBody.master.inventory.GiveItemPermanent(ItemCatalog.FindItemIndex(item));
+            characterBody.master.TryGetComponent(out rainbowComponent);
+            
+            if (rainbowComponent != null)
+            {
+                rainbowComponent.turretlingRainbow = true;
+                rainbowComponent.MasterOnonBodyStart(characterBody);
+                rainbowComponent.giveItems(true);
+            }
+            else
+            {
+                Log.Debug("rainboe null !! ");
+            }
+            
         }
 
         public override void OnExit()
         {
             base.OnExit();
-            base.characterBody.master.inventory.RemoveItemPermanent(ItemCatalog.FindItemIndex(item));
+            
+            if (rainbowComponent != null)
+            {
+                rainbowComponent.turretlingRainbow = false;
+                rainbowComponent.MasterOnonBodyStart(characterBody);
+                rainbowComponent.giveItems(false);
+            }
+            else
+            {
+                Log.Debug("rainboe null !!exyt  ");
+            }
+            
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+
             if (base.fixedAge > duration && base.isAuthority)
             {
+                //characterBody.GetComponent<DroneCommandReceiver>().droneState = DroneCommandReceiver.DroneState.Idle;
                 outer.SetNextStateToMain();
             }
         }

@@ -15,7 +15,6 @@ public class TurretlingRainbow : NetworkBehaviour
     [SyncVar]
     private float turretlingShade;
     [SyncVar]
-    private bool turretlingEpicWin;
     public bool turretlingRainbow;
     
     private CharacterMaster master;
@@ -32,39 +31,50 @@ public class TurretlingRainbow : NetworkBehaviour
             turretlingHue = Run.instance.runRNG.RangeFloat(0, 1);
             turretlingSat = Run.instance.runRNG.RangeFloat(0, 1);
             turretlingShade = Run.instance.runRNG.RangeFloat(0, 1);
-            turretlingEpicWin = SnowtimeToyboxMod.TurretlingRainbowChance.Value >= Run.instance.runRNG.RangeFloat(0, 100);
-            turretlingRainbow = false;
+            turretlingRainbow = SnowtimeToyboxMod.TurretlingRainbowChance.Value >= Run.instance.runRNG.RangeFloat(0, 100);
             
-            if (turretlingEpicWin)
+            if (turretlingRainbow)
             {
                 turretlingHue = 0f;
                 turretlingSat = 0f;
                 turretlingShade = 0f;
-                turretlingRainbow = true;
-                try
-                {
-                    string[] bonusItems = SnowtimeToyboxMod.TurretlingRainbowBonusItems.Value.Split(",");
-                    for (int i = 0; i < bonusItems.Length; i += 2)
-                    {
-                        master.inventory.GiveItemPermanent(ItemCatalog.FindItemIndex(bonusItems[i]), int.Parse(bonusItems[i + 1]));
-                        Log.Debug($"gave turretling {bonusItems[i + 1]} {bonusItems[i]} !!!");
-                    }
-                }
-                catch (Exception e)
-                {
-                    Log.Error("something bad happened when giving turretlings extra items!!");
-                    Log.Error(e);
-                }
+                giveItems(true);
             }
         }
 
+    }
+
+    public void giveItems(bool takeRemove)
+    {
+        try
+        {
+            string[] bonusItems = SnowtimeToyboxMod.TurretlingRainbowBonusItems.Value.Split(",");
+            for (int i = 0; i < bonusItems.Length; i += 2)
+            {
+                if (takeRemove)
+                {
+                    master.inventory.GiveItemPermanent(ItemCatalog.FindItemIndex(bonusItems[i]), int.Parse(bonusItems[i + 1]));
+                    Log.Debug($"gave turretling {bonusItems[i + 1]} {bonusItems[i]} !!!");
+                }
+                else
+                {
+                    master.inventory.RemoveItemPermanent(ItemCatalog.FindItemIndex(bonusItems[i]), int.Parse(bonusItems[i + 1]));
+                    Log.Debug($"removed turretling {bonusItems[i + 1]} {bonusItems[i]} !!!");
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Log.Error("something bad happened when giving turretlings extra items!!");
+            Log.Error(e);
+        }
     }
 
     private void MasterOnonBodyDeath()
     {
         int extralives = master.inventory.GetItemCountPermanent(RoR2Content.Items.ExtraLife);
         ChildLocator childLocator = master.GetBody().modelLocator.modelTransform.gameObject.GetComponent<ChildLocator>();
-        if (turretlingEpicWin == true && extralives != 0)
+        if (turretlingRainbow && extralives != 0)
         {
             childLocator.FindChild("Turretling_RainbowFX").gameObject.SetActive(false);
         }
@@ -76,7 +86,7 @@ public class TurretlingRainbow : NetworkBehaviour
         }
     }
 
-    private void MasterOnonBodyStart(CharacterBody body)
+    public void MasterOnonBodyStart(CharacterBody body)
     {
         ChildLocator childLocator = body.modelLocator.modelTransform.gameObject.GetComponent<ChildLocator>();
         GameObject overlay = childLocator.FindChild("Turretling_Overlay").gameObject;
@@ -93,15 +103,23 @@ public class TurretlingRainbow : NetworkBehaviour
         //does this have to be like this? no ,.., but its silyl .,. ,
         foreach (var animator in animators)
         {
-            animator.SetFloat("hue", turretlingHue);
-            animator.SetFloat("sat", turretlingSat);
-            animator.SetFloat("shade", turretlingShade);
-            animator.SetBool("shift", turretlingEpicWin);
+            if (turretlingRainbow)
+            {
+                animator.SetFloat("hue", turretlingHue);
+                animator.SetFloat("sat", turretlingSat);
+                animator.SetFloat("shade", turretlingShade);
+                animator.SetBool("shift", turretlingRainbow);
+            }
+            else
+            {
+                animator.SetFloat("hue", 0);
+                animator.SetFloat("sat", 0);
+                animator.SetFloat("shade", 0);
+                animator.SetBool("shift", turretlingRainbow);
+            }
+            
         }
-
-        if(turretlingEpicWin == true)
-        {
-            childLocator.FindChild("Turretling_RainbowFX").gameObject.SetActive(true);
-        }
+        
+        childLocator.FindChild("Turretling_RainbowFX").gameObject.SetActive(turretlingRainbow);
     }
 }

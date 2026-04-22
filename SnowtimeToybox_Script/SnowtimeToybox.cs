@@ -21,6 +21,7 @@ using System.Security.Permissions;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
+using UnityHotReloadNS;
 using Path = System.IO.Path;
 
 [module: UnverifiableCode]
@@ -539,9 +540,10 @@ namespace SnowtimeToybox
             DTTurretlingDef = _stcharacterAssetBundle.LoadAsset<DroneDef>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_DTTurretling.asset");
             DTTurretlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_DTTurretlingBody.prefab");
             DTTurretlingBody.GetComponent<CharacterDeathBehavior>().deathState = new SerializableEntityStateType(typeof(DTTurretlingDeath));
+            DTTurretlingBody.GetComponent<DroneCommandReceiver>().droneState = DroneCommandReceiver.DroneState.Idle;
             DTTurretlingBody.AddComponent<TurretlingMissileTracker>();
             DTTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_DTTurretlingMaster.prefab");
-            DTTurretlingMaster.AddComponent<DTTurretlingRainbow>();
+            DTTurretlingMaster.AddComponent<TurretlingRainbow>();
             DTTurretlingBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_DTTurretlingBroken.prefab");
             DTTurretlingSkillFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/DTTurretlingSpecialFamily.asset");
             DTTurretlingSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/DTTurretling_Special.asset");
