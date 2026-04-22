@@ -31,7 +31,10 @@ public class TurretlingRainbow : NetworkBehaviour
             turretlingHue = Run.instance.runRNG.RangeFloat(0, 1);
             turretlingSat = Run.instance.runRNG.RangeFloat(0, 1);
             turretlingShade = Run.instance.runRNG.RangeFloat(0, 1);
-            turretlingRainbow = SnowtimeToyboxMod.TurretlingRainbowChance.Value >= Run.instance.runRNG.RangeFloat(0, 100);
+            if(!master.name.Contains("_DT"))
+            {
+                turretlingRainbow = SnowtimeToyboxMod.TurretlingRainbowChance.Value >= Run.instance.runRNG.RangeFloat(0, 100);
+            }
             
             if (turretlingRainbow)
             {

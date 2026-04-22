@@ -33,7 +33,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             {
                 Log.Debug("rainboe null !! ");
             }
-            
+            characterBody.GetComponent<DroneCommandReceiver>().droneState = DroneCommandReceiver.DroneState.Idle;
         }
 
         public override void OnExit()
@@ -59,7 +59,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
 
             if (base.fixedAge > duration && base.isAuthority)
             {
-                //characterBody.GetComponent<DroneCommandReceiver>().droneState = DroneCommandReceiver.DroneState.Idle;
+                characterBody.GetComponent<DroneCommandReceiver>().droneState = DroneCommandReceiver.DroneState.Idle;
                 outer.SetNextStateToMain();
             }
         }
