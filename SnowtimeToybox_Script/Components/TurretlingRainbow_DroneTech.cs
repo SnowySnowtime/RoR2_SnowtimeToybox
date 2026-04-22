@@ -19,13 +19,13 @@ public class DTTurretlingRainbow : NetworkBehaviour
     private bool turretlingEmpowered;
     
     private CharacterMaster master;
-    private CharacterBody characterBody;
     public void OnEnable()
     {
         Log.Debug("turretling master spawned !!");
         
         master = gameObject.GetComponent<CharacterMaster>();
         master.onBodyStart += MasterOnonBodyStart;
+        master.inventory.onInventoryChanged += MasterOnInventoryChangedWaow;
 
         if (NetworkServer.active)
         {
@@ -39,7 +39,6 @@ public class DTTurretlingRainbow : NetworkBehaviour
     // Initial Shenanigans
     private void MasterOnonBodyStart(CharacterBody body)
     {
-        characterBody = body;
         ChildLocator childLocator = body.modelLocator.modelTransform.gameObject.GetComponent<ChildLocator>();
         GameObject overlay = childLocator.FindChild("Turretling_Overlay").gameObject;
         Animator overlayAnimator = overlay.GetComponent<Animator>();
@@ -61,9 +60,9 @@ public class DTTurretlingRainbow : NetworkBehaviour
         }
     }
 
-    public void UpdateItPLEASE()
+    public void MasterOnInventoryChangedWaow()
     {
-        ChildLocator childLocator = characterBody.modelLocator.modelTransform.gameObject.GetComponent<ChildLocator>();
+        ChildLocator childLocator = master.GetBody().modelLocator.modelTransform.gameObject.GetComponent<ChildLocator>();
         GameObject overlay = childLocator.FindChild("Turretling_Overlay").gameObject;
         Animator overlayAnimator = overlay.GetComponent<Animator>();
         GameObject light = childLocator.FindChild("Turretling_Light").gameObject;
@@ -100,7 +99,7 @@ public class DTTurretlingRainbow : NetworkBehaviour
                 animator.SetFloat("sat", 0f);
                 animator.SetFloat("shade", 0f);
             }
-            else if (animator.GetFloat("hue") != turretlingHue && turretlingEmpowered == false)
+            else if(animator.GetFloat("hue") != turretlingHue && turretlingEmpowered == false)
             {
                 animator.SetFloat("hue", turretlingHue);
                 animator.SetFloat("sat", turretlingSat);
