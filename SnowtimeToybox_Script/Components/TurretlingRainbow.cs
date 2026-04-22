@@ -127,16 +127,16 @@ public class TurretlingRainbow : NetworkBehaviour
         {
             if (turretlingRainbow)
             {
-                animator.SetFloat("hue", turretlingHue);
-                animator.SetFloat("sat", turretlingSat);
-                animator.SetFloat("shade", turretlingShade);
+                animator.SetFloat("hue", 0);
+                animator.SetFloat("sat", 0);
+                animator.SetFloat("shade", 0);
                 animator.SetBool("shift", turretlingRainbow);
             }
             else
             {
-                animator.SetFloat("hue", 0);
-                animator.SetFloat("sat", 0);
-                animator.SetFloat("shade", 0);
+                animator.SetFloat("hue", turretlingHue);
+                animator.SetFloat("sat", turretlingSat);
+                animator.SetFloat("shade", turretlingShade);
                 animator.SetBool("shift", turretlingRainbow);
             }
             
