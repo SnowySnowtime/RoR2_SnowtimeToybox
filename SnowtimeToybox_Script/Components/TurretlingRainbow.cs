@@ -5,7 +5,7 @@ using RoR2;
 using Object = UnityEngine.Object;
 
 namespace SnowtimeToybox.Components;
-
+[RequireComponent(typeof(CharacterMaster))]
 public class TurretlingRainbow : NetworkBehaviour
 {
     [SyncVar]
@@ -16,9 +16,22 @@ public class TurretlingRainbow : NetworkBehaviour
     private float turretlingShade;
     [SyncVar]
     public bool turretlingRainbow;
-    
+
+    [SyncVar]
+    public bool Snowtime;
+    [SyncVar]
+    public bool Acanthi;
+    [SyncVar]
+    public bool Bread;
+    [SyncVar]
+    public bool Shortcake;
+
+
+    private CharacterMaster turretlingPlayerMaster;
+    private PlayerCharacterMasterController turretlingPlayer;
     private CharacterMaster master;
-    private CharacterBody charbody;
+    private CharacterBody charBody;
+    private string steamid;
     public void OnEnable()
     {
         Log.Debug("turretling master spawned !!");
@@ -34,22 +47,65 @@ public class TurretlingRainbow : NetworkBehaviour
             turretlingHue = Run.instance.runRNG.RangeFloat(0, 1);
             turretlingSat = Run.instance.runRNG.RangeFloat(0, 1);
             turretlingShade = Run.instance.runRNG.RangeFloat(0, 1);
-            if(!gameObject.name.Contains("_DT"))
+
+            if (!gameObject.name.Contains("_DT"))
             {
                 turretlingRainbow = SnowtimeToyboxMod.TurretlingRainbowChance.Value >= Run.instance.runRNG.RangeFloat(0, 100);
             }
             
+            if (Snowtime)
+            {
+                if (turretlingHue != 0.55f)
+                {
+                    turretlingHue = 0.55f;
+                    turretlingSat = 0f;
+                    turretlingShade = 0f;
+                }
+            }
+
             if (turretlingRainbow)
             {
-                turretlingHue = 0f;
-                turretlingSat = 0f;
-                turretlingShade = 0f;
                 giveItems(true);
             }
         }
 
     }
+    public void FixedUpdate()
+    {
+        if (NetworkServer.active && Run.instance)
+        {
+            if (!turretlingPlayerMaster)
+            {
+                Log.Debug("Defining Turretling Owner Master...");
+                turretlingPlayerMaster = master.minionOwnership.ownerMaster;
+                Log.Debug(turretlingPlayerMaster);
+                if (!turretlingPlayer)
+                {
+                    Log.Debug("Defining Player Controller of Owner Master...");
+                    turretlingPlayer = turretlingPlayerMaster.playerCharacterMasterController;
+                    Log.Debug(turretlingPlayer);
+                }
 
+                if (gameObject.name.Contains("_DT") && turretlingPlayer != null)
+                {
+                    steamid = turretlingPlayer.networkUser.id.steamId.ToSteamID();
+
+                    // Snowy Snowtime
+                    if (steamid == "STEAM_1:1:146751517" && Snowtime == false)
+                    {
+                        Log.Debug("Snowy Snowtime -> Operator Turretling!!!!");
+                        Snowtime = true;
+                        if(turretlingHue != 0.55f)
+                        {
+                            turretlingHue = 0.55f;
+                            turretlingSat = 0f;
+                            turretlingShade = 0f;
+                        }
+                    }
+                }
+            }
+        }
+    }
     public void giveItems(bool takeRemove)
     {
         // Do not give operator turretlings items, item is handled separately in the case it is in revive state.
@@ -106,7 +162,7 @@ public class TurretlingRainbow : NetworkBehaviour
 
     public void MasterOnonBodyStart(CharacterBody body)
     {
-        charbody = body;
+        charBody = body;
         // dont run code if we're operator turretlings and we're being revived.
         if (body.name.Contains("Broken")) return;
         ChildLocator childLocator = body.modelLocator.modelTransform.gameObject.GetComponent<ChildLocator>();
@@ -115,11 +171,14 @@ public class TurretlingRainbow : NetworkBehaviour
         Animator overlayAnimator = overlay.GetComponent<Animator>();
         GameObject light = childLocator.FindChild("Turretling_Light").gameObject;
         Animator lightAnimator = light.GetComponent<Animator>();
-        
+        GameObject fx = childLocator.FindChild("Turretling_RainbowFX").gameObject;
+        Animator fxAnimator = fx.GetComponent<Animator>();
+
         Animator[] animators =
         [
             overlayAnimator,
-            lightAnimator
+            lightAnimator,
+            fxAnimator
         ];
         
         //does this have to be like this? no ,.., but its silyl .,. ,
@@ -142,6 +201,9 @@ public class TurretlingRainbow : NetworkBehaviour
             
         }
         
-        childLocator.FindChild("Turretling_RainbowFX").gameObject.SetActive(turretlingRainbow);
+        if(Snowtime == true)
+        {
+            childLocator.FindChild("SnowtimeHalo").gameObject.SetActive(true);
+        }
     }
 }
