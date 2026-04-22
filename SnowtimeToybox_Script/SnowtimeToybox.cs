@@ -82,6 +82,7 @@ namespace SnowtimeToybox
         public static SkillDef FriendlyTurretTurretlingSecondarySkillDef;
         public static SkillDef FriendlyTurretTurretlingUtilSkillDef;
         public static GameObject FriendlyTurretTurretlingBody;
+        public static GameObject FriendlyTurretTurretlingBodyRemoteOp;
         public static GameObject FriendlyTurretTurretlingMaster;
         public static GameObject FriendlyTurretTurretlingBroken;
         // turretling variants
@@ -447,9 +448,14 @@ namespace SnowtimeToybox
             Log.Debug("Defining Turretling(s)...");
             string turretlingPath = @"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/";
             FriendlyTurretTurretlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "_TurretlingBody.prefab");
-            // update stats
+            FriendlyTurretTurretlingBodyRemoteOp = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "_TurretlingBodyRemoteOp.prefab");
+            // update stats and components
             FriendlyTurretTurretlingBody.GetComponent<CharacterBody>().baseDamage = TurretlingBaseDamage.Value;
             FriendlyTurretTurretlingBody.GetComponent<CharacterBody>().levelDamage = TurretlingBaseDamagePerLevel.Value;
+            FriendlyTurretTurretlingBody.GetComponent<CharacterDeathBehavior>().deathState = new SerializableEntityStateType(typeof(TurretlingDeath));
+            FriendlyTurretTurretlingBodyRemoteOp.GetComponent<CharacterBody>().baseDamage = TurretlingBaseDamage.Value;
+            FriendlyTurretTurretlingBodyRemoteOp.GetComponent<CharacterBody>().levelDamage = TurretlingBaseDamagePerLevel.Value;
+            FriendlyTurretTurretlingBodyRemoteOp.GetComponent<CharacterDeathBehavior>().deathState = new SerializableEntityStateType(typeof(TurretlingDeath));
             FriendlyTurretTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "_TurretlingMaster.prefab");
             FriendlyTurretTurretlingPrimarySkillFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(turretlingPath + "Skills/TurretlingPrimaryFamily.asset");
             FriendlyTurretTurretlingPrimarySkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(turretlingPath + "Skills/Turretling_Primary.asset");
@@ -460,28 +466,38 @@ namespace SnowtimeToybox
             FriendlyTurretTurretlingUtilSkillFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(turretlingPath + "Skills/TurretlingUtilityFamily.asset");
             FriendlyTurretTurretlingUtilSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(turretlingPath + "Skills/TurretlingShenanigans.asset");
             FriendlyTurretTurretlingUtilSkillDef.activationState = new SerializableEntityStateType(typeof(Shenanigans));
-            FriendlyTurretTurretlingDef = _stcharacterAssetBundle.LoadAsset<DroneDef>(turretlingPath + "_FriendlyTurretling.asset");
+            FriendlyTurretTurretlingDef = _stcharacterAssetBundle.LoadAsset<DroneDef>(turretlingPath + "_Turretling.asset");
             FriendlyTurretTurretlingMaster.AddComponent<TurretlingRainbow>();
+            ContentAddition.AddDroneDef(FriendlyTurretTurretlingDef);
+            ContentAddition.AddEntityState(typeof(TurretlingDeath), out _);
             ContentAddition.AddEntityState(typeof(TurretlingBlaster), out _);
             ContentAddition.AddEntityState(typeof(TurretlingMissile), out _);
             ContentAddition.AddBody(FriendlyTurretTurretlingBody);
+            ContentAddition.AddBody(FriendlyTurretTurretlingBodyRemoteOp);
+            // erm
             ContentAddition.AddMaster(FriendlyTurretTurretlingMaster);
             ContentAddition.AddSkillFamily(FriendlyTurretTurretlingPrimarySkillFamily);
             ContentAddition.AddSkillDef(FriendlyTurretTurretlingPrimarySkillDef);
             ContentAddition.AddSkillFamily(FriendlyTurretTurretlingSecondarySkillFamily);
             ContentAddition.AddSkillDef(FriendlyTurretTurretlingSecondarySkillDef);
+            ContentAddition.AddEffect(TurretlingDeath.deathfx);
             ContentAddition.AddEffect(SnowtimeOrbs.orbTurretlingMissileObject);
             ContentAddition.AddEffect(SnowtimeOrbs.orbTurretlingMissileImpactObject);
             // add turretling variants (spawned with a friendly turret)
             AcanthiTurretlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "Variants/_TurretlingBody_Acanthi.prefab");
+            AcanthiTurretlingBody.GetComponent<CharacterDeathBehavior>().deathState = new SerializableEntityStateType(typeof(TurretlingDeath));
             AcanthiTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "Variants/_TurretlingMaster_Acanthi.prefab");
             BorboTurretlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "Variants/_TurretlingBody_Borbo.prefab");
+            BorboTurretlingBody.GetComponent<CharacterDeathBehavior>().deathState = new SerializableEntityStateType(typeof(TurretlingDeath));
             BorboTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "Variants/_TurretlingMaster_Borbo.prefab");
             BreadTurretlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "Variants/_TurretlingBody_Bread.prefab");
+            BreadTurretlingBody.GetComponent<CharacterDeathBehavior>().deathState = new SerializableEntityStateType(typeof(TurretlingDeath));
             BreadTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "Variants/_TurretlingMaster_Bread.prefab");
             ShortcakeTurretlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "Variants/_TurretlingBody_Shortcake.prefab");
+            ShortcakeTurretlingBody.GetComponent<CharacterDeathBehavior>().deathState = new SerializableEntityStateType(typeof(TurretlingDeath));
             ShortcakeTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "Variants/_TurretlingMaster_Shortcake.prefab");
             SnowtimeTurretlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "Variants/_TurretlingBody_Snowtime.prefab");
+            SnowtimeTurretlingBody.GetComponent<CharacterDeathBehavior>().deathState = new SerializableEntityStateType(typeof(TurretlingDeath));
             SnowtimeTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "Variants/_TurretlingMaster_Snowtime.prefab");
             ContentAddition.AddBody(AcanthiTurretlingBody);
             ContentAddition.AddMaster(AcanthiTurretlingMaster);
