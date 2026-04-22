@@ -62,9 +62,9 @@ public class TurretlingRainbow : NetworkBehaviour
 
     private void MasterOnonBodyDeath()
     {
-        int extralives = master.inventory.GetItemCountEffective(RoR2Content.Items.ExtraLife);
+        int extralives = master.inventory.GetItemCountPermanent(RoR2Content.Items.ExtraLife);
         ChildLocator childLocator = master.GetBody().modelLocator.modelTransform.gameObject.GetComponent<ChildLocator>();
-        if (turretlingEpicWin == true && extralives == 0)
+        if (turretlingEpicWin == true && extralives != 0)
         {
             childLocator.FindChild("Turretling_RainbowFX").gameObject.SetActive(false);
         }
@@ -79,7 +79,6 @@ public class TurretlingRainbow : NetworkBehaviour
     private void MasterOnonBodyStart(CharacterBody body)
     {
         ChildLocator childLocator = body.modelLocator.modelTransform.gameObject.GetComponent<ChildLocator>();
-        
         GameObject overlay = childLocator.FindChild("Turretling_Overlay").gameObject;
         Animator overlayAnimator = overlay.GetComponent<Animator>();
         GameObject light = childLocator.FindChild("Turretling_Light").gameObject;

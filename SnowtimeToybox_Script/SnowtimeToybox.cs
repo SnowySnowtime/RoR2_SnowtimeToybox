@@ -1,36 +1,27 @@
 using BepInEx;
-using BepInEx.Bootstrap;
 using BepInEx.Configuration;
 using EntityStates;
 using EntityStates.SnowtimeToybox_FireHaloWeapon;
 using EntityStates.SnowtimeToybox_FriendlyTurret;
 using On.RoR2.CharacterAI;
-using On.RoR2.UI;
 using R2API;
-using Rewired.ComponentControls.Data;
 using RoR2;
 using RoR2.Skills;
-using RoR2BepInExPack.GameAssetPaths;
 using ShaderSwapper;
 using SnowtimeToybox.Buffs;
 using SnowtimeToybox.Components;
 using SnowtimeToybox.FriendlyTurretChecks;
+using SnowtimeToybox.FriendlyTurrets;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Security;
 using System.Security.Permissions;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
-using UnityHotReloadNS;
 using Path = System.IO.Path;
-using SceneDirector = On.RoR2.SceneDirector;
-using Ror2AggroTools;
-using SnowtimeToybox.FriendlyTurrets;
 
 [module: UnverifiableCode]
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -96,7 +87,13 @@ namespace SnowtimeToybox
         public static GameObject ShortcakeTurretlingMaster;
         public static GameObject SnowtimeTurretlingBody;
         public static GameObject SnowtimeTurretlingMaster;
-        
+        public static DroneDef DTTurretlingDef;
+        public static GameObject DTTurretlingBody;
+        public static GameObject DTTurretlingMaster;
+        public static GameObject DTTurretlingBroken;
+        public static SkillFamily DTTurretlingSkillFamily;
+        public static SkillDef DTTurretlingSkillDef;
+
         //public static DroneDef FriendlyTurretTestDroneDef;
 
         public static List<FriendlyTurretBase> friendlyTurretList = [];
@@ -538,6 +535,25 @@ namespace SnowtimeToybox
             ContentAddition.AddEffect(TurretlingBlaster.tracerfx_rainbow);
             ContentAddition.AddEffect(SnowtimeOrbs.orbRainbowMissileObject);
             ContentAddition.AddEffect(SnowtimeOrbs.orbRainbowMissileImpactObject);
+            // Operator
+            DTTurretlingDef = _stcharacterAssetBundle.LoadAsset<DroneDef>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_DTTurretling.asset");
+            DTTurretlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_DTTurretlingBody.prefab");
+            DTTurretlingBody.GetComponent<CharacterDeathBehavior>().deathState = new SerializableEntityStateType(typeof(DTTurretlingDeath));
+            DTTurretlingBody.AddComponent<TurretlingMissileTracker>();
+            DTTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_DTTurretlingMaster.prefab");
+            DTTurretlingMaster.AddComponent<DTTurretlingRainbow>();
+            DTTurretlingBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_DTTurretlingBroken.prefab");
+            DTTurretlingSkillFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/DTTurretlingSpecialFamily.asset");
+            DTTurretlingSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/DTTurretling_Special.asset");
+            DTTurretlingSkillDef.activationState = new SerializableEntityStateType(typeof(DTTurretlingRainbowize));
+            ContentAddition.AddDroneDef(DTTurretlingDef);
+            ContentAddition.AddBody(DTTurretlingBody);
+            ContentAddition.AddMaster(DTTurretlingMaster);
+            ContentAddition.AddBody(DTTurretlingBroken);
+            ContentAddition.AddSkillFamily(DTTurretlingSkillFamily);
+            ContentAddition.AddSkillDef(DTTurretlingSkillDef);
+            ContentAddition.AddEntityState(typeof(DTTurretlingDeath), out _);
+            ContentAddition.AddEntityState(typeof(DTTurretlingRainbowize), out _);
 
             ContentAddition.AddEntityState(typeof(Shenanigans), out _);
             
@@ -951,6 +967,41 @@ namespace SnowtimeToybox
             ContentAddition.AddEntityState(typeof(FirePlasmaRifle), out _);
             ContentAddition.AddSkillDef(SnowtimePlasmaRifleSkillDef);
             // done!
+
+            // Turretlings!
+            SkillDef DroneTechTurretlingSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/DroneTechTurretling.asset");
+            foreach (GenericSkill genericSkill in DroneTechBodyPrefab.GetComponents<GenericSkill>())
+            {
+                if(genericSkill.skillName == "Drone1")
+                {
+                    Log.Debug("Found Operator Passive SkillFamily 1!");
+                    Array.Resize(ref genericSkill.skillFamily.variants, genericSkill.skillFamily.variants.Length + 1);
+                    genericSkill.skillFamily.variants[^1] = new SkillFamily.Variant
+                    {
+                        skillDef = DroneTechTurretlingSkillDef,
+                        viewableNode = new ViewablesCatalog.Node(DroneTechTurretlingSkillDef.skillNameToken, false)
+                    };
+                }
+                else if (genericSkill.skillName == "Drone2")
+                {
+                    Log.Debug("Found Operator Passive SkillFamily 2!");
+                    Array.Resize(ref genericSkill.skillFamily.variants, genericSkill.skillFamily.variants.Length + 1);
+                    genericSkill.skillFamily.variants[^1] = new SkillFamily.Variant
+                    {
+                        skillDef = DroneTechTurretlingSkillDef,
+                        viewableNode = new ViewablesCatalog.Node(DroneTechTurretlingSkillDef.skillNameToken, false)
+                    };
+                }
+            }
+            ContentAddition.AddSkillDef(DroneTechTurretlingSkillDef);
+            //if (DroneTechBodyPrefab.GetComponent<GenericSkill>().skillName == "Drone1")
+            //{
+            //    Log.Debug("Found Drone Passive 1");
+            //    Log.Debug(DroneTechBodyPrefab.GetComponent<GenericSkill>().skillName);
+            //    SkillFamily dronePassive1 = DroneTechBodyPrefab.GetComponent<GenericSkill>().skillFamily;
+            //    Log.Debug(dronePassive1.defaultSkillDef);
+            //}
+            //GenericSkill droneTechPassiveSkillFamily1GenericSkill = DroneTechBodyPrefab.GetComponent<GenericSkill>().skillFamily;
         }
 
         public void CollectLanguageRootFolders(List<string> folders)
