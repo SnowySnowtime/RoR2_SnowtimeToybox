@@ -20,6 +20,7 @@ using System.Security;
 using System.Security.Permissions;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityHotReloadNS;
 using Path = System.IO.Path;
@@ -1000,25 +1001,84 @@ namespace SnowtimeToybox
             // this isnt going to be fun.
             //On.RoR2.DroneCommandReceiver.CanFollow += DroneCommandReceiverFixedUpdate;
             //On.DroneTechController.Start += DroneTechControllerHookStart;
+            On.RoR2.DroneRepairMaster.TickHealthRepairServer += DroneRepairMasterHookTickHealthRepairServer;
+            On.DroneTechController.CommandFollowInternal += DroneTechControllerHookCommandFollowInternal;
+            On.DroneTechController.CommandFollow_bool_GameObject += DroneTechControllerHookCommandFollowGameObject;
+            On.DroneTechController.CommandFollow_bool_DroneInfo += DroneTechControllerHookCommandFollowDroneInfo;
+            On.DroneTechController.BeginFollow_CharacterBody += DroneTechControllerHookBeginFollow;
+            On.DroneTechController.BeginFollow_CharacterBody_int += DroneTechControllerHookBeginFollowInt;
+            On.RoR2.DroneCommandReceiver.FixedUpdate += DroneCommandReceiverHookFixedUpdate;
             On.RoR2.DroneCommandReceiver.CommandFollow += DroneCommandReceiverHookCommandFollow;
             On.RoR2.DroneCommandReceiver.ActivateFollow += DroneCommandReceiverHookActivateFollow;
             On.RoR2.DroneCommandReceiver.CommandActivate += DroneCommandReceiverHookCommandActivate;
         }
 
+        private void DroneTechControllerHookCommandFollowInternal(On.DroneTechController.orig_CommandFollowInternal orig, DroneTechController self, bool shouldFollow, GameObject droneBody)
+        {
+            if (droneBody.gameObject.name.Contains("Turretling")) return;
+            orig(self, shouldFollow, droneBody);
+        }
+
+        private void DroneTechControllerHookCommandFollowGameObject(On.DroneTechController.orig_CommandFollow_bool_GameObject orig, DroneTechController self, bool shouldFollow, GameObject droneBody)
+        {
+            if (droneBody.gameObject.name.Contains("Turretling")) return;
+            orig(self, shouldFollow, droneBody);
+        }
+
+        private void DroneTechControllerHookCommandFollowDroneInfo(On.DroneTechController.orig_CommandFollow_bool_DroneInfo orig, DroneTechController self, bool shouldFollow, DroneInfo drone)
+        {
+            if (drone.characterBody.gameObject.name.Contains("Turretling")) return;
+            orig(self, shouldFollow, drone);
+        }
+
+        // Double the rate that the Operator Turretlings respawn; in part due to their fragility.
+        private void DroneRepairMasterHookTickHealthRepairServer(On.RoR2.DroneRepairMaster.orig_TickHealthRepairServer orig, DroneRepairMaster self, float healRate)
+        {
+            if (self.gameObject.name.Contains("Turretling"))
+            {
+                if (!NetworkServer.active)
+                {
+                    Debug.LogWarning("[Server] function 'System.Void RoR2.DroneRepairMaster::TickHealthRepairServer(System.Single)' called on client");
+                }
+                else if (self.HaveRepairBody && !(self.healthComponent == null) && NetworkServer.active)
+                {
+                    self.healthComponent.Heal((healRate * 2) * self.healthComponent.fullHealth * Time.fixedDeltaTime, default(ProcChainMask), nonRegen: false);
+                    if (self.healthComponent.health >= self.healthComponent.fullHealth)
+                    {
+                        self.RespawnDrone();
+                    }
+                }
+            }
+            if (self.gameObject.name.Contains("Turretling")) return;
+            orig(self,healRate);
+        }
+        private void DroneTechControllerHookBeginFollow(On.DroneTechController.orig_BeginFollow_CharacterBody orig, DroneTechController self, CharacterBody drone)
+        {
+            if (drone.gameObject.name.Contains("Turretling")) return;
+            orig(self, drone);
+        }
+        private void DroneTechControllerHookBeginFollowInt(On.DroneTechController.orig_BeginFollow_CharacterBody_int orig, DroneTechController self, CharacterBody drone, int index)
+        {
+            if (self.gameObject.name.Contains("Turretling")) return;
+            orig(self,drone,index);
+        }
+        private void DroneCommandReceiverHookFixedUpdate(On.RoR2.DroneCommandReceiver.orig_FixedUpdate orig, DroneCommandReceiver self)
+        {
+            if (self.gameObject.name.Contains("Turretling")) return;
+            orig(self);
+        }
         private void DroneCommandReceiverHookCommandFollow(On.RoR2.DroneCommandReceiver.orig_CommandFollow orig, DroneCommandReceiver self, bool shouldFollow)
         {
             Log.Debug("DroneCommandReceiver.CommandFollow fired on" + self.gameObject.name);
             if (self.gameObject.name.Contains("Turretling")) return;
             orig(self, shouldFollow);
         }
-
         private void DroneCommandReceiverHookActivateFollow(On.RoR2.DroneCommandReceiver.orig_ActivateFollow orig, DroneCommandReceiver self, bool occupySpace)
         {
             Log.Debug("DroneCommandReceiver.ActivateFollow fired on" + self.gameObject.name);
             if (self.gameObject.name.Contains("Turretling")) return;
             orig(self, occupySpace);
         }
-
         private static void DroneCommandReceiverHookCommandActivate(On.RoR2.DroneCommandReceiver.orig_CommandActivate orig, DroneCommandReceiver self)
         {
             Log.Debug("DroneCommandReceiver.CommandActivate fired on " + self.gameObject.name);
@@ -1026,13 +1086,12 @@ namespace SnowtimeToybox
             {
                 Log.Debug("Turretling: ADMIN OVERRIDE! Executing...");
                 SerializableEntityStateType serializableEntityStateType  = self.commandSkill.activationState;
-                self.commandSkill.stateMachine.SetInterruptState(EntityStateCatalog.InstantiateState(ref serializableEntityStateType), InterruptPriority.Skill);
+                self.commandSkill.stateMachine.SetInterruptState(EntityStateCatalog.InstantiateState(ref serializableEntityStateType), InterruptPriority.Vehicle);
             }
             if (self.gameObject.name.Contains("Turretling")) return;
             Log.Debug("Drone: ADMIN OVERRIDE! Executing...");
             orig(self);
         }
-
         //private static void DroneTechControllerHookStart(On.DroneTechController.orig_Start orig, DroneTechController self)
         //{
         //    // miaw

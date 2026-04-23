@@ -239,6 +239,11 @@ public class TurretlingRainbow : NetworkBehaviour
 
     public void MasterOnonBodyStart(CharacterBody body)
     {
+        // try to prevent it from keeping the item on map change or revive
+        if (master.inventory.GetItemCountEffective(RoR2Content.Items.ScrapRed) != 0)
+        {
+            master.inventory.RemoveItemPermanent(RoR2Content.Items.ScrapRed, master.inventory.GetItemCountEffective(RoR2Content.Items.ScrapRed));
+        }
         charBody = body;
         // dont run code if we're operator turretlings and we're being revived.
         if (body.name.Contains("Broken")) return;

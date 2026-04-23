@@ -11,7 +11,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
 {
     public class DTTurretlingRainbowize : BaseState
     {
-        public float baseDuration = 7f;
+        public float baseDuration = 5f;
 
         private float duration;
 
