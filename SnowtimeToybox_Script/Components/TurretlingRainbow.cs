@@ -277,11 +277,11 @@ public class TurretlingRainbow : NetworkBehaviour
             }
             
         }
-        
-        //if(Snowtime == true)
-        //{
-        //    childLocator.FindChild("SnowtimeHalo").gameObject.SetActive(true);
-        //}
+
+        if (Snowtime == true)
+        {
+            childLocator.FindChild("SnowtimeHalo").gameObject.SetActive(true);
+        }
         if (Acanthi == true)
         {
             childLocator.FindChild("AcanthiHalo").gameObject.SetActive(true);
