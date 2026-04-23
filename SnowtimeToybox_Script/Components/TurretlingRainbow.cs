@@ -25,6 +25,12 @@ public class TurretlingRainbow : NetworkBehaviour
     public bool Bread;
     [SyncVar]
     public bool Shortcake;
+    [SyncVar]
+    public bool Illusive;
+    [SyncVar]
+    public bool Anartoast;
+    [SyncVar]
+    public bool Lukas;
 
 
     private CharacterMaster turretlingPlayerMaster;
@@ -76,29 +82,100 @@ public class TurretlingRainbow : NetworkBehaviour
         {
             if (!turretlingPlayerMaster)
             {
-                Log.Debug("Defining Turretling Owner Master...");
-                turretlingPlayerMaster = master.minionOwnership.ownerMaster;
-                Log.Debug(turretlingPlayerMaster);
-                if (!turretlingPlayer)
+                if(master.gameObject.name.Contains("_DT"))
                 {
-                    Log.Debug("Defining Player Controller of Owner Master...");
-                    turretlingPlayer = turretlingPlayerMaster.playerCharacterMasterController;
-                    Log.Debug(turretlingPlayer);
+                    Log.Debug("Operator Turretling Found... Defining Turretling Owner Master...");
+                    turretlingPlayerMaster = master.minionOwnership.ownerMaster;
+                    Log.Debug(turretlingPlayerMaster);
+                    if (!turretlingPlayer)
+                    {
+                        Log.Debug("Defining Player Controller of Owner Master...");
+                        turretlingPlayer = turretlingPlayerMaster.playerCharacterMasterController;
+                        Log.Debug(turretlingPlayer);
+                    }
+                    if (turretlingPlayer != null)
+                    {
+                        steamid = turretlingPlayer.networkUser.id.steamId.ToSteamID();
+                    }
+                }
+                else if (master.gameObject.name.Contains("RemoteOp"))
+                {
+                    Log.Debug("Player found possessing Turretling, defining SteamID directly.");
+                    steamid = master.playerCharacterMasterController.networkUser.id.steamId.ToSteamID();
                 }
 
-                if (gameObject.name.Contains("_DT") && turretlingPlayer != null)
-                {
-                    steamid = turretlingPlayer.networkUser.id.steamId.ToSteamID();
 
+                if (gameObject.name.Contains("_DT") && turretlingPlayer != null || gameObject.name.Contains("RemoteOp"))
+                {
                     // Snowy Snowtime
                     if (steamid == "STEAM_1:1:146751517" && Snowtime == false)
                     {
                         Log.Debug("Snowy Snowtime -> Operator Turretling!!!!");
                         Snowtime = true;
-                        if(turretlingHue != 0.55f)
+                        if (turretlingHue != 0.55f)
                         {
                             turretlingHue = 0.55f;
                             turretlingSat = 0f;
+                            turretlingShade = 0f;
+                        }
+                    }
+                    // Acanthi
+                    if (steamid == "STEAM_0:1:60493073" && Acanthi == false)
+                    {
+                        Log.Debug("Acanthi -> Operator Turretling!!!!");
+                        Acanthi = true;
+                        if (turretlingSat != 1f)
+                        {
+                            turretlingHue = 0f;
+                            turretlingSat = 1f;
+                            turretlingShade = 0f;
+                        }
+                    }
+                    // Bread
+                    if (steamid == "STEAM_0:1:174533492" && Bread == false)
+                    {
+                        Log.Debug("Bread -> Operator Turretling!!!!");
+                        Bread = true;
+                        if (turretlingHue != 0.87f)
+                        {
+                            turretlingHue = 0.87f;
+                            turretlingSat = 0.97f;
+                            turretlingShade = 0f;
+                        }
+                    }
+                    // Illusive
+                    if (steamid == "STEAM_0:0:64329810" && Illusive == false)
+                    {
+                        Log.Debug("Illusive -> Operator Turretling!!!!");
+                        Illusive = true;
+                        if (turretlingHue != 0.71f)
+                        {
+                            turretlingHue = 0.71f;
+                            turretlingSat = 0.27f;
+                            turretlingShade = 0.27f;
+                        }
+                    }
+                    // Anartoast
+                    if (steamid == "STEAM_0:1:502654116" && Anartoast == false)
+                    {
+                        Log.Debug("Anartoast -> Operator Turretling!!!!");
+                        Anartoast = true;
+                        if (turretlingHue != 0.83f)
+                        {
+                            turretlingHue = 0.83f;
+                            turretlingSat = 0f;
+                            turretlingShade = 0f;
+                        }
+                    }
+                    // Lukas
+                    if (steamid == "STEAM_0:0:131809264" && Lukas == false)
+                    {
+                        Log.Debug("Lukas -> Operator Turretling!!!!");
+                        Lukas = true;
+                        if (turretlingHue != 0.43f)
+                        {
+                            turretlingHue = 0.43f;
+                            turretlingSat = 0.97f;
                             turretlingShade = 0f;
                         }
                     }
@@ -108,7 +185,7 @@ public class TurretlingRainbow : NetworkBehaviour
     }
     public void giveItems(bool takeRemove)
     {
-        // Do not give operator turretlings items, item is handled separately in the case it is in revive state.
+        // Do not give operator turretlings the defined rainbow turret items, item is handled separately in the case it is in revive state.
         // However, do remove the item in the case it dies during its rainbow powerup.
         if (gameObject.name.Contains("Broken"))
         {
@@ -201,9 +278,25 @@ public class TurretlingRainbow : NetworkBehaviour
             
         }
         
-        if(Snowtime == true)
+        //if(Snowtime == true)
+        //{
+        //    childLocator.FindChild("SnowtimeHalo").gameObject.SetActive(true);
+        //}
+        if (Acanthi == true)
         {
-            childLocator.FindChild("SnowtimeHalo").gameObject.SetActive(true);
+            childLocator.FindChild("AcanthiHalo").gameObject.SetActive(true);
+        }
+        if (Illusive == true)
+        {
+            childLocator.FindChild("IllusiveUnusual").gameObject.SetActive(true);
+        }
+        if (Anartoast == true)
+        {
+            childLocator.FindChild("AnartoastUnusual").gameObject.SetActive(true);
+        }
+        if (Bread == true)
+        {
+            childLocator.FindChild("BreadUnusual").gameObject.SetActive(true);
         }
     }
 }
