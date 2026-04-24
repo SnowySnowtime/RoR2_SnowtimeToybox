@@ -6,6 +6,7 @@ using SnowtimeToybox.Components;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
+using SnowtimeToybox.Items;
 
 namespace EntityStates.SnowtimeToybox_FriendlyTurret
 {
@@ -36,6 +37,8 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         private static int fireMissileParamHash = Animator.StringToHash("turretling_missile_fire.playbackRate");
         private float firingTime;
         private int missilesFired;
+        private float damageMultMoreMissiles;
+        private float damageMultFromOperatorRainbowizer;
 
         public override void OnEnter()
         {
@@ -56,6 +59,10 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             duration = baseDuration;
             PlayAnimation("Gesture", fireMissileHash, fireMissileParamHash, duration);
             isCrit = Util.CheckRoll(base.characterBody.crit, base.characterBody.master);
+            Inventory inventory = base.characterBody.inventory;
+            int itemCountEffective = inventory.GetItemCountEffective(DLC1Content.Items.MoreMissile);
+            int itemCountDTTurretlingPowerup = inventory.GetItemCountEffective(ItemCatalog.FindItemIndex("RainbowizerPowerUp"));
+            damageMultMoreMissiles = Mathf.Max(1f, 1f + 0.5f * (float)(itemCountEffective - 1));
             FireOrbMissile();
         }
 
@@ -98,7 +105,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 {
                     snowtimeOrb.snowtimeOrbType = SnowtimeOrbs.OrbTypes.TurretlingMissile;
                 }
-                snowtimeOrb.damageValue = base.characterBody.damage * orbDamageCoefficient;
+                snowtimeOrb.damageValue = (base.characterBody.damage * orbDamageCoefficient) * (damageMultMoreMissiles);
                 snowtimeOrb.isCrit = isCrit;
                 snowtimeOrb.teamIndex = TeamComponent.GetObjectTeam(base.gameObject);
                 snowtimeOrb.attacker = base.gameObject;
@@ -121,7 +128,8 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             firingTime += Time.fixedDeltaTime;
             Inventory inventory = base.characterBody.inventory;
             int itemCountEffective = inventory.GetItemCountEffective(DLC1Content.Items.MoreMissile);
-            if (itemCountEffective > 0)
+            int itemCountDTTurretlingPowerup = inventory.GetItemCountEffective(ItemCatalog.FindItemIndex("RainbowizerPowerUp"));
+            if (itemCountEffective > 0 || itemCountDTTurretlingPowerup > 0 && RainbowizerPowerup.AdditionalMissiles.Value == true)
             {
                 if (firingTime > 0.1f && missilesFired < 2)
                 {

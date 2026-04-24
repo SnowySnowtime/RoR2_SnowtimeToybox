@@ -30,7 +30,9 @@ namespace SnowtimeToybox.Items
 
         public abstract ItemDef ItemDef { get; }
         public bool AIBlacklisted { get; set; }
+        public bool Hidden { get; set; }
         public string ItemName;
+        public static string ItemNameInternal;
 
         /// <summary>
         /// This method structures your code execution of this class. An example implementation inside of it would be:
@@ -57,19 +59,21 @@ namespace SnowtimeToybox.Items
         public abstract ItemDisplayRuleDict CreateItemDisplayRules();
         protected void CreateItem()
         {
-            // ignore obsolete, didnt want to have to fix it.
-            if (!ItemDef.pickupModelPrefab)
-                ItemDef.pickupModelPrefab = Addressables.LoadAssetAsync<GameObject>(RoR2BepInExPack.GameAssetPaths.Version_1_39_0.RoR2_Base_Mystery.PickupMystery_prefab).WaitForCompletion();
-
             CreateLang(); //just for autogeneration of lang file wiht https://thunderstore.io/c/riskofrain2/p/TheTimesweeper/LanguageFileGenerator/ older build with this could also work thouvh ,.,.
 
-            // not sure how to replicate this
-            //if (Language.GetString(ItemDef.loreToken) == "")
-            //{
-            //    ItemDef.loreToken = ItemHelpers.OrderManifestLoreFormatter(ItemName, "sunfall !!", "sunfall hq !!!!!!", "super sunfall !!!", Language.GetString(ItemDef.pickupToken), "sunfall ues awesome !!", "sunfall epic !!");
-            //}
+            if (ItemDef == null)
+            {
+                Log.Error("An ItemDef was null! Ensure that the paths are correct. Especially make sure it uses .asset suffix");
+            }
+            ItemAPI.Add(new CustomItem(ItemDef, CreateItemDisplayRules()));
+            Log.Debug("Attempted to add item: " +  ItemDef.nameToken + "... Check Ingame if it works!");
+            //if (!ItemDef.pickupModelPrefab)
+            //    ItemDef.pickupModelPrefab = Addressables.LoadAssetAsync<GameObject>(RoR2BepInExPack.GameAssetPaths.Version_1_39_0.RoR2_Base_Mystery.PickupMystery_prefab).WaitForCompletion();
 
-            ContentAddition.AddItemDef(ItemDef);
+            if (Hidden)
+            {
+                ItemDef.hidden = true;
+            }
             if (AIBlacklisted && !ItemDef.tags.Contains(ItemTag.AIBlacklist))
             {
                 ItemDef.tags = ItemDef.tags.Append(ItemTag.AIBlacklist).ToArray();
@@ -80,6 +84,7 @@ namespace SnowtimeToybox.Items
         {
             if (ItemDef != null)
                 ItemName = ItemDef.name;
+                ItemNameInternal = ItemDef.name;
         }
 
         public virtual void Hooks() { }

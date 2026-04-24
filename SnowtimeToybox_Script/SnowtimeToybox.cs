@@ -12,6 +12,7 @@ using SnowtimeToybox.Buffs;
 using SnowtimeToybox.Components;
 using SnowtimeToybox.FriendlyTurretChecks;
 using SnowtimeToybox.FriendlyTurrets;
+using SnowtimeToybox.Items;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -108,8 +109,10 @@ namespace SnowtimeToybox
         public static String assetDirectory;
         public static AssetBundle _stdifficultyAssetBundle;
         public static AssetBundle _stcharacterAssetBundle;
+        public static AssetBundle _stitemAssetBundle;
         internal const string _stdifficultyAssetBundleName = "snowtimetoybox_difficulty";
         internal const string _stcharacterAssetBundleName = "snowtimetoybox_characters";
+        internal const string _stitemAssetBundleName = "snowtimetoybox_items";
 
         public static ConfigEntry<bool> ToggleSpawnMessages { get; set; }
         public static ConfigEntry<bool> FriendlyTurretImmuneVoidDeath { get; set; }
@@ -156,10 +159,13 @@ namespace SnowtimeToybox
             _stcharacterAssetBundle = AssetBundle.LoadFromFile(Path.Combine(assetsFolderFullPath, _stcharacterAssetBundleName));
             base.StartCoroutine(_stcharacterAssetBundle.UpgradeStubbedShadersAsync());
             _stdifficultyAssetBundle = AssetBundle.LoadFromFile(Path.Combine(assetsFolderFullPath, _stdifficultyAssetBundleName));
+            _stitemAssetBundle = AssetBundle.LoadFromFile(Path.Combine(assetsFolderFullPath, _stitemAssetBundleName));
             Debug.Log(_stcharacterAssetBundle);
             Debug.Log(_stdifficultyAssetBundle);
+            Debug.Log(_stitemAssetBundle);
 
             AddDifficulty();
+            AddCustomItems();
             AddCustomSkills();
             AddCustomAllies();
             AddCustomBuffs();
@@ -415,6 +421,17 @@ namespace SnowtimeToybox
                 if (eliteDef.eliteEquipmentDef?.equipmentIndex == null) return;
                 eliteDefsEquipInherit.Add(eliteDef.eliteEquipmentDef.equipmentIndex);
                 Log.Debug("Elite Equipment: " + eliteDef.eliteEquipmentDef + " Index: " + eliteDef.eliteEquipmentDef.equipmentIndex);
+            }
+        }
+
+        public void AddCustomItems()
+        {
+            var ItemTypes = Assembly.GetExecutingAssembly().GetTypes().Where(type => !type.IsAbstract && type.IsSubclassOf(typeof(ItemBase)));
+
+            foreach (var itemType in ItemTypes)
+            {
+                ItemBase item = (ItemBase)System.Activator.CreateInstance(itemType);
+                item.Init(Config);
             }
         }
 

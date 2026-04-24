@@ -97,6 +97,14 @@ public class TurretlingRainbow : NetworkBehaviour
                     {
                         steamid = turretlingPlayer.networkUser.id.steamId.ToSteamID();
                     }
+                    // Just in case...
+                    if (gameObject.name.Contains("Broken"))
+                    {
+                        if (master.inventory.GetItemCountEffective(ItemCatalog.FindItemIndex("RainbowizerPowerUp")) != 0)
+                        {
+                            master.inventory.RemoveItemPermanent(ItemCatalog.FindItemIndex("RainbowizerPowerUp"), master.inventory.GetItemCountEffective(RoR2Content.Items.ScrapRed));
+                        }
+                    }
                 }
                 else if (master.gameObject.name.Contains("RemoteOp"))
                 {
@@ -187,14 +195,24 @@ public class TurretlingRainbow : NetworkBehaviour
     {
         // Do not give operator turretlings the defined rainbow turret items, item is handled separately in the case it is in revive state.
         // However, do remove the item in the case it dies during its rainbow powerup.
-        if (gameObject.name.Contains("Broken"))
+        if (gameObject.name.Contains("_DT"))
         {
-            if(master.inventory.GetItemCountEffective(RoR2Content.Items.ScrapRed) != 0)
+            if (takeRemove)
             {
-                master.inventory.RemoveItemPermanent(RoR2Content.Items.ScrapRed, master.inventory.GetItemCountEffective(RoR2Content.Items.ScrapRed));
+                if (master.inventory.GetItemCountEffective(ItemCatalog.FindItemIndex("RainbowizerPowerUp")) == 0)
+                {
+                    master.inventory.GiveItemPermanent(ItemCatalog.FindItemIndex("RainbowizerPowerUp"));
+                }
             }
+            else
+            {
+                if (master.inventory.GetItemCountEffective(ItemCatalog.FindItemIndex("RainbowizerPowerUp")) != 0)
+                {
+                    master.inventory.RemoveItemPermanent(ItemCatalog.FindItemIndex("RainbowizerPowerUp"), master.inventory.GetItemCountEffective(ItemCatalog.FindItemIndex("RainbowizerPowerUp")));
+                }
+            }
+           return;
         }
-        if (gameObject.name.Contains("_DT")) return;
         try
         {
             string[] bonusItems = SnowtimeToyboxMod.TurretlingRainbowBonusItems.Value.Split(",");
