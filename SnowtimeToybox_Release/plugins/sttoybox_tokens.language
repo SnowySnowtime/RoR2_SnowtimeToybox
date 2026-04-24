@@ -107,6 +107,7 @@
 		"TURRETLING_DT_DESCRIPTION": "Tiny, distracting, walking turret which assists the user in damage.",
 		"TURRETLING_DT_SKILL_DESCRIPTION": "Fires a blaster for <style=cIsDamage>100% damage</style>.\nOccassionally fires its pixi launcher for <style=cIsDamage>200% damage</style>.",
 		"TURRETLING_DT_SPECIAL": "Rainbowize; enter an <style=cIsDamage>empowered state</style>, <style=cIsDamage>massively increasing offensive stats</style> for 5 seconds.",
+		"TURRETLING_DT_SPECIAL_DESC": "Rainbowize; enter an <style=cIsDamage>empowered state</style>, <style=cIsDamage>massively increasing offensive stats</style> for 5 seconds.",
 		
 		"TURRETLING_DRONETECH_NAME": "Turretling Mk 2",
 		"TURRETLING_DRONETECH_DESCRIPTION": "<style=cDeath>Fragile</style>. A customized turretling will spawn with you at the start of each stage. Automatically repairs when downed.",
