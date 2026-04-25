@@ -6,6 +6,7 @@ using EntityStates.SnowtimeToybox_FriendlyTurret;
 using On.RoR2.CharacterAI;
 using R2API;
 using RoR2;
+using RoR2.Networking;
 using RoR2.Skills;
 using ShaderSwapper;
 using SnowtimeToybox.Buffs;
@@ -1033,6 +1034,59 @@ namespace SnowtimeToybox
             On.RoR2.DroneCommandReceiver.CommandFollow += DroneCommandReceiverHookCommandFollow;
             On.RoR2.DroneCommandReceiver.ActivateFollow += DroneCommandReceiverHookActivateFollow;
             On.RoR2.DroneCommandReceiver.CommandActivate += DroneCommandReceiverHookCommandActivate;
+            On.EntityStates.DroneTech.CommandCarry.OnEnter += DroneTechHookOnEnter;
+        }
+
+        private void DroneTechHookOnEnter(On.EntityStates.DroneTech.CommandCarry.orig_OnEnter orig, EntityStates.DroneTech.CommandCarry self)
+        {
+            if (self.gameObject.name.Contains("Turretling"))
+            {
+                Log.Debug(self.gameObject.name + " entered state CommandCarry.OnEnter");
+                if ((bool)self.target && self.target.TryGetComponent<CharacterBody>(out var component))
+                {
+                    self.targetBody = component;
+                    self.targetTransform = self.targetBody.modelLocator.modelChildLocator.FindChild(self.targetChildIndex);
+                }
+                if (!self.targetTransform)
+                {
+                    Debug.LogError("CommandCarry.OnEnter: No targetTransform! " + self.targetChildIndex);
+                }
+                if ((bool)self.rigidbodyMotor)
+                {
+                    self.rigidbodyMotor.enabled = false;
+                }
+                if ((bool)self.characterMotor)
+                {
+                    self.characterMotor.enabled = false;
+                }
+                if ((bool)self.modelLocator && (bool)self.modelLocator.modelBaseTransform && (bool)self.targetTransform)
+                {
+                    Transform modelBaseTransform = self.modelLocator.modelBaseTransform;
+                    self.cachedModelPosition = modelBaseTransform.localPosition;
+                    self.cachedModelRotation = modelBaseTransform.localRotation;
+                    modelBaseTransform.parent = self.targetTransform;
+                    modelBaseTransform.rotation = self.targetTransform.rotation;
+                    modelBaseTransform.localPosition = new Vector3(0f, self.characterBody.radius, 0f);
+                    self.transform.position = modelBaseTransform.transform.position;
+                }
+                if ((bool)self.characterBody.hurtBoxGroup)
+                {
+                    self.characterBody.hurtBoxGroup.hurtBoxesDeactivatorCounter++;
+                }
+                self.commandReceiver = GetComponent<DroneCommandReceiver>();
+                if ((bool)self.commandReceiver)
+                {
+                    self.commandReceiver.droneState = DroneCommandReceiver.DroneState.Busy;
+                }
+                self.characterBody.fakeActorCounter++;
+                if (!self.isAuthority && TryGetComponent<CharacterNetworkTransform>(out var t))
+                {
+                    self.networkTransform = t;
+                    self.networkTransform.enabled = false;
+                }
+            }
+            if (self.gameObject.name.Contains("Turretling")) return;
+            orig(self);
         }
 
         private void DroneTechControllerHookCommandFollowInternal(On.DroneTechController.orig_CommandFollowInternal orig, DroneTechController self, bool shouldFollow, GameObject droneBody)
