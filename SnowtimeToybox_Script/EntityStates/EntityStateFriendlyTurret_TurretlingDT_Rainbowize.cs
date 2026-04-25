@@ -33,6 +33,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             {
                 Log.Debug("rainboe null !! ");
             }
+            if (base.gameObject.name.Contains("RemoteOp")) return;
             characterBody.GetComponent<DroneCommandReceiver>().droneState = DroneCommandReceiver.DroneState.Idle;
         }
 
@@ -57,7 +58,11 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         {
             base.FixedUpdate();
 
-            if (base.fixedAge > duration && base.isAuthority)
+            if (base.gameObject.name.Contains("RemoteOp"))
+            {
+                outer.SetNextStateToMain();
+            }
+            else if (base.fixedAge > duration && base.isAuthority)
             {
                 characterBody.GetComponent<DroneCommandReceiver>().droneState = DroneCommandReceiver.DroneState.Idle;
                 outer.SetNextStateToMain();
