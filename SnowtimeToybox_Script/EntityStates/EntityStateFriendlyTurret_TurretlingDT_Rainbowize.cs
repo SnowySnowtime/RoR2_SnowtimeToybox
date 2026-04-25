@@ -58,7 +58,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         {
             base.FixedUpdate();
 
-            if (base.gameObject.name.Contains("RemoteOp"))
+            if (base.gameObject.name.Contains("RemoteOp") || base.gameObject.name.Contains("_Holy") || base.gameObject.name.Contains("PlayerMaster"))
             {
                 outer.SetNextStateToMain();
             }

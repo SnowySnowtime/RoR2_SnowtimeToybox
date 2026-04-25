@@ -57,19 +57,9 @@ public class TurretlingRainbow : NetworkBehaviour
             turretlingSat = Run.instance.runRNG.RangeFloat(0, 1);
             turretlingShade = Run.instance.runRNG.RangeFloat(0, 1);
 
-            if (!gameObject.name.Contains("_DT") || !gameObject.name.Contains("PlayerMaster"))
+            if (!gameObject.name.Contains("_DT") || !gameObject.name.Contains("PlayerMaster") || gameObject.name.Contains("_Holy"))
             {
                 turretlingRainbow = SnowtimeToyboxMod.TurretlingRainbowChance.Value >= Run.instance.runRNG.RangeFloat(0, 100);
-            }
-            
-            if (Snowtime)
-            {
-                if (turretlingHue != 0.55f)
-                {
-                    turretlingHue = 0.55f;
-                    turretlingSat = 0f;
-                    turretlingShade = 0f;
-                }
             }
 
             if (turretlingRainbow)
@@ -86,7 +76,6 @@ public class TurretlingRainbow : NetworkBehaviour
             //Log.Debug("erm...");
             if (!turretlingPlayerMaster)
             {
-                Log.Debug(gameObject.name);
                 if(gameObject.name.Contains("_DT") || gameObject.name.Contains("_Holy"))
                 {
                     Log.Debug("Operator/Artificer Turretling Found... Defining Turretling Owner Master...");
@@ -125,19 +114,19 @@ public class TurretlingRainbow : NetworkBehaviour
                 if (gameObject.name.Contains("_DT") && turretlingPlayer != null || gameObject.name.Contains("_Holy") && turretlingPlayer != null || gameObject.name.Contains("PlayerMaster"))
                 {
                     // Snowy Snowtime
-                    //if (steamid == "STEAM_1:1:146751517" && Snowtime == false)
-                    //{
-                    //    Log.Debug("Snowy Snowtime -> Turretling!!!!");
-                    //    Snowtime = true;
-                    //    if (turretlingHue != 0.55f)
-                    //    {
-                    //        turretlingHue = 0.55f;
-                    //        turretlingSat = 0f;
-                    //        turretlingShade = 0f;
-                    //    }
-                    //}
+                    if (steamid == "STEAM_1:1:146751517" && Snowtime == false)
+                    {
+                        Log.Debug("Snowy Snowtime -> Turretling!!!!");
+                        Snowtime = true;
+                        if (turretlingHue != 0.55f)
+                        {
+                            turretlingHue = 0.55f;
+                            turretlingSat = 0f;
+                            turretlingShade = 0f;
+                        }
+                    }
                     // Shortcake
-                    if (steamid == "STEAM_1:1:146751517" && Shortcake == false)
+                    if (steamid == "STEAM_0:0:615574887" && Shortcake == false)
                     {
                         Log.Debug("Shortcake -> Turretling!!!!");
                         Shortcake = true;
