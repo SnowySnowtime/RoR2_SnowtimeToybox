@@ -38,9 +38,11 @@ public class TurretlingRainbow : NetworkBehaviour
     private CharacterMaster master;
     private CharacterBody charBody;
     private string steamid;
+    private bool firstSpawnPassed;
     public void OnEnable()
     {
         if (!gameObject.name.Contains("Turretling")) return;
+        firstSpawnPassed = false;
         Log.Debug("turretling master spawned !!");
         Log.Debug("Object Name: " + gameObject.name);
         if (gameObject.name.Contains("Broken")) return;
@@ -55,7 +57,7 @@ public class TurretlingRainbow : NetworkBehaviour
             turretlingSat = Run.instance.runRNG.RangeFloat(0, 1);
             turretlingShade = Run.instance.runRNG.RangeFloat(0, 1);
 
-            if (!gameObject.name.Contains("_DT"))
+            if (!gameObject.name.Contains("_DT") || !gameObject.name.Contains("PlayerMaster"))
             {
                 turretlingRainbow = SnowtimeToyboxMod.TurretlingRainbowChance.Value >= Run.instance.runRNG.RangeFloat(0, 100);
             }
@@ -81,11 +83,13 @@ public class TurretlingRainbow : NetworkBehaviour
     {
         if (NetworkServer.active && Run.instance)
         {
+            //Log.Debug("erm...");
             if (!turretlingPlayerMaster)
             {
-                if(master.gameObject.name.Contains("_DT"))
+                Log.Debug(gameObject.name);
+                if(gameObject.name.Contains("_DT") || gameObject.name.Contains("_Holy"))
                 {
-                    Log.Debug("Operator Turretling Found... Defining Turretling Owner Master...");
+                    Log.Debug("Operator/Artificer Turretling Found... Defining Turretling Owner Master...");
                     turretlingPlayerMaster = master.minionOwnership.ownerMaster;
                     Log.Debug(turretlingPlayerMaster);
                     if (!turretlingPlayer)
@@ -107,23 +111,39 @@ public class TurretlingRainbow : NetworkBehaviour
                         }
                     }
                 }
-                else if (master.gameObject.name.Contains("RemoteOp"))
+                else if (gameObject.name.Contains("PlayerMaster"))
                 {
+                    turretlingPlayerMaster = gameObject.GetComponent<CharacterMaster>();
                     Log.Debug("Player found possessing Turretling, defining SteamID directly.");
-                    steamid = master.playerCharacterMasterController.networkUser.id.steamId.ToSteamID();
+                    if (!gameObject.GetComponent<PlayerCharacterMasterController>()) return;
+                    steamid = gameObject.GetComponent<PlayerCharacterMasterController>().networkUser.id.steamId.ToSteamID();
+                    // Disable this log later
+                    Log.Debug("Player" + gameObject.GetComponent<PlayerCharacterMasterController>().GetDisplayName() + " SteamID: " + steamid);
                 }
 
 
-                if (gameObject.name.Contains("_DT") && turretlingPlayer != null || gameObject.name.Contains("RemoteOp"))
+                if (gameObject.name.Contains("_DT") && turretlingPlayer != null || gameObject.name.Contains("_Holy") && turretlingPlayer != null || gameObject.name.Contains("PlayerMaster"))
                 {
                     // Snowy Snowtime
-                    if (steamid == "STEAM_1:1:146751517" && Snowtime == false)
+                    //if (steamid == "STEAM_1:1:146751517" && Snowtime == false)
+                    //{
+                    //    Log.Debug("Snowy Snowtime -> Turretling!!!!");
+                    //    Snowtime = true;
+                    //    if (turretlingHue != 0.55f)
+                    //    {
+                    //        turretlingHue = 0.55f;
+                    //        turretlingSat = 0f;
+                    //        turretlingShade = 0f;
+                    //    }
+                    //}
+                    // Shortcake
+                    if (steamid == "STEAM_1:1:146751517" && Shortcake == false)
                     {
-                        Log.Debug("Snowy Snowtime -> Operator Turretling!!!!");
-                        Snowtime = true;
-                        if (turretlingHue != 0.55f)
+                        Log.Debug("Shortcake -> Turretling!!!!");
+                        Shortcake = true;
+                        if (turretlingHue != 0.045f)
                         {
-                            turretlingHue = 0.55f;
+                            turretlingHue = 0.045f;
                             turretlingSat = 0f;
                             turretlingShade = 0f;
                         }
@@ -131,7 +151,7 @@ public class TurretlingRainbow : NetworkBehaviour
                     // Acanthi
                     if (steamid == "STEAM_0:1:60493073" && Acanthi == false)
                     {
-                        Log.Debug("Acanthi -> Operator Turretling!!!!");
+                        Log.Debug("Acanthi -> Turretling!!!!");
                         Acanthi = true;
                         if (turretlingSat != 1f)
                         {
@@ -143,7 +163,7 @@ public class TurretlingRainbow : NetworkBehaviour
                     // Bread
                     if (steamid == "STEAM_0:1:174533492" && Bread == false)
                     {
-                        Log.Debug("Bread -> Operator Turretling!!!!");
+                        Log.Debug("Bread -> Turretling!!!!");
                         Bread = true;
                         if (turretlingHue != 0.87f)
                         {
@@ -155,7 +175,7 @@ public class TurretlingRainbow : NetworkBehaviour
                     // Illusive
                     if (steamid == "STEAM_0:0:64329810" && Illusive == false)
                     {
-                        Log.Debug("Illusive -> Operator Turretling!!!!");
+                        Log.Debug("Illusive -> Turretling!!!!");
                         Illusive = true;
                         if (turretlingHue != 0.71f)
                         {
@@ -167,7 +187,7 @@ public class TurretlingRainbow : NetworkBehaviour
                     // Anartoast
                     if (steamid == "STEAM_0:1:502654116" && Anartoast == false)
                     {
-                        Log.Debug("Anartoast -> Operator Turretling!!!!");
+                        Log.Debug("Anartoast -> Turretling!!!!");
                         Anartoast = true;
                         if (turretlingHue != 0.83f)
                         {
@@ -179,7 +199,7 @@ public class TurretlingRainbow : NetworkBehaviour
                     // Lukas
                     if (steamid == "STEAM_0:0:131809264" && Lukas == false)
                     {
-                        Log.Debug("Lukas -> Operator Turretling!!!!");
+                        Log.Debug("Lukas -> Turretling!!!!");
                         Lukas = true;
                         if (turretlingHue != 0.43f)
                         {
@@ -188,10 +208,87 @@ public class TurretlingRainbow : NetworkBehaviour
                             turretlingShade = 0f;
                         }
                     }
+
+                    if(firstSpawnPassed != true)
+                    {
+                        firstSpawnPassed = true;
+                        if(gameObject.name.Contains("PlayerMaster"))
+                        {
+                            charBody = gameObject.GetComponent<CharacterMaster>().GetBody().gameObject.GetComponent<CharacterBody>();
+                        }
+                        else
+                        {
+                            charBody = master.GetBody();
+                        }
+
+                        if (charBody.name.Contains("Broken")) return;
+                        ChildLocator childLocator = charBody.modelLocator.modelTransform.gameObject.GetComponent<ChildLocator>();
+                        if (childLocator == null) return;
+                        GameObject overlay = childLocator.FindChild("Turretling_Overlay").gameObject;
+                        Animator overlayAnimator = overlay.GetComponent<Animator>();
+                        GameObject light = childLocator.FindChild("Turretling_Light").gameObject;
+                        Animator lightAnimator = light.GetComponent<Animator>();
+                        GameObject fx = childLocator.FindChild("Turretling_RainbowFX").gameObject;
+                        Animator fxAnimator = fx.GetComponent<Animator>();
+
+                        Animator[] animators =
+                        [
+                            overlayAnimator,
+                            lightAnimator,
+                            fxAnimator
+                        ];
+
+                        //does this have to be like this? no ,.., but its silyl .,. ,
+                        foreach (var animator in animators)
+                        {
+                            if (turretlingRainbow)
+                            {
+                                animator.SetFloat("hue", 0);
+                                animator.SetFloat("sat", 0);
+                                animator.SetFloat("shade", 0);
+                                animator.SetBool("shift", turretlingRainbow);
+                            }
+                            else
+                            {
+                                animator.SetFloat("hue", turretlingHue);
+                                animator.SetFloat("sat", turretlingSat);
+                                animator.SetFloat("shade", turretlingShade);
+                                animator.SetBool("shift", turretlingRainbow);
+                            }
+
+                        }
+
+                        if (Snowtime == true)
+                        {
+                            childLocator.FindChild("SnowtimeHalo").gameObject.SetActive(true);
+                        }
+                        if (Shortcake == true)
+                        {
+                            childLocator.FindChild("ShortcakeHalo").gameObject.SetActive(true);
+                        }
+                        if (Acanthi == true)
+                        {
+                            childLocator.FindChild("AcanthiHalo").gameObject.SetActive(true);
+                        }
+                        if (Illusive == true)
+                        {
+                            childLocator.FindChild("IllusiveUnusual").gameObject.SetActive(true);
+                        }
+                        if (Anartoast == true)
+                        {
+                            childLocator.FindChild("AnartoastUnusual").gameObject.SetActive(true);
+                        }
+                        if (Bread == true)
+                        {
+                            childLocator.FindChild("BreadUnusual").gameObject.SetActive(true);
+                        }
+
+                    }
                 }
             }
         }
     }
+
     public void giveItems(bool takeRemove)
     {
         // Do not give operator turretlings the defined rainbow turret items, item is handled separately in the case it is in revive state.
@@ -241,7 +338,7 @@ public class TurretlingRainbow : NetworkBehaviour
     private void MasterOnonBodyDeath()
     {
         // enough said.
-        if (gameObject.name.Contains("_DT") || gameObject.name.Contains("Broken")) return;
+        if (gameObject.name.Contains("_DT") || gameObject.name.Contains("Broken") || gameObject.name.Contains("_Holy")) return;
         int extralives = master.inventory.GetItemCountPermanent(RoR2Content.Items.ExtraLife);
         ChildLocator childLocator = master.GetBody().modelLocator.modelTransform.gameObject.GetComponent<ChildLocator>();
         if (turretlingRainbow && extralives != 0)
@@ -259,11 +356,10 @@ public class TurretlingRainbow : NetworkBehaviour
     public void MasterOnonBodyStart(CharacterBody body)
     {
         // try to prevent it from keeping the item on map change or revive
-        if (master.inventory.GetItemCountEffective(RoR2Content.Items.ScrapRed) != 0)
+        if (master.inventory.GetItemCountEffective(ItemCatalog.FindItemIndex("RainbowizerPowerUp")) != 0)
         {
-            master.inventory.RemoveItemPermanent(RoR2Content.Items.ScrapRed, master.inventory.GetItemCountEffective(RoR2Content.Items.ScrapRed));
+            master.inventory.RemoveItemPermanent(ItemCatalog.FindItemIndex("RainbowizerPowerUp"), master.inventory.GetItemCountEffective(ItemCatalog.FindItemIndex("RainbowizerPowerUp")));
         }
-        charBody = body;
         // dont run code if we're operator turretlings and we're being revived.
         if (body.name.Contains("Broken")) return;
         ChildLocator childLocator = body.modelLocator.modelTransform.gameObject.GetComponent<ChildLocator>();
@@ -305,6 +401,10 @@ public class TurretlingRainbow : NetworkBehaviour
         if (Snowtime == true)
         {
             childLocator.FindChild("SnowtimeHalo").gameObject.SetActive(true);
+        }
+        if (Shortcake == true)
+        {
+            childLocator.FindChild("ShortcakeHalo").gameObject.SetActive(true);
         }
         if (Acanthi == true)
         {

@@ -97,6 +97,13 @@ namespace SnowtimeToybox
         public static GameObject DTTurretlingBroken;
         public static SkillFamily DTTurretlingSkillFamily;
         public static SkillDef DTTurretlingSkillDef;
+        public static SkillFamily ArtiPassiveFamily;
+        public static SkillDef ArtiTurretSkill;
+        public static SkillDef ArtiNoTurretSkill;
+        public static DroneDef ArtiTurretlingDef;
+        public static GameObject ArtiTurretlingBody;
+        public static GameObject ArtiTurretlingMaster;
+        public static GameObject ArtiTurretlingBroken;
 
         //public static DroneDef FriendlyTurretTestDroneDef;
 
@@ -126,6 +133,7 @@ namespace SnowtimeToybox
         public static ConfigEntry<float> TurretlingRainbowChance { get; set; }
         public static ConfigEntry<string> TurretlingRainbowBonusItems { get; set; }
         public static ConfigEntry<bool> TurretlingKillOriginalTurrets { get; set; }
+        public static ConfigEntry<bool> TurretlingArtificerPassive { get; set; }
         public static ConfigEntry<float> TurretlingReviveCostMult { get; set; }
         public static ConfigEntry<float> TurretlingBaseDamage { get; set; }
         public static ConfigEntry<float> TurretlingBaseDamagePerLevel { get; set; }
@@ -142,6 +150,7 @@ namespace SnowtimeToybox
             FriendlyTurretFallImmunity = Config.Bind("Friendly Turret Flags", "Fall Damage Immunity", true, "If true, Friendly Turrets (and turretlings) are immune to fall damage, as navigating some maps can be a little difficult for them. Prevents any unexpected turret deaths, as we cant simply 'replace' them like Engineer can.");
             FriendlyTurretDrone = Config.Bind("Friendly Turret Flags", "Drone", false, "If true, Friendly Turrets (and turretlings) are flagged as drones. Probably comes with some oddities.");
             FriendlyTurretRemoteOpPrice = Config.Bind("Friendly Turret Functions", "Remote Operation Cost", 250, "Cost for becoming a Friendly Turret with Remote Operation.");
+            TurretlingArtificerPassive = Config.Bind("Turretlings", "Artificer Passive", false, "If true, gives Artificer a holy turretling.");
             TurretlingSpawnChance = Config.Bind("Turretlings", "Turretling Variant Spawn Chance ,,.", 100f, "chance to get a turretling when buying a friendly turret !!!");
             TurretlingImmuneVoidDeath = Config.Bind("Turretlings", "Void Death Immunity", false, "If true, All turretlings are immune to Void Death (Void Reaver implosions). Keep the scrunglies safe.");
             TurretlingReviveCostMult = Config.Bind("Turretlings", "turretling revive cost mult .,.", 0.6f, "price multiplier for reviving turretlings ,.. ,.");
@@ -558,6 +567,17 @@ namespace SnowtimeToybox
             ContentAddition.AddEffect(TurretlingBlaster.tracerfx_rainbow);
             ContentAddition.AddEffect(SnowtimeOrbs.orbRainbowMissileObject);
             ContentAddition.AddEffect(SnowtimeOrbs.orbRainbowMissileImpactObject);
+            // Arti really quickly 
+            ArtiTurretlingDef = _stcharacterAssetBundle.LoadAsset<DroneDef>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_HolyTurretling.asset");
+            ArtiTurretlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_HolyTurretlingBody.prefab");
+            ArtiTurretlingBody.GetComponent<CharacterDeathBehavior>().deathState = new SerializableEntityStateType(typeof(DTTurretlingDeath));
+            ArtiTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_HolyTurretlingMaster.prefab");
+            ArtiTurretlingMaster.AddComponent<TurretlingRainbow>();
+            ArtiTurretlingBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_HolyTurretlingBroken.prefab");
+            ContentAddition.AddDroneDef(ArtiTurretlingDef);
+            ContentAddition.AddBody(ArtiTurretlingBody);
+            ContentAddition.AddMaster(ArtiTurretlingMaster);
+            ContentAddition.AddBody(ArtiTurretlingBroken);
             // Operator
             DTTurretlingDef = _stcharacterAssetBundle.LoadAsset<DroneDef>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_DTTurretling.asset");
             DTTurretlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_DTTurretlingBody.prefab");
@@ -977,6 +997,24 @@ namespace SnowtimeToybox
             ContentAddition.AddEffect(SnowtimeHaloRicochetOrb.orbEffectObject);
             ContentAddition.AddEffect(_stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/PlasmaRifle/PlasmaRifleImpactVFXRico.prefab"));
 
+            ArtiPassiveFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/ArtificerHiddenPassiveFamily.asset");
+            ArtiTurretSkill = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/ArtificerTurretling.asset");
+            ArtiNoTurretSkill = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/ArtificerNoTurretling.asset");
+            ContentAddition.AddSkillFamily(ArtiPassiveFamily);
+            ContentAddition.AddSkillDef(ArtiTurretSkill);
+            ContentAddition.AddSkillDef(ArtiNoTurretSkill);
+
+            if(TurretlingArtificerPassive.Value)
+            {
+                Log.Debug("Artificer is bringing a holy relic. Its fragile so be careful!");
+                GameObject ArtificerPrefab = Addressables.LoadAssetAsync<GameObject>(RoR2BepInExPack.GameAssetPaths.Version_1_39_0.RoR2_Base_Mage.MageBody_prefab).WaitForCompletion();
+                DroneTechRepairQueue ArtificerRepairQueue = ArtificerPrefab.AddComponent<DroneTechRepairQueue>();
+                ArtificerRepairQueue.healRate = 0.05f;
+                GenericSkill ArtiHolyTurretling = ArtificerPrefab.AddComponent<GenericSkill>();
+                ArtiHolyTurretling._skillFamily = ArtiPassiveFamily;
+                ArtiHolyTurretling.skillName = "Turretling";
+            }
+
             GameObject DroneTechBodyPrefab = Addressables.LoadAssetAsync<GameObject>(RoR2BepInExPack.GameAssetPaths.Version_1_39_0.RoR2_DLC3_Drone_Tech.DroneTechBody_prefab).WaitForCompletion();
             SkillLocator skillLocator = DroneTechBodyPrefab.GetComponent<SkillLocator>();
             SkillFamily skillFamily = skillLocator.primary.skillFamily;
@@ -1022,8 +1060,6 @@ namespace SnowtimeToybox
             ContentAddition.AddSkillDef(DroneTechTurretlingSkillDef);
 
             // this isnt going to be fun.
-            //On.RoR2.DroneCommandReceiver.CanFollow += DroneCommandReceiverFixedUpdate;
-            //On.DroneTechController.Start += DroneTechControllerHookStart;
             On.RoR2.DroneRepairMaster.TickHealthRepairServer += DroneRepairMasterHookTickHealthRepairServer;
             On.DroneTechController.CommandFollowInternal += DroneTechControllerHookCommandFollowInternal;
             On.DroneTechController.CommandFollow_bool_GameObject += DroneTechControllerHookCommandFollowGameObject;
@@ -1035,6 +1071,20 @@ namespace SnowtimeToybox
             On.RoR2.DroneCommandReceiver.ActivateFollow += DroneCommandReceiverHookActivateFollow;
             On.RoR2.DroneCommandReceiver.CommandActivate += DroneCommandReceiverHookCommandActivate;
             On.EntityStates.DroneTech.CommandCarry.OnEnter += DroneTechHookOnEnter;
+            On.RoR2.CharacterMaster.OnBodyStart += SnowtimeOnBodyStart;
+        }
+
+        private void SnowtimeOnBodyStart(On.RoR2.CharacterMaster.orig_OnBodyStart orig, CharacterMaster self, CharacterBody body)
+        {
+            orig(self, body);
+
+            var charMaster = body.master;
+            if (!charMaster.gameObject.GetComponent<PlayerCharacterMasterController>()) return;
+            if(!charMaster.gameObject.GetComponent<PlayerTurretlingRainbowHandler>())
+            {
+                Log.Debug("Added PlayerTurretRainbowHandler to " + charMaster.gameObject.name + " | " + charMaster.playerCharacterMasterController.GetDisplayName());
+                charMaster.gameObject.AddComponent<PlayerTurretlingRainbowHandler>();
+            }
         }
 
         private void DroneTechHookOnEnter(On.EntityStates.DroneTech.CommandCarry.orig_OnEnter orig, EntityStates.DroneTech.CommandCarry self)
@@ -1168,10 +1218,6 @@ namespace SnowtimeToybox
             Log.Debug("Drone: ADMIN OVERRIDE! Executing...");
             orig(self);
         }
-        //private static void DroneTechControllerHookStart(On.DroneTechController.orig_Start orig, DroneTechController self)
-        //{
-        //    // miaw
-        //}
 
         public void CollectLanguageRootFolders(List<string> folders)
         {

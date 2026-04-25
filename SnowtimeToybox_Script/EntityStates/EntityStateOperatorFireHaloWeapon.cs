@@ -43,8 +43,11 @@ namespace EntityStates.SnowtimeToybox_FireHaloWeapon
             this.controller = this.GetComponent<DroneTechController>();
             base.OnEnter();
             this.duration = this.baseDuration / (this.attackSpeedStat / 4f);
-            additionalStocks = 23f + (this.attackSpeedStat * 3.5f);
-            this.skillLocator.primary.maxStock = (int)additionalStocks;
+            if(base.isAuthority)
+            {
+                additionalStocks = 23f + (this.attackSpeedStat * 3.5f);
+                this.skillLocator.primary.maxStock = (int)additionalStocks;
+            }
         }
 
         public override InterruptPriority GetMinimumInterruptPriority() => InterruptPriority.Skill;
