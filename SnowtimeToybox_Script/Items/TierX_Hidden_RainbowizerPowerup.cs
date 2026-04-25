@@ -27,6 +27,8 @@ public class RainbowizerPowerup : ItemBase<RainbowizerPowerup>
         CreateLang();
         CreateItem();
         Hooks();
+        // TODO - Mark as Hidden when done.
+        //Hidden = true;
     }
 
     public override void CreateConfig(ConfigFile config)
