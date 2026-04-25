@@ -57,7 +57,8 @@ public class TurretlingRainbow : NetworkBehaviour
             turretlingSat = Run.instance.runRNG.RangeFloat(0, 1);
             turretlingShade = Run.instance.runRNG.RangeFloat(0, 1);
 
-            if (!gameObject.name.Contains("_DT") || !gameObject.name.Contains("PlayerMaster") || gameObject.name.Contains("_Holy"))
+            Log.Debug(gameObject.name);
+            if (!gameObject.name.Contains("_DT") || !gameObject.name.Contains("PlayerMaster") || !gameObject.name.Contains("_Holy"))
             {
                 turretlingRainbow = SnowtimeToyboxMod.TurretlingRainbowChance.Value >= Run.instance.runRNG.RangeFloat(0, 100);
             }
@@ -103,11 +104,10 @@ public class TurretlingRainbow : NetworkBehaviour
                 else if (gameObject.name.Contains("PlayerMaster"))
                 {
                     turretlingPlayerMaster = gameObject.GetComponent<CharacterMaster>();
-                    Log.Debug("Player found possessing Turretling, defining SteamID directly.");
+                    //Log.Debug("Player found possessing Turretling, defining SteamID directly.");
                     if (!gameObject.GetComponent<PlayerCharacterMasterController>()) return;
                     steamid = gameObject.GetComponent<PlayerCharacterMasterController>().networkUser.id.steamId.ToSteamID();
-                    // Disable this log later
-                    Log.Debug("Player" + gameObject.GetComponent<PlayerCharacterMasterController>().GetDisplayName() + " SteamID: " + steamid);
+                    //Log.Debug("Player" + gameObject.GetComponent<PlayerCharacterMasterController>().GetDisplayName() + " SteamID: " + steamid);
                 }
 
 
@@ -197,84 +197,91 @@ public class TurretlingRainbow : NetworkBehaviour
                             turretlingShade = 0f;
                         }
                     }
-
-                    if(firstSpawnPassed != true)
-                    {
-                        firstSpawnPassed = true;
-                        if(gameObject.name.Contains("PlayerMaster"))
-                        {
-                            charBody = gameObject.GetComponent<CharacterMaster>().GetBody().gameObject.GetComponent<CharacterBody>();
-                        }
-                        else
-                        {
-                            charBody = master.GetBody();
-                        }
-
-                        if (charBody.name.Contains("Broken")) return;
-                        ChildLocator childLocator = charBody.modelLocator.modelTransform.gameObject.GetComponent<ChildLocator>();
-                        if (childLocator == null) return;
-                        GameObject overlay = childLocator.FindChild("Turretling_Overlay").gameObject;
-                        Animator overlayAnimator = overlay.GetComponent<Animator>();
-                        GameObject light = childLocator.FindChild("Turretling_Light").gameObject;
-                        Animator lightAnimator = light.GetComponent<Animator>();
-                        GameObject fx = childLocator.FindChild("Turretling_RainbowFX").gameObject;
-                        Animator fxAnimator = fx.GetComponent<Animator>();
-
-                        Animator[] animators =
-                        [
-                            overlayAnimator,
-                            lightAnimator,
-                            fxAnimator
-                        ];
-
-                        //does this have to be like this? no ,.., but its silyl .,. ,
-                        foreach (var animator in animators)
-                        {
-                            if (turretlingRainbow)
-                            {
-                                animator.SetFloat("hue", 0);
-                                animator.SetFloat("sat", 0);
-                                animator.SetFloat("shade", 0);
-                                animator.SetBool("shift", turretlingRainbow);
-                            }
-                            else
-                            {
-                                animator.SetFloat("hue", turretlingHue);
-                                animator.SetFloat("sat", turretlingSat);
-                                animator.SetFloat("shade", turretlingShade);
-                                animator.SetBool("shift", turretlingRainbow);
-                            }
-
-                        }
-
-                        if (Snowtime == true)
-                        {
-                            childLocator.FindChild("SnowtimeHalo").gameObject.SetActive(true);
-                        }
-                        if (Shortcake == true)
-                        {
-                            childLocator.FindChild("ShortcakeHalo").gameObject.SetActive(true);
-                        }
-                        if (Acanthi == true)
-                        {
-                            childLocator.FindChild("AcanthiHalo").gameObject.SetActive(true);
-                        }
-                        if (Illusive == true)
-                        {
-                            childLocator.FindChild("IllusiveUnusual").gameObject.SetActive(true);
-                        }
-                        if (Anartoast == true)
-                        {
-                            childLocator.FindChild("AnartoastUnusual").gameObject.SetActive(true);
-                        }
-                        if (Bread == true)
-                        {
-                            childLocator.FindChild("BreadUnusual").gameObject.SetActive(true);
-                        }
-
-                    }
                 }
             }
+        }
+
+        if (firstSpawnPassed != true)
+        {
+            Log.Debug("This firstSpawnPassed check ran!");
+            if (gameObject.name.Contains("PlayerMaster"))
+            {
+                charBody = gameObject.GetComponent<CharacterMaster>().GetBody().gameObject.GetComponent<CharacterBody>();
+            }
+            else
+            {
+                charBody = master.GetBody();
+            }
+
+            if (!charBody) return;
+            if (charBody.name.Contains("Broken")) return;
+            ChildLocator childLocator = charBody.modelLocator.modelTransform.gameObject.GetComponent<ChildLocator>();
+            if (childLocator == null) return;
+            GameObject overlay = childLocator.FindChild("Turretling_Overlay").gameObject;
+            if (overlay == null) return;
+            Animator overlayAnimator = overlay.GetComponent<Animator>();
+            if (overlayAnimator == null) return;
+            GameObject light = childLocator.FindChild("Turretling_Light").gameObject;
+            if (light == null) return;
+            Animator lightAnimator = light.GetComponent<Animator>();
+            if (lightAnimator == null) return;
+            GameObject fx = childLocator.FindChild("Turretling_RainbowFX").gameObject;
+            if (fx == null) return;
+            Animator fxAnimator = fx.GetComponent<Animator>();
+            if (fxAnimator == null) return;
+
+            Animator[] animators =
+            [
+                overlayAnimator,
+                lightAnimator,
+                fxAnimator
+            ];
+
+            //does this have to be like this? no ,.., but its silyl .,. ,
+            foreach (var animator in animators)
+            {
+                if (turretlingRainbow)
+                {
+                    animator.SetFloat("hue", 0);
+                    animator.SetFloat("sat", 0);
+                    animator.SetFloat("shade", 0);
+                    animator.SetBool("shift", turretlingRainbow);
+                }
+                else
+                {
+                    animator.SetFloat("hue", turretlingHue);
+                    animator.SetFloat("sat", turretlingSat);
+                    animator.SetFloat("shade", turretlingShade);
+                    animator.SetBool("shift", turretlingRainbow);
+                }
+
+            }
+
+            if (Snowtime == true)
+            {
+                childLocator.FindChild("SnowtimeHalo").gameObject.SetActive(true);
+            }
+            if (Shortcake == true)
+            {
+                childLocator.FindChild("ShortcakeHalo").gameObject.SetActive(true);
+            }
+            if (Acanthi == true)
+            {
+                childLocator.FindChild("AcanthiHalo").gameObject.SetActive(true);
+            }
+            if (Illusive == true)
+            {
+                childLocator.FindChild("IllusiveUnusual").gameObject.SetActive(true);
+            }
+            if (Anartoast == true)
+            {
+                childLocator.FindChild("AnartoastUnusual").gameObject.SetActive(true);
+            }
+            if (Bread == true)
+            {
+                childLocator.FindChild("BreadUnusual").gameObject.SetActive(true);
+            }
+            firstSpawnPassed = true;
         }
     }
 

@@ -16,14 +16,12 @@ public class PlayerTurretlingRainbowHandler : MonoBehaviour
 
     public void Awake()
     {
-        enabled = NetworkServer.active;
         self = GetComponent<CharacterMaster>();
         addedRainbowizer = false;
     }
 
     public void FixedUpdate()
     {
-        if (!NetworkServer.active) return;
         if (!self.GetBody()) return;
         charBody = self.GetBody();
         charBodyObject = charBody.gameObject;

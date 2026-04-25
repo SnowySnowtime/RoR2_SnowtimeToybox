@@ -150,7 +150,7 @@ namespace SnowtimeToybox
             FriendlyTurretFallImmunity = Config.Bind("Friendly Turret Flags", "Fall Damage Immunity", true, "If true, Friendly Turrets (and turretlings) are immune to fall damage, as navigating some maps can be a little difficult for them. Prevents any unexpected turret deaths, as we cant simply 'replace' them like Engineer can.");
             FriendlyTurretDrone = Config.Bind("Friendly Turret Flags", "Drone", false, "If true, Friendly Turrets (and turretlings) are flagged as drones. Probably comes with some oddities.");
             FriendlyTurretRemoteOpPrice = Config.Bind("Friendly Turret Functions", "Remote Operation Cost", 250, "Cost for becoming a Friendly Turret with Remote Operation.");
-            TurretlingArtificerPassive = Config.Bind("Turretlings", "Artificer Passive", false, "If true, gives Artificer a holy turretling.");
+            TurretlingArtificerPassive = Config.Bind("Turretlings", "Turretling Passive", false, "If true, gives Artificer / Railgunner / Mercenary a(n) Divineling/Purity/Mercling turretling.");
             TurretlingSpawnChance = Config.Bind("Turretlings", "Turretling Variant Spawn Chance ,,.", 100f, "chance to get a turretling when buying a friendly turret !!!");
             TurretlingImmuneVoidDeath = Config.Bind("Turretlings", "Void Death Immunity", false, "If true, All turretlings are immune to Void Death (Void Reaver implosions). Keep the scrunglies safe.");
             TurretlingReviveCostMult = Config.Bind("Turretlings", "turretling revive cost mult .,.", 0.6f, "price multiplier for reviving turretlings ,.. ,.");
@@ -202,6 +202,9 @@ namespace SnowtimeToybox
 
             ItemTag TurretlingNoneWhitelist = ItemAPI.AddItemTag("FriendTurret_None_Whitelist");
             Log.Debug("None FriendTurret_Whitelist: " + TurretlingNoneWhitelist);
+
+            ItemTag TurretlingWhitelist = ItemAPI.AddItemTag("Turretling_Whitelist");
+            Log.Debug("Turretling_Whitelist: " + TurretlingWhitelist);
 
             ItemCatalog.availability.CallWhenAvailable(AddCustomTagsToItems);
             EquipmentCatalog.availability.CallWhenAvailable(AddElitesToList);
@@ -358,6 +361,15 @@ namespace SnowtimeToybox
                 // DLC2
                 DLC2Content.Items.BoostAllStats,
                 // DLC3
+            ];
+            ItemDef[] whitelistTurretlingVars = [
+                // Base
+                RoR2Content.Items.Syringe,
+                // DLC1
+                DLC1Content.Items.ElementalRingVoid,
+                // DLC2
+                // DLC3
+                DLC3Content.Items.ShieldBooster,
             ];
             foreach (ItemDef item in whitelistGlobalTurret)
             {
@@ -573,7 +585,10 @@ namespace SnowtimeToybox
             ArtiTurretlingBody.GetComponent<CharacterDeathBehavior>().deathState = new SerializableEntityStateType(typeof(DTTurretlingDeath));
             ArtiTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_HolyTurretlingMaster.prefab");
             ArtiTurretlingMaster.AddComponent<TurretlingRainbow>();
+            ArtiTurretlingMaster.AddComponent<PassiveTurretlingUpdateNamePerCharacter>();
             ArtiTurretlingBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_HolyTurretlingBroken.prefab");
+            ArtiTurretlingBody.GetComponent<CharacterBody>().baseDamage = (TurretlingBaseDamage.Value / 1.5f);
+            ArtiTurretlingBody.GetComponent<CharacterBody>().levelDamage = (TurretlingBaseDamagePerLevel.Value / 1.5f);
             ContentAddition.AddDroneDef(ArtiTurretlingDef);
             ContentAddition.AddBody(ArtiTurretlingBody);
             ContentAddition.AddMaster(ArtiTurretlingMaster);
@@ -687,7 +702,8 @@ namespace SnowtimeToybox
                 SnowtimeTurretlingBody,
                 BreadTurretlingBody,
                 DTTurretlingBody,
-                FriendlyTurretTurretlingBodyRemoteOp
+                FriendlyTurretTurretlingBodyRemoteOp,
+                ArtiTurretlingBody
             ];
             foreach (var turretling in turretlingBodies)
             {
@@ -702,6 +718,8 @@ namespace SnowtimeToybox
             AcanthiTurretlingMaster.AddComponent<FriendlyTurretInheritance>().whitelistedTag = "FriendTurret_Acanthi_Whitelist";
             BreadTurretlingMaster.AddComponent<FriendlyTurretInheritance>().whitelistedTag = "FriendTurret_Bread_Whitelist";
             ShortcakeTurretlingMaster.AddComponent<FriendlyTurretInheritance>().whitelistedTag = "FriendTurret_Shortcake_Whitelist";
+            DTTurretlingBody.AddComponent<FriendlyTurretInheritance>().whitelistedTag = "FriendTurret_Shortcake_Whitelist";
+            ArtiTurretlingBody.AddComponent<FriendlyTurretInheritance>().whitelistedTag = "FriendTurret_Shortcake_Whitelist";
             
             foreach (var turretling in turretlingBodies)
             {
@@ -1006,13 +1024,30 @@ namespace SnowtimeToybox
 
             if(TurretlingArtificerPassive.Value)
             {
+                // Artificer
                 Log.Debug("Artificer is bringing a holy relic. Its fragile so be careful!");
                 GameObject ArtificerPrefab = Addressables.LoadAssetAsync<GameObject>(RoR2BepInExPack.GameAssetPaths.Version_1_39_0.RoR2_Base_Mage.MageBody_prefab).WaitForCompletion();
-                DroneTechRepairQueue ArtificerRepairQueue = ArtificerPrefab.AddComponent<DroneTechRepairQueue>();
+                DroneTechRepairQueue ArtificerRepairQueue = ArtificerPrefab.gameObject.AddComponent<DroneTechRepairQueue>();
                 ArtificerRepairQueue.healRate = 0.05f;
-                GenericSkill ArtiHolyTurretling = ArtificerPrefab.AddComponent<GenericSkill>();
+                GenericSkill ArtiHolyTurretling = ArtificerPrefab.gameObject.AddComponent<GenericSkill>();
                 ArtiHolyTurretling._skillFamily = ArtiPassiveFamily;
                 ArtiHolyTurretling.skillName = "Turretling";
+                // Railgunner
+                Log.Debug("Railgunner is bringing a little friend. Its fragile so be careful!");
+                GameObject RailgunnerPrefab = Addressables.LoadAssetAsync<GameObject>(RoR2BepInExPack.GameAssetPaths.Version_1_39_0.RoR2_DLC1_Railgunner.RailgunnerBody_prefab).WaitForCompletion();
+                DroneTechRepairQueue RailgunnerRepairQueue = RailgunnerPrefab.gameObject.AddComponent<DroneTechRepairQueue>();
+                RailgunnerRepairQueue.healRate = 0.05f;
+                GenericSkill RailgunnerTurretling = RailgunnerPrefab.gameObject.AddComponent<GenericSkill>();
+                RailgunnerTurretling._skillFamily = ArtiPassiveFamily;
+                RailgunnerTurretling.skillName = "Turretling";
+                // Mercenary
+                Log.Debug("Mercenary is bringing their companion. Its fragile so be careful!");
+                GameObject MercPrefab = Addressables.LoadAssetAsync<GameObject>(RoR2BepInExPack.GameAssetPaths.Version_1_39_0.RoR2_Base_Merc.MercBody_prefab).WaitForCompletion();
+                DroneTechRepairQueue MercRepairQueue = MercPrefab.gameObject.AddComponent<DroneTechRepairQueue>();
+                MercRepairQueue.healRate = 0.05f;
+                GenericSkill MercTurretling = MercPrefab.gameObject.AddComponent<GenericSkill>();
+                MercTurretling._skillFamily = ArtiPassiveFamily;
+                MercTurretling.skillName = "Turretling";
             }
 
             GameObject DroneTechBodyPrefab = Addressables.LoadAssetAsync<GameObject>(RoR2BepInExPack.GameAssetPaths.Version_1_39_0.RoR2_DLC3_Drone_Tech.DroneTechBody_prefab).WaitForCompletion();
