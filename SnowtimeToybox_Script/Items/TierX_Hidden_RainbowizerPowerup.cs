@@ -31,7 +31,7 @@ public class RainbowizerPowerup : ItemBase<RainbowizerPowerup>
 
     public override void CreateConfig(ConfigFile config)
     {
-        AttackSpeedMod = config.Bind<float>("Operator Turretling: Rainbowizer Powerup", "Attack Speed Modifier (Mult)", 15f, "Attack speed modifier when Rainbowizer is active");
+        AttackSpeedMod = config.Bind<float>("Operator Turretling: Rainbowizer Powerup", "Attack Speed Modifier (Mult)", 7.5f, "Attack speed modifier when Rainbowizer is active");
         CritDMGMod = config.Bind<float>("Operator Turretling: Rainbowizer Powerup", "Crit Damage Modifier (Mult)", 1f, "Critical Strike damage modifier when Rainbowizer is active");
         DamageMod = config.Bind<float>("Operator Turretling: Rainbowizer Powerup", "Damage Modifier (Mult)", 1f, "Damage modifier when Rainbowizer is active");
         CoolDownMod = config.Bind<float>("Operator Turretling: Rainbowizer Powerup", "Pixi Launcher Cooldown Modifier (Mult)", 0.25f, "Pixi Launcher Cooldown modifier when Rainbowizer is active. Excludes Rainbowizer");
