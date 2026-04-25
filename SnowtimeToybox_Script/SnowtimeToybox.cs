@@ -119,6 +119,7 @@ namespace SnowtimeToybox
         public static ConfigEntry<bool> TurretlingImmuneVoidDeath { get; set; }
         public static ConfigEntry<bool> FriendlyTurretFallImmunity { get; set; }
         public static ConfigEntry<bool> FriendlyTurretDrone { get; set; }
+        public static ConfigEntry<int> FriendlyTurretRemoteOpPrice { get; set; }
         public static ConfigEntry<bool> FriendlyTurretShortcakeAggroType { get; set; }
         public static ConfigEntry<float> TurretlingSpawnChance { get; set; }
         public static ConfigEntry<float> TurretlingRainbowChance { get; set; }
@@ -139,6 +140,7 @@ namespace SnowtimeToybox
             FriendlyTurretImmuneVoidDeath = Config.Bind("Friendly Turret Flags", "Void Death Immunity", true, "If true, Friendly Turrets are immune to Void Death (Void Reaver implosions), this is because they are awful at avoiding them even with mods to make allies avoid them, and we get sad when they are detained.");
             FriendlyTurretFallImmunity = Config.Bind("Friendly Turret Flags", "Fall Damage Immunity", true, "If true, Friendly Turrets (and turretlings) are immune to fall damage, as navigating some maps can be a little difficult for them. Prevents any unexpected turret deaths, as we cant simply 'replace' them like Engineer can.");
             FriendlyTurretDrone = Config.Bind("Friendly Turret Flags", "Drone", false, "If true, Friendly Turrets (and turretlings) are flagged as drones. Probably comes with some oddities.");
+            FriendlyTurretRemoteOpPrice = Config.Bind("Friendly Turret Functions", "Remote Operation Cost", 250, "Cost for becoming a Friendly Turret with Remote Operation.");
             TurretlingSpawnChance = Config.Bind("Turretlings", "Turretling Variant Spawn Chance ,,.", 100f, "chance to get a turretling when buying a friendly turret !!!");
             TurretlingImmuneVoidDeath = Config.Bind("Turretlings", "Void Death Immunity", false, "If true, All turretlings are immune to Void Death (Void Reaver implosions). Keep the scrunglies safe.");
             TurretlingReviveCostMult = Config.Bind("Turretlings", "turretling revive cost mult .,.", 0.6f, "price multiplier for reviving turretlings ,.. ,.");
@@ -457,6 +459,7 @@ namespace SnowtimeToybox
                 FriendlyTurretBase turret = (FriendlyTurretBase)System.Activator.CreateInstance(friendlyTurret);
                 turret.Initalization();
                 turret.ContentAdditionFuncs();
+                turret.StageInteractableFuncs();
                 turret.PostInit();
             }
 
@@ -559,7 +562,6 @@ namespace SnowtimeToybox
             DTTurretlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_DTTurretlingBody.prefab");
             DTTurretlingBody.GetComponent<CharacterDeathBehavior>().deathState = new SerializableEntityStateType(typeof(DTTurretlingDeath));
             DTTurretlingBody.GetComponent<DroneCommandReceiver>().droneState = DroneCommandReceiver.DroneState.Idle;
-            DTTurretlingBody.AddComponent<TurretlingMissileTracker>();
             DTTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_DTTurretlingMaster.prefab");
             DTTurretlingMaster.AddComponent<TurretlingRainbow>();
             DTTurretlingBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_DTTurretlingBroken.prefab");
@@ -646,12 +648,12 @@ namespace SnowtimeToybox
 
             foreach (DirectorAPI.Stage stage in turretlingStageList)
             {
-                Log.Debug("Adding Friendly Turrets to stage: " + stage);
+                Log.Debug("Adding Turretlings to stage: " + stage);
                 DirectorAPI.Helpers.AddNewInteractableToStage(directorCardHolderFriendlyTurretTurretling, stage);
             }
             foreach (string stage in turretlingCustomStageList)
             {
-                Log.Debug("Adding Friendly Turrets to stage: " + stage);
+                Log.Debug("Adding Turretlings to stage: " + stage);
                 DirectorAPI.Helpers.AddNewInteractableToStage(directorCardHolderFriendlyTurretTurretling, DirectorAPI.Stage.Custom, stage);
             }
             
@@ -662,11 +664,14 @@ namespace SnowtimeToybox
                 BorboTurretlingBody,
                 ShortcakeTurretlingBody,
                 SnowtimeTurretlingBody,
-                BreadTurretlingBody
+                BreadTurretlingBody,
+                DTTurretlingBody,
+                FriendlyTurretTurretlingBodyRemoteOp
             ];
             foreach (var turretling in turretlingBodies)
             {
                 turretling.AddComponent<TurretlingMissileTracker>();
+                if (turretling.gameObject.name.Contains("RemoteOp")) return;
                 turretling.AddComponent<EquipmentSlot>();
             }
             

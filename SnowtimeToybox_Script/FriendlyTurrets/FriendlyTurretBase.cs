@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using EntityStates.SnowtimeToybox_FriendlyTurret;
 using R2API;
 using R2API.Utils;
@@ -7,7 +5,10 @@ using RoR2;
 using RoR2.Skills;
 using SnowtimeToybox.Components;
 using SnowtimeToybox.FriendlyTurretChecks;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace SnowtimeToybox.FriendlyTurrets;
 
@@ -26,6 +27,7 @@ public abstract class FriendlyTurretBase
 {
     public virtual GameObject broken { get; set;  }
     public virtual GameObject body { get; set;  }
+    public virtual GameObject bodyRemoteOp { get; set;  }
     public virtual GameObject master { get; set;  }
 
     public List<SkillFamily> skillFamilies = [];
@@ -37,6 +39,7 @@ public abstract class FriendlyTurretBase
     public virtual string turretName { get; set;  }
 
     public virtual GameObject turretlingMaster { get; set;  }
+    public virtual InteractableSpawnCard interactableSpawnCard { get; set; }
     
     public virtual string[] riskierStats { get; set; }
     
@@ -47,7 +50,9 @@ public abstract class FriendlyTurretBase
     
     public virtual void ContentAdditionFuncs()
     {
+        ContentAddition.AddDroneDef(droneDef);
         ContentAddition.AddBody(body);
+        ContentAddition.AddBody(bodyRemoteOp);
         ContentAddition.AddMaster(master);
         foreach (var skillFamily in skillFamilies)
         {
@@ -58,6 +63,84 @@ public abstract class FriendlyTurretBase
             ContentAddition.AddSkillDef(skillDef);
         }
         ContentAddition.AddNetworkedObject(broken);
+    }
+
+    public virtual void StageInteractableFuncs()
+    {
+        Log.Debug(interactableSpawnCard);
+        var directorCardFriendlyTurret = new DirectorCard
+        {
+            spawnCard = interactableSpawnCard,
+            selectionWeight = 0,
+            spawnDistance = DirectorCore.MonsterSpawnDistance.Standard,
+            minimumStageCompletions = 670,
+            preventOverhead = false
+        };
+
+        var directorCardHolderFriendlyTurret = new DirectorAPI.DirectorCardHolder
+        {
+            Card = directorCardFriendlyTurret,
+            InteractableCategory = DirectorAPI.InteractableCategory.Drones
+        };
+
+        List<DirectorAPI.Stage> friendlyTurretStageList = new List<DirectorAPI.Stage>();
+        List<String> friendlyTurretCustomStageList = new List<String>();
+
+        // Stage 1
+        friendlyTurretStageList.Add(DirectorAPI.Stage.TitanicPlains);
+        friendlyTurretStageList.Add(DirectorAPI.Stage.DistantRoost);
+        friendlyTurretStageList.Add(DirectorAPI.Stage.SiphonedForest);
+        friendlyTurretStageList.Add(DirectorAPI.Stage.VerdantFalls);
+        friendlyTurretStageList.Add(DirectorAPI.Stage.ViscousFalls);
+        // Stage 2
+        friendlyTurretStageList.Add(DirectorAPI.Stage.AbandonedAqueduct);
+        friendlyTurretStageList.Add(DirectorAPI.Stage.AphelianSanctuary);
+        friendlyTurretStageList.Add(DirectorAPI.Stage.PretendersPrecipice);
+        // Stage 3
+        friendlyTurretStageList.Add(DirectorAPI.Stage.RallypointDelta);
+        friendlyTurretStageList.Add(DirectorAPI.Stage.ScorchedAcres);
+        friendlyTurretStageList.Add(DirectorAPI.Stage.IronAlluvium);
+        friendlyTurretStageList.Add(DirectorAPI.Stage.IronAuroras);
+        // Stage 4
+        friendlyTurretStageList.Add(DirectorAPI.Stage.SirensCall);
+        friendlyTurretStageList.Add(DirectorAPI.Stage.SunderedGrove);
+        friendlyTurretStageList.Add(DirectorAPI.Stage.RepurposedCrater);
+        friendlyTurretStageList.Add(DirectorAPI.Stage.ConduitCanyon);
+        // Stage 5
+        friendlyTurretStageList.Add(DirectorAPI.Stage.SkyMeadow);
+        // Mods
+        friendlyTurretCustomStageList.Add("FBLScene");
+        friendlyTurretCustomStageList.Add("broadcastperch_wormsworms");
+        friendlyTurretCustomStageList.Add("tropics_wormsworms");
+        friendlyTurretCustomStageList.Add("tropicsnight_wormsworms");
+        friendlyTurretCustomStageList.Add("hollowsummit_wormsworms");
+        friendlyTurretCustomStageList.Add("hollowsummitnight_wormsworms");
+        friendlyTurretCustomStageList.Add("catacombs_DS1_Catacombs");
+        friendlyTurretCustomStageList.Add("snowtime_bloodgulch");
+        friendlyTurretCustomStageList.Add("snowtime_deathisland");
+        friendlyTurretCustomStageList.Add("snowtime_gephyrophobia");
+        friendlyTurretCustomStageList.Add("snowtime_gmconstruct");
+        friendlyTurretCustomStageList.Add("snowtime_gmflatgrass");
+        friendlyTurretCustomStageList.Add("snowtime_halo");
+        friendlyTurretCustomStageList.Add("snowtime_halo2");
+        friendlyTurretCustomStageList.Add("snowtime_highcharity");
+        friendlyTurretCustomStageList.Add("snowtime_icefields");
+        friendlyTurretCustomStageList.Add("snowtime_newmombasabridge");
+        friendlyTurretCustomStageList.Add("snowtime_odstmombasa");
+        friendlyTurretCustomStageList.Add("snowtime_plrhightower");
+        friendlyTurretCustomStageList.Add("snowtime_sandtrap");
+        friendlyTurretCustomStageList.Add("snowtime_sidewinder");
+
+        foreach (DirectorAPI.Stage stage in friendlyTurretStageList)
+        {
+            //Log.Debug("Adding Friendly Turrets to stage: " + stage);
+            DirectorAPI.Helpers.AddNewInteractableToStage(directorCardHolderFriendlyTurret, stage);
+        }
+        foreach (string stage in friendlyTurretCustomStageList)
+        {
+            //Log.Debug("Adding Friendly Turrets to stage: " + stage);
+            DirectorAPI.Helpers.AddNewInteractableToStage(directorCardHolderFriendlyTurret, DirectorAPI.Stage.Custom, stage);
+        }
     }
     
     public virtual void PostInit()
@@ -79,5 +162,16 @@ public abstract class FriendlyTurretBase
 
         charBody.bodyFlags |= SnowtimeToyboxMod.bodyFlags;
         SnowtimeToyboxMod.friendlyTurretList.Add(this);
+        droneDef.remoteOpCost = SnowtimeToyboxMod.FriendlyTurretRemoteOpPrice.Value;
+        Log.Debug("Updated Friendly Turret " + charBody.name + " Remote Operation prices to: " +  droneDef.remoteOpCost);
+
+        ExplicitPickupDropTable dtTripleDroneShopBlacklist = Addressables.LoadAssetAsync<ExplicitPickupDropTable>(RoR2BepInExPack.GameAssetPaths.Version_1_39_0.RoR2_DLC3_TripleDroneShop.dtTripleDroneShopBlacklist_asset).WaitForCompletion();
+        Array.Resize(ref dtTripleDroneShopBlacklist.pickupEntries, dtTripleDroneShopBlacklist.pickupEntries.Length + 1);
+        Log.Debug("Adding " + droneDef.name + " to " + dtTripleDroneShopBlacklist.name);
+        dtTripleDroneShopBlacklist.pickupEntries[^1] = new ExplicitPickupDropTable.PickupDefEntry
+        {
+            pickupDef = droneDef,
+            pickupWeight = 8008132
+        };
     }
 }

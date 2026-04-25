@@ -24,6 +24,7 @@ public class AcanthiFriendlyTurret : FriendlyTurretBase<AcanthiFriendlyTurret>
         
         broken = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(friendDir + "_mdlFriendlyTurretAcanthiBroken.prefab");
         body = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(friendDir + "_FriendlyTurretAcanthiBody.prefab");
+        bodyRemoteOp = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(friendDir + "_FriendlyTurretAcanthiBodyRemoteOp.prefab");
         master = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(friendDir + "_FriendlyTurretAcanthiMaster.prefab");
         skillFamilies.Add(SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<SkillFamily>(friendDir + "Skills/AcanthiPrimaryFamily.asset"));
         skillFamilies.Add(SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<SkillFamily>(friendDir + "Skills/AcanthiUtilityFamily.asset"));
@@ -40,6 +41,7 @@ public class AcanthiFriendlyTurret : FriendlyTurretBase<AcanthiFriendlyTurret>
         AcanthiTurretDebuff = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<BuffDef>(friendDir + "Buff/VampiricBleeding.asset");
        
         droneDef = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<DroneDef>(friendDir + "_FriendlyTurretAcanthi.asset");
+        interactableSpawnCard = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<InteractableSpawnCard>(friendDir + "_iscBrokenFriendlyTurretAcanthi.asset");
         turretlingMaster = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/_TurretlingMaster_Acanthi.prefab");
     }
 
@@ -47,5 +49,9 @@ public class AcanthiFriendlyTurret : FriendlyTurretBase<AcanthiFriendlyTurret>
     {
         base.ContentAdditionFuncs();
         ContentAddition.AddEntityState(typeof(FireAcanthiBeam), out _);
+    }
+    public override void StageInteractableFuncs()
+    {
+        base.StageInteractableFuncs();
     }
 }

@@ -40,6 +40,7 @@ public class TurretlingRainbow : NetworkBehaviour
     private string steamid;
     public void OnEnable()
     {
+        if (!gameObject.name.Contains("Turretling")) return;
         Log.Debug("turretling master spawned !!");
         Log.Debug("Object Name: " + gameObject.name);
         if (gameObject.name.Contains("Broken")) return;

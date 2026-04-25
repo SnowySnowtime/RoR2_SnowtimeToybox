@@ -21,6 +21,7 @@ public class SnowtimeFriendlyTurret : FriendlyTurretBase<SnowtimeFriendlyTurret>
         
         broken = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(friendDir + "_mdlFriendlyTurretSnowtimeBroken.prefab");
         body = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(friendDir + "_FriendlyTurretSnowtimeBody.prefab");
+        bodyRemoteOp = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(friendDir + "_FriendlyTurretSnowtimeBodyRemoteOp.prefab");
         master = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(friendDir + "_FriendlyTurretSnowtimeMaster.prefab");
         skillFamilies.Add(SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<SkillFamily>(friendDir + "Skills/SnowtimePrimaryFamily.asset"));
         skillFamilies.Add(SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<SkillFamily>(friendDir + "Skills/SnowtimeUtilityFamily.asset"));
@@ -34,6 +35,7 @@ public class SnowtimeFriendlyTurret : FriendlyTurretBase<SnowtimeFriendlyTurret>
         skillDefs.Add(silly);
         
         droneDef = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<DroneDef>(friendDir + "_FriendlyTurretSnowtime.asset");
+        interactableSpawnCard = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<InteractableSpawnCard>(friendDir + "_iscBrokenFriendlyTurretSnowtime.asset");
         turretlingMaster = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/_TurretlingMaster_Snowtime.prefab");
     }
 
@@ -45,5 +47,9 @@ public class SnowtimeFriendlyTurret : FriendlyTurretBase<SnowtimeFriendlyTurret>
         ContentAddition.AddProjectile(SnowtimeCryoGaussFire.projectileObject);
         ContentAddition.AddEffect(SnowtimeCryoGaussFire.projectileGhostObject);
         ContentAddition.AddEffect(SnowtimeCryoGaussFire.projectileExplosionObject);
+    }
+    public override void StageInteractableFuncs()
+    {
+        base.StageInteractableFuncs();
     }
 }

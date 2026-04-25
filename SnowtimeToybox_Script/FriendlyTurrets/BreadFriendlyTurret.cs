@@ -31,6 +31,7 @@ public class BreadFriendlyTurret : FriendlyTurretBase<BreadFriendlyTurret>
         
         broken = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(friendDir + "_mdlFriendlyTurretBreadBroken.prefab");
         body = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(friendDir + "_FriendlyTurretBreadBody.prefab");
+        bodyRemoteOp = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(friendDir + "_FriendlyTurretBreadBodyRemoteOp.prefab");
         master = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(friendDir + "_FriendlyTurretBreadMaster.prefab");
         skillFamilies.Add(SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<SkillFamily>(friendDir + "Skills/BreadPrimaryFamily.asset"));
         skillFamilies.Add(SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<SkillFamily>(friendDir + "Skills/BreadUtilityFamily.asset"));
@@ -52,6 +53,7 @@ public class BreadFriendlyTurret : FriendlyTurretBase<BreadFriendlyTurret>
         BreadTurretBuffNearbyAllies = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<BuffDef>(friendDir + "Buff/BreadsGrace.asset");
         
         droneDef = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<DroneDef>(friendDir + "_FriendlyTurretBread.asset");
+        interactableSpawnCard = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<InteractableSpawnCard>(friendDir + "_iscBrokenFriendlyTurretBread.asset");
         turretlingMaster = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/_TurretlingMaster_Bread.prefab");
     }
 
@@ -63,5 +65,10 @@ public class BreadFriendlyTurret : FriendlyTurretBase<BreadFriendlyTurret>
         FriendlyTurretBreadBeamR.RegisterNetworkPrefab();
         FriendlyTurretBreadGraceWard.RegisterNetworkPrefab();
         body.AddComponent<BreadTurretWard>();
+        bodyRemoteOp.AddComponent<BreadTurretWard>();
+    }
+    public override void StageInteractableFuncs()
+    {
+        base.StageInteractableFuncs();
     }
 }

@@ -23,6 +23,7 @@ public class ShortcakeFriendlyTurret : FriendlyTurretBase<ShortcakeFriendlyTurre
         
         broken = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(friendDir + "_mdlFriendlyTurretShortcakeBroken.prefab");
         body = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(friendDir + "_FriendlyTurretShortcakeBody.prefab");
+        bodyRemoteOp = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(friendDir + "_FriendlyTurretShortcakeBodyRemoteOp.prefab");
         master = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(friendDir + "_FriendlyTurretShortcakeMaster.prefab");
         skillFamilies.Add(SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<SkillFamily>(friendDir + "Skills/ShortcakePrimaryFamily.asset"));
         skillFamilies.Add(SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<SkillFamily>(friendDir + "Skills/ShortcakeUtilityFamily.asset"));
@@ -38,6 +39,7 @@ public class ShortcakeFriendlyTurret : FriendlyTurretBase<ShortcakeFriendlyTurre
         ShortcakeTurretBuff = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<BuffDef>(friendDir + "Buff/ShortcakeTurretBuff.asset");
        
         droneDef = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<DroneDef>(friendDir + "_FriendlyTurretShortcake.asset");
+        interactableSpawnCard = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<InteractableSpawnCard>(friendDir + "_iscBrokenFriendlyTurretShortcake.asset");
         turretlingMaster = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/_TurretlingMaster_Shortcake.prefab");
     }
 
@@ -51,5 +53,9 @@ public class ShortcakeFriendlyTurret : FriendlyTurretBase<ShortcakeFriendlyTurre
         ContentAddition.AddEffect(SnowtimeOrbs.orbShortcakeRetaliateImpactObject);
         ContentAddition.AddEffect(SnowtimeOrbs.orbShortcakeRetaliateFriendlyImpactObject);
         ContentAddition.AddEffect(SnowtimeOrbs.orbShortcakeTauntImpactObject);
+    }
+    public override void StageInteractableFuncs()
+    {
+        base.StageInteractableFuncs();
     }
 }

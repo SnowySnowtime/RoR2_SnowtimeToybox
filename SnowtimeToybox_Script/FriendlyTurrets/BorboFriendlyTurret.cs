@@ -23,6 +23,7 @@ public class BorboFriendlyTurret : FriendlyTurretBase<BorboFriendlyTurret>
         
         broken = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(friendDir + "_mdlFriendlyTurretBorboBroken.prefab");
         body = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(friendDir + "_FriendlyTurretBorboBody.prefab");
+        bodyRemoteOp = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(friendDir + "_FriendlyTurretBorboBodyRemoteOp.prefab");
         master = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(friendDir + "_FriendlyTurretBorboMaster.prefab");
         skillFamilies.Add(SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<SkillFamily>(friendDir + "Skills/BorboPrimaryFamily.asset"));
         skillFamilies.Add(SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<SkillFamily>(friendDir + "Skills/BorboUtilityFamily.asset"));
@@ -37,7 +38,8 @@ public class BorboFriendlyTurret : FriendlyTurretBase<BorboFriendlyTurret>
         
         BorboTurretDebuff = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<BuffDef>(friendDir + "Buff/BorboTurretDebuff.asset");
        
-        droneDef = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<DroneDef>(friendDir + "/_FriendlyTurretAcanthi.asset");
+        droneDef = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<DroneDef>(friendDir + "_FriendlyTurretBorbo.asset");
+        interactableSpawnCard = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<InteractableSpawnCard>(friendDir + "_iscBrokenFriendlyTurretBorbo.asset");
         turretlingMaster = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/_TurretlingMaster_Borbo.prefab");
     }
 
@@ -49,6 +51,9 @@ public class BorboFriendlyTurret : FriendlyTurretBase<BorboFriendlyTurret>
         ContentAddition.AddEffect(FireBorboLaser.effectPrefabObject);
         ContentAddition.AddEffect(FireBorboLaser.hitEffectPrefabObject);
         ContentAddition.AddEffect(FireBorboLaser.tracerEffectPrefabObject);
-
+    }
+    public override void StageInteractableFuncs()
+    {
+        base.StageInteractableFuncs();
     }
 }
