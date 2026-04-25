@@ -110,7 +110,18 @@
 		"TURRETLING_DT_SPECIAL_DESC": "Rainbowize; enter an <style=cIsDamage>empowered state</style>, <style=cIsDamage>massively increasing offensive stats</style> for 5 seconds.",
 		
 		"TURRETLING_DRONETECH_NAME": "Turretling Mk 2",
-		"TURRETLING_DRONETECH_DESCRIPTION": "<style=cDeath>Fragile</style>. A customized turretling will spawn with you at the start of each stage. Automatically repairs when downed.",
-		"TURRETLING_FRAGILE": "[ <style=cDeath>Fragile</style> ]\n<style=cSub>Careful now. The turretling is fragile, but its rather simple internals makes <style=cIsUtility>repairs 2x quicker</style></style>.</style>",
+		"TURRETLING_DRONETECH_DESCRIPTION": "<style=cDeath>Fragile</style>. A customized turretling will spawn with you at the start of each stage. Automatically repairs when downed. Inherits Elite Equipment and a large portion of items.",
+		"TURRETLING_FRAGILE": "[ <style=cDeath>Fragile</style> ]\n<style=cSub>Careful now. The turretling is fragile, but its rather simple internals makes <style=cIsUtility>repairs 2x quicker</style></style></style>",
+		
+		"ARTI_ALLY_NONE_SELECTED": "No Ally",
+		"ARTI_ALLY_NONE_SELECTED_DESC": "No additional allies will join you on spawn.",
+		
+		"TURRETLING_ARTI_NAME": "Personal Turretling",
+		"TURRETLING_ARTI_CONTEXT": "waow...",
+		"TURRETLING_ARTI_NAME_IG": "Divineling",
+		"TURRETLING_RAIL_NAME": "Purity",
+		"TURRETLING_MERC_NAME": "Mercling",
+		"TURRETLING_ARTI_DESCRIPTION": "<style=cDeath>Fragile</style>. A weaker, yet personalized turretling will spawn with you at the start of each stage. Automatically repairs when downed. Inherits Elite Equipment and a small selection of items.",
+		"TURRETLING_FRAGILE_ARTI": "[ <style=cDeath>Fragile</style> ]\n<style=cSub>Careful now. The turretling is fragile. On death, it will <style=cIsUtility>repair</style> itself.</style>.</style>",
 	}
 }
