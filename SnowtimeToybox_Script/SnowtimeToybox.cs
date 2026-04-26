@@ -108,6 +108,24 @@ namespace SnowtimeToybox
         public static GameObject ArtiTurretlingBody;
         public static GameObject ArtiTurretlingMaster;
         public static GameObject ArtiTurretlingBroken;
+        // turretling survivor
+        public static SurvivorDef SwarmlingDef;
+        public static GameObject SwarmlingBody;
+        public static DroneDef SwarmlingMinionDef;
+        public static GameObject SwarmlingMinionBody;
+        public static GameObject SwarmlingMinionBroken;
+        public static GameObject SwarmlingMinionMaster;
+        public static SkillFamily Swarmling_PassiveFamily1;
+        public static SkillFamily Swarmling_PassiveFamily2;
+        public static SkillFamily Swarmling_PassiveFamily3;
+        public static SkillFamily Swarmling_PassiveFamily4;
+        public static SkillFamily Swarmling_PassiveFamily5;
+        public static SkillFamily Swarmling_PassiveFamily6;
+        public static SkillDef SwarmlingPassiveMinion;
+        public static SkillFamily SwarmlingSpecialFamily;
+        public static SkillDef SwarmlingSpecialSkill;
+        public static SkillFamily SwarmlingUtilityFamily;
+        public static SkillDef SwarmlingUtilitySkill;
 
         //public static DroneDef FriendlyTurretTestDroneDef;
 
@@ -465,7 +483,6 @@ namespace SnowtimeToybox
                 item.Init(Config);
             }
         }
-
         public void AddCustomAllies()
         {
             bodyFlags = new CharacterBody.BodyFlags();
@@ -620,6 +637,58 @@ namespace SnowtimeToybox
             ContentAddition.AddSkillDef(DTTurretlingSkillDef);
             ContentAddition.AddEntityState(typeof(DTTurretlingDeath), out _);
             ContentAddition.AddEntityState(typeof(DTTurretlingRainbowize), out _);
+
+            string swarmlingPath = @"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Survivor/";
+            SwarmlingDef = _stcharacterAssetBundle.LoadAsset<SurvivorDef>(swarmlingPath + "Swarmling.asset");
+            SwarmlingMinionDef = _stcharacterAssetBundle.LoadAsset<DroneDef>(swarmlingPath + "_SwarmTurretling.asset");
+            SwarmlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(swarmlingPath + "_TurretlingSurvivorBody.prefab");
+            SwarmlingBody.GetComponent<CharacterDeathBehavior>().deathState = new SerializableEntityStateType(typeof(TurretlingDeath));
+            SwarmlingBody.AddComponent<TurretlingMissileTracker>();
+            DroneTechRepairQueue repairQueueSwarmling = SwarmlingBody.AddComponent<DroneTechRepairQueue>();
+            repairQueueSwarmling.healRate = 0.05f;
+            SwarmlingMinionBody = _stcharacterAssetBundle.LoadAsset<GameObject>(swarmlingPath + "_SwarmTurretlingBody.prefab");
+            SwarmlingMinionBody.GetComponent<CharacterDeathBehavior>().deathState = new SerializableEntityStateType(typeof(DTTurretlingDeath));
+            SwarmlingMinionBody.AddComponent<TurretlingMissileTracker>();
+            SwarmlingMinionBody.AddComponent<EquipmentSlot>();
+            SwarmlingMinionBody.GetComponent<CharacterBody>().baseDamage = (TurretlingBaseDamage.Value / 2f);
+            SwarmlingMinionBody.GetComponent<CharacterBody>().levelDamage = (TurretlingBaseDamagePerLevel.Value / 2f);
+            SwarmlingMinionBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(swarmlingPath + "_SwarmTurretlingBroken.prefab");
+            SwarmlingMinionMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(swarmlingPath + "_SwarmTurretlingMaster.prefab");
+            SwarmlingMinionMaster.AddComponent<TurretlingRainbow>();
+            SwarmlingMinionMaster.AddComponent<FriendlyTurretInheritance>().whitelistedTag = "FriendTurret_None_Whitelist";
+            Swarmling_PassiveFamily1 = _stcharacterAssetBundle.LoadAsset<SkillFamily>(swarmlingPath + "Skills/Swarm_PassiveFamily1.asset");
+            Swarmling_PassiveFamily2 = _stcharacterAssetBundle.LoadAsset<SkillFamily>(swarmlingPath + "Skills/Swarm_PassiveFamily2.asset");
+            Swarmling_PassiveFamily3 = _stcharacterAssetBundle.LoadAsset<SkillFamily>(swarmlingPath + "Skills/Swarm_PassiveFamily3.asset");
+            Swarmling_PassiveFamily4 = _stcharacterAssetBundle.LoadAsset<SkillFamily>(swarmlingPath + "Skills/Swarm_PassiveFamily4.asset");
+            Swarmling_PassiveFamily5 = _stcharacterAssetBundle.LoadAsset<SkillFamily>(swarmlingPath + "Skills/Swarm_PassiveFamily5.asset");
+            Swarmling_PassiveFamily6 = _stcharacterAssetBundle.LoadAsset<SkillFamily>(swarmlingPath + "Skills/Swarm_PassiveFamily6.asset");
+            SwarmlingSpecialFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(swarmlingPath + "Skills/TurretlingSpecialFamilySurvivor.asset");
+            SwarmlingUtilityFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(swarmlingPath + "Skills/TurretlingUtilityFamilySurvivor.asset");
+            SwarmlingPassiveMinion = _stcharacterAssetBundle.LoadAsset<SkillDef>(swarmlingPath + "Skills/Swarmling.asset");
+            SwarmlingSpecialSkill = _stcharacterAssetBundle.LoadAsset<SkillDef>(swarmlingPath + "Skills/Turretling_SpecialSurvivor.asset");
+            SwarmlingSpecialSkill.activationState = new SerializableEntityStateType(typeof(TurretlingEnergyNova));
+            SwarmlingUtilitySkill = _stcharacterAssetBundle.LoadAsset<SkillDef>(swarmlingPath + "Skills/Turretling_UtilitySurvivor.asset");
+            SwarmlingUtilitySkill.activationState = new SerializableEntityStateType(typeof(TurretlingMiniBlinkState));
+            ContentAddition.AddSurvivorDef(SwarmlingDef);
+            ContentAddition.AddDroneDef(SwarmlingMinionDef);
+            ContentAddition.AddBody(SwarmlingBody);
+            ContentAddition.AddBody(SwarmlingMinionBody);
+            ContentAddition.AddBody(SwarmlingMinionBroken);
+            ContentAddition.AddMaster(SwarmlingMinionMaster);
+            ContentAddition.AddSkillFamily(Swarmling_PassiveFamily1);
+            ContentAddition.AddSkillFamily(Swarmling_PassiveFamily2);
+            ContentAddition.AddSkillFamily(Swarmling_PassiveFamily3);
+            ContentAddition.AddSkillFamily(Swarmling_PassiveFamily4);
+            ContentAddition.AddSkillFamily(Swarmling_PassiveFamily5);
+            ContentAddition.AddSkillFamily(Swarmling_PassiveFamily6);
+            ContentAddition.AddSkillFamily(SwarmlingSpecialFamily);
+            ContentAddition.AddSkillFamily(SwarmlingUtilityFamily);
+            ContentAddition.AddSkillDef(SwarmlingPassiveMinion);
+            ContentAddition.AddSkillDef(SwarmlingSpecialSkill);
+            ContentAddition.AddSkillDef(SwarmlingUtilitySkill);
+            ContentAddition.AddEntityState(typeof(TurretlingEnergyNova), out _);
+            ContentAddition.AddEntityState(typeof(TurretlingMiniBlinkState), out _);
+            ContentAddition.AddEffect(TurretlingEnergyNova.novafx);
 
             ContentAddition.AddEntityState(typeof(Shenanigans), out _);
             

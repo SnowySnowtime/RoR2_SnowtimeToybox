@@ -123,5 +123,19 @@
 		"TURRETLING_MERC_NAME": "Mercling",
 		"TURRETLING_ARTI_DESCRIPTION": "<style=cDeath>Fragile</style>. A weaker, yet personalized turretling will spawn with you at the start of each stage. Automatically repairs when downed. Inherits Elite Equipment and a small selection of items.",
 		"TURRETLING_FRAGILE_ARTI": "[ <style=cDeath>Fragile</style> ]\n<style=cSub>Careful now. The turretling is fragile. On death, it will <style=cIsUtility>repair</style> itself.</style>.</style>",
+		
+		
+		"TURRETLING_SWARM_NAME": "Swarmling",
+		"TURRETLING_SWARM_PASSIVE": "The Swarm...",
+		"TURRETLING_SWARM_PASSIVE_DESC": "<style=cDeath>Fragile</style>. <style=cIsUtility>Spawn</style> with 6 other weaker turretlings that <style=cIsUtility>inherit </style><style=cIsDamage>elite equipment</style> and <style=cIsUtility>all items</style>.",
+		"TURRETLING_FRAGILE_SWARM": "[ <style=cDeath>Fragile</style> ]\n<style=cSub><style=cDeath>You and your swarm are frail</style>. On death, your Swarmlings will <style=cIsUtility>repair</style> itself.</style>.</style>",
+		"FRIENDLYTURRET_TURRETLING_SKILL1_NAME": "Blaster",
+		"FRIENDLYTURRET_TURRETLING_SKILL1_DESC": "Occasionally fire a blaster for <style=cIsDamage>100% damage</style>.",
+		"FRIENDLYTURRET_TURRETLING_SKILL2_NAME": "Pixi Launcher",
+		"FRIENDLYTURRET_TURRETLING_SKILL2_DESC": "Fire a missile for <style=cIsDamage>200% damage</style>.",
+		"FRIENDLYTURRET_TURRETLING_SKILL5_NAME": "Bionic Blink",
+		"FRIENDLYTURRET_TURRETLING_SKILL5_DESC": "Blink a short distance.",
+		"FRIENDLYTURRET_TURRETLING_SKILL4_NAME": "Energy Nova",
+		"FRIENDLYTURRET_TURRETLING_SKILL4_DESC": "Emit a concussive blast, dealing <style=cIsDamage>150% damage</style> and <style=cIsUtility>deleting projectiles</style> within <style=cIsUtility>15m</style>.",
 	}
 }

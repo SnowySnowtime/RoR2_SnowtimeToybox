@@ -76,7 +76,7 @@ public class TurretlingRainbow : NetworkBehaviour
             //Log.Debug("erm...");
             if (!turretlingPlayerMaster)
             {
-                if(gameObject.name.Contains("_DT") || gameObject.name.Contains("_Holy"))
+                if(gameObject.name.Contains("_DT") || gameObject.name.Contains("_Holy") || gameObject.name.Contains("_SwarmTurretling") && turretlingPlayer != null)
                 {
                     Log.Debug("Operator/Artificer Turretling Found... Defining Turretling Owner Master...");
                     turretlingPlayerMaster = master.minionOwnership.ownerMaster;
@@ -109,7 +109,7 @@ public class TurretlingRainbow : NetworkBehaviour
                     //Log.Debug("Player" + gameObject.GetComponent<PlayerCharacterMasterController>().GetDisplayName() + " SteamID: " + steamid);
                 }
                 
-                if (gameObject.name.Contains("_DT") && turretlingPlayer != null || gameObject.name.Contains("_Holy") && !steamid.IsNullOrWhiteSpace() || gameObject.name.Contains("PlayerMaster"))
+                if (gameObject.name.Contains("_DT") && turretlingPlayer != null || gameObject.name.Contains("_Holy") && !steamid.IsNullOrWhiteSpace() || gameObject.name.Contains("PlayerMaster") || gameObject.name.Contains("_SwarmTurretling") && turretlingPlayer != null)
                 {
                     if (turretlingRecolors.TryGetValue(steamid, out string turretlingColors))
                     {
@@ -228,7 +228,7 @@ public class TurretlingRainbow : NetworkBehaviour
     private void MasterOnonBodyDeath()
     {
         // enough said.
-        if (gameObject.name.Contains("_DT") || gameObject.name.Contains("Broken") || gameObject.name.Contains("_Holy")) return;
+        if (gameObject.name.Contains("_DT") || gameObject.name.Contains("Broken") || gameObject.name.Contains("_Holy") || gameObject.name.Contains("_SwarmTurretling")) return;
         int extralives = master.inventory.GetItemCountPermanent(RoR2Content.Items.ExtraLife);
         ChildLocator childLocator = master.GetBody().modelLocator.modelTransform.gameObject.GetComponent<ChildLocator>();
         if (turretlingRainbow && extralives != 0)
