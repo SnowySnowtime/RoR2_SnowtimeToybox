@@ -119,6 +119,7 @@ public class TurretlingRainbow : NetworkBehaviour
                         turretlingHue = float.Parse(turretlingParams[0]);
                         turretlingSat = float.Parse(turretlingParams[1]);
                         turretlingShade = float.Parse(turretlingParams[2]);
+                        turretlingVisualsApplied = false;
                     }
                 }
             }
@@ -128,6 +129,7 @@ public class TurretlingRainbow : NetworkBehaviour
         {
             steamidApplied = true;
             turretlingVisualsApplied = false;
+            Log.Debug($"appling steam id {steamid} !!");
             
             string[] turretlingParams = turretling.Split(",");
             if (turretlingParams.Length == 4)
@@ -143,7 +145,8 @@ public class TurretlingRainbow : NetworkBehaviour
         
         turretlingVisualsApplied = true;
         Log.Debug("This firstSpawnPassed check ran!");
-        
+        Log.Debug($"current steam id {steamid} !!");
+
         charBody = gameObject.name.Contains("PlayerMaster") ? gameObject.GetComponent<CharacterMaster>().GetBody().gameObject.GetComponent<CharacterBody>() : master.GetBody();
         if (!charBody) return;
         if (charBody.name.Contains("Broken")) return;
@@ -243,6 +246,7 @@ public class TurretlingRainbow : NetworkBehaviour
     public void MasterOnonBodyStart(CharacterBody body)
     {
         turretlingVisualsApplied = false;
+        steamidApplied = false; 
         /*// try to prevent it from keeping the item on map change or revive
         if (master.inventory.GetItemCountEffective(ItemCatalog.FindItemIndex("RainbowizerPowerUp")) != 0)
         {
