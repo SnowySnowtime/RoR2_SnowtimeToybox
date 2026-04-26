@@ -25,7 +25,8 @@ public class TurretlingRainbow : NetworkBehaviour
     private PlayerCharacterMasterController turretlingPlayer;
     private CharacterMaster master;
     private CharacterBody charBody;
-    private bool firstSpawnPassed;
+    private bool turretlingVisualsApplied;
+    private bool steamidApplied;
     
     public static Dictionary<string, string> turretlingRecolors = new()
     {
@@ -41,7 +42,7 @@ public class TurretlingRainbow : NetworkBehaviour
     public void OnEnable()
     {
         if (!gameObject.name.Contains("Turretling")) return;
-        firstSpawnPassed = false;
+        turretlingVisualsApplied = false;
         Log.Debug("turretling master spawned !!");
         Log.Debug("Object Name: " + gameObject.name);
         if (gameObject.name.Contains("Broken")) return;
@@ -123,19 +124,27 @@ public class TurretlingRainbow : NetworkBehaviour
             }
         }
 
-        if (firstSpawnPassed) return;
-        firstSpawnPassed = true;
-
+        if (!steamidApplied && !steamid.IsNullOrWhiteSpace() && turretlingRecolors.TryGetValue(steamid, out string turretling))
+        {
+            steamidApplied = true;
+            turretlingVisualsApplied = false;
+            
+            string[] turretlingParams = turretling.Split(",");
+            if (turretlingParams.Length == 4)
+            {
+                string turretlingName = turretlingParams[^1].Trim();
+                ChildLocator childLocatorSteamUnusual = charBody.modelLocator.modelTransform.gameObject.GetComponent<ChildLocator>();
+                childLocatorSteamUnusual.FindChild($"{turretlingName}Halo")?.gameObject.SetActive(true);
+                childLocatorSteamUnusual.FindChild($"{turretlingName}Unusual")?.gameObject.SetActive(true);
+            }
+        }
+        
+        if (turretlingVisualsApplied) return;
+        
+        turretlingVisualsApplied = true;
         Log.Debug("This firstSpawnPassed check ran!");
-        if (gameObject.name.Contains("PlayerMaster"))
-        {
-            charBody = gameObject.GetComponent<CharacterMaster>().GetBody().gameObject.GetComponent<CharacterBody>();
-        }
-        else
-        {
-            charBody = master.GetBody();
-        }
-
+        
+        charBody = gameObject.name.Contains("PlayerMaster") ? gameObject.GetComponent<CharacterMaster>().GetBody().gameObject.GetComponent<CharacterBody>() : master.GetBody();
         if (!charBody) return;
         if (charBody.name.Contains("Broken")) return;
         
@@ -164,18 +173,6 @@ public class TurretlingRainbow : NetworkBehaviour
             animator.SetFloat("sat", turretlingRainbow ? 0 : turretlingSat);
             animator.SetFloat("shade", turretlingRainbow ? 0 : turretlingShade);
             animator.SetBool("shift", turretlingRainbow);
-        }
-
-        if (!steamid.IsNullOrWhiteSpace() && turretlingRecolors.TryGetValue(steamid, out string turretling))
-        {
-            string[] turretlingParams = turretling.Split(",");
-            if (turretlingParams.Length == 4)
-            {
-                string turretlingName = turretlingParams[^1].Trim();
-                
-                childLocator.FindChild($"{turretlingName}Halo")?.gameObject.SetActive(true);
-                childLocator.FindChild($"{turretlingName}Unusual")?.gameObject.SetActive(true);
-            }
         }
     }
 
@@ -245,7 +242,7 @@ public class TurretlingRainbow : NetworkBehaviour
 
     public void MasterOnonBodyStart(CharacterBody body)
     {
-        firstSpawnPassed = false;
+        turretlingVisualsApplied = false;
         /*// try to prevent it from keeping the item on map change or revive
         if (master.inventory.GetItemCountEffective(ItemCatalog.FindItemIndex("RainbowizerPowerUp")) != 0)
         {
