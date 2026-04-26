@@ -76,7 +76,7 @@ public class TurretlingRainbow : NetworkBehaviour
             //Log.Debug("erm...");
             if (!turretlingPlayerMaster)
             {
-                if(gameObject.name.Contains("_DT") || gameObject.name.Contains("_Holy") || gameObject.name.Contains("_SwarmTurretling") && turretlingPlayer != null)
+                if(gameObject.name.Contains("_DT") || gameObject.name.Contains("_Holy") || gameObject.name.Contains("_SwarmTurretling"))
                 {
                     Log.Debug("Operator/Artificer Turretling Found... Defining Turretling Owner Master...");
                     turretlingPlayerMaster = master.minionOwnership.ownerMaster;
@@ -105,7 +105,7 @@ public class TurretlingRainbow : NetworkBehaviour
                     turretlingPlayerMaster = gameObject.GetComponent<CharacterMaster>();
                     //Log.Debug("Player found possessing Turretling, defining SteamID directly.");
                     if (!gameObject.GetComponent<PlayerCharacterMasterController>()) return;
-                    steamid = gameObject.GetComponent<PlayerCharacterMasterController>().networkUser.id.steamId.ToSteamID();
+                    steamid = gameObject.GetComponent<PlayerCharacterMasterController>().networkUser.id.steamId.ToSteamID().ToString();
                     //Log.Debug("Player" + gameObject.GetComponent<PlayerCharacterMasterController>().GetDisplayName() + " SteamID: " + steamid);
                 }
                 
