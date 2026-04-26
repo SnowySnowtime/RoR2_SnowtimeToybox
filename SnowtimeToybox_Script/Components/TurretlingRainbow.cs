@@ -19,7 +19,7 @@ public class TurretlingRainbow : NetworkBehaviour
     [SyncVar]
     public bool turretlingRainbow;
     [SyncVar]
-    private string steamid;
+    private string steamid = "";
 
     private CharacterMaster turretlingPlayerMaster;
     private PlayerCharacterMasterController turretlingPlayer;
@@ -32,7 +32,7 @@ public class TurretlingRainbow : NetworkBehaviour
         { "STEAM_1:1:146751517", "0.55,0,0,Snowtime" }, // snowy 
         { "STEAM_0:0:615574887", "0.045,0,0,Shortcake" }, //shortcake
         { "STEAM_0:1:60493073", "0,1,0,Acanthi" }, // canthi 
-        { "STEAM_0:1:174533492", "0.87,0.87,0,Bread" }, // bread
+        { "STEAM_255:0:1737027363", "0.87,0.87,0,Bread" }, // bread
         { "STEAM_0:0:64329810", "0.71,0.27,0.27,Illusive" }, // illusive 
         { "STEAM_0:1:502654116", "0.83,0,0,Anartoast" }, // anar
         { "STEAM_0:0:131809264", "0.43,0.97,0,Lukas" }, // lukas
@@ -90,9 +90,6 @@ public class TurretlingRainbow : NetworkBehaviour
                     {
                         steamid = turretlingPlayer.networkUser.id.steamId.ToSteamID();
                         Log.Debug($"steam id !! {steamid}");
-                        Log.Debug($"steam id 2!! {turretlingPlayer.networkUser.id.steamId}");
-                        Log.Debug($"steam id !3! {turretlingPlayer.networkUser.id}");
-                        Log.Debug($"steam id !4! {turretlingPlayer.networkUser.id.steamId.value}");
                     }
                     // Just in case...
                     if (gameObject.name.Contains("Broken"))
@@ -127,7 +124,8 @@ public class TurretlingRainbow : NetworkBehaviour
         }
 
         if (firstSpawnPassed) return;
-        
+        firstSpawnPassed = true;
+
         Log.Debug("This firstSpawnPassed check ran!");
         if (gameObject.name.Contains("PlayerMaster"))
         {
@@ -168,7 +166,7 @@ public class TurretlingRainbow : NetworkBehaviour
             animator.SetBool("shift", turretlingRainbow);
         }
 
-        if (turretlingRecolors.TryGetValue(steamid, out string turretling))
+        if (!steamid.IsNullOrWhiteSpace() && turretlingRecolors.TryGetValue(steamid, out string turretling))
         {
             string[] turretlingParams = turretling.Split(",");
             if (turretlingParams.Length == 4)
@@ -179,8 +177,6 @@ public class TurretlingRainbow : NetworkBehaviour
                 childLocator.FindChild($"{turretlingName}Unusual")?.gameObject.SetActive(true);
             }
         }
-        
-        firstSpawnPassed = true;
     }
 
     public void giveItems(bool takeRemove)
