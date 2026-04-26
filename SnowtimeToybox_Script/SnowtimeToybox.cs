@@ -1045,7 +1045,7 @@ namespace SnowtimeToybox
                                 foreach (string bodyNameAndTurretlingName in bodyNames)
                                 {
                                     string bodyName = bodyNameAndTurretlingName.Split(",")[0];
-                                    if (bodyName != bodyPrefab.name) return;
+                                    if (bodyName != bodyPrefab.name) continue;
                                     
                                     string turretlingName = bodyNameAndTurretlingName.Split(",")[1];
                                     Log.Debug($"{bodyName} has turretling friend .,,. Its fragile so be careful!");
