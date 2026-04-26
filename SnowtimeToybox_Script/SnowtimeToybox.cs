@@ -1134,6 +1134,24 @@ namespace SnowtimeToybox
             On.RoR2.DroneCommandReceiver.CommandActivate += DroneCommandReceiverHookCommandActivate;
             On.EntityStates.DroneTech.CommandCarry.OnEnter += DroneTechHookOnEnter;
             On.RoR2.CharacterMaster.OnBodyStart += SnowtimeOnBodyStart;
+            On.RoR2.Items.DroneUpgradeHiddenBodyBehavior.UpdateStack += DroneUpgradeHiddenBodyBehaviorHookUpdateStack;
+            // i hate doing this, idk.
+            On.RoR2.CharacterModel.IsUpgradedDrone += CharacterModelHookIsUpgradedDrone;
+        }
+
+        private bool CharacterModelHookIsUpgradedDrone(On.RoR2.CharacterModel.orig_IsUpgradedDrone orig, CharacterModel self)
+        {
+            if (self.gameObject.name.Contains("Turretling"))
+            {
+                return false;
+            }
+            else return orig(self);
+        }
+
+        private void DroneUpgradeHiddenBodyBehaviorHookUpdateStack(On.RoR2.Items.DroneUpgradeHiddenBodyBehavior.orig_UpdateStack orig, RoR2.Items.DroneUpgradeHiddenBodyBehavior self, int newStack)
+        {
+            if (self.body.gameObject.name.Contains("Turretling")) return;
+            orig(self, newStack);
         }
 
         private void SnowtimeOnBodyStart(On.RoR2.CharacterMaster.orig_OnBodyStart orig, CharacterMaster self, CharacterBody body)
