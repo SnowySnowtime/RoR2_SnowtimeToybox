@@ -594,6 +594,7 @@ namespace SnowtimeToybox
             ArtiTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_HolyTurretlingMaster.prefab");
             ArtiTurretlingMaster.AddComponent<TurretlingRainbow>();
             ArtiTurretlingBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_HolyTurretlingBroken.prefab");
+            ArtiTurretlingBroken.AddComponent<PassiveTurretlingUpdateNamePerCharacter>();
             ArtiTurretlingBody.GetComponent<CharacterBody>().baseDamage = (TurretlingBaseDamage.Value / 1.5f);
             ArtiTurretlingBody.GetComponent<CharacterBody>().levelDamage = (TurretlingBaseDamagePerLevel.Value / 1.5f);
             ContentAddition.AddDroneDef(ArtiTurretlingDef);
