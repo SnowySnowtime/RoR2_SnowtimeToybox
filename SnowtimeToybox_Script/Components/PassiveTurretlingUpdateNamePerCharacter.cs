@@ -23,31 +23,16 @@ public class PassiveTurretlingUpdateNamePerCharacter : MonoBehaviour
 
     public void FixedUpdate()
     {
+        if (nameUpdated) return;
         if (!self.GetBody()) return;
         charBody = self.GetBody();
         if (!charBody.master.minionOwnership.ownerMaster) return;
         if (!charBody.master.minionOwnership.ownerMaster.GetBody()) return;
         //Log.Debug(charBody.master.minionOwnership.ownerMaster.GetBody().name);
         ownerBody = charBody.master.minionOwnership.ownerMaster.GetBody();
-        if (ownerBody.gameObject.name.Contains("RailgunnerBody"))
-        {
-            nameUpdated = true;
-            charBody.baseNameToken = "TURRETLING_RAIL_NAME";
-        }
-        else if(ownerBody.gameObject.name.Contains("MercBody"))
-        {
-            nameUpdated = true;
-            charBody.baseNameToken = "TURRETLING_MERC_NAME";
-        }
-        else if(ownerBody.gameObject.name.Contains("MageBody"))
-        {
-            nameUpdated = true;
-            charBody.baseNameToken = "TURRETLING_ARTI_NAME_IG";
-        }
-        else
-        {
-            nameUpdated = true;
-            //Log.Debug("We are someone who shouldnt be/have this turretling.");
-        }
+        
+        Log.Debug(ownerBody.name + " turretling ");
+        charBody.baseNameToken = $"TURRETLING_{ownerBody.name.ToUpper()}_NAME";
+        nameUpdated = true;
     }
 }
