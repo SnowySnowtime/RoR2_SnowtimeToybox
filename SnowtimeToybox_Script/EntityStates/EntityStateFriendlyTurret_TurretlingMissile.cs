@@ -45,7 +45,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             missilesFired = 0;
             Transform modelTransform = GetModelTransform();
             missileTracker = GetComponent<TurretlingMissileTracker>();
-            if (!missileTracker.GetTrackingTarget())
+            if (!missileTracker?.GetTrackingTarget())
             {
                 base.skillLocator.secondary.AddOneStock();
                 outer.SetNextStateToMain();
