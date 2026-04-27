@@ -30,18 +30,24 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
 
         public static int bulletCount = 1;
         public static float radius = 15f;
+        public static float newrad;
 
-        public static float baseDuration = 0.3f;
+        public static float baseDuration = 0.4f;
 
         public int bulletCountCurrent = 1;
 
         private float duration = 1f;
 
+        public float additionalStocks = 0;
+
         public override void OnEnter()
         {
             base.OnEnter();
             base.characterBody.SetAimTimer(0f);
-            duration = baseDuration * base.skillLocator.utility.cooldownScale;
+            duration = baseDuration;
+            additionalStocks = base.skillLocator.special.bonusStockFromBody;
+            newrad = radius + (additionalStocks + additionalStocks);
+            Log.Debug("Original Radius: " + radius + "... Now it is: " + newrad);
             Util.PlaySound(attackSoundString, base.gameObject);
             Ray aimRay = GetAimRay();
             StartAimMode(aimRay);
@@ -54,12 +60,12 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
 			        EffectManager.SpawnEffect(novaPrefab, new EffectData
 			        {
 			        	origin = fxorigin.position,
-			        	scale = radius
-			        }, transmit: true);
+			        	scale = newrad
+                    }, transmit: true);
                 }
                 BlastAttack blastAttack = new BlastAttack();
                 blastAttack.position = fxorigin.position;
-                blastAttack.radius = radius;
+                blastAttack.radius = newrad;
                 blastAttack.falloffModel = BlastAttack.FalloffModel.None;
                 blastAttack.attacker = base.gameObject;
                 blastAttack.inflictor = base.gameObject;
