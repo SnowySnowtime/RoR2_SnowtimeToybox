@@ -1209,6 +1209,18 @@ namespace SnowtimeToybox
             On.RoR2.Items.DroneUpgradeHiddenBodyBehavior.UpdateStack += DroneUpgradeHiddenBodyBehaviorHookUpdateStack;
             // i hate doing this, idk.
             On.RoR2.CharacterModel.IsUpgradedDrone += CharacterModelHookIsUpgradedDrone;
+            On.RoR2.DroneCombinerController.Init += DroneCombinerControllerHookInit;
+        }
+
+        private void DroneCombinerControllerHookInit(On.RoR2.DroneCombinerController.orig_Init orig)
+        {
+            orig();
+            DroneCombinerController.doNotDestroy.Add(BodyCatalog.FindBodyIndex(SwarmlingMinionBody));
+            DroneCombinerController.doNotDestroy.Add(BodyCatalog.FindBodyIndex(ArtiTurretlingBody));
+            DroneCombinerController.doNotDestroy.Add(BodyCatalog.FindBodyIndex(DTTurretlingBody));
+            DroneCombinerController.droneCompatibilityLUT.Add(BodyCatalog.FindBodyIndex(SwarmlingMinionBody), BodyCatalog.FindBodyIndex(FriendlyTurretTurretlingBody));
+            DroneCombinerController.droneCompatibilityLUT.Add(BodyCatalog.FindBodyIndex(ArtiTurretlingBody), BodyCatalog.FindBodyIndex(FriendlyTurretTurretlingBody));
+            DroneCombinerController.droneCompatibilityLUT.Add(BodyCatalog.FindBodyIndex(DTTurretlingBody), BodyCatalog.FindBodyIndex(FriendlyTurretTurretlingBody));
         }
 
         private bool CharacterModelHookIsUpgradedDrone(On.RoR2.CharacterModel.orig_IsUpgradedDrone orig, CharacterModel self)

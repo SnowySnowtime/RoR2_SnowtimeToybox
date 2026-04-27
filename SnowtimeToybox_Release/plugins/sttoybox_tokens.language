@@ -128,7 +128,7 @@
 		"TURRETLING_SWARM_NAME": "Swarmling",
 		"TURRETLING_SWARM_PASSIVE": "The Swarm...",
 		"TURRETLING_SWARM_PASSIVE_DESC": "<style=cDeath>Fragile</style>. Spawn with 6 other weaker turretlings that <style=cIsUtility>inherit </style><style=cIsDamage>elite equipment</style> and <style=cIsUtility>all items</style>.",
-		"TURRETLING_FRAGILE_SWARM": "[ <style=cDeath>Fragile</style> ]\n<style=cDeath>You and your swarm are frail</style>. <style=cSub>On death, your Swarmlings will <style=cIsUtility>repair</style> themselves.\nYour allied <style=cArtifact>Swarmlings</style> have <style=cDeath>halved Proc Coefficients</style>.</style>",
+		"TURRETLING_FRAGILE_SWARM": "[ <style=cDeath>Fragile</style> ]\n<style=cDeath>You and your swarm are frail</style>. <style=cSub>On death, your Swarmlings will <style=cIsUtility>repair</style> themselves.\nYour allied <style=cArtifact>Swarmlings</style> have <style=cDeath>halved Proc Coefficients</style>.\n<style=cArtifact>Swarmlings </style>can very rarely spawn <color=#FF0000>R</color><color=#FF8000>a</color><color=#FFFB00>i</color><color=#37FF00>n</color><color=#00FF99>b</color><color=#00FFFF>o</color><color=#00BBFF>w</color><color=#0000FF>i</color><color=#9000FF>z</color><color=#FF00FF>e</color><color=#FF0000>d</color>, <style=cIsHealing>massively increasing its stats</style>.</style>",
 		"TURRETLING_SKILL1_NAME": "<color=#cfb25a>Blaster</color>",
 		"TURRETLING_SKILL1_DESC": "Occasionally fire the blaster for <style=cIsDamage>125% damage</style>.",
 		"TURRETLING_SKILL2_NAME": "<color=#ff4e73>Pixi Launcher</color>",

@@ -14,7 +14,7 @@ public class SwarmPlayerSwarmlingTracker : MonoBehaviour
     public CharacterBody self;
     public static List<DroneInfo> Swarmlings = new List<DroneInfo>();
     public static List<CharacterBody> SwarmlingBodies = new List<CharacterBody>();
-    private new bool hasAuthority => Util.HasEffectiveAuthority(base.gameObject);
+    private bool hasAuthority;
 
     public void Start()
     {
@@ -22,6 +22,7 @@ public class SwarmPlayerSwarmlingTracker : MonoBehaviour
         GetSwarmlings();
         CharacterBody.onBodyDestroyGlobal += OnSwarmlingBodyDestroyGlobal;
         CharacterBody.onBodyStartGlobal += OnSwarmlingBodyStartGlobal;
+        hasAuthority = Util.HasEffectiveAuthority(base.gameObject);
     }
     public void FixedUpdate()
     {
