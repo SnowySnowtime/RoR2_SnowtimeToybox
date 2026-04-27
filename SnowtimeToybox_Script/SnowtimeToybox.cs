@@ -692,7 +692,10 @@ namespace SnowtimeToybox
             ContentAddition.AddEffect(TurretlingEnergyNova.novafx);
 
             ContentAddition.AddEntityState(typeof(Shenanigans), out _);
-            
+
+            // Fix Camera for playable turretlings
+            SwarmlingBody.GetComponent<CameraTargetParams>().dontRaycastToPivot = true;
+            FriendlyTurretTurretlingBodyRemoteOp.GetComponent<CameraTargetParams>().dontRaycastToPivot = true;
             // Add the Turretling to stages interactable spawncards, as it is a standard walking turret and NOT a Friendly Turret, as its internal name may imply
             FriendlyTurretTurretlingBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/_mdlTurretlingBroken.prefab");
             FriendlyTurretTurretlingIsc = _stcharacterAssetBundle.LoadAsset<InteractableSpawnCard>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/_iscBrokenTurretling.asset");

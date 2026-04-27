@@ -164,7 +164,7 @@ public abstract class FriendlyTurretBase
         SnowtimeToyboxMod.friendlyTurretList.Add(this);
         droneDef.remoteOpCost = SnowtimeToyboxMod.FriendlyTurretRemoteOpPrice.Value;
         Log.Debug("Updated Friendly Turret " + charBody.name + " Remote Operation prices to: " +  droneDef.remoteOpCost);
-
+        bodyRemoteOp.GetComponent<CameraTargetParams>().dontRaycastToPivot = true;
         ExplicitPickupDropTable dtTripleDroneShopBlacklist = Addressables.LoadAssetAsync<ExplicitPickupDropTable>(RoR2BepInExPack.GameAssetPaths.Version_1_39_0.RoR2_DLC3_TripleDroneShop.dtTripleDroneShopBlacklist_asset).WaitForCompletion();
         Array.Resize(ref dtTripleDroneShopBlacklist.pickupEntries, dtTripleDroneShopBlacklist.pickupEntries.Length + 1);
         Log.Debug("Adding " + droneDef.name + " to " + dtTripleDroneShopBlacklist.name);
