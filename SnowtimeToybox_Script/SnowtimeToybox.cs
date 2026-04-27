@@ -607,6 +607,7 @@ namespace SnowtimeToybox
             ArtiTurretlingBody.AddComponent<PassiveTurretlingUpdateNamePerCharacter>();
             ArtiTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_HolyTurretlingMaster.prefab");
             ArtiTurretlingMaster.AddComponent<TurretlingRainbow>();
+            ArtiTurretlingMaster.AddComponent<FriendlyTurretInheritance>().whitelistedTag = "FriendTurret_None_Whitelist";
             ArtiTurretlingBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_HolyTurretlingBroken.prefab");
             ArtiTurretlingBroken.AddComponent<PassiveTurretlingUpdateNamePerCharacter>();
             ArtiTurretlingBody.GetComponent<CharacterBody>().baseDamage = (TurretlingBaseDamage.Value / 1.5f);
@@ -622,6 +623,7 @@ namespace SnowtimeToybox
             DTTurretlingBody.GetComponent<DroneCommandReceiver>().droneState = DroneCommandReceiver.DroneState.Idle;
             DTTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_DTTurretlingMaster.prefab");
             DTTurretlingMaster.AddComponent<TurretlingRainbow>();
+            DTTurretlingMaster.AddComponent<FriendlyTurretInheritance>().whitelistedTag = "FriendTurret_None_Whitelist";
             DTTurretlingBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_DTTurretlingBroken.prefab");
             DTTurretlingSkillFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/DTTurretlingSpecialFamily.asset");
             DTTurretlingSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/DTTurretling_Special.asset");
