@@ -25,8 +25,8 @@ public class TurretlingRainbow : NetworkBehaviour
     private PlayerCharacterMasterController turretlingPlayer;
     private CharacterMaster master;
     private CharacterBody charBody;
-    private bool turretlingVisualsApplied;
-    private bool steamidApplied;
+    private bool applyTurretlingVisuals;
+    private string steamidToApply;
     
     public static Dictionary<string, string> turretlingRecolors = new()
     {
@@ -42,112 +42,107 @@ public class TurretlingRainbow : NetworkBehaviour
     public void OnEnable()
     {
         if (!gameObject.name.Contains("Turretling")) return;
-        turretlingVisualsApplied = false;
+        if (gameObject.name.Contains("Broken")) return;
+        
         Log.Debug("turretling master spawned !!");
         Log.Debug("Object Name: " + gameObject.name);
-        if (gameObject.name.Contains("Broken")) return;
+        
         master = gameObject.GetComponent<CharacterMaster>();
         Log.Debug(master);
+        
         master.onBodyStart += MasterOnonBodyStart;
         master.onBodyDeath.AddListener(MasterOnonBodyDeath);
 
-        if (NetworkServer.active)
+        if (!NetworkServer.active) return;
+        
+        turretlingHue = Run.instance.runRNG.RangeFloat(0, 1);
+        turretlingSat = Run.instance.runRNG.RangeFloat(0, 1);
+        turretlingShade = Run.instance.runRNG.RangeFloat(0, 1);
+
+        if (!gameObject.name.Contains("_DT") && !gameObject.name.Contains("PlayerMaster") && !gameObject.name.Contains("_Holy"))
         {
-            turretlingHue = Run.instance.runRNG.RangeFloat(0, 1);
-            turretlingSat = Run.instance.runRNG.RangeFloat(0, 1);
-            turretlingShade = Run.instance.runRNG.RangeFloat(0, 1);
-
-            Log.Debug(gameObject.name);
-            if (!gameObject.name.Contains("_DT") && !gameObject.name.Contains("PlayerMaster") && !gameObject.name.Contains("_Holy"))
-            {
-                turretlingRainbow = SnowtimeToyboxMod.TurretlingRainbowChance.Value >= Run.instance.runRNG.RangeFloat(0, 100);
-            }
-
-            if (turretlingRainbow)
-            {
-                giveItems(true);
-            }
+            turretlingRainbow = SnowtimeToyboxMod.TurretlingRainbowChance.Value >= Run.instance.runRNG.RangeFloat(0, 100);  
         }
-
+        
+        if (turretlingRainbow)
+        {
+            giveItems(true);
+        }
     }
+    
     public void FixedUpdate()
     {
-        if (NetworkServer.active && Run.instance)
+        if (NetworkServer.active && Run.instance && !turretlingPlayerMaster)
         {
-            //Log.Debug("erm...");
-            if (!turretlingPlayerMaster)
+            if(gameObject.name.Contains("_DT") || gameObject.name.Contains("_Holy") || gameObject.name.Contains("_SwarmTurretling"))
             {
-                if(gameObject.name.Contains("_DT") || gameObject.name.Contains("_Holy") || gameObject.name.Contains("_SwarmTurretling"))
+                Log.Debug("Operator/Artificer Turretling Found... Defining Turretling Owner Master...");
+                turretlingPlayerMaster = master.minionOwnership.ownerMaster;
+                if (!turretlingPlayer)
                 {
-                    Log.Debug("Operator/Artificer Turretling Found... Defining Turretling Owner Master...");
-                    turretlingPlayerMaster = master.minionOwnership.ownerMaster;
-                    if (!turretlingPlayer)
-                    {
-                        Log.Debug("Defining Player Controller of Owner Master...");
-                        turretlingPlayer = turretlingPlayerMaster.playerCharacterMasterController;
-                        Log.Debug(turretlingPlayer);
-                    }
-                    if (turretlingPlayer != null)
-                    {
-                        steamid = turretlingPlayer.networkUser.id.steamId.ToSteamID();
-                        Log.Debug($"steam id !! {steamid}");
-                    }
-                    // Just in case...
-                    if (gameObject.name.Contains("Broken"))
-                    {
-                        if (master.inventory.GetItemCountEffective(ItemCatalog.FindItemIndex("RainbowizerPowerUp")) != 0)
-                        {
-                            master.inventory.RemoveItemPermanent(ItemCatalog.FindItemIndex("RainbowizerPowerUp"), master.inventory.GetItemCountEffective(RoR2Content.Items.ScrapRed));
-                        }
-                    }
-                }
-                else if (gameObject.name.Contains("PlayerMaster"))
-                {
-                    turretlingPlayerMaster = gameObject.GetComponent<CharacterMaster>();
-                    //Log.Debug("Player found possessing Turretling, defining SteamID directly.");
-                    if (!gameObject.GetComponent<PlayerCharacterMasterController>()) return;
-                    steamid = gameObject.GetComponent<PlayerCharacterMasterController>().networkUser.id.steamId.ToSteamID().ToString();
-                    //Log.Debug("Player" + gameObject.GetComponent<PlayerCharacterMasterController>().GetDisplayName() + " SteamID: " + steamid);
+                    Log.Debug("Defining Player Controller of Owner Master...");
+                    turretlingPlayer = turretlingPlayerMaster.playerCharacterMasterController;
+                    Log.Debug(turretlingPlayer);
                 }
                 
-                if (gameObject.name.Contains("_DT") && turretlingPlayer != null || gameObject.name.Contains("_Holy") && !steamid.IsNullOrWhiteSpace() || gameObject.name.Contains("PlayerMaster") || gameObject.name.Contains("_SwarmTurretling"))
+                if (turretlingPlayer != null)
                 {
-                    if (turretlingRecolors.TryGetValue(steamid, out string turretlingColors))
+                    steamid = turretlingPlayer.networkUser.id.steamId.ToSteamID();
+                    Log.Debug($"steam id !! {steamid}");
+                }
+                
+                // Just in case...
+                if (gameObject.name.Contains("Broken"))
+                {
+                    if (master.inventory.GetItemCountEffective(ItemCatalog.FindItemIndex("RainbowizerPowerUp")) != 0)
                     {
-                        string[] turretlingParams = turretlingColors.Split(",");
-                        
-                        turretlingHue = float.Parse(turretlingParams[0]);
-                        turretlingSat = float.Parse(turretlingParams[1]);
-                        turretlingShade = float.Parse(turretlingParams[2]);
-                        turretlingVisualsApplied = false;
+                        master.inventory.RemoveItemPermanent(ItemCatalog.FindItemIndex("RainbowizerPowerUp"), master.inventory.GetItemCountEffective(RoR2Content.Items.ScrapRed));
                     }
+                }
+            }
+            else if (gameObject.name.Contains("PlayerMaster"))
+            {
+                turretlingPlayerMaster = gameObject.GetComponent<CharacterMaster>();
+                //Log.Debug("Player found possessing Turretling, defining SteamID directly.");
+                if (!gameObject.GetComponent<PlayerCharacterMasterController>()) return;
+                steamid = gameObject.GetComponent<PlayerCharacterMasterController>().networkUser.id.steamId.ToSteamID().ToString();
+                //Log.Debug("Player" + gameObject.GetComponent<PlayerCharacterMasterController>().GetDisplayName() + " SteamID: " + steamid);
+            }
+            
+            if (gameObject.name.Contains("_DT") && turretlingPlayer != null || gameObject.name.Contains("_Holy") && !steamid.IsNullOrWhiteSpace() || gameObject.name.Contains("PlayerMaster") || gameObject.name.Contains("_SwarmTurretling"))
+            {
+                if (turretlingRecolors.TryGetValue(steamid, out string turretlingColors))
+                {
+                    string[] turretlingParams = turretlingColors.Split(",");
+                    
+                    turretlingHue = float.Parse(turretlingParams[0]);
+                    turretlingSat = float.Parse(turretlingParams[1]);
+                    turretlingShade = float.Parse(turretlingParams[2]);
                 }
             }
         }
 
-        if (!steamidApplied && !steamid.IsNullOrWhiteSpace() && turretlingRecolors.TryGetValue(steamid, out string turretling))
+        if (steamidToApply.IsNullOrWhiteSpace() && !steamid.IsNullOrWhiteSpace() && turretlingRecolors.ContainsKey(steamid))
         {
-            steamidApplied = true;
-            turretlingVisualsApplied = false;
             Log.Debug($"appling steam id {steamid} !!");
-            
-            string[] turretlingParams = turretling.Split(",");
-            if (turretlingParams.Length == 4)
-            {
-                string turretlingName = turretlingParams[^1].Trim();
-                ChildLocator childLocatorSteamUnusual = charBody.modelLocator.modelTransform.gameObject.GetComponent<ChildLocator>();
-                childLocatorSteamUnusual.FindChild($"{turretlingName}Halo")?.gameObject.SetActive(true);
-                childLocatorSteamUnusual.FindChild($"{turretlingName}Unusual")?.gameObject.SetActive(true);
-            }
+            steamidToApply = steamid;
+            applyTurretlingVisuals = true;
         }
         
-        if (turretlingVisualsApplied) return;
+        ApplyVisuals();
+    }
+
+    public void ApplyVisuals()
+    {
+        if (!applyTurretlingVisuals) return;
+        applyTurretlingVisuals = true;
         
-        turretlingVisualsApplied = true;
-        Log.Debug("This firstSpawnPassed check ran!");
         Log.Debug($"current steam id {steamid} !!");
 
-        charBody = gameObject.name.Contains("PlayerMaster") ? gameObject.GetComponent<CharacterMaster>().GetBody().gameObject.GetComponent<CharacterBody>() : master.GetBody();
+        if (!charBody)
+        {
+            charBody = gameObject.name.Contains("PlayerMaster") ? gameObject.GetComponent<CharacterMaster>().GetBody().gameObject.GetComponent<CharacterBody>() : master.GetBody();
+        }
         if (!charBody) return;
         if (charBody.name.Contains("Broken")) return;
         
@@ -176,6 +171,24 @@ public class TurretlingRainbow : NetworkBehaviour
             animator.SetFloat("sat", turretlingRainbow ? 0 : turretlingSat);
             animator.SetFloat("shade", turretlingRainbow ? 0 : turretlingShade);
             animator.SetBool("shift", turretlingRainbow);
+        }
+
+        if (steamidToApply != "-1" && turretlingRecolors.TryGetValue(steamid, out string turretling))
+        {
+            string[] turretlingParams = turretling.Split(",");
+            
+            if (turretlingParams.Length == 4)
+            {
+                string turretlingName = turretlingParams[^1].Trim();
+                if (charBody && charBody.modelLocator?.modelTransform?.gameObject.TryGetComponent(out ChildLocator childLocatorSteamUnusual) == true)
+                {
+                    childLocatorSteamUnusual.FindChild($"{turretlingName}Halo")?.gameObject.SetActive(true);
+                    childLocatorSteamUnusual.FindChild($"{turretlingName}Unusual")?.gameObject.SetActive(true);
+                }
+            }
+
+            steamidToApply = "-1";
+            Log.Debug("applied steam id !!");
         }
     }
 
@@ -245,8 +258,8 @@ public class TurretlingRainbow : NetworkBehaviour
 
     public void MasterOnonBodyStart(CharacterBody body)
     {
-        turretlingVisualsApplied = false;
-        steamidApplied = false; 
+        applyTurretlingVisuals = false;
+        steamidToApply = ""; 
         /*// try to prevent it from keeping the item on map change or revive
         if (master.inventory.GetItemCountEffective(ItemCatalog.FindItemIndex("RainbowizerPowerUp")) != 0)
         {
