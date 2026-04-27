@@ -1229,10 +1229,10 @@ namespace SnowtimeToybox
 
             var charMaster = body.master;
             if (!charMaster.gameObject.GetComponent<PlayerCharacterMasterController>()) return;
-            if(!charMaster.gameObject.GetComponent<PlayerTurretlingRainbowHandler>())
+            if(!charMaster.gameObject.GetComponent<TurretlingRainbow>())
             {
-                Log.Debug("Added PlayerTurretRainbowHandler to " + charMaster.gameObject.name + " | " + charMaster.playerCharacterMasterController.GetDisplayName());
-                charMaster.gameObject.AddComponent<PlayerTurretlingRainbowHandler>();
+                Log.Debug("Added TurretlingRainbow to " + charMaster.gameObject.name + " | " + charMaster.playerCharacterMasterController.GetDisplayName());
+                charMaster.gameObject.AddComponent<TurretlingRainbow>();
             }
         }
 

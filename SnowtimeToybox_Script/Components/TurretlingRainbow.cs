@@ -39,18 +39,17 @@ public class TurretlingRainbow : NetworkBehaviour
         { "STEAM_1:0:131809264", "0.43,0.97,0,Lukas" }, // lukas
     };
     
-    public void OnEnable()
+    public void Start()
     {
-        if (!gameObject.name.Contains("Turretling")) return;
         if (gameObject.name.Contains("Broken")) return;
         
-        Log.Debug("turretling master spawned !!");
+        Log.Debug("master spawned !!");
         Log.Debug("Object Name: " + gameObject.name);
         
         master = gameObject.GetComponent<CharacterMaster>();
         Log.Debug(master);
         
-        master.onBodyStart += MasterOnonBodyStart;
+        master.onBodyStart += MasterOnonBodyStart;  
         master.onBodyDeath.AddListener(MasterOnonBodyDeath);
 
         if (!NetworkServer.active) return;
@@ -72,6 +71,10 @@ public class TurretlingRainbow : NetworkBehaviour
     
     public void FixedUpdate()
     {
+        if (!gameObject?.GetComponent<CharacterMaster>()) return;
+        if (!gameObject?.GetComponent<CharacterMaster>().GetBody()) return;
+        if (!gameObject?.GetComponent<CharacterMaster>().GetBody().gameObject?.GetComponent<CharacterBody>()) return;
+        if (gameObject.name.Contains("PlayerMaster") && !gameObject.GetComponent<CharacterMaster>().GetBody().gameObject.name.Contains("Turretling")) return;
         if (NetworkServer.active && Run.instance && !turretlingPlayerMaster)
         {
             if(gameObject.name.Contains("_DT") || gameObject.name.Contains("_Holy") || gameObject.name.Contains("_SwarmTurretling"))
@@ -139,6 +142,10 @@ public class TurretlingRainbow : NetworkBehaviour
 
     public void ApplyVisuals()
     {
+        if (!gameObject?.GetComponent<CharacterMaster>()) return;
+        if (!gameObject?.GetComponent<CharacterMaster>().GetBody()) return;
+        if (!gameObject?.GetComponent<CharacterMaster>().GetBody().gameObject?.GetComponent<CharacterBody>()) return;
+        if (gameObject.name.Contains("PlayerMaster") && !gameObject.GetComponent<CharacterMaster>().GetBody().gameObject.name.Contains("Turretling")) return;
         if (!applyTurretlingVisuals) return;
         applyTurretlingVisuals = false;
 
@@ -218,6 +225,7 @@ public class TurretlingRainbow : NetworkBehaviour
 
     public void giveItems(bool takeRemove)
     {
+        if (gameObject.name.Contains("PlayerMaster")) return;
         // Do not give operator turretlings the defined rainbow turret items, item is handled separately in the case it is in revive state.
         // However, do remove the item in the case it dies during its rainbow powerup.
         if (gameObject.name.Contains("_DT"))
@@ -264,6 +272,7 @@ public class TurretlingRainbow : NetworkBehaviour
 
     private void MasterOnonBodyDeath()
     {
+        if (gameObject.name.Contains("PlayerMaster")) return;
         // enough said.
         if (gameObject.name.Contains("_DT") || gameObject.name.Contains("Broken") || gameObject.name.Contains("_Holy") || gameObject.name.Contains("_SwarmTurretling")) return;
         int extralives = master.inventory.GetItemCountPermanent(RoR2Content.Items.ExtraLife);
@@ -282,6 +291,10 @@ public class TurretlingRainbow : NetworkBehaviour
 
     public void MasterOnonBodyStart(CharacterBody body)
     {
+        if (!gameObject?.GetComponent<CharacterMaster>()) return;
+        if (!gameObject?.GetComponent<CharacterMaster>().GetBody()) return;
+        if (!gameObject?.GetComponent<CharacterMaster>().GetBody().gameObject?.GetComponent<CharacterBody>()) return;
+        if (gameObject.name.Contains("PlayerMaster") && !gameObject.GetComponent<CharacterMaster>().GetBody().gameObject.name.Contains("Turretling")) return;
         applyTurretlingVisuals = true;
         steamidToApply = ""; 
         /*// try to prevent it from keeping the item on map change or revive
