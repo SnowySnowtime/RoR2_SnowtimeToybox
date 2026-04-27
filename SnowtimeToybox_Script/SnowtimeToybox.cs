@@ -1190,6 +1190,9 @@ namespace SnowtimeToybox
             }
             ContentAddition.AddSkillDef(DroneTechTurretlingSkillDef);
 
+            GameObject PlayerMaster = Addressables.LoadAssetAsync<GameObject>(RoR2BepInExPack.GameAssetPaths.Version_1_39_0.RoR2_Base_Core.PlayerMaster_prefab).WaitForCompletion();
+            PlayerMaster.AddComponent<TurretlingRainbow>();
+
             // this isnt going to be fun.
             On.RoR2.DroneRepairMaster.TickHealthRepairServer += DroneRepairMasterHookTickHealthRepairServer;
             On.DroneTechController.CommandFollowInternal += DroneTechControllerHookCommandFollowInternal;
@@ -1202,7 +1205,6 @@ namespace SnowtimeToybox
             On.RoR2.DroneCommandReceiver.ActivateFollow += DroneCommandReceiverHookActivateFollow;
             On.RoR2.DroneCommandReceiver.CommandActivate += DroneCommandReceiverHookCommandActivate;
             On.EntityStates.DroneTech.CommandCarry.OnEnter += DroneTechHookOnEnter;
-            On.RoR2.CharacterMaster.OnBodyStart += SnowtimeOnBodyStart;
             On.RoR2.Items.DroneUpgradeHiddenBodyBehavior.UpdateStack += DroneUpgradeHiddenBodyBehaviorHookUpdateStack;
             // i hate doing this, idk.
             On.RoR2.CharacterModel.IsUpgradedDrone += CharacterModelHookIsUpgradedDrone;
@@ -1221,19 +1223,6 @@ namespace SnowtimeToybox
         {
             if (self.body.gameObject.name.Contains("Turretling")) return;
             orig(self, newStack);
-        }
-
-        private void SnowtimeOnBodyStart(On.RoR2.CharacterMaster.orig_OnBodyStart orig, CharacterMaster self, CharacterBody body)
-        {
-            orig(self, body);
-
-            var charMaster = body.master;
-            if (!charMaster.gameObject.GetComponent<PlayerCharacterMasterController>()) return;
-            if(!charMaster.gameObject.GetComponent<TurretlingRainbow>())
-            {
-                Log.Debug("Added TurretlingRainbow to " + charMaster.gameObject.name + " | " + charMaster.playerCharacterMasterController.GetDisplayName());
-                charMaster.gameObject.AddComponent<TurretlingRainbow>();
-            }
         }
 
         private void DroneTechHookOnEnter(On.EntityStates.DroneTech.CommandCarry.orig_OnEnter orig, EntityStates.DroneTech.CommandCarry self)
