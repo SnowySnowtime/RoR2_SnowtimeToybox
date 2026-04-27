@@ -133,6 +133,11 @@ namespace SnowtimeToybox.Components
             ItemTag globalTag = ItemAPI.FindItemTagByName("GlobalFriendTurret_Whitelist");
             //Log.Debug("Item Token: " + item.nameToken + " Has Whitelisted Tag: " + item.ContainsTag(ItemAPI.FindItemTagByName(whitelistedTag)));
             //Log.Debug("specificTag: " + specificTag + " globalTag: " + globalTag);
+            if(gameObject.name.Contains("SwarmTurretling"))
+            {
+                if (item.ContainsTag(ItemTag.AIBlacklist) || item.ContainsTag(ItemTag.MobilityRelated) || item.ContainsTag(ItemTag.OnStageBeginEffect)) return false;
+                return true;
+            }
             if (item.ContainsTag(specificTag) || item.ContainsTag(globalTag))
             {
                 //Log.Debug("Item Token: " + item.nameToken + " passed check for Shortcake whitelist");

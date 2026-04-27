@@ -228,9 +228,6 @@ namespace SnowtimeToybox
             ItemTag TurretlingNoneWhitelist = ItemAPI.AddItemTag("FriendTurret_None_Whitelist");
             Log.Debug("None FriendTurret_Whitelist: " + TurretlingNoneWhitelist);
 
-            ItemTag TurretlingWhitelist = ItemAPI.AddItemTag("Turretling_Whitelist");
-            Log.Debug("Turretling_Whitelist: " + TurretlingWhitelist);
-
             ItemCatalog.availability.CallWhenAvailable(AddCustomTagsToItems);
             EquipmentCatalog.availability.CallWhenAvailable(AddElitesToList);
         }
@@ -387,14 +384,9 @@ namespace SnowtimeToybox
                 DLC2Content.Items.BoostAllStats,
                 // DLC3
             ];
-            ItemDef[] whitelistTurretlingVars = [
+            ItemDef[] whitelistTurretlingNone = [
                 // Base
-                RoR2Content.Items.Syringe,
-                // DLC1
-                DLC1Content.Items.ElementalRingVoid,
-                // DLC2
-                // DLC3
-                DLC3Content.Items.ShieldBooster,
+                RoR2Content.Items.BoostDamage,
             ];
             foreach (ItemDef item in whitelistGlobalTurret)
             {
@@ -425,6 +417,11 @@ namespace SnowtimeToybox
             {
                 Log.Debug("Added " + item.name + " to bread turret's item whitelist");
                 ItemAPI.ApplyTagToItem("FriendTurret_Bread_Whitelist", item);
+            }
+            foreach (ItemDef item in whitelistTurretlingNone)
+            {
+                Log.Debug("Added " + item.name + " to bread turret's item whitelist");
+                ItemAPI.ApplyTagToItem("FriendTurret_None_Whitelist", item);
             }
             AddCustomTagsToModdedItems();
         }
