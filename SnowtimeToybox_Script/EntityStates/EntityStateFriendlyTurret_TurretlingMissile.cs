@@ -12,7 +12,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
 {
     public class TurretlingMissile : BaseState
     {
-        public float orbDamageCoefficient = 2f;
+        public float orbDamageCoefficient = 4f;
 
         public float orbProcCoefficient = 1f;
 
@@ -37,8 +37,6 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         private static int fireMissileParamHash = Animator.StringToHash("turretling_missile_fire.playbackRate");
         private float firingTime;
         private int missilesFired;
-        private float damageMultMoreMissiles;
-        private float damageMultFromOperatorRainbowizer;
 
         public override void OnEnter()
         {
@@ -60,9 +58,6 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             PlayAnimation("Gesture", fireMissileHash, fireMissileParamHash, duration);
             isCrit = Util.CheckRoll(base.characterBody.crit, base.characterBody.master);
             Inventory inventory = base.characterBody.inventory;
-            int itemCountEffective = inventory.GetItemCountEffective(DLC1Content.Items.MoreMissile);
-            int itemCountDTTurretlingPowerup = inventory.GetItemCountEffective(ItemCatalog.FindItemIndex("RainbowizerPowerUp"));
-            damageMultMoreMissiles = Mathf.Max(1f, 1f + 0.5f * (float)(itemCountEffective - 1));
             FireOrbMissile();
         }
 
@@ -105,11 +100,18 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 {
                     snowtimeOrb.snowtimeOrbType = SnowtimeOrbs.OrbTypes.TurretlingMissile;
                 }
-                snowtimeOrb.damageValue = (base.characterBody.damage * orbDamageCoefficient) * (damageMultMoreMissiles);
+                snowtimeOrb.damageValue = (base.characterBody.damage * (orbDamageCoefficient + (base.skillLocator.secondary.bonusStockFromBody + base.skillLocator.secondary.bonusStockFromBody))) * ((Mathf.Clamp(((attackSpeedStat - 2.5f) / 2f), 1f, 9999f)));
                 snowtimeOrb.isCrit = isCrit;
                 snowtimeOrb.teamIndex = TeamComponent.GetObjectTeam(base.gameObject);
                 snowtimeOrb.attacker = base.gameObject;
-                snowtimeOrb.procCoefficient = orbProcCoefficient;
+                if(base.gameObject.name.Contains("Survivor"))
+                {
+                    snowtimeOrb.procCoefficient = orbProcCoefficient;
+                }
+                else
+                {
+                    snowtimeOrb.procCoefficient = orbProcCoefficient / 2;
+                }
                 snowtimeOrb.damageType.damageSource = DamageSource.Secondary;
                 HurtBox hurtBox = initialOrbTarget;
                 if ((bool)hurtBox)

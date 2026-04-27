@@ -44,6 +44,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         public static string attackSoundString = "Play_Turretling_Fire";
 
         public static float damageCoefficient = 1.0f;
+        public static float procCoefficient = 0.5f;
 
         public static float force = 50.0f;
 
@@ -129,14 +130,16 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                     bulletAttack.maxSpread = 4f;
                     bulletAttack.bulletCount = 15u;
                     bulletAttack.damage = (damageCoefficient/5) * damageStat;
+                    bulletAttack.procCoefficient = (procCoefficient/5);
                 }
                 // Rainbow Turretling and Turretling Variants should be more accurate than default
-                else if (characterBody.master.gameObject.TryGetComponent(out TurretlingRainbow rainbowCheck) && rainbowCheck.turretlingRainbow || base.gameObject.name.Contains("Acanthi") || base.gameObject.name.Contains("Bread") || base.gameObject.name.Contains("Borbo") || base.gameObject.name.Contains("Shortcake"))
+                else if (characterBody.master.gameObject.TryGetComponent(out TurretlingRainbow rainbowCheck) && rainbowCheck.turretlingRainbow || base.gameObject.name.Contains("Acanthi") || base.gameObject.name.Contains("Bread") || base.gameObject.name.Contains("Borbo") || base.gameObject.name.Contains("Shortcake") || base.gameObject.name.Contains("Survivor"))
                 {
                     bulletAttack.minSpread = minSpread;
                     bulletAttack.maxSpread = maxSpread/4;
                     bulletAttack.bulletCount = 1u;
-                    bulletAttack.damage = damageCoefficient * damageStat;
+                    bulletAttack.damage = (damageCoefficient * 1.25f) * damageStat;
+                    bulletAttack.procCoefficient = procCoefficient * 4;
                 }
                 else
                 {
@@ -144,6 +147,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                     bulletAttack.maxSpread = maxSpread;
                     bulletAttack.bulletCount = 1u;
                     bulletAttack.damage = damageCoefficient * damageStat;
+                    bulletAttack.procCoefficient = procCoefficient;
                 }
                 bulletAttack.owner = base.gameObject;
                 bulletAttack.weapon = base.gameObject;

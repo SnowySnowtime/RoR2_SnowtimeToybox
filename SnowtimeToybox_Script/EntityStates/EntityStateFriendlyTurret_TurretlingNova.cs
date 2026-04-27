@@ -46,8 +46,8 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             base.characterBody.SetAimTimer(0f);
             duration = baseDuration;
             additionalStocks = base.skillLocator.special.bonusStockFromBody;
-            newrad = radius + (additionalStocks + additionalStocks);
-            Log.Debug("Original Radius: " + radius + "... Now it is: " + newrad);
+            newrad = radius + (additionalStocks + additionalStocks + additionalStocks);
+            //Log.Debug("Original Radius: " + radius + "... Now it is: " + newrad);
             Util.PlaySound(attackSoundString, base.gameObject);
             Ray aimRay = GetAimRay();
             StartAimMode(aimRay);
@@ -69,12 +69,12 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 blastAttack.falloffModel = BlastAttack.FalloffModel.None;
                 blastAttack.attacker = base.gameObject;
                 blastAttack.inflictor = base.gameObject;
-                blastAttack.damageColorIndex = DamageColorIndex.Item;
-                blastAttack.baseDamage = (damageCoefficient * (Mathf.Clamp((attackSpeedStat / 2.5f), 1f, 9999f))) * damageStat;
-                blastAttack.baseForce = 50f;
+                blastAttack.damageColorIndex = DamageColorIndex.Electrocution;
+                blastAttack.damageType.damageSource = DamageSource.Special;
+                blastAttack.baseDamage = ((damageCoefficient + (additionalStocks/2)) * (Mathf.Clamp(((attackSpeedStat - 2.5f)), 1f, 9999f))) * damageStat;
+                blastAttack.baseForce = 150f;
                 blastAttack.bonusForce = Vector3.zero;
-                blastAttack.crit = false;
-                blastAttack.procChainMask = default(ProcChainMask);
+                blastAttack.crit = Util.CheckRoll(base.characterBody.crit, base.characterBody.master);
                 blastAttack.procCoefficient = 0f;
                 blastAttack.teamIndex = base.gameObject.GetComponent<TeamComponent>().teamIndex;
                 blastAttack.Fire();

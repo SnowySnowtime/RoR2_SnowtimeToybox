@@ -643,11 +643,13 @@ namespace SnowtimeToybox
             SwarmlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(swarmlingPath + "_TurretlingSurvivorBody.prefab");
             SwarmlingBody.GetComponent<CharacterDeathBehavior>().deathState = new SerializableEntityStateType(typeof(TurretlingDeath));
             SwarmlingBody.AddComponent<TurretlingMissileTracker>();
+            SwarmlingBody.AddComponent<SwarmPlayerSwarmlingTracker>();
             DroneTechRepairQueue repairQueueSwarmling = SwarmlingBody.AddComponent<DroneTechRepairQueue>();
             repairQueueSwarmling.healRate = 0.05f;
             SwarmlingMinionBody = _stcharacterAssetBundle.LoadAsset<GameObject>(swarmlingPath + "_SwarmTurretlingBody.prefab");
             SwarmlingMinionBody.GetComponent<CharacterDeathBehavior>().deathState = new SerializableEntityStateType(typeof(DTTurretlingDeath));
             SwarmlingMinionBody.AddComponent<TurretlingMissileTracker>();
+            SwarmlingMinionBody.AddComponent<SwarmMinionSwarmlingTeleportHandler>();
             SwarmlingMinionBody.AddComponent<EquipmentSlot>();
             SwarmlingMinionBody.GetComponent<CharacterBody>().baseDamage = (TurretlingBaseDamage.Value / 2f);
             SwarmlingMinionBody.GetComponent<CharacterBody>().levelDamage = (TurretlingBaseDamagePerLevel.Value / 2f);
