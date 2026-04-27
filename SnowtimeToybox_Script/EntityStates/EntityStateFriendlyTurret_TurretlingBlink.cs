@@ -1,5 +1,3 @@
-// RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// EntityStates.Huntress.MiniBlinkState
 using EntityStates.Huntress;
 using UnityEngine;
 
@@ -10,7 +8,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         public override void OnEnter()
         {
             duration = 0.1f;
-            speedCoefficient = 10f;
+            speedCoefficient = 25f;
             beginSoundString = "Play_huntress_shift_mini_blink";
             endSoundString = "Play_huntress_shift_end";
             base.OnEnter();
