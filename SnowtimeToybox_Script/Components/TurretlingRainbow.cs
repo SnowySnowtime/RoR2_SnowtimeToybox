@@ -33,7 +33,7 @@ public class TurretlingRainbow : NetworkBehaviour
         { "STEAM_1:1:146751517", "0.55,0,0,Snowtime" }, // snowy 
         { "STEAM_1:0:615574887", "0.045,0,0,Shortcake" }, //shortcake
         { "STEAM_1:1:60493073", "0,1,0,Acanthi" }, // canthi 
-        { "STEAM_255:0:1737027363", "0.87,0.87,0,Bread" }, // bread
+        { "STEAM_1:0:1737027363", "0.87,0.87,0,Bread" }, // bread
         { "STEAM_1:0:64329810", "0.71,0.27,0.27,Illusive" }, // illusive 
         { "STEAM_1:1:502654116", "0.83,0,0,Anartoast" }, // anar
         { "STEAM_1:0:131809264", "0.43,0.97,0,Lukas" }, // lukas
