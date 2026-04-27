@@ -105,7 +105,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 {
                     snowtimeOrb.snowtimeOrbType = SnowtimeOrbs.OrbTypes.TurretlingMissile;
                 }
-                snowtimeOrb.damageValue = (base.characterBody.damage * (orbDamageCoefficient + (base.skillLocator.secondary.bonusStockFromBody + base.skillLocator.secondary.bonusStockFromBody))) * ((Mathf.Clamp(((attackSpeedStat - 2.5f) / 2f), 1f, 9999f)));
+                snowtimeOrb.damageValue = (base.characterBody.damage * (orbDamageCoefficient + (base.skillLocator.secondary.bonusStockFromBody + base.skillLocator.secondary.bonusStockFromBody))) * ((Mathf.Clamp(((attackSpeedStat) / 2f), 1f, 9999f)));
                 snowtimeOrb.isCrit = isCrit;
                 snowtimeOrb.teamIndex = TeamComponent.GetObjectTeam(base.gameObject);
                 snowtimeOrb.attacker = base.gameObject;
