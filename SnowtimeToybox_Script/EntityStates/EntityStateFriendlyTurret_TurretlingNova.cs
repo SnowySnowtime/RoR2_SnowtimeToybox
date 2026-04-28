@@ -71,7 +71,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 blastAttack.inflictor = base.gameObject;
                 blastAttack.damageColorIndex = DamageColorIndex.Electrocution;
                 blastAttack.damageType.damageSource = DamageSource.Special;
-                blastAttack.baseDamage = ((damageCoefficient + (additionalStocks/2)) * (Mathf.Clamp(((attackSpeedStat)), 1f, 9999f))) * damageStat;
+                blastAttack.baseDamage = ((damageCoefficient + (additionalStocks/2)) * (Mathf.Clamp(((attackSpeedStat - 2.5f)), 1f, 9999f))) * damageStat;
                 blastAttack.baseForce = 150f;
                 blastAttack.bonusForce = Vector3.zero;
                 blastAttack.crit = Util.CheckRoll(base.characterBody.crit, base.characterBody.master);
