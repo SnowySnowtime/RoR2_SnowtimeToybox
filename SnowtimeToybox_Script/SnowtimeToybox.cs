@@ -1208,11 +1208,17 @@ namespace SnowtimeToybox
             On.RoR2.DroneCommandReceiver.CommandFollow += DroneCommandReceiverHookCommandFollow;
             On.RoR2.DroneCommandReceiver.ActivateFollow += DroneCommandReceiverHookActivateFollow;
             On.RoR2.DroneCommandReceiver.CommandActivate += DroneCommandReceiverHookCommandActivate;
+            On.RoR2.DroneCommandReceiver.IsReady += DroneCommandReceiverOnIsReady;
             On.EntityStates.DroneTech.CommandCarry.OnEnter += DroneTechHookOnEnter;
             On.RoR2.Items.DroneUpgradeHiddenBodyBehavior.UpdateStack += DroneUpgradeHiddenBodyBehaviorHookUpdateStack;
             // i hate doing this, idk.
             On.RoR2.CharacterModel.IsUpgradedDrone += CharacterModelHookIsUpgradedDrone;
             On.RoR2.DroneCombinerController.Init += DroneCombinerControllerHookInit;
+        }
+
+        private bool DroneCommandReceiverOnIsReady(On.RoR2.DroneCommandReceiver.orig_IsReady orig, DroneCommandReceiver self)
+        {
+            return !TurretlingRainbow.DTActiveTurretlings.Contains(self.characterBody) && orig(self);
         }
 
         private void DroneCombinerControllerHookInit(On.RoR2.DroneCombinerController.orig_Init orig)

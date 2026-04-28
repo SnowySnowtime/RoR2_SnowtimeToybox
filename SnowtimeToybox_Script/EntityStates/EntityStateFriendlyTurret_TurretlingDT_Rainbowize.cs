@@ -21,18 +21,17 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         {
             base.OnEnter();
             duration = baseDuration;
-            characterBody.master.TryGetComponent(out rainbowComponent);
+            //Log.Debug("DT rainbowize enter ");
             
-            if (rainbowComponent != null)
+            if (characterBody.master.TryGetComponent(out rainbowComponent) && NetworkServer.active)
             {
-                rainbowComponent.turretlingRainbow = true;
-                rainbowComponent.MasterOnonBodyStart(characterBody);
-                rainbowComponent.giveItems(true);
+                rainbowComponent.DTRainbowize(true);
             }
             else
             {
-                Log.Debug("rainboe null !! ");
+                Log.Debug("rainbow null !! ");
             }
+            
             if (base.gameObject.name.Contains("RemoteOp")) return;
             characterBody.GetComponent<DroneCommandReceiver>().droneState = DroneCommandReceiver.DroneState.Idle;
         }
@@ -41,17 +40,15 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         {
             base.OnExit();
             
-            if (rainbowComponent != null)
+            if (rainbowComponent != null && NetworkServer.active)
             {
-                rainbowComponent.turretlingRainbow = false;
-                rainbowComponent.MasterOnonBodyStart(characterBody);
-                rainbowComponent.giveItems(false);
+                Log.Debug($"setting dt rainbow false !!");
+                rainbowComponent.DTRainbowize(false);
             }
             else
             {
-                Log.Debug("rainboe null !!exyt  ");
+                Log.Debug("rainbow null !! exit");
             }
-            
         }
 
         public override void FixedUpdate()

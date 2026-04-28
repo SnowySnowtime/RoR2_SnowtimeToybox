@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using BepInEx;
+using EntityStates.AffixVoid;
 using UnityEngine;
 using UnityEngine.Networking;
 using RoR2;
+using UnityEngine.TextCore.Text;
 using Object = UnityEngine.Object;
 
 namespace SnowtimeToybox.Components;
@@ -19,14 +21,17 @@ public class TurretlingRainbow : NetworkBehaviour
     [SyncVar]
     public bool turretlingRainbow;
     [SyncVar]
+    public bool DTRainbowActive;
+    [SyncVar]
     private string steamid = "";
+    private bool applyTurretlingVisuals = true;
 
     private CharacterMaster turretlingPlayerMaster;
     private PlayerCharacterMasterController turretlingPlayer;
     private CharacterMaster master;
     private CharacterBody charBody;
-    private bool applyTurretlingVisuals = true;
     private string steamidToApply;
+    public static List<CharacterBody> DTActiveTurretlings = [];
     
     public static Dictionary<string, string> turretlingRecolors = new()
     {
@@ -47,7 +52,6 @@ public class TurretlingRainbow : NetworkBehaviour
         //Log.Debug("Object Name: " + gameObject.name);
         
         master = gameObject.GetComponent<CharacterMaster>();
-        //Log.Debug(master);
         
         master.onBodyStart += MasterOnonBodyStart;  
         master.onBodyDeath.AddListener(MasterOnonBodyDeath);
@@ -71,10 +75,33 @@ public class TurretlingRainbow : NetworkBehaviour
     
     public void FixedUpdate()
     {
-        if (!gameObject?.GetComponent<CharacterMaster>()) return;
-        if (!gameObject?.GetComponent<CharacterMaster>().GetBody()) return;
-        if (!gameObject?.GetComponent<CharacterMaster>().GetBody().gameObject?.GetComponent<CharacterBody>()) return;
-        if (gameObject.name.Contains("PlayerMaster") && !gameObject.GetComponent<CharacterMaster>().GetBody().gameObject.name.Contains("Turretling")) return;
+        if (!master.GetBody()) return;
+
+        if (gameObject.name.StartsWith("_DT"))
+        {
+            if (DTRainbowActive && !turretlingRainbow)
+            {
+                applyTurretlingVisuals = true;
+                turretlingRainbow = true;
+                DTActiveTurretlings.Add(master.GetBody());
+            }
+            else if(!DTRainbowActive && turretlingRainbow)
+            {
+                applyTurretlingVisuals = true;
+                turretlingRainbow = false;
+                DTActiveTurretlings.Remove(master.GetBody());
+            }
+        }
+        
+        
+        if (!applyTurretlingVisuals) return;
+        if (gameObject.name.Contains("PlayerMaster") && !master.GetBody().gameObject.name.Contains("Turretling"))
+        {
+            applyTurretlingVisuals = false;
+            //Log.Debug($"{master.GetBody().name} is not a turretling !! continue ,.,.");
+            return;
+        };
+        //Log.Debug($"running fixed updatre 9on {master.GetBody().name} dt rainbow {DTRainbowActive} rainbow {turretlingRainbow}");
         if (NetworkServer.active && Run.instance && !turretlingPlayerMaster)
         {
             if(gameObject.name.Contains("_DT") || gameObject.name.Contains("_Holy") || gameObject.name.Contains("_SwarmTurretling"))
@@ -106,10 +133,10 @@ public class TurretlingRainbow : NetworkBehaviour
             else if (gameObject.name.Contains("PlayerMaster"))
             {
                 turretlingPlayerMaster = gameObject.GetComponent<CharacterMaster>();
-                ////Log.Debug("Player found possessing Turretling, defining SteamID directly.");
+                //Log.Debug("Player found possessing Turretling, defining SteamID directly.");
                 if (!gameObject.GetComponent<PlayerCharacterMasterController>()) return;
                 steamid = turretlingPlayerMaster.playerCharacterMasterController.networkUser.id.steamId.ToSteamID();
-                ////Log.Debug("Player" + gameObject.GetComponent<PlayerCharacterMasterController>().GetDisplayName() + " SteamID: " + steamid);
+                //Log.Debug("Player" + gameObject.GetComponent<PlayerCharacterMasterController>().GetDisplayName() + " SteamID: " + steamid);
                 //Log.Debug($"steam id !! {steamid} from player: " + gameObject.GetComponent<PlayerCharacterMasterController>().GetDisplayName());
             }
             
@@ -128,10 +155,10 @@ public class TurretlingRainbow : NetworkBehaviour
 
         if (steamidToApply.IsNullOrWhiteSpace() && !steamid.IsNullOrWhiteSpace() && turretlingRecolors.ContainsKey(steamid))
         {
-            //Log.Debug($"appling steam id {steamid} !!");
+            Log.Debug($"appling steam id {steamid} !!");
             if(gameObject.name.Contains("PlayerMaster"))
             {
-                //Log.Debug("The ID was applied from" + gameObject.GetComponent<PlayerCharacterMasterController>().GetDisplayName());
+                Log.Debug("The ID was applied from" + gameObject.GetComponent<PlayerCharacterMasterController>().GetDisplayName());
             }
             steamidToApply = steamid;
             applyTurretlingVisuals = true;
@@ -142,10 +169,10 @@ public class TurretlingRainbow : NetworkBehaviour
 
     public void ApplyVisuals()
     {
-        if (!gameObject?.GetComponent<CharacterMaster>()) return;
-        if (!gameObject?.GetComponent<CharacterMaster>().GetBody()) return;
-        if (!gameObject?.GetComponent<CharacterMaster>().GetBody().gameObject?.GetComponent<CharacterBody>()) return;
-        if (gameObject.name.Contains("PlayerMaster") && !gameObject.GetComponent<CharacterMaster>().GetBody().gameObject.name.Contains("Turretling")) return;
+        //if (!gameObject?.GetComponent<CharacterMaster>()) return;
+        //if (!gameObject?.GetComponent<CharacterMaster>().GetBody()) return;
+        //if (!gameObject?.GetComponent<CharacterMaster>().GetBody().gameObject?.GetComponent<CharacterBody>()) return;
+        if (gameObject.name.Contains("PlayerMaster") && !master.GetBody().gameObject.name.Contains("Turretling")) return;
         if (!applyTurretlingVisuals) return;
         applyTurretlingVisuals = false;
 
@@ -291,53 +318,16 @@ public class TurretlingRainbow : NetworkBehaviour
 
     public void MasterOnonBodyStart(CharacterBody body)
     {
-        if (!gameObject?.GetComponent<CharacterMaster>()) return;
-        if (!gameObject?.GetComponent<CharacterMaster>().GetBody()) return;
-        if (!gameObject?.GetComponent<CharacterMaster>().GetBody().gameObject?.GetComponent<CharacterBody>()) return;
-        if (gameObject.name.Contains("PlayerMaster") && !gameObject.GetComponent<CharacterMaster>().GetBody().gameObject.name.Contains("Turretling")) return;
         applyTurretlingVisuals = true;
         steamidToApply = ""; 
-        /*// try to prevent it from keeping the item on map change or revive
-        if (master.inventory.GetItemCountEffective(ItemCatalog.FindItemIndex("RainbowizerPowerUp")) != 0)
-        {
-            master.inventory.RemoveItemPermanent(ItemCatalog.FindItemIndex("RainbowizerPowerUp"), master.inventory.GetItemCountEffective(ItemCatalog.FindItemIndex("RainbowizerPowerUp")));
-        }
-        // dont run code if we're operator turretlings and we're being revived.
-        if (body.name.Contains("Broken")) return;
-        ChildLocator childLocator = body.modelLocator.modelTransform.gameObject.GetComponent<ChildLocator>();
-        if (childLocator == null) return;
-        GameObject overlay = childLocator.FindChild("Turretling_Overlay").gameObject;
-        Animator overlayAnimator = overlay.GetComponent<Animator>();
-        GameObject light = childLocator.FindChild("Turretling_Light").gameObject;
-        Animator lightAnimator = light.GetComponent<Animator>();
-        GameObject fx = childLocator.FindChild("Turretling_RainbowFX").gameObject;
-        Animator fxAnimator = fx.GetComponent<Animator>();
-
-        Animator[] animators =
-        [
-            overlayAnimator,
-            lightAnimator,
-            fxAnimator
-        ];
-
-        //does this have to be like this? no ,.., but its silyl .,. ,
-        foreach (var animator in animators)
-        {
-            if (turretlingRainbow)
-            {
-                animator.SetFloat("hue", 0);
-                animator.SetFloat("sat", 0);
-                animator.SetFloat("shade", 0);
-                animator.SetBool("shift", turretlingRainbow);
-            }
-            else
-            {
-                animator.SetFloat("hue", turretlingHue);
-                animator.SetFloat("sat", turretlingSat);
-                animator.SetFloat("shade", turretlingShade);
-                animator.SetBool("shift", turretlingRainbow);
-            }
-
-        }*/
+        //Log.Debug($"ran body start on {body.name} !!");
+    }
+    
+    public void DTRainbowize(bool enterExit)
+    {
+        //turretlingRainbow = enterExit;
+        DTRainbowActive = enterExit;
+        //applyTurretlingVisuals = true;
+        giveItems(enterExit);
     }
 }

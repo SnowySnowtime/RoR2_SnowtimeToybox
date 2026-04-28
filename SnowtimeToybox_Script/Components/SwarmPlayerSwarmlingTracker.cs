@@ -26,7 +26,7 @@ public class SwarmPlayerSwarmlingTracker : MonoBehaviour
     }
     public void FixedUpdate()
     {
-        if(Swarmlings.Count == 0)
+        if(SwarmlingBodies.Count == 0)
         {
             GetSwarmlings();
         }
@@ -52,8 +52,8 @@ public class SwarmPlayerSwarmlingTracker : MonoBehaviour
         if(!SwarmlingBodies.Contains(body))
         {
             SwarmlingBodies.Add(body);
-            DroneInfo Swarmling = new DroneInfo(body);
-            Swarmlings.Add(Swarmling);
+            //DroneInfo Swarmling = new DroneInfo(body);
+            //Swarmlings.Add(Swarmling);
         }
     }
     private void OnSwarmlingBodyStartGlobal(CharacterBody body)
@@ -68,8 +68,8 @@ public class SwarmPlayerSwarmlingTracker : MonoBehaviour
         if (!SwarmlingBodies.Contains(body))
         {
             SwarmlingBodies.Add(body);
-            DroneInfo Swarmling = new DroneInfo(body);
-            Swarmlings.Add(Swarmling);
+            //DroneInfo Swarmling = new DroneInfo(body);
+            //Swarmlings.Add(Swarmling);
         }
     }
     private void OnSwarmlingBodyDestroyGlobal(CharacterBody body)
@@ -84,8 +84,8 @@ public class SwarmPlayerSwarmlingTracker : MonoBehaviour
         if (SwarmlingBodies.Contains(body))
         {
             SwarmlingBodies.Remove(body);
-            DroneInfo Swarmling = new DroneInfo(body);
-            Swarmlings.Remove(Swarmling);
+            //DroneInfo Swarmling = new DroneInfo(body);
+            //Swarmlings.Remove(Swarmling);
         }
     }
 }
