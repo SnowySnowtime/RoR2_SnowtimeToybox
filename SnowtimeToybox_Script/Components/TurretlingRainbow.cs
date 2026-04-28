@@ -75,6 +75,10 @@ public class TurretlingRainbow : NetworkBehaviour
     
     public void FixedUpdate()
     {
+        if (steamid != "" && steamidToApply != "-1")
+        {
+            applyTurretlingVisuals = true;
+        }
         if (!master.GetBody()) return;
 
         if (gameObject.name.StartsWith("_DT"))
