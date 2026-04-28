@@ -45,6 +45,7 @@
 		<PackageReference Include="R2API.Sound" Version="1.0.3" />
 		<PackageReference Include="R2API.Stages" Version="1.0.3" />
 		<PackageReference Include="R2API.Unlockable" Version="1.0.2" />
+		<PackageReference Include="R2API.Colors" Version="1.0.*" />
 
 		<PackageReference Include="MMHOOK.RoR2" Version="2025.12.9" NoWarn="NU1701" />
 		<PackageReference Include="UnityEngine.Modules" Version="2021.3.33" GeneratePathProperty="true" />
@@ -53,6 +54,9 @@
 
 	<ItemGroup>
 	  <Reference Include="ShaderSwapper">
+	    <HintPath>_modsupportbins\ShaderSwapper.dll</HintPath>
+	  </Reference>
+	  <Reference Include="AncientScepter">
 	    <HintPath>_modsupportbins\ShaderSwapper.dll</HintPath>
 	  </Reference>
 	  <Reference Include="Ror2AggroTools">

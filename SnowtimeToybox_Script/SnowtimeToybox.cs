@@ -48,6 +48,7 @@ namespace SnowtimeToybox
     [BepInDependency(R2API.DifficultyAPI.PluginGUID)]
     [BepInDependency("com.RiskOfBrainrot.RiskierRain", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.RiskOfBrainrot.SwanSongExtended", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.DestroyedClone.AncientScepter", BepInDependency.DependencyFlags.SoftDependency)]
     public class SnowtimeToyboxMod : BaseUnityPlugin
     {
         public const string Author = "SnowySnowtime";
@@ -78,6 +79,8 @@ namespace SnowtimeToybox
         public static SkillFamily FriendlyTurretTurretlingSecondarySkillFamily;
         public static SkillFamily FriendlyTurretTurretlingUtilSkillFamily;
         public static SkillDef FriendlyTurretTurretlingPrimarySkillDef;
+        public static SkillDef FriendlyTurretTurretlingPrimaryScepterSkillDef;
+        public static SkillDef FriendlyTurretTurretlingPrimaryScepterMinionSkillDef;
         public static SkillDef FriendlyTurretTurretlingSecondarySkillDef;
         public static SkillDef FriendlyTurretTurretlingUtilSkillDef;
         public static GameObject FriendlyTurretTurretlingBody;
@@ -126,6 +129,9 @@ namespace SnowtimeToybox
         public static SkillDef SwarmlingSpecialSkill;
         public static SkillFamily SwarmlingUtilityFamily;
         public static SkillDef SwarmlingUtilitySkill;
+        public static DamageColorIndex BlasterScepterColor1;
+        public static DamageColorIndex BlasterScepterColor2;
+        public static DamageColorIndex BlasterScepterColor3;
 
         //public static DroneDef FriendlyTurretTestDroneDef;
 
@@ -135,6 +141,7 @@ namespace SnowtimeToybox
         // Copied from RiskierRain, sorry borbo :(
         public static bool ModLoaded(string modGuid) { return !string.IsNullOrEmpty(modGuid) && BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey(modGuid); }
         public static bool riskierLoaded => ModLoaded("com.RiskOfBrainrot.RiskierRain");
+        public static bool scepterLoaded => ModLoaded("com.DestroyedClone.AncientScepter");
 
         public static String assetDirectory;
         public static AssetBundle _stdifficultyAssetBundle;
@@ -506,6 +513,10 @@ namespace SnowtimeToybox
                 turret.PostInit();
             }
 
+            BlasterScepterColor1 = ColorsAPI.RegisterDamageColor(new Color(1f, 0.1f, 0.1f));
+            BlasterScepterColor2 = ColorsAPI.RegisterDamageColor(new Color(0.1f, 1f, 0.1f));
+            BlasterScepterColor3 = ColorsAPI.RegisterDamageColor(new Color(0.1f, 0.7f, 1f));
+
             // add turretling
             Log.Debug("Defining Turretling(s)...");
             string turretlingPath = @"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/";
@@ -536,6 +547,33 @@ namespace SnowtimeToybox
             ContentAddition.AddEntityState(typeof(TurretlingMissile), out _);
             ContentAddition.AddBody(FriendlyTurretTurretlingBody);
             ContentAddition.AddBody(FriendlyTurretTurretlingBodyRemoteOp);
+
+            if (scepterLoaded)
+            {
+                FriendlyTurretTurretlingPrimaryScepterSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(turretlingPath + "Skills/Turretling_Primary_Scepter.asset");
+                FriendlyTurretTurretlingPrimaryScepterSkillDef.activationState = new SerializableEntityStateType(typeof(TurretlingBlasterScepter));
+                FriendlyTurretTurretlingPrimarySkillDef.keywordTokens = new string[1] { "TURRETLING_SKILL1_KEYWORD" };
+                FriendlyTurretTurretlingPrimaryScepterMinionSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(turretlingPath + "Skills/Turretling_Primary_Scepter.asset");
+                FriendlyTurretTurretlingPrimaryScepterMinionSkillDef.activationState = new SerializableEntityStateType(typeof(TurretlingBlasterScepter));
+
+                ContentAddition.AddSkillDef(FriendlyTurretTurretlingPrimaryScepterSkillDef);
+                ContentAddition.AddSkillDef(FriendlyTurretTurretlingPrimaryScepterMinionSkillDef);
+                ContentAddition.AddEffect(TurretlingBlasterScepter.muzzlefx_kinetic);
+                ContentAddition.AddEffect(TurretlingBlasterScepter.muzzlefx_corrosive);
+                ContentAddition.AddEffect(TurretlingBlasterScepter.muzzlefx_energy);
+                ContentAddition.AddEffect(TurretlingBlasterScepter.hitfx_kinetic);
+                ContentAddition.AddEffect(TurretlingBlasterScepter.hitfx_corrosive);
+                ContentAddition.AddEffect(TurretlingBlasterScepter.hitfx_energy);
+                ContentAddition.AddEffect(TurretlingBlasterScepter.tracerfx_kinetic);
+                ContentAddition.AddEffect(TurretlingBlasterScepter.tracerfx_corrosive);
+                ContentAddition.AddEffect(TurretlingBlasterScepter.tracerfx_energy);
+                ContentAddition.AddEntityState(typeof(TurretlingBlasterScepter), out _);
+                // waow
+                AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(FriendlyTurretTurretlingPrimaryScepterSkillDef, "_TurretlingSurvivorBody", SkillSlot.Primary, 0);
+                // for some reason, ancient scepter really does not like skills using the same scepter replace ability. might be related to identical skilldefs; test with duplicate skilldefs.
+                //AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(FriendlyTurretTurretlingPrimaryScepterMinionSkillDef, "_SwarmTurretlingBody", SkillSlot.Primary, 0);
+            }
+
             // erm
             ContentAddition.AddMaster(FriendlyTurretTurretlingMaster);
             ContentAddition.AddSkillFamily(FriendlyTurretTurretlingPrimarySkillFamily);
