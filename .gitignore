@@ -125,3 +125,6 @@ SnowtimeToybox_Script/obj/
 
 SnowtimeToybox_Script/bin/
 SnowtimeToybox_Release/SnowtimeToybox_Release.zip
+SnowtimeToybox_Script/NetworkWeaver/SnowtimeToybox.pdb.prepatch
+SnowtimeToybox_Script/NetworkWeaver/SnowtimeToybox.dll.prepatch
+SnowtimeToybox_Script/SnowtimeToybox.dll
