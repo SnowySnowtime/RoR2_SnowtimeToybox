@@ -147,6 +147,7 @@ public abstract class FriendlyTurretBase
     {
         master.AddComponent<TurretlingBabySpawner>().turretlingPrefab = turretlingMaster;
         broken.AddComponent<BorboCheck>().purchaseInteraction = broken.GetComponent<PurchaseInteraction>();
+        broken.GetComponent<BorboCheck>().bodyName = body.name;
         master.AddComponent<FriendlyTurretInheritance>().whitelistedTag = turretWhitelistString;
 
         body.AddComponent<EquipmentSlot>();

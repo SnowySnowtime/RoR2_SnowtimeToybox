@@ -813,7 +813,7 @@ namespace SnowtimeToybox
             foreach (var turretling in turretlingBodies)
             {
                 turretling.AddComponent<TurretlingMissileTracker>();
-                if (turretling.gameObject.name.Contains("RemoteOp")) return;
+                if (turretling.gameObject.name.Contains("RemoteOp")) continue;
                 turretling.AddComponent<EquipmentSlot>();
             }
             
@@ -1057,50 +1057,22 @@ namespace SnowtimeToybox
         private Interactability GetInteractabilityFriendlyTurrets(On.RoR2.PurchaseInteraction.orig_GetInteractability orig, PurchaseInteraction self, Interactor activator)
         {
             //Log.Debug(self.displayNameToken);
-            if (!self.displayNameToken.StartsWith("FRIENDLYTURRET_"))
-            {
-                return orig(self, activator);
-            }
-
+            if (!self.displayNameToken.StartsWith("FRIENDLYTURRET_")) return orig(self, activator);
+            
             CharacterBody[] minionBodies = activator.gameObject.GetComponent<CharacterBody>()?.GetMinionBodies();
             if (minionBodies == null) return orig(self, activator);
             
             foreach (CharacterBody body in minionBodies)
             {
-                if (!body.baseNameToken.StartsWith("FRIENDLYTURRET_"))
+                if (!body.baseNameToken.StartsWith("FRIENDLYTURRET_")) continue;
+                
+                //Log.Debug(self.gameObject.GetComponent<BorboCheck>().bodyName);
+                //Log.Debug(body.name);
+                
+                if (body.name.Contains(self.gameObject.GetComponent<BorboCheck>().bodyName))
                 {
-                    continue;
-                }
-
-                //Log.Debug("Minion: " + body.baseNameToken);
-                interactablesmaster = self.GetComponent<SummonMasterBehavior>().masterPrefab.gameObject.ToString();
-                if (interactablesmaster.EndsWith(interactablesuffering))
-                {
-                    interactablesmaster = interactablesmaster.Substring(0, interactablesmaster.LastIndexOf(interactablesuffering));
-                }
-                charactersmaster = body.master.gameObject.ToString();
-                if (charactersmaster.EndsWith(charactersuffering))
-                {
-                    charactersmaster = charactersmaster.Substring(0, charactersmaster.LastIndexOf(charactersuffering));
-                }
-                //Log.Debug("Interactable: " + self.displayNameToken + " Minion CharacterBody: " + body.baseNameToken);
-                //Log.Debug("Cleaned Interactable Summonable: " + interactablesmaster + " Minion Master: " + charactersmaster);
-                //Log.Debug("Does Interactable Summon Master match CharacterBody Master?");
-                if (charactersmaster.Contains(interactablesmaster))
-                {
-                    //Log.Debug("Previous query returned true");
                     return Interactability.Disabled;
                 }
-                // Implement cost reduction later.
-                //networkUser.id.steamId
-
-                //if (FriendlyTurretReducedCostForPartnersOrSelf.Value)
-                //{
-                //    if (initialprice == 0f)
-                //    {
-                //        initialprice = (self.cost / 2);
-                //    }
-                //}
             }
 
             return orig(self, activator);

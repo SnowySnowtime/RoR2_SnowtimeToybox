@@ -13,6 +13,7 @@ namespace SnowtimeToybox.FriendlyTurretChecks
     public class BorboCheck : NetworkBehaviour
     {
         public PurchaseInteraction purchaseInteraction;
+        public string bodyName;
         public static GameObject turretUseEffect = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/TurretUseEffect.prefab");
 
         SummonMasterBehavior summonMasterBehavior;

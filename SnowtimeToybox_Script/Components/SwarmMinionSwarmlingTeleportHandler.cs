@@ -22,35 +22,32 @@ public class SwarmMinionSwarmlingTeleportHandler : MonoBehaviour
     {
         self = gameObject.GetComponent<CharacterBody>();
     }
-    public void FixedUpdate()
-    {
-        
-    }
-    public void StartTeleporting()
+    
+    public void StartTeleporting(Vector3 position)
     {
         CharacterMaster master = self.master;
         CharacterMaster characterMaster = (master ? master.minionOwnership.ownerMaster : null);
         CharacterBody characterBody = (characterMaster ? characterMaster.GetBody() : null);
         if (self.hasEffectiveAuthority && (bool)characterBody && (((bool)self.characterMotor) || ((bool)rigidbodyMotor)))
         {
-            StartCoroutine(Teleport());
+            StartCoroutine(Teleport(position));
         }
     }
-    public IEnumerator Teleport()
+    public IEnumerator Teleport(Vector3 ownerPosition)
     {
-        CharacterMaster master = self.master;
-        CharacterMaster characterMaster = (master ? master.minionOwnership.ownerMaster : null);
-        CharacterBody ownerBody = (characterMaster ? characterMaster.GetBody() : null);
+        //CharacterMaster master = self.master;
+        //CharacterMaster characterMaster = (master ? master.minionOwnership.ownerMaster : null);
+        //CharacterBody ownerBody = (characterMaster ? characterMaster.GetBody() : null);
         NodeGraph nodeGraph = SceneInfo.instance.GetNodeGraph(MapNodeGroup.GraphType.Ground);
-        if (!ownerBody)
-        {
-            yield break;
-        }
-        List<NodeGraph.NodeIndex> list = nodeGraph.FindNodesInRangeWithFlagConditions(ownerBody.transform.position, 3f, 20f, HullMask.None, NodeFlags.None, NodeFlags.NoCharacterSpawn, preventOverhead: false);
+        //if (!ownerBody)
+        //{
+        //    yield break;
+        //}
+        List<NodeGraph.NodeIndex> list = nodeGraph.FindNodesInRangeWithFlagConditions(ownerPosition, 3f, 20f, HullMask.None, NodeFlags.None, NodeFlags.NoCharacterSpawn, preventOverhead: false);
         while (list.Count == 0)
         {
             yield return new WaitForSeconds(1f);
-            list = nodeGraph.FindNodesInRangeWithFlagConditions(ownerBody.transform.position, 3f, 20f, HullMask.None, NodeFlags.None, NodeFlags.NoCharacterSpawn, preventOverhead: false);
+            list = nodeGraph.FindNodesInRangeWithFlagConditions(ownerPosition, 3f, 20f, HullMask.None, NodeFlags.None, NodeFlags.NoCharacterSpawn, preventOverhead: false);
         }
         while (list.Count > 0)
         {
