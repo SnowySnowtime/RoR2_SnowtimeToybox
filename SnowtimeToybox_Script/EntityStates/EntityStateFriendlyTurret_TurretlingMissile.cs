@@ -37,6 +37,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         private static int fireMissileParamHash = Animator.StringToHash("turretling_missile_fire.playbackRate");
         private float firingTime;
         private int missilesFired;
+        private bool missileCheckPassed = false;
 
         public override void OnEnter()
         {
@@ -49,6 +50,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 outer.SetNextStateToMain();
                 return;
             }
+            missileCheckPassed = true;
             Log.Debug(missileTracker.GetTrackingTarget().gameObject);
             //base.skillLocator.secondary.DeductStock(base.skillLocator.secondary.maxStock);
             base.skillLocator.secondary.RemoveAllStocks();
@@ -165,13 +167,13 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             }
             if (base.characterBody.isServer)
             {
-                if (!gameObject?.GetComponent<TurretlingMissileTracker>()) return;
-                missileTracker = GetComponent<TurretlingMissileTracker>();
-                if (missileTracker?.GetTrackingTarget()?.gameObject == null) return;
-                CharacterBody obj = base.characterBody;
-                if ((object)obj != null && obj.inventory.GetItemCountEffective(DLC2Content.Items.IncreasePrimaryDamage) > 0)
+                if (missileCheckPassed == true)
                 {
-                    base.characterBody.AddIncreasePrimaryDamageStack();
+                    CharacterBody obj = base.characterBody;
+                    if ((object)obj != null && obj.inventory.GetItemCountEffective(DLC2Content.Items.IncreasePrimaryDamage) > 0)
+                    {
+                        base.characterBody.AddIncreasePrimaryDamageStack();
+                    }
                 }
             }
             if (base.fixedAge > duration && base.isAuthority)
