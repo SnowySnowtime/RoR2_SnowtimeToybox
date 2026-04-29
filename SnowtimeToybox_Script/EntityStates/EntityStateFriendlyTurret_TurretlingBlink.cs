@@ -20,7 +20,6 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         }
         public override void OnExit()
         {
-            if (!base.isAuthority) return;
             swarmlingTracker = gameObject.GetComponent<SwarmPlayerSwarmlingTracker>();
             Swarmlings = swarmlingTracker.GetSwarmlingBodies();
             foreach(CharacterBody body in Swarmlings)

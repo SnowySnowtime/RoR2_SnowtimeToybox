@@ -118,9 +118,6 @@
 		
 		"TURRETLING_ARTI_NAME": "Personal Turretling",
 		"TURRETLING_ARTI_CONTEXT": "waow...",
-		"TURRETLING_ARTI_NAME_IG": "Divineling",
-		"TURRETLING_RAIL_NAME": "Purity",
-		"TURRETLING_MERC_NAME": "Mercling",
 		"TURRETLING_ARTI_DESCRIPTION": "<style=cDeath>Fragile</style>. A weaker, yet personalized turretling will spawn with you at the start of each stage. Automatically repairs when downed. Inherits Elite Equipment and a small selection of items.",
 		"TURRETLING_FRAGILE_ARTI": "[ <style=cDeath>Fragile</style> ]\n<style=cSub>Careful now. The turretling is fragile. On death, it will <style=cIsUtility>repair</style> itself.</style>.</style>",
 		

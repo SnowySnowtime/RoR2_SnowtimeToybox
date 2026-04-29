@@ -239,6 +239,11 @@ namespace SnowtimeToybox
 
             ItemCatalog.availability.CallWhenAvailable(AddCustomTagsToItems);
             EquipmentCatalog.availability.CallWhenAvailable(AddElitesToList);
+
+            if(scepterLoaded)
+            {
+                AddScepterSkills();
+            }
         }
         
         Dictionary<string, string> itemStuff = new()
@@ -553,32 +558,6 @@ namespace SnowtimeToybox
             ContentAddition.AddBody(FriendlyTurretTurretlingBody);
             ContentAddition.AddBody(FriendlyTurretTurretlingBodyRemoteOp);
 
-            if (scepterLoaded)
-            {
-                FriendlyTurretTurretlingPrimaryScepterSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(turretlingPath + "Skills/Turretling_Primary_Scepter.asset");
-                FriendlyTurretTurretlingPrimaryScepterSkillDef.activationState = new SerializableEntityStateType(typeof(TurretlingBlasterScepter));
-                FriendlyTurretTurretlingPrimarySkillDef.keywordTokens = new string[1] { "TURRETLING_SKILL1_KEYWORD" };
-                FriendlyTurretTurretlingPrimaryScepterMinionSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(turretlingPath + "Skills/Turretling_Primary_Scepter.asset");
-                FriendlyTurretTurretlingPrimaryScepterMinionSkillDef.activationState = new SerializableEntityStateType(typeof(TurretlingBlasterScepter));
-
-                ContentAddition.AddSkillDef(FriendlyTurretTurretlingPrimaryScepterSkillDef);
-                ContentAddition.AddSkillDef(FriendlyTurretTurretlingPrimaryScepterMinionSkillDef);
-                ContentAddition.AddEffect(TurretlingBlasterScepter.muzzlefx_kinetic);
-                ContentAddition.AddEffect(TurretlingBlasterScepter.muzzlefx_corrosive);
-                ContentAddition.AddEffect(TurretlingBlasterScepter.muzzlefx_energy);
-                ContentAddition.AddEffect(TurretlingBlasterScepter.hitfx_kinetic);
-                ContentAddition.AddEffect(TurretlingBlasterScepter.hitfx_corrosive);
-                ContentAddition.AddEffect(TurretlingBlasterScepter.hitfx_energy);
-                ContentAddition.AddEffect(TurretlingBlasterScepter.tracerfx_kinetic);
-                ContentAddition.AddEffect(TurretlingBlasterScepter.tracerfx_corrosive);
-                ContentAddition.AddEffect(TurretlingBlasterScepter.tracerfx_energy);
-                ContentAddition.AddEntityState(typeof(TurretlingBlasterScepter), out _);
-                // waow
-                AncientScepter.AncientScepterItem.instance?.RegisterScepterSkill(FriendlyTurretTurretlingPrimaryScepterSkillDef, "_TurretlingSurvivorBody", SkillSlot.Primary, 0);
-                // for some reason, ancient scepter really does not like skills using the same scepter replace ability. might be related to identical skilldefs; test with duplicate skilldefs.
-                AncientScepter.AncientScepterItem.instance?.RegisterScepterSkill(FriendlyTurretTurretlingPrimaryScepterMinionSkillDef, "_SwarmTurretlingBody", SkillSlot.Primary, 0);
-            }
-
             // erm
             ContentAddition.AddMaster(FriendlyTurretTurretlingMaster);
             ContentAddition.AddSkillFamily(FriendlyTurretTurretlingPrimarySkillFamily);
@@ -866,6 +845,36 @@ namespace SnowtimeToybox
             
             //overlay amanger ,.,. 
             On.RoR2.CharacterModel.UpdateOverlays += CharacterModelOnUpdateOverlays;
+        }
+
+        private void AddScepterSkills()
+        {
+            string turretlingPath = @"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/";
+            if (scepterLoaded)
+            {
+                FriendlyTurretTurretlingPrimaryScepterSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(turretlingPath + "Skills/Turretling_Primary_Scepter.asset");
+                FriendlyTurretTurretlingPrimaryScepterSkillDef.activationState = new SerializableEntityStateType(typeof(TurretlingBlasterScepter));
+                FriendlyTurretTurretlingPrimarySkillDef.keywordTokens = new string[1] { "TURRETLING_SKILL1_KEYWORD" };
+                FriendlyTurretTurretlingPrimaryScepterMinionSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(turretlingPath + "Skills/Turretling_Primary_Scepter.asset");
+                FriendlyTurretTurretlingPrimaryScepterMinionSkillDef.activationState = new SerializableEntityStateType(typeof(TurretlingBlasterScepter));
+
+                ContentAddition.AddSkillDef(FriendlyTurretTurretlingPrimaryScepterSkillDef);
+                ContentAddition.AddSkillDef(FriendlyTurretTurretlingPrimaryScepterMinionSkillDef);
+                ContentAddition.AddEffect(TurretlingBlasterScepter.muzzlefx_kinetic);
+                ContentAddition.AddEffect(TurretlingBlasterScepter.muzzlefx_corrosive);
+                ContentAddition.AddEffect(TurretlingBlasterScepter.muzzlefx_energy);
+                ContentAddition.AddEffect(TurretlingBlasterScepter.hitfx_kinetic);
+                ContentAddition.AddEffect(TurretlingBlasterScepter.hitfx_corrosive);
+                ContentAddition.AddEffect(TurretlingBlasterScepter.hitfx_energy);
+                ContentAddition.AddEffect(TurretlingBlasterScepter.tracerfx_kinetic);
+                ContentAddition.AddEffect(TurretlingBlasterScepter.tracerfx_corrosive);
+                ContentAddition.AddEffect(TurretlingBlasterScepter.tracerfx_energy);
+                ContentAddition.AddEntityState(typeof(TurretlingBlasterScepter), out _);
+                // waow
+                AncientScepter.AncientScepterItem.instance?.RegisterScepterSkill(FriendlyTurretTurretlingPrimaryScepterSkillDef, "_TurretlingSurvivorBody", SkillSlot.Primary, 0);
+                // for some reason, ancient scepter really does not like skills using the same scepter replace ability. might be related to identical skilldefs; test with duplicate skilldefs.
+                AncientScepter.AncientScepterItem.instance?.RegisterScepterSkill(FriendlyTurretTurretlingPrimaryScepterMinionSkillDef, "_SwarmTurretlingBody", SkillSlot.Primary, 0);
+            }
         }
         
         private void CharacterModelOnUpdateOverlays(On.RoR2.CharacterModel.orig_UpdateOverlays orig, RoR2.CharacterModel self)
