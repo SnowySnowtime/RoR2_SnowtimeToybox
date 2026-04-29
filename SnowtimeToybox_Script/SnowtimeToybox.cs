@@ -834,7 +834,9 @@ namespace SnowtimeToybox
             if (TurretlingImmuneVoidDeath.Value)
             {
                 FriendlyTurretTurretlingBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
+                SwarmlingMinionBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
             }
+            SwarmlingMinionBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
 
             On.RoR2.PurchaseInteraction.GetInteractability += GetInteractabilityFriendlyTurrets;
             // i want die
