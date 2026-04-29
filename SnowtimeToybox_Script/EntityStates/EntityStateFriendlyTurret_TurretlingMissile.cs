@@ -165,6 +165,8 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             }
             if (base.characterBody.isServer)
             {
+                if (!gameObject?.GetComponent<TurretlingMissileTracker>()) return;
+                missileTracker = GetComponent<TurretlingMissileTracker>();
                 if (missileTracker?.GetTrackingTarget()?.gameObject == null) return;
                 CharacterBody obj = base.characterBody;
                 if ((object)obj != null && obj.inventory.GetItemCountEffective(DLC2Content.Items.IncreasePrimaryDamage) > 0)

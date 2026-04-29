@@ -123,7 +123,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 bulletAttack2.HitEffectNormal = false;
                 bulletAttack2.radius = 0.15f;
                 bulletAttack2.damageType.damageSource = DamageSource.Primary;
-                bulletAttack2.damageType = DamageType.SlowOnHit;
+                bulletAttack2.damageType = DamageType.CrippleOnHit;
 
                 bulletAttack.Fire();
                 bulletAttack1.Fire();
