@@ -124,7 +124,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return InterruptPriority.Skill;
+            return InterruptPriority.PrioritySkill;
         }
     }
 }
