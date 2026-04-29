@@ -40,16 +40,16 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
 
         public override void OnEnter()
         {
-            base.OnEnter();
-            firingTime = 0f;
-            missilesFired = 0;
-            Transform modelTransform = GetModelTransform();
             missileTracker = GetComponent<TurretlingMissileTracker>();
             if (!missileTracker?.GetTrackingTarget())
             {
                 base.skillLocator.secondary.AddOneStock();
                 outer.SetNextStateToMain();
             }
+            base.OnEnter();
+            firingTime = 0f;
+            missilesFired = 0;
+            Transform modelTransform = GetModelTransform();
             if ((bool)modelTransform)
             {
                 childLocator = modelTransform.GetComponent<ChildLocator>();

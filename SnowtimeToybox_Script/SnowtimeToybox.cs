@@ -76,9 +76,11 @@ namespace SnowtimeToybox
         public static DroneDef FriendlyTurretTurretlingDef;
         public static InteractableSpawnCard FriendlyTurretTurretlingIsc;
         public static SkillFamily FriendlyTurretTurretlingPrimarySkillFamily;
+        public static SkillFamily FriendlyTurretTurretlingPrimaryMinionSkillFamily;
         public static SkillFamily FriendlyTurretTurretlingSecondarySkillFamily;
         public static SkillFamily FriendlyTurretTurretlingUtilSkillFamily;
         public static SkillDef FriendlyTurretTurretlingPrimarySkillDef;
+        public static SkillDef FriendlyTurretTurretlingPrimaryMinionSkillDef;
         public static SkillDef FriendlyTurretTurretlingPrimaryScepterSkillDef;
         public static SkillDef FriendlyTurretTurretlingPrimaryScepterMinionSkillDef;
         public static SkillDef FriendlyTurretTurretlingSecondarySkillDef;
@@ -531,8 +533,11 @@ namespace SnowtimeToybox
             FriendlyTurretTurretlingBodyRemoteOp.GetComponent<CharacterDeathBehavior>().deathState = new SerializableEntityStateType(typeof(TurretlingDeath));
             FriendlyTurretTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "_TurretlingMaster.prefab");
             FriendlyTurretTurretlingPrimarySkillFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(turretlingPath + "Skills/TurretlingPrimaryFamily.asset");
+            FriendlyTurretTurretlingPrimaryMinionSkillFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(turretlingPath + "Skills/TurretlingPrimaryFamilyMinion.asset");
             FriendlyTurretTurretlingPrimarySkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(turretlingPath + "Skills/Turretling_Primary.asset");
+            FriendlyTurretTurretlingPrimaryMinionSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(turretlingPath + "Skills/Turretling_Primary_Minion.asset");
             FriendlyTurretTurretlingPrimarySkillDef.activationState = new SerializableEntityStateType(typeof(TurretlingBlaster));
+            FriendlyTurretTurretlingPrimaryMinionSkillDef.activationState = new SerializableEntityStateType(typeof(TurretlingBlaster));
             FriendlyTurretTurretlingSecondarySkillFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(turretlingPath + "Skills/TurretlingSecondaryFamily.asset");
             FriendlyTurretTurretlingSecondarySkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(turretlingPath + "Skills/Turretling_Secondary.asset");
             FriendlyTurretTurretlingSecondarySkillDef.activationState = new SerializableEntityStateType(typeof(TurretlingMissile));
@@ -569,15 +574,17 @@ namespace SnowtimeToybox
                 ContentAddition.AddEffect(TurretlingBlasterScepter.tracerfx_energy);
                 ContentAddition.AddEntityState(typeof(TurretlingBlasterScepter), out _);
                 // waow
-                AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(FriendlyTurretTurretlingPrimaryScepterSkillDef, "_TurretlingSurvivorBody", SkillSlot.Primary, 0);
+                AncientScepter.AncientScepterItem.instance?.RegisterScepterSkill(FriendlyTurretTurretlingPrimaryScepterSkillDef, "_TurretlingSurvivorBody", SkillSlot.Primary, 0);
                 // for some reason, ancient scepter really does not like skills using the same scepter replace ability. might be related to identical skilldefs; test with duplicate skilldefs.
-                //AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(FriendlyTurretTurretlingPrimaryScepterMinionSkillDef, "_SwarmTurretlingBody", SkillSlot.Primary, 0);
+                AncientScepter.AncientScepterItem.instance?.RegisterScepterSkill(FriendlyTurretTurretlingPrimaryScepterMinionSkillDef, "_SwarmTurretlingBody", SkillSlot.Primary, 0);
             }
 
             // erm
             ContentAddition.AddMaster(FriendlyTurretTurretlingMaster);
             ContentAddition.AddSkillFamily(FriendlyTurretTurretlingPrimarySkillFamily);
+            ContentAddition.AddSkillFamily(FriendlyTurretTurretlingPrimaryMinionSkillFamily);
             ContentAddition.AddSkillDef(FriendlyTurretTurretlingPrimarySkillDef);
+            ContentAddition.AddSkillDef(FriendlyTurretTurretlingPrimaryMinionSkillDef);
             ContentAddition.AddSkillFamily(FriendlyTurretTurretlingSecondarySkillFamily);
             ContentAddition.AddSkillDef(FriendlyTurretTurretlingSecondarySkillDef);
             ContentAddition.AddEffect(TurretlingDeath.deathfx);
