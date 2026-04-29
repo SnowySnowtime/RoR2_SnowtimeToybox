@@ -35,13 +35,18 @@ public class TurretlingRainbow : NetworkBehaviour
     
     public static Dictionary<string, string> turretlingRecolors = new()
     {
-        { "STEAM_1:1:146751517", "0.55,0,0,Snowtime" }, // snowy 
+        //{ "STEAM_1:1:146751517", "0.55,0,0,Snowtime" }, // snowy 
+        { "STEAM_1:1:146751517", "0.5,0.3,0.99,Regi" }, // snowy 
         { "STEAM_1:0:615574887", "0.045,0,0,Shortcake" }, //shortcake
         { "STEAM_1:1:60493073", "0,1,0,Acanthi" }, // canthi 
         { "STEAM_1:0:1737027363", "0.87,0.87,0,Bread" }, // bread
         { "STEAM_1:0:64329810", "0.71,0.27,0.27,Illusive" }, // illusive 
         { "STEAM_1:1:502654116", "0.83,0,0,Anartoast" }, // anar
         { "STEAM_1:0:131809264", "0.43,0.97,0,Lukas" }, // lukas
+        // Testers!!!!!
+        { "STEAM_1:1:35743795", "0.9,0.5,0,PlNK" }, // plnk
+        { "STEAM_1:0:502558120", "0.32,0.3,0.99,Green" }, // green 
+        //{ "STEAM_1:0:75897289", "0.32,0.3,0.99,Green" }, // green 
     };
     
     public void Start()
@@ -141,7 +146,7 @@ public class TurretlingRainbow : NetworkBehaviour
                 if (!gameObject.GetComponent<PlayerCharacterMasterController>()) return;
                 steamid = turretlingPlayerMaster.playerCharacterMasterController.networkUser.id.steamId.ToSteamID();
                 //Log.Debug("Player" + gameObject.GetComponent<PlayerCharacterMasterController>().GetDisplayName() + " SteamID: " + steamid);
-                //Log.Debug($"steam id !! {steamid} from player: " + gameObject.GetComponent<PlayerCharacterMasterController>().GetDisplayName());
+                Log.Debug($"steam id !! {steamid} from player: " + gameObject.GetComponent<PlayerCharacterMasterController>().GetDisplayName());
             }
             
             if (gameObject.name.Contains("_DT") && turretlingPlayer != null || gameObject.name.Contains("_Holy") && !steamid.IsNullOrWhiteSpace() || gameObject.name.Contains("PlayerMaster") || gameObject.name.Contains("_SwarmTurretling"))

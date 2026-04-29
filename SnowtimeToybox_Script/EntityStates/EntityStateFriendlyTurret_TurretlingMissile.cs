@@ -40,13 +40,18 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
 
         public override void OnEnter()
         {
+            base.OnEnter();
+            if (!gameObject?.GetComponent<TurretlingMissileTracker>()) return;
             missileTracker = GetComponent<TurretlingMissileTracker>();
-            if (!missileTracker?.GetTrackingTarget())
+            if (missileTracker?.GetTrackingTarget()?.gameObject == null)
             {
                 base.skillLocator.secondary.AddOneStock();
                 outer.SetNextStateToMain();
+                return;
             }
-            base.OnEnter();
+            Log.Debug(missileTracker.GetTrackingTarget().gameObject);
+            //base.skillLocator.secondary.DeductStock(base.skillLocator.secondary.maxStock);
+            base.skillLocator.secondary.RemoveAllStocks();
             firingTime = 0f;
             missilesFired = 0;
             Transform modelTransform = GetModelTransform();
@@ -60,7 +65,6 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 initialOrbTarget = missileTracker.GetTrackingTarget();
             }
             duration = baseDuration;
-            PlayAnimation("Gesture", fireMissileHash, fireMissileParamHash, duration);
             isCrit = Util.CheckRoll(base.characterBody.crit, base.characterBody.master);
             Inventory inventory = base.characterBody.inventory;
             FireOrbMissile();
@@ -132,6 +136,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                     snowtimeOrb.origin = transform.position;
                     snowtimeOrb.target = hurtBox;
                     OrbManager.instance.AddOrb(snowtimeOrb);
+                    PlayAnimation("Gesture", fireMissileHash, fireMissileParamHash, duration);
                 }
             }
         }
@@ -158,6 +163,15 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                     FireOrbMissile();
                 }
             }
+            if (base.characterBody.isServer)
+            {
+                if (missileTracker?.GetTrackingTarget()?.gameObject == null) return;
+                CharacterBody obj = base.characterBody;
+                if ((object)obj != null && obj.inventory.GetItemCountEffective(DLC2Content.Items.IncreasePrimaryDamage) > 0)
+                {
+                    base.characterBody.AddIncreasePrimaryDamageStack();
+                }
+            }
             if (base.fixedAge > duration && base.isAuthority)
             {
                 outer.SetNextStateToMain();
@@ -166,7 +180,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return InterruptPriority.PrioritySkill;
+            return InterruptPriority.Skill;
         }
 
         public override void OnSerialize(NetworkWriter writer)

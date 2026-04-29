@@ -120,6 +120,7 @@ public class SwarmPlayerSwarmlingTracker : NetworkBehaviour
         //Log.Debug($"tel;eporting swarmlings as server !! {SwarmlingBodies.Count}");
         foreach (CharacterBody swarmlingBody in SwarmlingBodies)
         {
+            if (!swarmlingBody?.GetComponent<SwarmMinionSwarmlingTeleportHandler>()) return;
             swarmlingBody.GetComponent<SwarmMinionSwarmlingTeleportHandler>().StartTeleporting(position);
         }
     }

@@ -20,7 +20,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
 
         public static string attackSoundString = "Play_Turretling_Nova";
 
-        public static float damageCoefficient = 1.5f;
+        public static float damageCoefficient = 2.5f;
 
         public static float force = 50.0f;
 
@@ -111,6 +111,9 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         public override void OnExit()
         {
             base.OnExit();
+            TeamIndex myTeam = base.gameObject.GetComponent<TeamComponent>().teamIndex;
+            Transform fxorigin = base.modelLocator.modelChildLocator.FindChild("HeadCenter").transform;
+            RemoveNearbyProjectilesServer(myTeam, fxorigin.position, radius);
         }
 
         public override void FixedUpdate()
@@ -124,7 +127,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return InterruptPriority.PrioritySkill;
+            return InterruptPriority.Skill;
         }
     }
 }
