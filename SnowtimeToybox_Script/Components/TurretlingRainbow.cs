@@ -35,8 +35,7 @@ public class TurretlingRainbow : NetworkBehaviour
     
     public static Dictionary<string, string> turretlingRecolors = new()
     {
-        //{ "STEAM_1:1:146751517", "0.55,0,0,Snowtime" }, // snowy 
-        { "STEAM_1:1:146751517", "0.5,0.3,0.99,Regi" }, // snowy 
+        { "STEAM_1:1:146751517", "0.55,0,0,Snowtime" }, // snowy 
         { "STEAM_1:0:615574887", "0.045,0,0,Shortcake" }, //shortcake
         { "STEAM_1:1:60493073", "0,1,0,Acanthi" }, // canthi 
         { "STEAM_1:0:1737027363", "0.87,0.87,0,Bread" }, // bread
@@ -46,7 +45,7 @@ public class TurretlingRainbow : NetworkBehaviour
         // Testers!!!!!
         { "STEAM_1:1:35743795", "0.9,0.5,0,PlNK" }, // plnk
         { "STEAM_1:0:502558120", "0.32,0.3,0.99,Green" }, // green 
-        //{ "STEAM_1:0:75897289", "0.32,0.3,0.99,Green" }, // green 
+        { "STEAM_1:0:75897289", "0.5,0.3,0.99,Regi" }, // Regigigas 
     };
     
     public void Start()
