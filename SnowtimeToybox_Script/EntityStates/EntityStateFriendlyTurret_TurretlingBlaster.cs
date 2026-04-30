@@ -3,6 +3,7 @@ using RoR2;
 using RoR2.ContentManagement;
 using SnowtimeToybox;
 using SnowtimeToybox.Components;
+using System;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -60,21 +61,58 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
 
         private float duration = 1f;
 
+        private int firecount;
+
         private static int FireHash = Animator.StringToHash("turretling_fire");
 
         private static int FireParamHash = Animator.StringToHash("turretling_fire.playbackRate");
 
+        private float firingTime;
+        private float refireTime;
+
         public override void OnEnter()
         {
             base.OnEnter();
+            firecount = 0;
+            firingTime = 0f;
             base.characterBody.SetAimTimer(0f);
-            duration = baseDuration / attackSpeedStat;
+            duration = (baseDuration) / attackSpeedStat;
+            refireTime = duration / 8;
+            AttackWaow();
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
+        }
+
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+            firingTime += Time.fixedDeltaTime;
+            if (base.fixedAge >= duration && base.isAuthority)
+            {
+                outer.SetNextStateToMain();
+            }
+            if (base.gameObject.name.Contains("Survivor"))
+            {
+                if(firingTime > refireTime && firecount < 3)
+                {
+                    AttackWaow();
+                }
+            }
+        }
+
+        public void AttackWaow()
+        {
+            firecount++;
+            firingTime = 0f;
+            //Log.Debug(firecount);
             Util.PlaySound(attackSoundString, base.gameObject);
             Ray aimRay = GetAimRay();
-            StartAimMode(aimRay);
             PlayAnimation("Gesture", FireHash, FireParamHash, duration);
             string muzzleName = "Muzzle_Primary";
-            if(base.gameObject.name.Contains("Acanthi"))
+            if (base.gameObject.name.Contains("Acanthi"))
             {
                 effectPrefab = muzzlefx_acanthi;
                 hitEffectPrefab = hitfx_acanthi;
@@ -129,16 +167,24 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                     bulletAttack.minSpread = 0f;
                     bulletAttack.maxSpread = 4f;
                     bulletAttack.bulletCount = 15u;
-                    bulletAttack.damage = (damageCoefficient/5) * damageStat;
-                    bulletAttack.procCoefficient = (procCoefficient/5);
+                    bulletAttack.damage = (damageCoefficient / 5) * damageStat;
+                    bulletAttack.procCoefficient = (procCoefficient / 5);
                 }
                 // Rainbow Turretling and Turretling Variants should be more accurate than default
-                else if (characterBody.master.gameObject.TryGetComponent(out TurretlingRainbow rainbowCheck) && rainbowCheck.turretlingRainbow || base.gameObject.name.Contains("Acanthi") || base.gameObject.name.Contains("Bread") || base.gameObject.name.Contains("Borbo") || base.gameObject.name.Contains("Shortcake") || base.gameObject.name.Contains("Survivor"))
+                else if (characterBody.master.gameObject.TryGetComponent(out TurretlingRainbow rainbowCheck) && rainbowCheck.turretlingRainbow || base.gameObject.name.Contains("Acanthi") || base.gameObject.name.Contains("Bread") || base.gameObject.name.Contains("Borbo") || base.gameObject.name.Contains("Shortcake"))
                 {
                     bulletAttack.minSpread = minSpread;
-                    bulletAttack.maxSpread = maxSpread/4;
+                    bulletAttack.maxSpread = maxSpread / 4;
                     bulletAttack.bulletCount = 1u;
-                    bulletAttack.damage = (damageCoefficient * 1.25f) * damageStat;
+                    bulletAttack.damage = (damageCoefficient * 1f) * damageStat;
+                    bulletAttack.procCoefficient = procCoefficient * 4;
+                }
+                else if (base.gameObject.name.Contains("Survivor"))
+                {
+                    bulletAttack.minSpread = minSpread;
+                    bulletAttack.maxSpread = maxSpread / 4;
+                    bulletAttack.bulletCount = 1u;
+                    bulletAttack.damage = (damageCoefficient/1.25f) * damageStat;
                     bulletAttack.procCoefficient = procCoefficient * 4;
                 }
                 else
@@ -162,20 +208,6 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 bulletAttack.radius = 0.15f;
                 bulletAttack.damageType.damageSource = DamageSource.Primary;
                 bulletAttack.Fire();
-            }
-        }
-
-        public override void OnExit()
-        {
-            base.OnExit();
-        }
-
-        public override void FixedUpdate()
-        {
-            base.FixedUpdate();
-            if (base.fixedAge >= duration && base.isAuthority)
-            {
-                outer.SetNextStateToMain();
             }
         }
 

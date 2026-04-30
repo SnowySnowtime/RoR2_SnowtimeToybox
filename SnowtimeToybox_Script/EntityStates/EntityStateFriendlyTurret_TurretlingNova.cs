@@ -1,4 +1,5 @@
 using EntityStates;
+using EntityStates.AffixVoid;
 using HG;
 using R2API;
 using RoR2;
@@ -20,7 +21,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
 
         public static string attackSoundString = "Play_Turretling_Nova";
 
-        public static float damageCoefficient = 2.5f;
+        public static float damageCoefficient = 3f;
 
         public static float force = 50.0f;
 
@@ -43,6 +44,10 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         public override void OnEnter()
         {
             base.OnEnter();
+            if(base.gameObject.name.Contains("Survivor"))
+            {
+                attackSoundString = "Play_Turretling_Nova_Player";
+            }
             base.characterBody.SetAimTimer(0f);
             duration = baseDuration;
             additionalStocks = base.skillLocator.special.bonusStockFromBody;
@@ -50,7 +55,6 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             //Log.Debug("Original Radius: " + radius + "... Now it is: " + newrad);
             Util.PlaySound(attackSoundString, base.gameObject);
             Ray aimRay = GetAimRay();
-            StartAimMode(aimRay);
             TeamIndex myTeam = base.gameObject.GetComponent<TeamComponent>().teamIndex;
             Transform fxorigin = base.modelLocator.modelChildLocator.FindChild("HeadCenter").transform;
             if (base.isAuthority)

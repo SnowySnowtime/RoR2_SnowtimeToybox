@@ -50,6 +50,7 @@ namespace SnowtimeToybox
         private bool isElectric;
         private bool isHealing;
         private bool isRainbow;
+        private bool isMissile;
 
         public static GameObject orbShortcakeRetaliateObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Shortcake/Skills/shortcakeretaliate_orbeffect.prefab");
         public static GameObject orbShortcakeRetaliateImpactObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Shortcake/Skills/shortcakeretaliate_impacteffect.prefab");
@@ -100,60 +101,70 @@ namespace SnowtimeToybox
                     isHealing = false;
                     isElectric = false;
                     isRainbow = false;
+                    isMissile = false;
                     break;
                 case OrbTypes.ShortcakeRetaliate:
                     orbasset = orbShortcakeRetaliatePrefab;
                     isHealing = false;
                     isElectric = false;
                     isRainbow = false;
+                    isMissile = false;
                     break;
                 case OrbTypes.ShortcakeRetaliateFriendly:
                     orbasset = orbShortcakeRetaliateFriendlyPrefab;
                     isHealing = true;
                     isElectric = false;
                     isRainbow = false;
+                    isMissile = false;
                     break;
                 case OrbTypes.TurretlingMissile:
                     orbasset = orbTurretlingMissilePrefab;
                     isHealing = false;
                     isElectric = false;
                     isRainbow = false;
+                    isMissile = true;
                     break;
                 case OrbTypes.TurretlingMissile_Acanthi:
                     orbasset = orbAcanthilingMissilePrefab;
                     isHealing = false;
                     isElectric = false;
                     isRainbow = false;
+                    isMissile = true;
                     break;
                 case OrbTypes.TurretlingMissile_Borbo:
                     orbasset = orbBorbolingMissilePrefab;
                     isHealing = false;
                     isElectric = false;
                     isRainbow = false;
+                    isMissile = true;
                     break;
                 case OrbTypes.TurretlingMissile_Bread:
                     orbasset = orbBreadlingMissilePrefab;
                     isHealing = false;
                     isElectric = false;
                     isRainbow = false;
+                    isMissile = true;
                     break;
                 case OrbTypes.TurretlingMissile_Shortcake:
                     orbasset = orbShortcakelingMissilePrefab;
                     isHealing = false;
                     isElectric = false;
                     isRainbow = false;
+                    isMissile = true;
                     break;
                 case OrbTypes.TurretlingMissile_Snowtime:
                     orbasset = orbSnowtimelingMissilePrefab;
                     isHealing = false;
                     isElectric = false;
                     isRainbow = false;
+                    isMissile = true;
                     break;
                 case OrbTypes.TurretlingMissile_Rainbow:
                     orbasset = orbRainbowMissilePrefab;
                     isHealing = false;
                     isElectric = true;
                     isRainbow = true;
+                    isMissile = true;
                     break;
             }
             EffectData effectData = new EffectData
@@ -162,6 +173,16 @@ namespace SnowtimeToybox
                 genericFloat = (base.duration * 2f)
             };
             effectData.SetHurtBoxReference(target);
+            if(attacker.gameObject.name.Contains("Survivor") && isMissile)
+            {
+                orbTurretlingMissileImpactObject.GetComponent<EffectComponent>().soundName = "Play_Turretling_MissilePlayer_ExplodeAlt";
+                Util.PlaySound("Play_Turretling_MissilePlayer_Fire", attacker.gameObject);
+            }
+            else
+            {
+                orbTurretlingMissileImpactObject.GetComponent<EffectComponent>().soundName = "Play_Turretling_Missile_Explode";
+                Util.PlaySound("Play_Turretling_Missile_Fire", attacker.gameObject);
+            }
             EffectManager.SpawnEffect(orbasset, effectData, transmit: true);
         }
 
@@ -199,6 +220,14 @@ namespace SnowtimeToybox
                 }
                 damageInfo.inflictedHurtbox = target;
                 healthComponent.TakeDamage(damageInfo);
+                if (attacker.gameObject.name.Contains("Survivor") && isMissile)
+                {
+                    Util.PlaySound("Play_Turretling_MissilePlayer_ExplodeAlt", healthComponent.gameObject);
+                }
+                else
+                {
+                    Util.PlaySound("Play_Turretling_Missile_Explode", healthComponent.gameObject);
+                }
                 GlobalEventManager.instance.OnHitEnemy(damageInfo, healthComponent.gameObject);
                 GlobalEventManager.instance.OnHitAll(damageInfo, healthComponent.gameObject);
             }

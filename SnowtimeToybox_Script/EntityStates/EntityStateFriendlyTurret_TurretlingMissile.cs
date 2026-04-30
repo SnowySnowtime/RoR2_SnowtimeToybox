@@ -36,6 +36,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
 
         private static int fireMissileParamHash = Animator.StringToHash("turretling_missile_fire.playbackRate");
         private float firingTime;
+        private float refireTime;
         private int missilesFired;
         private bool missileCheckPassed = false;
 
@@ -51,7 +52,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 return;
             }
             missileCheckPassed = true;
-            Log.Debug(missileTracker.GetTrackingTarget().gameObject);
+            //Log.Debug(missileTracker.GetTrackingTarget().gameObject);
             //base.skillLocator.secondary.DeductStock(base.skillLocator.secondary.maxStock);
             base.skillLocator.secondary.RemoveAllStocks();
             firingTime = 0f;
@@ -67,6 +68,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 initialOrbTarget = missileTracker.GetTrackingTarget();
             }
             duration = baseDuration;
+            refireTime = duration / 4;
             isCrit = Util.CheckRoll(base.characterBody.crit, base.characterBody.master);
             Inventory inventory = base.characterBody.inventory;
             FireOrbMissile();
@@ -82,6 +84,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             if (NetworkServer.active)
             {
                 missilesFired++;
+                firingTime = 0f;
                 SnowtimeOrbs snowtimeOrb = new SnowtimeOrbs();
                 if(base.gameObject.name.Contains("Acanthi"))
                 {
@@ -152,15 +155,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             int itemCountDTTurretlingPowerup = inventory.GetItemCountEffective(ItemCatalog.FindItemIndex("RainbowizerPowerUp"));
             if (itemCountEffective > 0 || itemCountDTTurretlingPowerup > 0 && RainbowizerPowerup.AdditionalMissiles.Value == true)
             {
-                if (firingTime > 0.1f && missilesFired < 2)
-                {
-                    FireOrbMissile();
-                }
-                if (firingTime > 0.2f && missilesFired < 3)
-                {
-                    FireOrbMissile();
-                }
-                if (firingTime > 0.3f && missilesFired < 4)
+                if (firingTime > refireTime && missilesFired < 4)
                 {
                     FireOrbMissile();
                 }

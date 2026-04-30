@@ -47,7 +47,7 @@ public class TurretlingRainbow : NetworkBehaviour
         { "STEAM_1:0:502558120", "0.32,0.3,0.99,Green" }, // green 
         { "STEAM_1:0:75897289", "0.5,0.3,0.99,Regi" }, // Regigigas 
         { "STEAM_1:1:158283592", "0.0125,0.25,0.5,VCR" }, // VCR
-        //{ "STEAM_1:1:59278323", "0.5,0.3,0.99,F4lx" }, // F4lx/Gadreel
+        { "STEAM_1:1:59278323", "0.75,0.1,0.01,F4lx" }, // F4lx/Gadreel
         { "STEAM_1:0:98120944", "0.6,0.27,0.27,Samue" }, // Samuel
     };
     
