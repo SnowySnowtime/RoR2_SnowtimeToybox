@@ -27,9 +27,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         private HurtBox initialOrbTarget;
 
         private ChildLocator childLocator;
-
-        private TurretlingMissileTracker missileTracker;
-
+        
         private Animator animator;
 
         private static int fireMissileHash = Animator.StringToHash("turretling_missile_fire");
@@ -44,17 +42,18 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         {
             base.OnEnter();
             if (!gameObject?.GetComponent<TurretlingMissileTracker>()) return;
-            missileTracker = GetComponent<TurretlingMissileTracker>();
+            if (gameObject?.TryGetComponent(out TurretlingMissileTracker missileTracker) != true) return;
             if (missileTracker?.GetTrackingTarget()?.gameObject == null)
+            if (missileTracker?.GetTrackingTarget() == null)
             {
-                base.skillLocator.secondary.AddOneStock();
+                //base.skillLocator.secondary.AddOneStock();
                 outer.SetNextStateToMain();
                 return;
             }
             missileCheckPassed = true;
             //Log.Debug(missileTracker.GetTrackingTarget().gameObject);
             //base.skillLocator.secondary.DeductStock(base.skillLocator.secondary.maxStock);
-            base.skillLocator.secondary.RemoveAllStocks();
+            skillLocator.secondary.RemoveAllStocks();
             firingTime = 0f;
             missilesFired = 0;
             Transform modelTransform = GetModelTransform();
@@ -63,14 +62,14 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 childLocator = modelTransform.GetComponent<ChildLocator>();
                 animator = modelTransform.GetComponent<Animator>();
             }
-            if ((bool)missileTracker && base.isAuthority)
+            if ((bool)missileTracker && isAuthority)
             {
                 initialOrbTarget = missileTracker.GetTrackingTarget();
             }
             duration = baseDuration;
             refireTime = duration / 4;
-            isCrit = Util.CheckRoll(base.characterBody.crit, base.characterBody.master);
-            Inventory inventory = base.characterBody.inventory;
+            isCrit = Util.CheckRoll(characterBody.crit, characterBody.master);
+            Inventory inventory = characterBody.inventory;
             FireOrbMissile();
         }
 
@@ -83,26 +82,28 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         {
             if (NetworkServer.active)
             {
+                Log.Debug($"bwa 6");
                 missilesFired++;
                 firingTime = 0f;
-                SnowtimeOrbs snowtimeOrb = new SnowtimeOrbs();
+                SnowtimeOrbs snowtimeOrb = new();
                 if(base.gameObject.name.Contains("Acanthi"))
+                if(gameObject.name.Contains("Acanthi"))
                 {
                     snowtimeOrb.snowtimeOrbType = SnowtimeOrbs.OrbTypes.TurretlingMissile_Acanthi;
                 }
-                else if (base.gameObject.name.Contains("Borbo"))
+                else if (gameObject.name.Contains("Borbo"))
                 {
                     snowtimeOrb.snowtimeOrbType = SnowtimeOrbs.OrbTypes.TurretlingMissile_Borbo;
                 }
-                else if (base.gameObject.name.Contains("Bread"))
+                else if (gameObject.name.Contains("Bread"))
                 {
                     snowtimeOrb.snowtimeOrbType = SnowtimeOrbs.OrbTypes.TurretlingMissile_Bread;
                 }
-                else if (base.gameObject.name.Contains("Shortcake"))
+                else if (gameObject.name.Contains("Shortcake"))
                 {
                     snowtimeOrb.snowtimeOrbType = SnowtimeOrbs.OrbTypes.TurretlingMissile_Shortcake;
                 }
-                else if (base.gameObject.name.Contains("Snowtime"))
+                else if (gameObject.name.Contains("Snowtime"))
                 {
                     snowtimeOrb.snowtimeOrbType = SnowtimeOrbs.OrbTypes.TurretlingMissile_Snowtime;
                 }
@@ -114,28 +115,23 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 {
                     snowtimeOrb.snowtimeOrbType = SnowtimeOrbs.OrbTypes.TurretlingMissile;
                 }
-                if(base.gameObject.name.Contains("SwarmTurretling"))
+                if(gameObject.name.Contains("SwarmTurretling"))
                 {
-                    snowtimeOrb.damageValue = (base.characterBody.damage * ((orbDamageCoefficient / 2) + base.skillLocator.secondary.bonusStockFromBody + base.skillLocator.secondary.bonusStockFromBody)) * ((Mathf.Clamp(((attackSpeedStat - 2.5f) / 2f), 1f, 9999f)));
+                    snowtimeOrb.damageValue = (characterBody.damage * ((orbDamageCoefficient / 2) + skillLocator.secondary.bonusStockFromBody + skillLocator.secondary.bonusStockFromBody)) * ((Mathf.Clamp(((attackSpeedStat - 2.5f) / 2f), 1f, 9999f)));
                 }
                 else
                 {
-                    snowtimeOrb.damageValue = (base.characterBody.damage * (orbDamageCoefficient + base.skillLocator.secondary.bonusStockFromBody + base.skillLocator.secondary.bonusStockFromBody)) * ((Mathf.Clamp(((attackSpeedStat - 2.5f) / 2f), 1f, 9999f)));
+                    snowtimeOrb.damageValue = (characterBody.damage * (orbDamageCoefficient + skillLocator.secondary.bonusStockFromBody + skillLocator.secondary.bonusStockFromBody)) * ((Mathf.Clamp(((attackSpeedStat - 2.5f) / 2f), 1f, 9999f)));
                 }
+                
                 snowtimeOrb.isCrit = isCrit;
-                snowtimeOrb.teamIndex = TeamComponent.GetObjectTeam(base.gameObject);
-                snowtimeOrb.attacker = base.gameObject;
-                if(base.gameObject.name.Contains("Survivor"))
-                {
-                    snowtimeOrb.procCoefficient = orbProcCoefficient;
-                }
-                else
-                {
-                    snowtimeOrb.procCoefficient = orbProcCoefficient / 2;
-                }
+                snowtimeOrb.teamIndex = TeamComponent.GetObjectTeam(gameObject);
+                snowtimeOrb.attacker = gameObject;
+                snowtimeOrb.procCoefficient = gameObject.name.Contains("Survivor") ? orbProcCoefficient : orbProcCoefficient / 2;
                 snowtimeOrb.damageType.damageSource = DamageSource.Secondary;
+                
                 HurtBox hurtBox = initialOrbTarget;
-                if ((bool)hurtBox)
+                if (hurtBox)
                 {
                     Transform transform = childLocator.FindChild(muzzleString);
                     snowtimeOrb.origin = transform.position;
@@ -150,7 +146,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         {
             base.FixedUpdate();
             firingTime += Time.fixedDeltaTime;
-            Inventory inventory = base.characterBody.inventory;
+            Inventory inventory = characterBody.inventory;
             int itemCountEffective = inventory.GetItemCountEffective(DLC1Content.Items.MoreMissile);
             int itemCountDTTurretlingPowerup = inventory.GetItemCountEffective(ItemCatalog.FindItemIndex("RainbowizerPowerUp"));
             if (itemCountEffective > 0 || itemCountDTTurretlingPowerup > 0 && RainbowizerPowerup.AdditionalMissiles.Value == true)
@@ -160,18 +156,18 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                     FireOrbMissile();
                 }
             }
-            if (base.characterBody.isServer)
+            if (characterBody.isServer)
             {
                 if (missileCheckPassed == true)
                 {
-                    CharacterBody obj = base.characterBody;
+                    CharacterBody obj = characterBody;
                     if ((object)obj != null && obj.inventory.GetItemCountEffective(DLC2Content.Items.IncreasePrimaryDamage) > 0)
                     {
-                        base.characterBody.AddIncreasePrimaryDamageStack();
+                        characterBody.AddIncreasePrimaryDamageStack();
                     }
                 }
             }
-            if (base.fixedAge > duration && base.isAuthority)
+            if (fixedAge > duration && isAuthority)
             {
                 outer.SetNextStateToMain();
             }

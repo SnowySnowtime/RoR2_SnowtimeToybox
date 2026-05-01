@@ -205,7 +205,7 @@ public class TurretlingRainbow : NetworkBehaviour
         }
         if (charBody.name.Contains("Broken")) return;
         
-        ChildLocator childLocator = charBody.modelLocator.modelTransform.gameObject.GetComponent<ChildLocator>();
+        ChildLocator childLocator = charBody?.modelLocator?.modelTransform?.gameObject?.GetComponent<ChildLocator>();
         if (childLocator == null) return;
         //Log.Debug("ChildLocator: " + childLocator.gameObject.name);
 
