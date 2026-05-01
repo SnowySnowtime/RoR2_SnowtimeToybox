@@ -82,11 +82,10 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         {
             if (NetworkServer.active)
             {
-                Log.Debug($"bwa 6");
+                //Log.Debug($"bwa 6");
                 missilesFired++;
                 firingTime = 0f;
                 SnowtimeOrbs snowtimeOrb = new();
-                if(base.gameObject.name.Contains("Acanthi"))
                 if(gameObject.name.Contains("Acanthi"))
                 {
                     snowtimeOrb.snowtimeOrbType = SnowtimeOrbs.OrbTypes.TurretlingMissile_Acanthi;
