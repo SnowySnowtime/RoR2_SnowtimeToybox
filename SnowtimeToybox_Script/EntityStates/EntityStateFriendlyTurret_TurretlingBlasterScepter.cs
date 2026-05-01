@@ -33,8 +33,6 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
 
         public static int bulletCount = 1;
 
-        public static float baseDuration = 2f;
-
         public int bulletCountCurrent = 1;
 
         private float duration = 1f;
@@ -46,8 +44,6 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         public override void OnEnter()
         {
             base.OnEnter();
-            base.characterBody.SetAimTimer(0f);
-            duration = baseDuration;
             Util.PlaySound(attackSoundString, base.gameObject);
             Ray aimRay = GetAimRay();
             StartAimMode(aimRay);
@@ -56,8 +52,6 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             EffectManager.SimpleMuzzleFlash(muzzlefx_kinetic, base.gameObject, muzzleName, transmit: false);
             EffectManager.SimpleMuzzleFlash(muzzlefx_corrosive, base.gameObject, muzzleName, transmit: false);
             EffectManager.SimpleMuzzleFlash(muzzlefx_energy, base.gameObject, muzzleName, transmit: false);
-            uint bulletAddition = (uint)(((attackSpeedStat - 2.5) * 10) / 3);
-            Log.Debug(bulletAddition);
             if (base.isAuthority)
             {
                 BulletAttack bulletAttack = new BulletAttack();
@@ -66,9 +60,9 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 // Kinetic
                 bulletAttack.minSpread = 0f;
                 bulletAttack.maxSpread = 3f;
-                bulletAttack.bulletCount = 5u + bulletAddition;
-                bulletAttack.damage = (damageCoefficient / 5) * damageStat;
-                bulletAttack.procCoefficient = (procCoefficient / 5);
+                bulletAttack.bulletCount = 3u;
+                bulletAttack.damage = (damageCoefficient / 1.5f) * (damageStat * (Mathf.Clamp(((attackSpeedStat - 2.5f)), 1f, 9999f)));
+                bulletAttack.procCoefficient = (procCoefficient / 3);
                 bulletAttack.owner = base.gameObject;
                 bulletAttack.weapon = base.gameObject;
                 bulletAttack.origin = aimRay.origin;
@@ -88,9 +82,9 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 // Corrosive
                 bulletAttack1.minSpread = 0f;
                 bulletAttack1.maxSpread = 3f;
-                bulletAttack1.bulletCount = 5u + bulletAddition;
-                bulletAttack1.damage = (damageCoefficient / 5) * damageStat;
-                bulletAttack1.procCoefficient = (procCoefficient / 5);
+                bulletAttack1.bulletCount = 3u;
+                bulletAttack1.damage = (damageCoefficient / 1.5f) * (damageStat * (Mathf.Clamp(((attackSpeedStat - 2.5f)), 1f, 9999f)));
+                bulletAttack1.procCoefficient = (procCoefficient / 3);
                 bulletAttack1.owner = base.gameObject;
                 bulletAttack1.weapon = base.gameObject;
                 bulletAttack1.origin = aimRay.origin;
@@ -109,9 +103,9 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 // Energy
                 bulletAttack2.minSpread = 0f;
                 bulletAttack2.maxSpread = 3f;
-                bulletAttack2.bulletCount = 5u + bulletAddition;
-                bulletAttack2.damage = (damageCoefficient / 5) * damageStat;
-                bulletAttack2.procCoefficient = (procCoefficient / 5);
+                bulletAttack2.bulletCount = 3u;
+                bulletAttack2.damage = (damageCoefficient / 1.5f) * (damageStat * (Mathf.Clamp(((attackSpeedStat - 2.5f)), 1f, 9999f)));
+                bulletAttack2.procCoefficient = (procCoefficient / 3);
                 bulletAttack2.owner = base.gameObject;
                 bulletAttack2.weapon = base.gameObject;
                 bulletAttack2.origin = aimRay.origin;
