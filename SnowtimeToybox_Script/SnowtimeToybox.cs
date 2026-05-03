@@ -798,6 +798,7 @@ namespace SnowtimeToybox
             DemoTurretlingBody.GetComponent<CharacterBody>().baseDamage = TurretlingBaseDamage.Value;
             DemoTurretlingBody.GetComponent<CharacterBody>().levelDamage = TurretlingBaseDamagePerLevel.Value;
             DemoTurretlingBody.GetComponent<CharacterDeathBehavior>().deathState = new SerializableEntityStateType(typeof(TurretlingDeath));
+            DemoTurretlingBody.AddComponent<TurretlingDrunkenRamblingHandler>();
             DemoTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "_DemoTurretlingMaster.prefab");
             DemoTurretlingMaster.AddComponent<TurretlingRainbow>();
             DemoTurretlingPrimaryFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(turretlingPath + "Skills/TurretlingPrimaryFamilyAlt.asset");
