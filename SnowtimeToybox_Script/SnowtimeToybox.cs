@@ -30,6 +30,7 @@ using UnityEngine.SceneManagement;
 using UnityHotReloadNS;
 using Path = System.IO.Path;
 using ReadOnlyContentPack = RoR2.ContentManagement.ReadOnlyContentPack;
+using UnityEngine.XR;
 
 [module: UnverifiableCode]
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -106,6 +107,10 @@ namespace SnowtimeToybox
         public static GameObject DTTurretlingBroken;
         public static SkillFamily DTTurretlingSkillFamily;
         public static SkillDef DTTurretlingSkillDef;
+        public static DroneDef DTDemoTurretlingDef;
+        public static GameObject DTDemoTurretlingBody;
+        public static GameObject DTDemoTurretlingMaster;
+        public static GameObject DTDemoTurretlingBroken;
         public static SkillFamily ArtiPassiveFamily;
         public static SkillDef ArtiTurretSkill;
         public static SkillDef ArtiNoTurretSkill;
@@ -113,6 +118,21 @@ namespace SnowtimeToybox
         public static GameObject ArtiTurretlingBody;
         public static GameObject ArtiTurretlingMaster;
         public static GameObject ArtiTurretlingBroken;
+        public static DroneDef DemoTurretlingDef;
+        public static GameObject DemoTurretlingBody;
+        public static GameObject DemoTurretlingMaster;
+        public static GameObject DemoTurretlingBroken;
+        public static GameObject DemoTurretlingProjectile;
+        public static GameObject DemoTurretlingProjectileGhost;
+        public static GameObject DemoTurretlingExplosEffect;
+        public static InteractableSpawnCard DemoTurretlingIsc;
+        public static SkillFamily DemoTurretlingPrimaryFamily;
+        public static SkillDef DemoTurretlingPrimarySkill;
+        public static SkillDef PassiveDemoTurretSkill;
+        public static DroneDef PassiveDemoTurretlingDef;
+        public static GameObject PassiveDemoTurretlingBody;
+        public static GameObject PassiveDemoTurretlingMaster;
+        public static GameObject PassiveDemoTurretlingBroken;
         // turretling survivor
         public static SurvivorDef SwarmlingDef;
         public static GameObject SwarmlingBody;
@@ -120,6 +140,10 @@ namespace SnowtimeToybox
         public static GameObject SwarmlingMinionBody;
         public static GameObject SwarmlingMinionBroken;
         public static GameObject SwarmlingMinionMaster;
+        public static DroneDef SwarmlingDemoMinionDef;
+        public static GameObject SwarmlingDemoMinionBody;
+        public static GameObject SwarmlingDemoMinionBroken;
+        public static GameObject SwarmlingDemoMinionMaster;
         public static SkillFamily Swarmling_PassiveFamily1;
         public static SkillFamily Swarmling_PassiveFamily2;
         public static SkillFamily Swarmling_PassiveFamily3;
@@ -127,6 +151,7 @@ namespace SnowtimeToybox
         public static SkillFamily Swarmling_PassiveFamily5;
         public static SkillFamily Swarmling_PassiveFamily6;
         public static SkillDef SwarmlingPassiveMinion;
+        public static SkillDef SwarmlingDemoPassiveMinion;
         public static SkillFamily SwarmlingSpecialFamily;
         public static SkillDef SwarmlingSpecialSkill;
         public static SkillFamily SwarmlingUtilityFamily;
@@ -170,6 +195,7 @@ namespace SnowtimeToybox
         public static ConfigEntry<float> TurretlingReviveCostMult { get; set; }
         public static ConfigEntry<float> TurretlingBaseDamage { get; set; }
         public static ConfigEntry<float> TurretlingBaseDamagePerLevel { get; set; }
+        public static ConfigEntry<float> TurretlingDemoChance { get; set; }
 
         public void Awake()
         {
@@ -184,14 +210,15 @@ namespace SnowtimeToybox
             FriendlyTurretDrone = Config.Bind("Friendly Turret Flags", "Drone", false, "If true, Friendly Turrets (and turretlings) are flagged as drones. Probably comes with some oddities.");
             FriendlyTurretRemoteOpPrice = Config.Bind("Friendly Turret Functions", "Remote Operation Cost", 250, "Cost for becoming a Friendly Turret with Remote Operation.");
             TurretlingArtificerPassive = Config.Bind("Turretlings", "Turretling Passive", false, "If true, gives a turretling passive to those defined in Turretling Passive List.");
-            TurretlingPassives = Config.Bind("Turretlings", "Turretling Passive List", "MageBody,Divineling;MercBody,Mercling;RailgunnerBody,Purity;BastionRobot,Ganymede;SeekerBody,Toastling;HuntressBody,Kottling;RocketSurvivorBody,Lil\'lusiveling;Loader,Scrapling;ArbiterBody,Nugget;CaptainBody,\'Paperweight\'", "internal names for bodies that should have turretlings ,.., (bodyname,turretlingname) turretlingname is the name given to these turretlings");
+            TurretlingPassives = Config.Bind("Turretlings", "Turretling Passive List", "MageBody,Divineling;MercBody,Mercling;RailgunnerBody,Purity;BastionRobot,Ganymede;SeekerBody,Toastling;HuntressBody,Kottling;RocketSurvivorBody,Lil\'lusiveling;Loader,Scrapling;ArbiterBody,Nugget;CaptainBody,\'Paperweight\';DemolisherBody,Demoling", "internal names for bodies that should have turretlings ,.., (bodyname,turretlingname) turretlingname is the name given to these turretlings");
             TurretlingSpawnChance = Config.Bind("Turretlings", "Turretling Variant Spawn Chance ,,.", 100f, "chance to get a turretling when buying a friendly turret !!!");
             TurretlingImmuneVoidDeath = Config.Bind("Turretlings", "Void Death Immunity", false, "If true, All turretlings are immune to Void Death (Void Reaver implosions). Keep the scrunglies safe.");
             TurretlingReviveCostMult = Config.Bind("Turretlings", "turretling revive cost mult .,.", 0.6f, "price multiplier for reviving turretlings ,.. ,.");
             TurretlingKillOriginalTurrets = Config.Bind("Turretlings", "kill original turrets .,,.", false, "kills normal(gunner) turrets and replaces them with turretlings ,. ,.");
             TurretlingRainbowChance = Config.Bind("Turretlings", "turretling rainbow chance ,,.", 1f, "% chance to get a powerful and prideful rainbow turretling ,.,.");
             TurretlingRainbowBonusItems = Config.Bind("Turretlings", "turretling rainbow bonus items ,,.", "syringe,50,alienhead,5,extralife,1,moremissile,1,adaptivearmor,1,powercube,1,shockdamageaura,1", "give rainbow turretlings bonus items !!! follows (internalitemname),(count)");
-            TurretlingBaseDamage = Config.Bind("Turretling Stats", "Base Damage", 12f, "Damage the turretling deals. Blaster deals 100%(1x) base damage, Pixi Launcher deal 200%(2x) base damage. Does not affect Turretling variants.");
+            TurretlingDemoChance = Config.Bind("Turretlings", "turretling demo chance ,.,,,.", 10f, "% chance to get a drunken gremlin ,.,.");
+            TurretlingBaseDamage = Config.Bind("Turretling Stats", "Base Damage", 12f, "Damage the turretling deals. Blaster deals 100%(1x) base damage, Pixi Launcher deal 200%(2x) base damage. demoling grenade launcher does 300%(3x) base damage. Does not affect Turretling variants.");
             TurretlingBaseDamagePerLevel = Config.Bind("Turretling Stats", "Base Damage Per Level", 3f, "Base Damage increase per level. Does not affect Turretling variants.");
             Language.collectLanguageRootFolders += CollectLanguageRootFolders;
 
@@ -660,6 +687,36 @@ namespace SnowtimeToybox
             ContentAddition.AddSkillDef(DTTurretlingSkillDef);
             ContentAddition.AddEntityState(typeof(DTTurretlingDeath), out _);
             ContentAddition.AddEntityState(typeof(DTTurretlingRainbowize), out _);
+            // Operator Turretling Alt
+            DTDemoTurretlingDef = _stcharacterAssetBundle.LoadAsset<DroneDef>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_DTTurretling_Demo.asset");
+            DTDemoTurretlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_DTTurretling_DemoBody.prefab");
+            DTDemoTurretlingBody.GetComponent<CharacterDeathBehavior>().deathState = new SerializableEntityStateType(typeof(DTTurretlingDeath));
+            DTDemoTurretlingBody.GetComponent<DroneCommandReceiver>().droneState = DroneCommandReceiver.DroneState.Idle;
+            DTDemoTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_DTTurretling_DemoMaster.prefab");
+            DTDemoTurretlingMaster.AddComponent<TurretlingRainbow>();
+            DTDemoTurretlingMaster.AddComponent<FriendlyTurretInheritance>().whitelistedTag = "FriendTurret_None_Whitelist";
+            DTDemoTurretlingBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_DTTurretling_DemoBroken.prefab");
+            ContentAddition.AddDroneDef(DTDemoTurretlingDef);
+            ContentAddition.AddBody(DTDemoTurretlingBody);
+            ContentAddition.AddMaster(DTDemoTurretlingMaster);
+            ContentAddition.AddBody(DTDemoTurretlingBroken);
+            // Passive DemolingTurret really quickly 
+            PassiveDemoTurretlingDef = _stcharacterAssetBundle.LoadAsset<DroneDef>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_DManTurretling.asset");
+            PassiveDemoTurretlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_DManTurretlingBody.prefab");
+            PassiveDemoTurretlingBody.GetComponent<CharacterDeathBehavior>().deathState = new SerializableEntityStateType(typeof(DTTurretlingDeath));
+            PassiveDemoTurretlingBody.AddComponent<PassiveTurretlingUpdateNamePerCharacter>();
+            PassiveDemoTurretlingBody.AddComponent<TurretlingDrunkenRamblingHandler>();
+            PassiveDemoTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_DManTurretlingMaster.prefab");
+            PassiveDemoTurretlingMaster.AddComponent<TurretlingRainbow>();
+            PassiveDemoTurretlingMaster.AddComponent<FriendlyTurretInheritance>().whitelistedTag = "FriendTurret_None_Whitelist";
+            PassiveDemoTurretlingBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_DManTurretlingBroken.prefab");
+            PassiveDemoTurretlingBroken.AddComponent<PassiveTurretlingUpdateNamePerCharacter>();
+            PassiveDemoTurretlingBody.GetComponent<CharacterBody>().baseDamage = (TurretlingBaseDamage.Value / 1.5f);
+            PassiveDemoTurretlingBody.GetComponent<CharacterBody>().levelDamage = (TurretlingBaseDamagePerLevel.Value / 1.5f);
+            ContentAddition.AddDroneDef(PassiveDemoTurretlingDef);
+            ContentAddition.AddBody(PassiveDemoTurretlingBody);
+            ContentAddition.AddMaster(PassiveDemoTurretlingMaster);
+            ContentAddition.AddBody(PassiveDemoTurretlingBroken);
 
             string swarmlingPath = @"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Survivor/";
             SwarmlingDef = _stcharacterAssetBundle.LoadAsset<SurvivorDef>(swarmlingPath + "Swarmling.asset");
@@ -670,6 +727,7 @@ namespace SnowtimeToybox
             SwarmlingBody.AddComponent<SwarmPlayerSwarmlingTracker>();
             DroneTechRepairQueue repairQueueSwarmling = SwarmlingBody.AddComponent<DroneTechRepairQueue>();
             repairQueueSwarmling.healRate = 0.05f;
+
             SwarmlingMinionBody = _stcharacterAssetBundle.LoadAsset<GameObject>(swarmlingPath + "_SwarmTurretlingBody.prefab");
             SwarmlingMinionBody.GetComponent<CharacterDeathBehavior>().deathState = new SerializableEntityStateType(typeof(DTTurretlingDeath));
             SwarmlingMinionBody.AddComponent<TurretlingMissileTracker>();
@@ -715,6 +773,47 @@ namespace SnowtimeToybox
             ContentAddition.AddEntityState(typeof(TurretlingMiniBlinkState), out _);
             ContentAddition.AddEffect(TurretlingEnergyNova.novafx);
 
+            SwarmlingDemoMinionDef = _stcharacterAssetBundle.LoadAsset<DroneDef>(swarmlingPath + "_SwarmTurretling_Demo.asset");
+            SwarmlingDemoMinionBody = _stcharacterAssetBundle.LoadAsset<GameObject>(swarmlingPath + "_SwarmTurretling_DemoBody.prefab");
+            SwarmlingDemoMinionBody.GetComponent<CharacterDeathBehavior>().deathState = new SerializableEntityStateType(typeof(DTTurretlingDeath));
+            SwarmlingDemoMinionBody.AddComponent<TurretlingMissileTracker>();
+            SwarmlingDemoMinionBody.AddComponent<SwarmMinionSwarmlingTeleportHandler>();
+            SwarmlingDemoMinionBody.AddComponent<EquipmentSlot>();
+            SwarmlingDemoMinionBody.GetComponent<CharacterBody>().baseDamage = (TurretlingBaseDamage.Value / 2f);
+            SwarmlingDemoMinionBody.GetComponent<CharacterBody>().levelDamage = (TurretlingBaseDamagePerLevel.Value / 2f);
+            SwarmlingDemoMinionBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(swarmlingPath + "_SwarmTurretling_DemoBroken.prefab");
+            SwarmlingDemoMinionMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(swarmlingPath + "_SwarmTurretling_DemoMaster.prefab");
+            SwarmlingDemoMinionMaster.AddComponent<TurretlingRainbow>();
+            SwarmlingDemoMinionMaster.AddComponent<FriendlyTurretInheritance>().whitelistedTag = "FriendTurret_None_Whitelist";
+            SwarmlingDemoPassiveMinion = _stcharacterAssetBundle.LoadAsset<SkillDef>(swarmlingPath + "Skills/Swarmling_Demo.asset");
+            ContentAddition.AddDroneDef(SwarmlingDemoMinionDef);
+            ContentAddition.AddBody(SwarmlingDemoMinionBody);
+            ContentAddition.AddBody(SwarmlingDemoMinionBroken);
+            ContentAddition.AddMaster(SwarmlingDemoMinionMaster);
+            ContentAddition.AddSkillDef(SwarmlingDemoPassiveMinion);
+
+            DemoTurretlingDef = _stcharacterAssetBundle.LoadAsset<DroneDef>(turretlingPath + "_DemoTurretling.asset");
+            DemoTurretlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "_DemoTurretlingBody.prefab");
+            // update stats and components
+            DemoTurretlingBody.GetComponent<CharacterBody>().baseDamage = TurretlingBaseDamage.Value;
+            DemoTurretlingBody.GetComponent<CharacterBody>().levelDamage = TurretlingBaseDamagePerLevel.Value;
+            DemoTurretlingBody.GetComponent<CharacterDeathBehavior>().deathState = new SerializableEntityStateType(typeof(TurretlingDeath));
+            DemoTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "_DemoTurretlingMaster.prefab");
+            DemoTurretlingMaster.AddComponent<TurretlingRainbow>();
+            DemoTurretlingPrimaryFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(turretlingPath + "Skills/TurretlingPrimaryFamilyAlt.asset");
+            DemoTurretlingPrimarySkill = _stcharacterAssetBundle.LoadAsset<SkillDef>(turretlingPath + "Skills/Turretling_Primary_GL.asset");
+            DemoTurretlingPrimarySkill.activationState = new SerializableEntityStateType(typeof(TurretlingGrenadeLauncher));
+            ContentAddition.AddEntityState(typeof(TurretlingGrenadeLauncher), out _);
+            ContentAddition.AddEffect(TurretlingGrenadeLauncher.grenadeGhostObject);
+            TurretlingGrenadeLauncher.grenadeGhostObject.AddComponent<TurretlingGLInheritColor>();
+            ContentAddition.AddEffect(TurretlingGrenadeLauncher.grenadeImpactObject);
+            ContentAddition.AddProjectile(TurretlingGrenadeLauncher.grenadeObject);
+            ContentAddition.AddSkillDef(DemoTurretlingPrimarySkill);
+            ContentAddition.AddSkillFamily(DemoTurretlingPrimaryFamily);
+            ContentAddition.AddBody(DemoTurretlingBody);
+            ContentAddition.AddMaster(DemoTurretlingMaster);
+            ContentAddition.AddDroneDef(DemoTurretlingDef);
+
             ContentAddition.AddEntityState(typeof(Shenanigans), out _);
 
             // Fix Camera for playable turretlings
@@ -722,8 +821,12 @@ namespace SnowtimeToybox
             FriendlyTurretTurretlingBodyRemoteOp.GetComponent<CameraTargetParams>().dontRaycastToPivot = true;
             // Add the Turretling to stages interactable spawncards, as it is a standard walking turret and NOT a Friendly Turret, as its internal name may imply
             FriendlyTurretTurretlingBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/_mdlTurretlingBroken.prefab");
+            FriendlyTurretTurretlingBroken.AddComponent<TurretlingKillNormalTurrets>();
             FriendlyTurretTurretlingIsc = _stcharacterAssetBundle.LoadAsset<InteractableSpawnCard>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/_iscBrokenTurretling.asset");
+            DemoTurretlingBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/_DemoTurretlingBroken.prefab");
+            DemoTurretlingIsc = _stcharacterAssetBundle.LoadAsset<InteractableSpawnCard>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/_iscBrokenDemoTurretling.asset");
             ContentAddition.AddNetworkedObject(FriendlyTurretTurretlingBroken);
+            ContentAddition.AddNetworkedObject(DemoTurretlingBroken);
             var directorCardFriendlyTurretTurretling = new DirectorCard // Borbo Turret Interactable
             {
                 spawnCard = FriendlyTurretTurretlingIsc,
@@ -736,6 +839,21 @@ namespace SnowtimeToybox
             var directorCardHolderFriendlyTurretTurretling = new DirectorAPI.DirectorCardHolder
             {
                 Card = directorCardFriendlyTurretTurretling,
+                InteractableCategory = DirectorAPI.InteractableCategory.Drones
+            };
+
+            var directorCardDemoTurretling = new DirectorCard // Borbo Turret Interactable
+            {
+                spawnCard = DemoTurretlingIsc,
+                selectionWeight = 67, // the higher it is, the more common it is
+                spawnDistance = DirectorCore.MonsterSpawnDistance.Standard,
+                minimumStageCompletions = 69420,
+                preventOverhead = false
+            };
+
+            var directorCardHolderDemoTurretling = new DirectorAPI.DirectorCardHolder
+            {
+                Card = directorCardDemoTurretling,
                 InteractableCategory = DirectorAPI.InteractableCategory.Drones
             };
 
@@ -791,11 +909,13 @@ namespace SnowtimeToybox
             {
                 Log.Debug("Adding Turretlings to stage: " + stage);
                 DirectorAPI.Helpers.AddNewInteractableToStage(directorCardHolderFriendlyTurretTurretling, stage);
+                DirectorAPI.Helpers.AddNewInteractableToStage(directorCardHolderDemoTurretling, stage);
             }
             foreach (string stage in turretlingCustomStageList)
             {
-                Log.Debug("Adding Turretlings to stage: " + stage);
+                Log.Debug("Adding Turretlings to custom stage (if present, will log regardless): " + stage);
                 DirectorAPI.Helpers.AddNewInteractableToStage(directorCardHolderFriendlyTurretTurretling, DirectorAPI.Stage.Custom, stage);
+                DirectorAPI.Helpers.AddNewInteractableToStage(directorCardHolderDemoTurretling, DirectorAPI.Stage.Custom, stage);
             }
             
             List<GameObject> turretlingBodies =
@@ -808,7 +928,8 @@ namespace SnowtimeToybox
                 BreadTurretlingBody,
                 DTTurretlingBody,
                 FriendlyTurretTurretlingBodyRemoteOp,
-                ArtiTurretlingBody
+                ArtiTurretlingBody,
+                DemoTurretlingBody
             ];
             foreach (var turretling in turretlingBodies)
             {
@@ -825,6 +946,7 @@ namespace SnowtimeToybox
             ShortcakeTurretlingMaster.AddComponent<FriendlyTurretInheritance>().whitelistedTag = "FriendTurret_Shortcake_Whitelist";
             DTTurretlingBody.AddComponent<FriendlyTurretInheritance>().whitelistedTag = "FriendTurret_Shortcake_Whitelist";
             ArtiTurretlingBody.AddComponent<FriendlyTurretInheritance>().whitelistedTag = "FriendTurret_Shortcake_Whitelist";
+            DemoTurretlingBody.AddComponent<FriendlyTurretInheritance>().whitelistedTag = "FriendTurret_Shortcake_Whitelist";
             
             foreach (var turretling in turretlingBodies)
             {
@@ -847,6 +969,20 @@ namespace SnowtimeToybox
             
             //overlay amanger ,.,. 
             On.RoR2.CharacterModel.UpdateOverlays += CharacterModelOnUpdateOverlays;
+            On.RoR2.Projectile.ProjectileController.IgnoreCollisionsWithBody += IgnoreCollisionsWithBody;
+        }
+
+        private void IgnoreCollisionsWithBody(On.RoR2.Projectile.ProjectileController.orig_IgnoreCollisionsWithBody orig, RoR2.Projectile.ProjectileController self, GameObject bodyObject, bool shouldIgnore)
+        {
+            orig(self, bodyObject, shouldIgnore);
+            if (self.name.Contains("TurretlingDemoGrenade"))
+            {
+                if (!self.owner?.gameObject.GetComponent<CharacterBody>()) return;
+                float myHue = self.owner.gameObject.GetComponent<CharacterBody>().master.gameObject.GetComponent<TurretlingRainbow>().myHue;
+                bool rainbow = self.owner.gameObject.GetComponent<CharacterBody>().master.gameObject.GetComponent<TurretlingRainbow>().turretlingRainbow;
+                self.gameObject.GetComponent<ChildLocator>().FindChild("Grenade").gameObject.GetComponent<Animator>().SetFloat("hue", myHue);
+                self.gameObject.GetComponent<ChildLocator>().FindChild("Grenade").gameObject.GetComponent<Animator>().SetBool("rainbow", rainbow);
+            }
         }
 
         private void AddScepterSkills()
@@ -1197,26 +1333,37 @@ namespace SnowtimeToybox
 
             // Turretlings!
             SkillDef DroneTechTurretlingSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/DroneTechTurretling.asset");
+            SkillDef DroneTechTurretlingDemoSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/DroneTechTurretlingDemo.asset");
             foreach (GenericSkill genericSkill in DroneTechBodyPrefab.GetComponents<GenericSkill>())
             {
                 if(genericSkill.skillName == "Drone1")
                 {
                     Log.Debug("Found Operator Passive SkillFamily 1!");
-                    Array.Resize(ref genericSkill.skillFamily.variants, genericSkill.skillFamily.variants.Length + 1);
+                    Array.Resize(ref genericSkill.skillFamily.variants, genericSkill.skillFamily.variants.Length + 2);
                     genericSkill.skillFamily.variants[^1] = new SkillFamily.Variant
                     {
                         skillDef = DroneTechTurretlingSkillDef,
                         viewableNode = new ViewablesCatalog.Node(DroneTechTurretlingSkillDef.skillNameToken, false)
                     };
+                    genericSkill.skillFamily.variants[^2] = new SkillFamily.Variant
+                    {
+                        skillDef = DroneTechTurretlingDemoSkillDef,
+                        viewableNode = new ViewablesCatalog.Node(DroneTechTurretlingDemoSkillDef.skillNameToken, false)
+                    };
                 }
                 else if (genericSkill.skillName == "Drone2")
                 {
                     Log.Debug("Found Operator Passive SkillFamily 2!");
-                    Array.Resize(ref genericSkill.skillFamily.variants, genericSkill.skillFamily.variants.Length + 1);
+                    Array.Resize(ref genericSkill.skillFamily.variants, genericSkill.skillFamily.variants.Length + 2);
                     genericSkill.skillFamily.variants[^1] = new SkillFamily.Variant
                     {
                         skillDef = DroneTechTurretlingSkillDef,
                         viewableNode = new ViewablesCatalog.Node(DroneTechTurretlingSkillDef.skillNameToken, false)
+                    };
+                    genericSkill.skillFamily.variants[^2] = new SkillFamily.Variant
+                    {
+                        skillDef = DroneTechTurretlingDemoSkillDef,
+                        viewableNode = new ViewablesCatalog.Node(DroneTechTurretlingDemoSkillDef.skillNameToken, false)
                     };
                 }
             }
@@ -1253,11 +1400,17 @@ namespace SnowtimeToybox
         {
             orig();
             DroneCombinerController.doNotDestroy.Add(BodyCatalog.FindBodyIndex(SwarmlingMinionBody));
+            DroneCombinerController.doNotDestroy.Add(BodyCatalog.FindBodyIndex(SwarmlingDemoMinionBody));
             DroneCombinerController.doNotDestroy.Add(BodyCatalog.FindBodyIndex(ArtiTurretlingBody));
+            DroneCombinerController.doNotDestroy.Add(BodyCatalog.FindBodyIndex(PassiveDemoTurretlingBody));
             DroneCombinerController.doNotDestroy.Add(BodyCatalog.FindBodyIndex(DTTurretlingBody));
+            DroneCombinerController.doNotDestroy.Add(BodyCatalog.FindBodyIndex(DTDemoTurretlingBody));
             DroneCombinerController.droneCompatibilityLUT.Add(BodyCatalog.FindBodyIndex(SwarmlingMinionBody), BodyCatalog.FindBodyIndex(FriendlyTurretTurretlingBody));
+            DroneCombinerController.droneCompatibilityLUT.Add(BodyCatalog.FindBodyIndex(SwarmlingDemoMinionBody), BodyCatalog.FindBodyIndex(FriendlyTurretTurretlingBody));
             DroneCombinerController.droneCompatibilityLUT.Add(BodyCatalog.FindBodyIndex(ArtiTurretlingBody), BodyCatalog.FindBodyIndex(FriendlyTurretTurretlingBody));
+            DroneCombinerController.droneCompatibilityLUT.Add(BodyCatalog.FindBodyIndex(PassiveDemoTurretlingBody), BodyCatalog.FindBodyIndex(FriendlyTurretTurretlingBody));
             DroneCombinerController.droneCompatibilityLUT.Add(BodyCatalog.FindBodyIndex(DTTurretlingBody), BodyCatalog.FindBodyIndex(FriendlyTurretTurretlingBody));
+            DroneCombinerController.droneCompatibilityLUT.Add(BodyCatalog.FindBodyIndex(DTDemoTurretlingBody), BodyCatalog.FindBodyIndex(FriendlyTurretTurretlingBody));
         }
 
         private bool CharacterModelHookIsUpgradedDrone(On.RoR2.CharacterModel.orig_IsUpgradedDrone orig, CharacterModel self)

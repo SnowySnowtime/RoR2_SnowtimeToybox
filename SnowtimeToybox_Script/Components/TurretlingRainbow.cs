@@ -32,6 +32,7 @@ public class TurretlingRainbow : NetworkBehaviour
     private CharacterBody charBody;
     private string steamidToApply;
     public static List<CharacterBody> DTActiveTurretlings = [];
+    public float myHue;
     
     public static Dictionary<string, string> turretlingRecolors = new()
     {
@@ -49,6 +50,8 @@ public class TurretlingRainbow : NetworkBehaviour
         { "STEAM_1:1:158283592", "0.0125,0.25,0.5,VCR" }, // VCR
         { "STEAM_1:1:59278323", "0.037,0.1,0.01,F4lx" }, // F4lx/Gadreel
         { "STEAM_1:0:98120944", "0.6,0.27,0.27,Samuel" }, // Samuel
+        // Mod support stuffs
+        { "STEAM_1:1:33573234", "0.34,0.65,0.6,DTEE" }, // DTEE
     };
     
     public void Start()
@@ -69,7 +72,7 @@ public class TurretlingRainbow : NetworkBehaviour
         turretlingSat = Run.instance.runRNG.RangeFloat(0, 1);
         turretlingShade = Run.instance.runRNG.RangeFloat(0, 1);
 
-        if (!gameObject.name.Contains("_DT") && !gameObject.name.Contains("PlayerMaster") && !gameObject.name.Contains("_Holy"))
+        if (!gameObject.name.Contains("_DT") && !gameObject.name.Contains("PlayerMaster") && !gameObject.name.Contains("_Holy") && !gameObject.name.Contains("_DMan"))
         {
             turretlingRainbow = SnowtimeToyboxMod.TurretlingRainbowChance.Value >= Run.instance.runRNG.RangeFloat(0, 100);  
         }
@@ -115,7 +118,7 @@ public class TurretlingRainbow : NetworkBehaviour
         //Log.Debug($"running fixed updatre 9on {master.GetBody().name} dt rainbow {DTRainbowActive} rainbow {turretlingRainbow}");
         if (NetworkServer.active && Run.instance && !turretlingPlayerMaster)
         {
-            if(gameObject.name.Contains("_DT") || gameObject.name.Contains("_Holy") || gameObject.name.Contains("_SwarmTurretling"))
+            if(gameObject.name.Contains("_DT") || gameObject.name.Contains("_Holy") || gameObject.name.Contains("_SwarmTurretling") || gameObject.name.Contains("_DMan"))
             {
                 //Log.Debug("Operator/Artificer Turretling Found... Defining Turretling Owner Master...");
                 turretlingPlayerMaster = master.minionOwnership.ownerMaster;
@@ -227,6 +230,7 @@ public class TurretlingRainbow : NetworkBehaviour
             fxAnimator
         ];
 
+        myHue = turretlingHue;
         //does this have to be like this? no ,.., but its silyl .,. ,
         //Log.Debug("Applying visuals to animators");
         foreach (var animator in animators)
@@ -312,7 +316,7 @@ public class TurretlingRainbow : NetworkBehaviour
     {
         if (gameObject.name.Contains("PlayerMaster")) return;
         // enough said.
-        if (gameObject.name.Contains("_DT") || gameObject.name.Contains("Broken") || gameObject.name.Contains("_Holy") || gameObject.name.Contains("_SwarmTurretling")) return;
+        if (gameObject.name.Contains("_DT") || gameObject.name.Contains("Broken") || gameObject.name.Contains("_Holy") || gameObject.name.Contains("_SwarmTurretling") || gameObject.name.Contains("_DMan")) return;
         int extralives = master.inventory.GetItemCountPermanent(RoR2Content.Items.ExtraLife);
         ChildLocator childLocator = master.GetBody().modelLocator.modelTransform.gameObject.GetComponent<ChildLocator>();
         if (turretlingRainbow && extralives != 0)
@@ -321,9 +325,18 @@ public class TurretlingRainbow : NetworkBehaviour
         }
         if (extralives == 0 && master.GetBody() && NetworkServer.active)
         {
-            GameObject newTurretling = Object.Instantiate(SnowtimeToyboxMod.FriendlyTurretTurretlingBroken, master.GetBody().transform.position, master.GetBody().transform.rotation);
-            newTurretling.GetComponent<PurchaseInteraction>().cost = (int)(Run.instance.GetDifficultyScaledCost(newTurretling.GetComponent<PurchaseInteraction>().cost) * SnowtimeToyboxMod.TurretlingReviveCostMult.Value);
-            NetworkServer.Spawn(newTurretling);
+            if(gameObject.name.Contains("Demo"))
+            {
+                GameObject newTurretling = Object.Instantiate(SnowtimeToyboxMod.DemoTurretlingBroken, master.GetBody().transform.position, master.GetBody().transform.rotation);
+                newTurretling.GetComponent<PurchaseInteraction>().cost = (int)(Run.instance.GetDifficultyScaledCost(newTurretling.GetComponent<PurchaseInteraction>().cost) * SnowtimeToyboxMod.TurretlingReviveCostMult.Value);
+                NetworkServer.Spawn(newTurretling);
+            }
+            else
+            {
+                GameObject newTurretling = Object.Instantiate(SnowtimeToyboxMod.FriendlyTurretTurretlingBroken, master.GetBody().transform.position, master.GetBody().transform.rotation);
+                newTurretling.GetComponent<PurchaseInteraction>().cost = (int)(Run.instance.GetDifficultyScaledCost(newTurretling.GetComponent<PurchaseInteraction>().cost) * SnowtimeToyboxMod.TurretlingReviveCostMult.Value);
+                NetworkServer.Spawn(newTurretling);
+            }
         }
     }
 

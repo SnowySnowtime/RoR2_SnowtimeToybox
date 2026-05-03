@@ -62,6 +62,7 @@
 		"FRIENDLYTURRET_BREAD_BROKEN_DESCRIPTION": "<style=cEvent>h ,,help !! please !!!! youre right ther e!!!!!!!!!! help me !!!!!!!!!!!!!!!!!!!!!!!!! please ,,..,,. ,.., .,, ,:pleading :.,.,,.,.,.</style>\n[<style=cIsUtility>SUPPORT</style>: <style=cIsDamage>BUFF</style>] <style=cIsUtility>Prioritizes</style> <style=cIsDamage>buffing </style>the <style=cIsHealing>owner</style>.\nBuffs nearby allies within 40m with <style=cIsDamage>+20% attack speed</style> and <style=cIsHealing>x0.33 barrier decay</style>\nFires two <style=cIsHealing>lucky beams</style> at the <style=cIsUtility>target</style>, increasing <style=cIsHealing>luck </style>by <style=cIsHealing>1</style>.\n<style=cIsUtility>Inherits</style> a curated set of items and <style=cIsDamage>any Elite Equipment</style> from the owner.",
 	
 		"TURRETLING_NAME": "Turretling",
+		"TURRETLINGDEMO_NAME": "Demoling",
 		"TURRETLING_SUBTITLE": "not so cute now...",
 		"TURRETLING_FUNCTION": "Tiny walking turret which assists the user in dealing damage.",
 		"TURRETLING_DESCRIPTION": "Tiny, distracting, walking turret which assists the user in damage.",
@@ -109,6 +110,12 @@
 		"TURRETLING_DT_SPECIAL": "Rainbowize; enter an <style=cIsDamage>empowered state</style>, <style=cIsDamage>massively increasing offensive stats</style> for 5 seconds.",
 		"TURRETLING_DT_SPECIAL_DESC": "Rainbowize; enter an <style=cIsDamage>empowered state</style>, <style=cIsDamage>massively increasing offensive stats</style> for 5 seconds.",
 		
+		"TURRETLING_DT_DEMONAME": "SCOTTLING",
+		"TURRETLING_DT_DEMOSUBTITLE": "not so cute now...",
+		"TURRETLING_DT_DEMOFUNCTION": "Tiny walking turret which assists the user in dealing damage.",
+		"TURRETLING_DT_DEMODESCRIPTION": "Tiny, distracting, walking turret which assists the user in damage.",
+		"TURRETLING_DT_DEMOSKILL_DESCRIPTION": "Fires a pipebomb for <style=cIsDamage>300% damage</style>.\nOccassionally fires its pixi launcher for <style=cIsDamage>200% damage</style>.",
+		
 		"TURRETLING_DRONETECH_NAME": "Turretling Mk 2",
 		"TURRETLING_DRONETECH_DESCRIPTION": "<style=cDeath>Fragile</style>. A customized turretling will spawn with you at the start of each stage. Automatically repairs when downed. Inherits Elite Equipment and a large portion of items.",
 		"TURRETLING_FRAGILE": "[ <style=cDeath>Fragile</style> ]\n<style=cSub>Careful now. The turretling is fragile, but its rather simple internals makes <style=cIsUtility>repairs 2x quicker</style></style></style>",
@@ -118,9 +125,11 @@
 		
 		"TURRETLING_ARTI_NAME": "Personal Turretling",
 		"TURRETLING_ARTI_CONTEXT": "waow...",
-		"TURRETLING_ARTI_DESCRIPTION": "<style=cDeath>Fragile</style>. A weaker, yet personalized turretling will spawn with you at the start of each stage. Automatically repairs when downed. Inherits Elite Equipment and a small selection of items.",
+		"TURRETLING_ARTI_DESCRIPTION": "<style=cDeath>Fragile</style>. A weaker, personal turretling spawns with you each stage. Automatically repairs when downed. Inherits elite equipment and a small selection of items.",
 		"TURRETLING_FRAGILE_ARTI": "[ <style=cDeath>Fragile</style> ]\n<style=cSub>Careful now. The turretling is fragile. On death, it will <style=cIsUtility>repair</style> itself.</style>.</style>",
-		
+		"TURRETLING_DEMOARTI_NAME": "Personal Turretling (Grenade Launcher)",
+		"TURRETLING_DEMOARTI_DESCRIPTION": "<style=cDeath>Fragile</style>. A weaker, personal turretling spawns with you each stage. Automatically repairs when downed. Inherits elite equipment and a small selection of items.",
+			
 		
 		"TURRETLING_SWARM_NAME": "Swarmling",
 		"TURRETLING_SWARM_PASSIVE": "The Swarm...",
@@ -140,7 +149,11 @@
 		"TURRETLING_SKILL4_KEYWORD": "[ <color=#eef77c>Concussive</color> ]\nAdditional <style=cIsUtility>stocks</style> to this skill increases <style=cIsDamage>damage by 50% and range by 3m</style> per <style=cIsUtility>stock</style>.\n<style=cIsDamage>Attack Speed</style> increases <style=cIsDamage>damage</style>. <style=cStack>(15% AtkSpd = 15% DMG)</style>",
 		"TURRETLING_SWARM_WIN": "...and so they left, their mission accomplished.",
 		"TURRETLING_SWARM_FAIL": "...and so they vanished, lost in transit.",
-		"TURRETLING_SWARM_DESC": "A Survivor dedicated to empowering your main group of allies.",
+		"TURRETLING_SWARM_DESC": "A Survivor dedicated to empowering your main group of allies.\nConfigure your team to your preference.\nGrenade Launcher Turretlings have higher potential damage output, but are more likely to miss their shot.",
+		"TURRETLING_SWARM_NAME": "Turretling",
+		"TURRETLING_SWARM_DEMO_DESCRIPTION": "Standard Turretling configuration, includes Blaster and Pixi Launcher.",
+		"TURRETLING_SWARM_DEMO_NAME": "Turretling (Demo)",
+		"TURRETLING_SWARM_DESCRIPTION": "Irregular Turretling configuration, includes Grenade Launcher and Pixi Launcher.",
 		"TURRETLING_SKILL6_NAME": "<color=#4f9aff>Prismatic Crystal</color>",
 		"TURRETLING_SKILL6_DESC": "Fire prismatic crystals for <style=cIsDamage>450% damage</style>, with different effects depending on color.\n<color=#FA2F2F>Kinetic</color> | <color=#FA2F2F>66%<style=cStack>(x3 bullets)</style> damage</color>. <style=cIsDamage>No falloff</style> and <style=cIsDamage>bypasses armor</style>.\n<color=#8EFA2F>Corrosive</color> | <color=#8EFA2F>66%<style=cStack>(x3 bullets)</style> damage</color>. <style=cIsDamage>Poisons enemies on hit</style>.\n<color=#2FD1FA>Energy</color> | <color=#2FD1FA>66%<style=cStack>(x3 bullets)</style> damage</color>. <style=cIsUtility>Cripples enemies on hit</style>.",
 	}
