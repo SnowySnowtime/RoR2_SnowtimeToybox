@@ -20,7 +20,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         public override void OnEnter()
         {
             duration = 1.5f / attackSpeedStat;
-            damageCoefficient = 3f;
+            damageCoefficient = 2f;
             force = 0f;
             minSpread = 0.5f;
             maxSpread = 0.5f;

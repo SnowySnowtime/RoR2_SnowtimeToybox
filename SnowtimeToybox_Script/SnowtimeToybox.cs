@@ -651,6 +651,8 @@ namespace SnowtimeToybox
             ContentAddition.AddEffect(TurretlingBlaster.tracerfx_rainbow);
             ContentAddition.AddEffect(SnowtimeOrbs.orbRainbowMissileObject);
             ContentAddition.AddEffect(SnowtimeOrbs.orbRainbowMissileImpactObject);
+            ContentAddition.AddEffect(SnowtimeOrbs.orbPlayerMissileObject);
+            ContentAddition.AddEffect(SnowtimeOrbs.orbPlayerMissileImpactObject);
             // Arti really quickly 
             ArtiTurretlingDef = _stcharacterAssetBundle.LoadAsset<DroneDef>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_HolyTurretling.asset");
             ArtiTurretlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_HolyTurretlingBody.prefab");

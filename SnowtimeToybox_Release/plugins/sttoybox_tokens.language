@@ -114,10 +114,12 @@
 		"TURRETLING_DT_DEMOSUBTITLE": "not so cute now...",
 		"TURRETLING_DT_DEMOFUNCTION": "Tiny walking turret which assists the user in dealing damage.",
 		"TURRETLING_DT_DEMODESCRIPTION": "Tiny, distracting, walking turret which assists the user in damage.",
-		"TURRETLING_DT_DEMOSKILL_DESCRIPTION": "Fires a pipebomb for <style=cIsDamage>300% damage</style>.\nOccassionally fires its pixi launcher for <style=cIsDamage>200% damage</style>.",
+		"TURRETLING_DT_DEMOSKILL_DESCRIPTION": "Fires a pipebomb for <style=cIsDamage>200% damage</style>.\nOccassionally fires its pixi launcher for <style=cIsDamage>200% damage</style>.",
 		
 		"TURRETLING_DRONETECH_NAME": "Turretling Mk 2",
 		"TURRETLING_DRONETECH_DESCRIPTION": "<style=cDeath>Fragile</style>. A customized turretling will spawn with you at the start of each stage. Automatically repairs when downed. Inherits Elite Equipment and a large portion of items.",
+		"TURRETLING_DRONETECH_DEMONAME": "Demoling Mk 2",
+		"TURRETLING_DRONETECH_DEMODESCRIPTION": "<style=cDeath>Fragile</style>. A customized turretling will spawn with you at the start of each stage. Automatically repairs when downed. Inherits Elite Equipment and a large portion of items.\nUses non-standard <color=#ffa14e>Grenade Launcher</color> primary.",
 		"TURRETLING_FRAGILE": "[ <style=cDeath>Fragile</style> ]\n<style=cSub>Careful now. The turretling is fragile, but its rather simple internals makes <style=cIsUtility>repairs 2x quicker</style></style></style>",
 		
 		"ARTI_ALLY_NONE_SELECTED": "No Ally",
@@ -133,7 +135,7 @@
 		
 		"TURRETLING_SWARM_NAME": "Swarmling",
 		"TURRETLING_SWARM_PASSIVE": "The Swarm...",
-		"TURRETLING_SWARM_PASSIVE_DESC": "<style=cDeath>Fragile</style>. Spawn with 6 other weaker turretlings that <style=cIsUtility>inherit </style><style=cIsDamage>elite equipment</style> and <style=cIsUtility>all items</style>.",
+		"TURRETLING_SWARM_PASSIVE_DESC": "<style=cDeath>Fragile</style>. Spawn with 6 other weaker turretlings that <style=cIsUtility>inherit </style><style=cIsDamage>elite equipment</style> and <style=cIsUtility>all items</style>.\nYou can select from 2 different variants for all 6 Turretlings individually.",
 		"TURRETLING_FRAGILE_SWARM": "[ <style=cDeath>Fragile</style> ]\n<style=cDeath>You and your swarm are frail</style>. <style=cSub>On death, your Swarmlings will <style=cIsUtility>repair</style> themselves.\nYour allied <style=cArtifact>Swarmlings</style> have <style=cDeath>halved Proc Coefficients</style>.\nVery rarely, <style=cArtifact>Swarmlings</style> spawn <color=#FF0000>R</color><color=#FF8000>a</color><color=#FFFB00>i</color><color=#37FF00>n</color><color=#00FF99>b</color><color=#00FFFF>o</color><color=#00BBFF>w</color><color=#0000FF>i</color><color=#9000FF>z</color><color=#FF00FF>e</color><color=#FF0000>d</color>, <style=cIsHealing>massively increasing their stats</style>.</style>",
 		"TURRETLING_SKILL1_NAME": "<color=#cfb25a>Blaster</color>",
 		"TURRETLING_SKILL1_DESC": "Burst fire the blaster for <style=cIsDamage>75%<style=cStack>(x3)</style> damage</style>.\nMinions occasionally fire the blaster for <style=cIsDamage>100% damage</style>.",
@@ -151,10 +153,16 @@
 		"TURRETLING_SWARM_FAIL": "...and so they vanished, lost in transit.",
 		"TURRETLING_SWARM_DESC": "A Survivor dedicated to empowering your main group of allies.\nConfigure your team to your preference.\nGrenade Launcher Turretlings have higher potential damage output, but are more likely to miss their shot.",
 		"TURRETLING_SWARM_NAME": "Turretling",
-		"TURRETLING_SWARM_DEMO_DESCRIPTION": "Standard Turretling configuration, includes Blaster and Pixi Launcher.",
+		"TURRETLING_SWARM_DESCRIPTION": "Regular Turretling configuration, includes <color=#cfb25a>Blaster</color><style=cStack>(100% damage)</style> and <color=#ff4e73>Pixi Launcher</color><style=cStack>(200% damage)</style>.",
 		"TURRETLING_SWARM_DEMO_NAME": "Turretling (Demo)",
-		"TURRETLING_SWARM_DESCRIPTION": "Irregular Turretling configuration, includes Grenade Launcher and Pixi Launcher.",
+		"TURRETLING_SWARM_DEMO_DESCRIPTION": "Irregular Turretling configuration, includes <color=#ffa14e>Grenade Launcher</color><style=cStack>(200% damage)</style> and <color=#ff4e73>Pixi Launcher</color><style=cStack>(200% damage)</style>.\n<style=cEvent>NON-STANDARD WEAPON MODIFICATIONS DETECTED. AI SYSTEMS NOT ADJUSTED FOR PROJECTILE.</style>",
 		"TURRETLING_SKILL6_NAME": "<color=#4f9aff>Prismatic Crystal</color>",
 		"TURRETLING_SKILL6_DESC": "Fire prismatic crystals for <style=cIsDamage>450% damage</style>, with different effects depending on color.\n<color=#FA2F2F>Kinetic</color> | <color=#FA2F2F>66%<style=cStack>(x3 bullets)</style> damage</color>. <style=cIsDamage>No falloff</style> and <style=cIsDamage>bypasses armor</style>.\n<color=#8EFA2F>Corrosive</color> | <color=#8EFA2F>66%<style=cStack>(x3 bullets)</style> damage</color>. <style=cIsDamage>Poisons enemies on hit</style>.\n<color=#2FD1FA>Energy</color> | <color=#2FD1FA>66%<style=cStack>(x3 bullets)</style> damage</color>. <style=cIsUtility>Cripples enemies on hit</style>.",
+		"TURRETLING_ALLY1": "Variant 1",
+		"TURRETLING_ALLY2": "Variant 2",
+		"TURRETLING_ALLY3": "Variant 3",
+		"TURRETLING_ALLY4": "Variant 4",
+		"TURRETLING_ALLY5": "Variant 5",
+		"TURRETLING_ALLY6": "Variant 6",
 	}
 }
