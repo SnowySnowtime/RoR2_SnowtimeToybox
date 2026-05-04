@@ -707,7 +707,6 @@ namespace SnowtimeToybox
             PassiveDemoTurretlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_DManTurretlingBody.prefab");
             PassiveDemoTurretlingBody.GetComponent<CharacterDeathBehavior>().deathState = new SerializableEntityStateType(typeof(DTTurretlingDeath));
             PassiveDemoTurretlingBody.AddComponent<PassiveTurretlingUpdateNamePerCharacter>();
-            PassiveDemoTurretlingBody.AddComponent<TurretlingDrunkenRamblingHandler>();
             PassiveDemoTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_DManTurretlingMaster.prefab");
             PassiveDemoTurretlingMaster.AddComponent<TurretlingRainbow>();
             PassiveDemoTurretlingMaster.AddComponent<FriendlyTurretInheritance>().whitelistedTag = "FriendTurret_None_Whitelist";
@@ -800,7 +799,6 @@ namespace SnowtimeToybox
             DemoTurretlingBody.GetComponent<CharacterBody>().baseDamage = TurretlingBaseDamage.Value;
             DemoTurretlingBody.GetComponent<CharacterBody>().levelDamage = TurretlingBaseDamagePerLevel.Value;
             DemoTurretlingBody.GetComponent<CharacterDeathBehavior>().deathState = new SerializableEntityStateType(typeof(TurretlingDeath));
-            DemoTurretlingBody.AddComponent<TurretlingDrunkenRamblingHandler>();
             DemoTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "_DemoTurretlingMaster.prefab");
             DemoTurretlingMaster.AddComponent<TurretlingRainbow>();
             DemoTurretlingPrimaryFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(turretlingPath + "Skills/TurretlingPrimaryFamilyAlt.asset");
@@ -930,9 +928,11 @@ namespace SnowtimeToybox
                 SnowtimeTurretlingBody,
                 BreadTurretlingBody,
                 DTTurretlingBody,
+                DTDemoTurretlingBody,
                 FriendlyTurretTurretlingBodyRemoteOp,
                 ArtiTurretlingBody,
-                DemoTurretlingBody
+                DemoTurretlingBody,
+                PassiveDemoTurretlingBody,
             ];
             foreach (var turretling in turretlingBodies)
             {
@@ -947,7 +947,6 @@ namespace SnowtimeToybox
             AcanthiTurretlingMaster.AddComponent<FriendlyTurretInheritance>().whitelistedTag = "FriendTurret_Acanthi_Whitelist";
             BreadTurretlingMaster.AddComponent<FriendlyTurretInheritance>().whitelistedTag = "FriendTurret_Bread_Whitelist";
             ShortcakeTurretlingMaster.AddComponent<FriendlyTurretInheritance>().whitelistedTag = "FriendTurret_Shortcake_Whitelist";
-            DTTurretlingBody.AddComponent<FriendlyTurretInheritance>().whitelistedTag = "FriendTurret_Shortcake_Whitelist";
             ArtiTurretlingBody.AddComponent<FriendlyTurretInheritance>().whitelistedTag = "FriendTurret_Shortcake_Whitelist";
             DemoTurretlingBody.AddComponent<FriendlyTurretInheritance>().whitelistedTag = "FriendTurret_Shortcake_Whitelist";
             
@@ -960,6 +959,7 @@ namespace SnowtimeToybox
             {
                 FriendlyTurretTurretlingBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
                 SwarmlingMinionBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
+                SwarmlingDemoMinionBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
             }
             SwarmlingMinionBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
 
