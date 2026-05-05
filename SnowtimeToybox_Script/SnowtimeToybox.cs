@@ -809,6 +809,7 @@ namespace SnowtimeToybox
             TurretlingGrenadeLauncher.grenadeGhostObject.AddComponent<TurretlingGLInheritColor>();
             ContentAddition.AddEffect(TurretlingGrenadeLauncher.grenadeImpactObject);
             ContentAddition.AddProjectile(TurretlingGrenadeLauncher.grenadeObject);
+            ContentAddition.AddProjectile(TurretlingGrenadeLauncher.grenadePlayerObject);
             ContentAddition.AddSkillDef(DemoTurretlingPrimarySkill);
             ContentAddition.AddSkillFamily(DemoTurretlingPrimaryFamily);
             ContentAddition.AddBody(DemoTurretlingBody);

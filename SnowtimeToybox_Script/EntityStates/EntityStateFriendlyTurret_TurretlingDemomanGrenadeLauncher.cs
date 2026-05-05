@@ -11,6 +11,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
     public class TurretlingGrenadeLauncher : GenericProjectileBaseState
     {
         public static GameObject grenadeObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/TurretlingDemoGrenadeProjectile.prefab");
+        public static GameObject grenadePlayerObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/TurretlingDemoGrenadeProjectile_Player.prefab");
         public static GameObject grenadeGhostObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/DemoGrenadeGhost.prefab");
         public static GameObject grenadeImpactObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/GrenadeImpact.prefab");
 
@@ -22,16 +23,49 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             duration = 1.5f / attackSpeedStat;
             damageCoefficient = 2f;
             force = 0f;
-            minSpread = 0.5f;
-            maxSpread = 0.5f;
             projectilePitchBonus = -2f;
-            projectilePrefab = grenadeObject;
+            if (gameObject.name.Contains("Survivor") || gameObject.name.Contains("PlayerMaster"))
+            {
+                projectilePrefab = grenadePlayerObject;
+            }
+            else
+            {
+                projectilePrefab = grenadeObject;
+            }
+
             targetMuzzle = "Muzzle_Primary";
             attackSoundString = "Play_DemoTF2_GL";
             base.OnEnter();
             stopwatch = 0f;
             delayBeforeFiringProjectile = baseDelayBeforeFiringProjectile / attackSpeedStat;
             PlayAnimation(duration);
+
+            // double up with icbm and scepter
+
+            minSpread = 0.0f;
+            maxSpread = 0.5f;
+            Inventory inventory = characterBody.inventory;
+            int itemCountEffective = inventory.GetItemCountEffective(DLC1Content.Items.MoreMissile);
+            if (itemCountEffective != 0)
+            {
+                FireProjectile();
+                minSpread = 0.2f;
+                maxSpread = 0.75f;
+            }
+            if (!SnowtimeToyboxMod.scepterLoaded) return;
+            int itemCountScepter = inventory.GetItemCountEffective(ItemCatalog.FindItemIndex("ITEM_ANCIENT_SCEPTER"));
+            if(itemCountScepter != 0)
+            {
+                minSpread = 0.2f;
+                maxSpread = 1.25f;
+                FireProjectile();
+                if (itemCountEffective != 0)
+                {
+                    minSpread = 0.4f;
+                    maxSpread = 1.5f;
+                    FireProjectile();
+                }
+            }
         }
 
         public override void PlayAnimation(float duration)
