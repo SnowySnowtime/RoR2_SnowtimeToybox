@@ -2,6 +2,12 @@
 adds skins for my friends and I. also adds one skill, difficulty, a new turret, and a few friendly turrets! still working on other stuff.
 - please direct any feedback to snowysnowtime in the risk of rain 2 modding discord
 
+# Swarmling
+- New Survivor based off of the Turretlings. You and 6 other turretlings.
+- Generally feature complete, balance still in progress.
+- Please direct feedback. Very Important.
+![swarmling](https://raw.githubusercontent.com/SnowySnowtime/RoR2_SnowtimeToybox/refs/heads/main/swarmling_preview.jpg)
+
 # Turretlings!!!
 - Little scrungly walking turrets that try their absolute best!
 - Spawns like regular drones or turrets.
@@ -9,6 +15,7 @@ adds skins for my friends and I. also adds one skill, difficulty, a new turret, 
 - Special variants of turretlings for each Friendly Turret! These turretlings will follow their respective Friendly Turrets like ducklings.
 - Configurable chance for turretling variants to spawn when repairing Friendly Turrets. (Default: 100%)
 - (Opt-In) Replaces Gunner Turrets with turretlings! No need for that outdated gear.
+- (Opt-In) Adds a configurable passive that allows any survivor to spawn with a personal turretling that revives!
 - Special variants also come with special (recolored) VFX, and have small stat differences between eachother.
 ![turretlings](https://github.com/SnowySnowtime/RoR2_SnowtimeToybox/blob/main/turretlings_preview.jpg?raw=true)
 ![turretlings2](https://github.com/SnowySnowtime/RoR2_SnowtimeToybox/blob/main/turretlings2_preview.jpg?raw=true)
