@@ -154,7 +154,7 @@ public class TurretlingRainbow : NetworkBehaviour
                 Log.Debug($"steam id !! {steamid} from player: " + gameObject.GetComponent<PlayerCharacterMasterController>().GetDisplayName());
             }
             
-            if (gameObject.name.Contains("_DT") && turretlingPlayer != null || gameObject.name.Contains("_Holy") && !steamid.IsNullOrWhiteSpace() || gameObject.name.Contains("PlayerMaster") || gameObject.name.Contains("_SwarmTurretling"))
+            if (gameObject.name.Contains("_DT") && turretlingPlayer != null || gameObject.name.Contains("_Holy") && !steamid.IsNullOrWhiteSpace() || gameObject.name.Contains("PlayerMaster") || gameObject.name.Contains("_SwarmTurretling") || gameObject.name.Contains("_DMan"))
             {
                 if (turretlingRecolors.TryGetValue(steamid, out string turretlingColors))
                 {
