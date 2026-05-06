@@ -196,6 +196,7 @@ namespace SnowtimeToybox
         public static ConfigEntry<float> TurretlingBaseDamage { get; set; }
         public static ConfigEntry<float> TurretlingBaseDamagePerLevel { get; set; }
         public static ConfigEntry<float> TurretlingDemoChance { get; set; }
+        public static ConfigEntry<float> TurretlingGibberishChance { get; set; }
 
         public void Awake()
         {
@@ -218,6 +219,7 @@ namespace SnowtimeToybox
             TurretlingRainbowChance = Config.Bind("Turretlings", "turretling rainbow chance ,,.", 1f, "% chance to get a powerful and prideful rainbow turretling ,.,.");
             TurretlingRainbowBonusItems = Config.Bind("Turretlings", "turretling rainbow bonus items ,,.", "syringe,50,alienhead,5,extralife,1,moremissile,1,adaptivearmor,1,powercube,1,shockdamageaura,1", "give rainbow turretlings bonus items !!! follows (internalitemname),(count)");
             TurretlingDemoChance = Config.Bind("Turretlings", "turretling demo chance ,.,,,.", 10f, "% chance to get a drunken gremlin ,.,.");
+            TurretlingGibberishChance = Config.Bind("Turretlings", "turretling demo gibberish chance ,.,,,.", 100f, "how often for demolings to go fghrgjnbvrfbjftgnbfg ,.,.");
             TurretlingBaseDamage = Config.Bind("Turretling Stats", "Base Damage", 12f, "Damage the turretling deals. Blaster deals 100%(1x) base damage, Pixi Launcher deal 200%(2x) base damage. demoling grenade launcher does 300%(3x) base damage. Does not affect Turretling variants.");
             TurretlingBaseDamagePerLevel = Config.Bind("Turretling Stats", "Base Damage Per Level", 3f, "Base Damage increase per level. Does not affect Turretling variants.");
             Language.collectLanguageRootFolders += CollectLanguageRootFolders;
@@ -694,6 +696,7 @@ namespace SnowtimeToybox
             DTDemoTurretlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_DTTurretling_DemoBody.prefab");
             DTDemoTurretlingBody.GetComponent<CharacterDeathBehavior>().deathState = new SerializableEntityStateType(typeof(DTTurretlingDeath));
             DTDemoTurretlingBody.GetComponent<DroneCommandReceiver>().droneState = DroneCommandReceiver.DroneState.Idle;
+            DTDemoTurretlingBody.AddComponent<TurretlingDrunkenRamblingHandler>();
             DTDemoTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_DTTurretling_DemoMaster.prefab");
             DTDemoTurretlingMaster.AddComponent<TurretlingRainbow>();
             DTDemoTurretlingMaster.AddComponent<FriendlyTurretInheritance>().whitelistedTag = "FriendTurret_None_Whitelist";
@@ -714,6 +717,7 @@ namespace SnowtimeToybox
             PassiveDemoTurretlingBroken.AddComponent<PassiveTurretlingUpdateNamePerCharacter>();
             PassiveDemoTurretlingBody.GetComponent<CharacterBody>().baseDamage = (TurretlingBaseDamage.Value / 1.5f);
             PassiveDemoTurretlingBody.GetComponent<CharacterBody>().levelDamage = (TurretlingBaseDamagePerLevel.Value / 1.5f);
+            PassiveDemoTurretlingBody.AddComponent<TurretlingDrunkenRamblingHandler>();
             ContentAddition.AddDroneDef(PassiveDemoTurretlingDef);
             ContentAddition.AddBody(PassiveDemoTurretlingBody);
             ContentAddition.AddMaster(PassiveDemoTurretlingMaster);
@@ -782,6 +786,7 @@ namespace SnowtimeToybox
             SwarmlingDemoMinionBody.AddComponent<EquipmentSlot>();
             SwarmlingDemoMinionBody.GetComponent<CharacterBody>().baseDamage = (TurretlingBaseDamage.Value / 2f);
             SwarmlingDemoMinionBody.GetComponent<CharacterBody>().levelDamage = (TurretlingBaseDamagePerLevel.Value / 2f);
+            SwarmlingDemoMinionBody.AddComponent<TurretlingDrunkenRamblingHandler>();
             SwarmlingDemoMinionBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(swarmlingPath + "_SwarmTurretling_DemoBroken.prefab");
             SwarmlingDemoMinionMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(swarmlingPath + "_SwarmTurretling_DemoMaster.prefab");
             SwarmlingDemoMinionMaster.AddComponent<TurretlingRainbow>();
@@ -798,6 +803,7 @@ namespace SnowtimeToybox
             // update stats and components
             DemoTurretlingBody.GetComponent<CharacterBody>().baseDamage = TurretlingBaseDamage.Value;
             DemoTurretlingBody.GetComponent<CharacterBody>().levelDamage = TurretlingBaseDamagePerLevel.Value;
+            DemoTurretlingBody.AddComponent<TurretlingDrunkenRamblingHandler>();
             DemoTurretlingBody.GetComponent<CharacterDeathBehavior>().deathState = new SerializableEntityStateType(typeof(TurretlingDeath));
             DemoTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "_DemoTurretlingMaster.prefab");
             DemoTurretlingMaster.AddComponent<TurretlingRainbow>();
