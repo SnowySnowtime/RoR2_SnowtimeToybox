@@ -980,6 +980,9 @@ namespace SnowtimeToybox
             //overlay amanger ,.,. 
             On.RoR2.CharacterModel.UpdateOverlays += CharacterModelOnUpdateOverlays;
             On.RoR2.Projectile.ProjectileController.IgnoreCollisionsWithBody += IgnoreCollisionsWithBody;
+
+            if (scepterLoaded) return;
+            DemoTurretlingPrimarySkill.keywordTokens = new string[1] { "TURRETLING_SKILL7_KEYWORD" };
         }
 
         private void IgnoreCollisionsWithBody(On.RoR2.Projectile.ProjectileController.orig_IgnoreCollisionsWithBody orig, RoR2.Projectile.ProjectileController self, GameObject bodyObject, bool shouldIgnore)
@@ -1003,6 +1006,7 @@ namespace SnowtimeToybox
                 FriendlyTurretTurretlingPrimaryScepterSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(turretlingPath + "Skills/Turretling_Primary_Scepter.asset");
                 FriendlyTurretTurretlingPrimaryScepterSkillDef.activationState = new SerializableEntityStateType(typeof(TurretlingBlasterScepter));
                 FriendlyTurretTurretlingPrimarySkillDef.keywordTokens = new string[1] { "TURRETLING_SKILL1_KEYWORD" };
+                DemoTurretlingPrimarySkill.keywordTokens = new string[1] { "TURRETLING_SKILL7_KEYWORD_SCEPTER" };
                 FriendlyTurretTurretlingPrimaryScepterMinionSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(turretlingPath + "Skills/Turretling_Primary_Scepter.asset");
                 FriendlyTurretTurretlingPrimaryScepterMinionSkillDef.activationState = new SerializableEntityStateType(typeof(TurretlingBlasterScepter));
 

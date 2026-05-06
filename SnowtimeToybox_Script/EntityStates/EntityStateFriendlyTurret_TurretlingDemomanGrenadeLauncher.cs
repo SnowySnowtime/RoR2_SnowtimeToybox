@@ -49,20 +49,20 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             if (itemCountEffective != 0)
             {
                 FireProjectile();
-                minSpread = 0.2f;
-                maxSpread = 0.75f;
+                minSpread = 0.5f;
+                maxSpread = 1.25f;
             }
             if (!SnowtimeToyboxMod.scepterLoaded) return;
             int itemCountScepter = inventory.GetItemCountEffective(ItemCatalog.FindItemIndex("ITEM_ANCIENT_SCEPTER"));
             if(itemCountScepter != 0)
             {
-                minSpread = 0.2f;
-                maxSpread = 1.25f;
+                minSpread = 0.75f;
+                maxSpread = 1.5f;
                 FireProjectile();
                 if (itemCountEffective != 0)
                 {
-                    minSpread = 0.4f;
-                    maxSpread = 1.5f;
+                    minSpread = 1f;
+                    maxSpread = 2f;
                     FireProjectile();
                 }
             }
