@@ -151,7 +151,7 @@
 		"TURRETLING_SKILL4_KEYWORD": "[ <color=#eef77c>Concussive</color> ]\nAdditional <style=cIsUtility>stocks</style> to this skill increases <style=cIsDamage>damage by 50% and range by 3m</style> per <style=cIsUtility>stock</style>.\n<style=cIsDamage>Attack Speed</style> increases <style=cIsDamage>damage</style>. <style=cStack>(15% AtkSpd = 15% DMG)</style>",
 		"TURRETLING_SWARM_WIN": "...and so they left, their mission accomplished.",
 		"TURRETLING_SWARM_FAIL": "...and so they vanished, lost in transit.",
-		"TURRETLING_SWARM_DESC": "A Survivor dedicated to empowering your main group of allies.\nConfigure your team to your preference.\nGrenade Launcher Turretlings have higher potential damage output, but are more likely to miss their shot.",
+		"TURRETLING_SWARM_DESC": "A swarm of Turretlings configured by Operator, Remotely Controlled for reconnaissance of Petrichor V.<color=#CCD3E0>\n\n< ! > Your health may be low, but your regen is plenty. If a fight gets scary, don't be afraid to take cover and let your swarm do the work. They can revive, you cannot.\n\n< ! > Swarmling (Demo)'s have higher potential damage output, but are more likely to miss their shot, especially for flying or fast moving targets.\n\n< ! > <color=#cfb25a>Blaster</color> has a high proc coefficient. Use it over <color=#ffa14e>Grenade Launcher</color> if you are having trouble landing your shots.\n\n< ! > <color=#ff4e73>Pixi Launcher</color> has the highest damage potential. Find Backup Magazines and Pocket I.C.B.M for some truly crazy damage.\n\n< ! > <color=#5357fb>Bionic Blink</color> will teleport your swarm to you. Use this to recover any lost Swarmlings.\n\n< ! > <color=#eef77c>Energy Nova</color> deletes most projectiles within its radius. Make use of it to maximize survivability!\n\n< ! > If you're feeling confident, you can replace <color=#eef77c>Energy Nova</color> with <color=#33e6a4>Tinker</color> for maximum item control.</color>",
 		"TURRETLING_SWARM_DESCRIPTION": "Regular Turretling configuration, includes <color=#cfb25a>Blaster</color><style=cStack>(100% damage)</style> and <color=#ff4e73>Pixi Launcher</color><style=cStack>(200% damage)</style>.",
 		"TURRETLING_SWARM_DEMO_NAME": "Swarmling (Demo)",
 		"TURRETLING_SWARM_DEMO_DESCRIPTION": "Irregular Turretling configuration, includes <color=#ffa14e>Grenade Launcher</color><style=cStack>(200% damage)</style> and <color=#ff4e73>Pixi Launcher</color><style=cStack>(200% damage)</style>.\n<style=cEvent>NON-STANDARD WEAPON MODIFICATIONS DETECTED. AI SYSTEMS NOT ADJUSTED FOR PROJECTILE.</style>",
@@ -164,6 +164,8 @@
 		"TURRETLING_ALLY5": "Variant 5",
 		"TURRETLING_ALLY6": "Variant 6",
 		"TURRETLING_SKILL7_NAME": "<color=#ffa14e>Grenade Launcher</color>",
-		"TURRETLING_SKILL7_DESC": "Fire pipebombs for 200% damage.",
+		"TURRETLING_SKILL7_DESC": "<color=#ffa14e>Explosive</color>. Fire a pipebomb for <style=cIsDamage>200% damage</style>.",
+		"TURRETLING_SKILL7_KEYWORD": "[ <color=#ffa14e>Explosive</color> ]\nWith <color=#e85032>Pocket I.C.B.M</color>, <color=#ffa14e>Grenade Launcher</color> inaccurately fires an <style=cIsDamage>additional pipebomb</style>.",
+		"TURRETLING_SKILL7_KEYWORD_SCEPTER": "[ <color=#ffa14e>Explosive</color> ]\nWith <color=#e85032>Pocket I.C.B.M</color>, <color=#ffa14e>Grenade Launcher</color> inaccurately fires an <style=cIsDamage>additional pipebomb</style>.\nWith <color=#e85032>Ancient Scepter</color>, <color=#ffa14e>Grenade Launcher</color> will have its <style=cIsDamage>projectiles doubled</style>, for a total of <style=cIsDamage>4 pipebombs</style> fired with <color=#e85032>Pocket I.C.B.M</color>.",
 	}
 }
