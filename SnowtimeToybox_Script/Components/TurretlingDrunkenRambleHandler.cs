@@ -44,22 +44,12 @@ public class TurretlingDrunkenRamblingHandler : MonoBehaviour
             ownerName = ownerBody.name.Replace("(Clone)", "");
             bodiesLogged = true;
         }
-        if (ownerName.Contains("Demolisher") && (gameObject.name.Contains("_DManTurretlingBody")))
+        if (ownerName.Contains("Demolisher") && (gameObject.name.Contains("_DManTurretlingBody")) || gameObject.name.Contains("_DemoTurretlingBody"))
         {
             if (timeSinceLastRamble < timeBetweenRambles) return;
 
             timeToRamble = SnowtimeToyboxMod.TurretlingRainbowChance.Value >= Run.instance.runRNG.RangeFloat(0, 100);
             if(timeToRamble)
-            {
-                Ramble();
-            }
-        }
-        else if(gameObject.name.Contains("_DemoTurretlingBody"))
-        {
-            if (timeSinceLastRamble < timeBetweenRambles) return;
-
-            timeToRamble = SnowtimeToyboxMod.TurretlingRainbowChance.Value >= Run.instance.runRNG.RangeFloat(0, 100);
-            if (timeToRamble)
             {
                 Ramble();
             }
