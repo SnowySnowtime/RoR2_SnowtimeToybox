@@ -16,11 +16,30 @@ adds skins for my friends and I. also adds one skill, difficulty, a new turret, 
 - Configurable chance for turretling variants to spawn when repairing Friendly Turrets. (Default: 100%)
 - (Opt-In) Replaces Gunner Turrets with turretlings! No need for that outdated gear.
 - (Opt-In) Adds a configurable passive that allows any survivor to spawn with a personal turretling that revives!
+- Low chance for a Turretling to be a Demoling.
+- Operator can select one of two turretling types, and they Rainbowize on command!
 - Special variants also come with special (recolored) VFX, and have small stat differences between eachother.
 ![turretlings](https://github.com/SnowySnowtime/RoR2_SnowtimeToybox/blob/main/turretlings_preview.jpg?raw=true)
 ![turretlings2](https://github.com/SnowySnowtime/RoR2_SnowtimeToybox/blob/main/turretlings2_preview.jpg?raw=true)
 - (Configurable) 1% chance for the legendary and fabled Rainbow Turretling to be acquired! Comes with a great increase to its power.
 ![turretlings3](https://github.com/SnowySnowtime/RoR2_SnowtimeToybox/blob/main/turretling3_preview.gif?raw=true)
+<details>
+<summary>Survivors with Turretling Passive</summary>
+Note: This must be enabled by setting "Turretling Passive" to true. You can add more yourself. "bodyname,turretlingname;" where ; is a divider. Some passives were added for devs or friends of devs, and their names may not be lore friendly.
+
+## Survivors /w Passive
+- Artificer | Divineling
+- Mercenary | Mercling
+- Railgunner | Purity
+- Seeker | Toastling
+- Huntress | Kottling
+- Loader | Scrapling
+- Captain | 'Paperweight'
+- Rocket | Lil'lusiveling
+- Bastion | Ganymede
+- An Arbiter | Nugget
+- Demolisher | Demoling (Special SFX enabled if Demo variant is selected.)
+</details>
 
 # Friendly Turrets!
 - Still a work in progress, but:

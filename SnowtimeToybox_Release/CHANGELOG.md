@@ -1,3 +1,31 @@
+`1.2.4`
+<details>
+<summary>Update Summary (includes summary of commits by users)</summary>
+
+- the defining update
+
+Snowy Snowtime
+---
+- scope creep the update
+- Swarmling!
+- dronedefs. they appear in logbooks now. they have user-facing descriptions. waow.
+- operator can now select turretlings
+- forgot to update networkedstatemachines with the new entitystatemachines at one point. i hate networking
+- you lot gonna scroll by without saying yyyeeerrraarrsessarseaandimth grasssmannpunkyeeyahhavinh
+- many other things i forget because there was so much scope creep this update
+
+icebro
+---
+![0](https://github.com/SnowySnowtime/RoR2_SnowtimeToybox/blob/main/changelogstuff/0000-0173-ezgif.com-optimize.gif?raw=true)
+- ummm ,.,.,, networking ,., evil i thi nk,.,.,,,.,
+- implemented dronedefs to contentmanagement for this update
+- implemented config for personal turretling passives
+- implemented unique turretling visuals for defined individuals
+- networked bionic blink for turretling (bringing the swarm to player)
+- fixed most networking issues caused by snowy being a stupid
+- fixed code snowy made yet again (i am so sorry bread :<)
+</details>
+
 `1.2.3`
 <details>
 <summary>Update Summary (includes summary of commits by users)</summary>
