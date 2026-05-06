@@ -806,7 +806,6 @@ namespace SnowtimeToybox
             DemoTurretlingPrimarySkill.activationState = new SerializableEntityStateType(typeof(TurretlingGrenadeLauncher));
             ContentAddition.AddEntityState(typeof(TurretlingGrenadeLauncher), out _);
             ContentAddition.AddEffect(TurretlingGrenadeLauncher.grenadeGhostObject);
-            TurretlingGrenadeLauncher.grenadeGhostObject.AddComponent<TurretlingGLInheritColor>();
             ContentAddition.AddEffect(TurretlingGrenadeLauncher.grenadeImpactObject);
             ContentAddition.AddProjectile(TurretlingGrenadeLauncher.grenadeObject);
             ContentAddition.AddProjectile(TurretlingGrenadeLauncher.grenadePlayerObject);

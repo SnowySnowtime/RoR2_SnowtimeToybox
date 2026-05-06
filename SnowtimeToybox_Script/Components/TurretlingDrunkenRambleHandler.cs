@@ -40,7 +40,7 @@ public class TurretlingDrunkenRamblingHandler : MonoBehaviour
             //Log.Debug(charBody.master.minionOwnership.ownerMaster.GetBody().name);
             ownerBody = charMaster.minionOwnership.ownerMaster.GetBody();
 
-            Log.Debug(ownerBody.name + " turretling ");
+            //Log.Debug(ownerBody.name + " turretling ");
             ownerName = ownerBody.name.Replace("(Clone)", "");
             bodiesLogged = true;
         }
