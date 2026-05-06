@@ -27,7 +27,7 @@ public class TurretlingBabySpawner : MonoBehaviour
     {
         if (turretlingMaster || !enableTurretlings) return;
         
-        Log.Debug("sppasnwing  turretling !! ");
+        //Log.Debug("sppasnwing  turretling !! ");
         //stolen froms OpenSummonReturnMaster .., 
         turretlingMaster = new MasterSummon
         {

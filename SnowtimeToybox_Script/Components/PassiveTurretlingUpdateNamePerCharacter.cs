@@ -31,7 +31,7 @@ public class PassiveTurretlingUpdateNamePerCharacter : MonoBehaviour
         //Log.Debug(charBody.master.minionOwnership.ownerMaster.GetBody().name);
         ownerBody = charMaster.minionOwnership.ownerMaster.GetBody();
         
-        Log.Debug(ownerBody.name + " turretling ");
+        //Log.Debug(ownerBody.name + " turretling ");
         string ownerName = ownerBody.name.Replace("(Clone)", "");
         self.baseNameToken = $"TURRETLING_{ownerName.ToUpper()}_NAME";
         nameUpdated = true;

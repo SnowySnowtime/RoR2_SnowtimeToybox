@@ -1436,7 +1436,7 @@ namespace SnowtimeToybox
         {
             if (self.gameObject.name.Contains("Turretling"))
             {
-                Log.Debug(self.gameObject.name + " entered state CommandCarry.OnEnter");
+                //Log.Debug(self.gameObject.name + " entered state CommandCarry.OnEnter");
                 if ((bool)self.target && self.target.TryGetComponent<CharacterBody>(out var component))
                 {
                     self.targetBody = component;
@@ -1444,7 +1444,7 @@ namespace SnowtimeToybox
                 }
                 if (!self.targetTransform)
                 {
-                    Debug.LogError("CommandCarry.OnEnter: No targetTransform! " + self.targetChildIndex);
+                    //Debug.LogError("CommandCarry.OnEnter: No targetTransform! " + self.targetChildIndex);
                 }
                 if ((bool)self.rigidbodyMotor)
                 {
@@ -1540,27 +1540,27 @@ namespace SnowtimeToybox
         }
         private void DroneCommandReceiverHookCommandFollow(On.RoR2.DroneCommandReceiver.orig_CommandFollow orig, DroneCommandReceiver self, bool shouldFollow)
         {
-            Log.Debug("DroneCommandReceiver.CommandFollow fired on" + self.gameObject.name);
+            //Log.Debug("DroneCommandReceiver.CommandFollow fired on" + self.gameObject.name);
             if (self.gameObject.name.Contains("Turretling")) return;
             orig(self, shouldFollow);
         }
         private void DroneCommandReceiverHookActivateFollow(On.RoR2.DroneCommandReceiver.orig_ActivateFollow orig, DroneCommandReceiver self, bool occupySpace)
         {
-            Log.Debug("DroneCommandReceiver.ActivateFollow fired on" + self.gameObject.name);
+            //Log.Debug("DroneCommandReceiver.ActivateFollow fired on" + self.gameObject.name);
             if (self.gameObject.name.Contains("Turretling")) return;
             orig(self, occupySpace);
         }
         private static void DroneCommandReceiverHookCommandActivate(On.RoR2.DroneCommandReceiver.orig_CommandActivate orig, DroneCommandReceiver self)
         {
-            Log.Debug("DroneCommandReceiver.CommandActivate fired on " + self.gameObject.name);
+            //Log.Debug("DroneCommandReceiver.CommandActivate fired on " + self.gameObject.name);
             if((bool)self.commandSkill && self.gameObject.name.Contains("Turretling"))
             {
-                Log.Debug("Turretling: ADMIN OVERRIDE! Executing...");
+                //Log.Debug("Turretling: ADMIN OVERRIDE! Executing...");
                 SerializableEntityStateType serializableEntityStateType  = self.commandSkill.activationState;
                 self.commandSkill.stateMachine.SetInterruptState(EntityStateCatalog.InstantiateState(ref serializableEntityStateType), InterruptPriority.Vehicle);
             }
             if (self.gameObject.name.Contains("Turretling")) return;
-            Log.Debug("Drone: ADMIN OVERRIDE! Executing...");
+            //Log.Debug("Drone: ADMIN OVERRIDE! Executing...");
             orig(self);
         }
 

@@ -169,10 +169,10 @@ public class TurretlingRainbow : NetworkBehaviour
 
         if (steamidToApply.IsNullOrWhiteSpace() && !steamid.IsNullOrWhiteSpace() && turretlingRecolors.ContainsKey(steamid))
         {
-            Log.Debug($"appling steam id {steamid} !!");
+            //Log.Debug($"appling steam id {steamid} !!");
             if(gameObject.name.Contains("PlayerMaster"))
             {
-                Log.Debug("The ID was applied from" + gameObject.GetComponent<PlayerCharacterMasterController>().GetDisplayName());
+                //Log.Debug("The ID was applied from" + gameObject.GetComponent<PlayerCharacterMasterController>().GetDisplayName());
             }
             steamidToApply = steamid;
             applyTurretlingVisuals = true;

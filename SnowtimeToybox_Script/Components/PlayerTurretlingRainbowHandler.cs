@@ -39,7 +39,7 @@ public class PlayerTurretlingRainbowHandler : NetworkBehaviour
         if(addedRainbowizer == false)
         {
             addedRainbowizer = true;
-            Log.Debug("Added Turretling Rainbowizer to... " + self + " | " + self.playerCharacterMasterController.GetDisplayName());
+            //Log.Debug("Added Turretling Rainbowizer to... " + self + " | " + self.playerCharacterMasterController.GetDisplayName());
             self.gameObject.AddComponent<TurretlingRainbow>();
         }
     }
@@ -49,11 +49,11 @@ public class PlayerTurretlingRainbowHandler : NetworkBehaviour
         {
             if (!idfound)
             {
-                Log.Debug("Attempting to get SteamID");
+                //Log.Debug("Attempting to get SteamID");
                 if (!gameObject.GetComponent<PlayerCharacterMasterController>()) return;
                 steamid = pcmc.networkUser.id.steamId.ToSteamID();
                 steamid_ = steamid;
-                Log.Debug("Player " + pcmc.GetDisplayName() + " SteamID: " + steamid);
+                //Log.Debug("Player " + pcmc.GetDisplayName() + " SteamID: " + steamid);
                 idfound = true;
             }
         }

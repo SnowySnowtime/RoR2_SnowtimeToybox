@@ -72,7 +72,7 @@ namespace SnowtimeToybox.FriendlyTurretChecks
                         Chat.SendBroadcastChat(new Chat.SimpleChatMessage() { baseToken = "<style=cEvent><color=#30ff78>Strawberry Shortcake Turret: Thank you friend! Let's take ibuprofen together? No? Aw. I'll defend you instead!</color></style>" });
                         break;
                     case "FRIENDLYTURRET_SNOWTIME_BROKEN_NAME": // Snowtime Turret Selected
-                        Chat.SendBroadcastChat(new Chat.SimpleChatMessage() { baseToken = "<style=cEvent><color=#30ff78>Snowtime Turret: Thank you! We are friends now!</color></style>" });
+                        Chat.SendBroadcastChat(new Chat.SimpleChatMessage() { baseToken = "<style=cEvent><color=#30ff78>Snowtime Turret: waow! thank yous! we are friend now.,,,</color></style>" });
                         break;
                     case "FRIENDLYTURRET_ACANTHI_BROKEN_NAME": // Acanthi Turret Selected
                         Chat.SendBroadcastChat(new Chat.SimpleChatMessage() { baseToken = "<style=cEvent><color=#30ff78>Acanthi Turret: Thank you! We are friends now! :soyeyes:</color></style>" });
@@ -92,17 +92,17 @@ namespace SnowtimeToybox.FriendlyTurretChecks
 
             if (turretlingSummon)
             {
-                Log.Debug($"tryings to spawn turretling {turretlingSummon}!! ");
+                //Log.Debug($"tryings to spawn turretling {turretlingSummon}!! ");
 
                 if (SnowtimeToyboxMod.TurretlingSpawnChance.Value >= Run.instance.runRNG.RangeFloat(0, 100))
                 {
                     turretlingSummon.OpenSummon(payCostContext.activator);
-                    Log.Debug($"spawned turretling !!!");
+                    //Log.Debug($"spawned turretling !!!");
                 }
             }
             else
             {
-                Log.Debug("turret had no turretling !!! bwa .,,.,.");
+                //Log.Debug("turret had no turretling !!! bwa .,,.,.");
             }            
             
             summonMasterBehavior.OpenSummon(payCostContext.activator);
