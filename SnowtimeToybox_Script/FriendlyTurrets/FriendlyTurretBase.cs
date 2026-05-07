@@ -111,6 +111,7 @@ public abstract class FriendlyTurretBase
         // Mods
         friendlyTurretCustomStageList.Add("FBLScene");
         friendlyTurretCustomStageList.Add("broadcastperch_wormsworms");
+        friendlyTurretCustomStageList.Add("sunkentombs_wormsworms");
         friendlyTurretCustomStageList.Add("tropics_wormsworms");
         friendlyTurretCustomStageList.Add("tropicsnight_wormsworms");
         friendlyTurretCustomStageList.Add("hollowsummit_wormsworms");

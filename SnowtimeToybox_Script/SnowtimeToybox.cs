@@ -892,6 +892,7 @@ namespace SnowtimeToybox
             // Mods
             turretlingCustomStageList.Add("FBLScene");
             turretlingCustomStageList.Add("broadcastperch_wormsworms");
+            turretlingCustomStageList.Add("sunkentombs_wormsworms");
             turretlingCustomStageList.Add("tropics_wormsworms");
             turretlingCustomStageList.Add("tropicsnight_wormsworms");
             turretlingCustomStageList.Add("hollowsummit_wormsworms");
@@ -1602,9 +1603,9 @@ namespace SnowtimeToybox
                stagePositions.Add(new Vector3(139f, 59.07873f, -181.3314f), Quaternion.Euler(355f, 325f, 0)); //behind a waterfall on the map's edge (how is there not already a secret here??)
                break;
              */
-            Log.Debug($"case \"{SceneManager.GetActiveScene().name}\":");
-            Log.Debug($"    stagePositions.Add(new Vector3({args.senderBody.footPosition.x}f, {args.senderBody.footPosition.y}f, {args.senderBody.footPosition.z}f), Quaternion.Euler({args.senderBody.modelLocator.modelTransform.rotation.eulerAngles.x}f, {args.senderBody.modelLocator.modelTransform.rotation.eulerAngles.y}f, {args.senderBody.modelLocator.modelTransform.rotation.eulerAngles.z}f));");
-            Log.Debug($"    break;");
+            Log.Info($"case \"{SceneManager.GetActiveScene().name}\":");
+            Log.Info($"    stagePositions.Add(new Vector3({args.senderBody.footPosition.x}f, {args.senderBody.footPosition.y}f, {args.senderBody.footPosition.z}f), Quaternion.Euler({args.senderBody.modelLocator.modelTransform.rotation.eulerAngles.x}f, {args.senderBody.modelLocator.modelTransform.rotation.eulerAngles.y}f, {args.senderBody.modelLocator.modelTransform.rotation.eulerAngles.z}f));");
+            Log.Info($"    break;");
         }
         
         [ConCommand(commandName = "spawn_turret", flags = ConVarFlags.None, helpText = "spawn a turret !!!")]

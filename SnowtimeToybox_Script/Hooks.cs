@@ -282,6 +282,10 @@ public class Hooks
                 stagePositions.Add(new Vector3(-37.58895f, 106.0261f, 108.1745f), Quaternion.Euler(0f, 24.11862f, 0f));
                 stagePositions.Add(new Vector3(160.7567f, 55.26473f, -70.89723f), Quaternion.Euler(0f, 87.57731f, 0f));
                 break;
+            case "sunkentombs_wormsworms":
+                stagePositions.Add(new Vector3(160.82f, -2.51438f, 85.47977f), Quaternion.Euler(8.114909f, 324.5277f, 6.795454f));
+                stagePositions.Add(new Vector3(-141.9162f, 76.95288f, -1.94882f), Quaternion.Euler(27.48974f, 67.94604f, 11.36176f));
+                break;
             // Bobomb Battlefield - viliger
             case "sm64_bbf_SM64_BBF":
                 stagePositions.Add(new Vector3(162.9347f, 38.44512f, 74.83717f), Quaternion.Euler(0f, 189.5465f, 0f));
