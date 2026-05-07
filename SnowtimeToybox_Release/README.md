@@ -132,7 +132,7 @@ Note: This must be enabled by setting "Turretling Passive" to true. You can add 
 - icebro | a bunch of code directly committed, helping getting most of the friendly turret spawns and other effects working
 - acanthi | helped with figuring out how to do some things, like handling the interactable for the turret to remain per-player singletons
 - without icebro and acanthi, the friendly turret(s) would have never become a thing. thank you two so very much!
-- PlNK | Custom Icon for the Legendary difficulty
+- PlNK & ebbysauce | Authored the logbooks.
 - anartoast | Custom Icon for the H4-L0 PL45 Rifle, ideas for balancing said skill
 - .score | Assistance with making the on-hit bounce work for H4-L0 PL45 Rifle
 - HIFU | Custom component for lingering tracers
