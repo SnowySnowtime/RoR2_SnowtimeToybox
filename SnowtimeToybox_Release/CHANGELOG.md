@@ -1,3 +1,7 @@
+`1.2.5`
+Emergency release, fixed missing dependency
+- i knew i forgot something...
+
 `1.2.4`
 <details>
 <summary>Update Summary (includes summary of commits by users)</summary>
