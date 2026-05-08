@@ -31,6 +31,7 @@ using UnityHotReloadNS;
 using Path = System.IO.Path;
 using ReadOnlyContentPack = RoR2.ContentManagement.ReadOnlyContentPack;
 using UnityEngine.XR;
+using RoR2BepInExPack.GameAssetPaths;
 
 [module: UnverifiableCode]
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -753,6 +754,8 @@ namespace SnowtimeToybox
             SwarmlingSpecialFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(swarmlingPath + "Skills/TurretlingSpecialFamilySurvivor.asset");
             SwarmlingUtilityFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(swarmlingPath + "Skills/TurretlingUtilityFamilySurvivor.asset");
             SwarmlingPassiveMinion = _stcharacterAssetBundle.LoadAsset<SkillDef>(swarmlingPath + "Skills/Swarmling.asset");
+            SwarmlingPassiveMinion.activationState = new SerializableEntityStateType(typeof(Idle));
+            SwarmlingPassiveMinion.activationStateMachineName = "gorp";
             SwarmlingSpecialSkill = _stcharacterAssetBundle.LoadAsset<SkillDef>(swarmlingPath + "Skills/Turretling_SpecialSurvivor.asset");
             SwarmlingSpecialSkill.activationState = new SerializableEntityStateType(typeof(TurretlingEnergyNova));
             SwarmlingUtilitySkill = _stcharacterAssetBundle.LoadAsset<SkillDef>(swarmlingPath + "Skills/Turretling_UtilitySurvivor.asset");
@@ -792,6 +795,8 @@ namespace SnowtimeToybox
             SwarmlingDemoMinionMaster.AddComponent<TurretlingRainbow>();
             SwarmlingDemoMinionMaster.AddComponent<FriendlyTurretInheritance>().whitelistedTag = "FriendTurret_None_Whitelist";
             SwarmlingDemoPassiveMinion = _stcharacterAssetBundle.LoadAsset<SkillDef>(swarmlingPath + "Skills/Swarmling_Demo.asset");
+            SwarmlingDemoPassiveMinion.activationState = new SerializableEntityStateType(typeof(Idle));
+            SwarmlingDemoPassiveMinion.activationStateMachineName = "gorp";
             ContentAddition.AddDroneDef(SwarmlingDemoMinionDef);
             ContentAddition.AddBody(SwarmlingDemoMinionBody);
             ContentAddition.AddBody(SwarmlingDemoMinionBroken);
@@ -1276,11 +1281,19 @@ namespace SnowtimeToybox
             ContentAddition.AddEffect(_stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/PlasmaRifle/PlasmaRifleImpactVFXRico.prefab"));
 
             ArtiPassiveFamily = _stcharacterAssetBundle.LoadAsset<SkillFamily>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/ArtificerHiddenPassiveFamily.asset");
-            ArtiTurretSkill = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/ArtificerTurretling.asset");
             ArtiNoTurretSkill = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/ArtificerNoTurretling.asset");
+            ArtiNoTurretSkill.activationState = new SerializableEntityStateType(typeof(Idle));
+            ArtiNoTurretSkill.activationStateMachineName = "gorp";
+            ArtiTurretSkill = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/ArtificerTurretling.asset");
+            ArtiTurretSkill.activationState = new SerializableEntityStateType(typeof(Idle));
+            ArtiTurretSkill.activationStateMachineName = "gorp";
+            PassiveDemoTurretSkill = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/ArtificerDemoTurretling.asset");
+            PassiveDemoTurretSkill.activationState = new SerializableEntityStateType(typeof(Idle));
+            PassiveDemoTurretSkill.activationStateMachineName = "gorp";
             ContentAddition.AddSkillFamily(ArtiPassiveFamily);
-            ContentAddition.AddSkillDef(ArtiTurretSkill);
             ContentAddition.AddSkillDef(ArtiNoTurretSkill);
+            ContentAddition.AddSkillDef(ArtiTurretSkill);
+            ContentAddition.AddSkillDef(PassiveDemoTurretSkill);
 
             if(TurretlingArtificerPassive.Value)
             {
@@ -1348,7 +1361,11 @@ namespace SnowtimeToybox
 
             // Turretlings!
             SkillDef DroneTechTurretlingSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/DroneTechTurretling.asset");
+            DroneTechTurretlingSkillDef.activationState = new SerializableEntityStateType(typeof(Idle));
+            DroneTechTurretlingSkillDef.activationStateMachineName = "gorp";
             SkillDef DroneTechTurretlingDemoSkillDef = _stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/DroneTechTurretlingDemo.asset");
+            DroneTechTurretlingDemoSkillDef.activationState = new SerializableEntityStateType(typeof(Idle));
+            DroneTechTurretlingDemoSkillDef.activationStateMachineName = "gorp";
             foreach (GenericSkill genericSkill in DroneTechBodyPrefab.GetComponents<GenericSkill>())
             {
                 if(genericSkill.skillName == "Drone1")
@@ -1383,6 +1400,7 @@ namespace SnowtimeToybox
                 }
             }
             ContentAddition.AddSkillDef(DroneTechTurretlingSkillDef);
+            ContentAddition.AddSkillDef(DroneTechTurretlingDemoSkillDef);
 
             GameObject PlayerMaster = Addressables.LoadAssetAsync<GameObject>(RoR2BepInExPack.GameAssetPaths.Version_1_39_0.RoR2_Base_Core.PlayerMaster_prefab).WaitForCompletion();
             PlayerMaster.AddComponent<TurretlingRainbow>();
@@ -1586,6 +1604,7 @@ namespace SnowtimeToybox
 
         private void Update()
         {
+            return;
 #if DEBUG
             if (Input.GetKeyUp(KeyCode.F3))
             {
