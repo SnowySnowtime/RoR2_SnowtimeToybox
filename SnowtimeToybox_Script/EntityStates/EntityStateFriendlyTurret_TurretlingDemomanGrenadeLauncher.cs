@@ -14,6 +14,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         public static GameObject grenadePlayerObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/TurretlingDemoGrenadeProjectile_Player.prefab");
         public static GameObject grenadeGhostObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/DemoGrenadeGhost.prefab");
         public static GameObject grenadeImpactObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/GrenadeImpact.prefab");
+        public static GameObject grenadeImpactRainbowObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/GrenadeImpact_Rainbow.prefab");
 
         private static int FireHash = Animator.StringToHash("turretling_fire");
         private static int FireParamHash = Animator.StringToHash("turretling_fire.playbackRate");
@@ -21,7 +22,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         public override void OnEnter()
         {
             duration = 1.5f / attackSpeedStat;
-            damageCoefficient = 2f;
+            damageCoefficient = 3f;
             force = 0f;
             projectilePitchBonus = -2f;
             if (gameObject.name.Contains("Survivor") || gameObject.name.Contains("PlayerMaster"))

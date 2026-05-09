@@ -157,7 +157,7 @@
 		"TURRETLING_SWARM_DESCRIPTION": "Regular Turretling configuration, includes <color=#cfb25a>Blaster</color><style=cStack>(100% damage)</style> and <color=#ff4e73>Pixi Launcher</color><style=cStack>(200% damage)</style>.",
 		"TURRETLING_SWARMMINION_NAME": "Swarmling",
 		"TURRETLING_SWARM_DEMO_NAME": "Swarmling (Demo)",
-		"TURRETLING_SWARM_DEMO_DESCRIPTION": "Irregular Turretling configuration, includes <color=#ffa14e>Grenade Launcher</color><style=cStack>(200% damage)</style> and <color=#ff4e73>Pixi Launcher</color><style=cStack>(200% damage)</style>.\n<style=cEvent>NON-STANDARD WEAPON MODIFICATIONS DETECTED. AI SYSTEMS NOT ADJUSTED FOR PROJECTILE.</style>",
+		"TURRETLING_SWARM_DEMO_DESCRIPTION": "Irregular Turretling configuration, includes <color=#ffa14e>Grenade Launcher</color><style=cStack>(300% damage)</style> and <color=#ff4e73>Pixi Launcher</color><style=cStack>(200% damage)</style>.\n<style=cEvent>NON-STANDARD WEAPON MODIFICATIONS DETECTED. AI SYSTEMS NOT ADJUSTED FOR PROJECTILE.</style>",
 		"TURRETLING_SKILL6_NAME": "<color=#4f9aff>Prismatic Crystal</color>",
 		"TURRETLING_SKILL6_DESC": "Fire prismatic crystals for <style=cIsDamage>450% damage</style>, with different effects depending on color.\n<color=#FA2F2F>Kinetic</color> | <color=#FA2F2F>66%<style=cStack>(x3 bullets)</style> damage</color>. <style=cIsDamage>No falloff</style> and <style=cIsDamage>bypasses armor</style>.\n<color=#8EFA2F>Corrosive</color> | <color=#8EFA2F>66%<style=cStack>(x3 bullets)</style> damage</color>. <style=cIsDamage>Poisons enemies on hit</style>.\n<color=#2FD1FA>Energy</color> | <color=#2FD1FA>66%<style=cStack>(x3 bullets)</style> damage</color>. <style=cIsUtility>Cripples enemies on hit</style>.",
 		"TURRETLING_ALLY1": "Variant 1",
@@ -167,7 +167,7 @@
 		"TURRETLING_ALLY5": "Variant 5",
 		"TURRETLING_ALLY6": "Variant 6",
 		"TURRETLING_SKILL7_NAME": "<color=#ffa14e>Grenade Launcher</color>",
-		"TURRETLING_SKILL7_DESC": "<color=#ffa14e>Explosive</color>. Fire a pipebomb for <style=cIsDamage>200% damage</style>.",
+		"TURRETLING_SKILL7_DESC": "<color=#ffa14e>Explosive</color>. Fire a pipebomb for <style=cIsDamage>300% damage</style>.",
 		"TURRETLING_SKILL7_KEYWORD": "[ <color=#ffa14e>Explosive</color> ]\nWith <color=#e85032>Pocket I.C.B.M</color>, <color=#ffa14e>Grenade Launcher</color> inaccurately fires an <style=cIsDamage>additional pipebomb</style>.",
 		"TURRETLING_SKILL7_KEYWORD_SCEPTER": "[ <color=#ffa14e>Explosive</color> ]\nWith <color=#e85032>Pocket I.C.B.M</color>, <color=#ffa14e>Grenade Launcher</color> inaccurately fires an <style=cIsDamage>additional pipebomb</style>.\nWith <color=#e85032>Ancient Scepter</color>, <color=#ffa14e>Grenade Launcher</color> will have its <style=cIsDamage>projectiles doubled</style>, for a total of <style=cIsDamage>4 pipebombs</style> fired with <color=#e85032>Pocket I.C.B.M</color>.",
 		

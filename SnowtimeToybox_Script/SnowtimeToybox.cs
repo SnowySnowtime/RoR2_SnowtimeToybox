@@ -32,6 +32,7 @@ using Path = System.IO.Path;
 using ReadOnlyContentPack = RoR2.ContentManagement.ReadOnlyContentPack;
 using UnityEngine.XR;
 using RoR2BepInExPack.GameAssetPaths;
+using RoR2.Projectile;
 
 [module: UnverifiableCode]
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -999,8 +1000,16 @@ namespace SnowtimeToybox
                 if (!self.owner?.gameObject.GetComponent<CharacterBody>()) return;
                 float myHue = self.owner.gameObject.GetComponent<CharacterBody>().master.gameObject.GetComponent<TurretlingRainbow>().myHue;
                 bool rainbow = self.owner.gameObject.GetComponent<CharacterBody>().master.gameObject.GetComponent<TurretlingRainbow>().turretlingRainbow;
-                self.gameObject.GetComponent<ChildLocator>().FindChild("Grenade").gameObject.GetComponent<Animator>().SetFloat("hue", myHue);
                 self.gameObject.GetComponent<ChildLocator>().FindChild("Grenade").gameObject.GetComponent<Animator>().SetBool("rainbow", rainbow);
+                if (rainbow)
+                {
+                    self.gameObject.GetComponent<ChildLocator>().FindChild("Grenade").gameObject.GetComponent<Animator>().SetFloat("hue", 0);
+                    self.gameObject.GetComponent<ProjectileImpactExplosion>().impactEffect = TurretlingGrenadeLauncher.grenadeImpactRainbowObject;
+                }
+                else
+                {
+                    self.gameObject.GetComponent<ChildLocator>().FindChild("Grenade").gameObject.GetComponent<Animator>().SetFloat("hue", myHue);
+                }
             }
         }
 
