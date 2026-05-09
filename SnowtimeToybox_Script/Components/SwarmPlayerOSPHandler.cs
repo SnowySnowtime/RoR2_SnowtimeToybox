@@ -24,6 +24,10 @@ public class SwarmPlayerOSPHandler : MonoBehaviour
     {
         self.onRecalculateStats -= onBodyRecalculateStats;
     }
+    public void OnDestroy()
+    {
+        self.onRecalculateStats -= onBodyRecalculateStats;
+    }
     private void onBodyRecalculateStats(CharacterBody body)
     {
         Log.Debug("ughhhhhh");
