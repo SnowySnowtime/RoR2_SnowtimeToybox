@@ -56,7 +56,7 @@ namespace SnowtimeToybox
     {
         public const string Author = "SnowySnowtime";
         public const string Name = nameof(SnowtimeToyboxMod);
-        public const string Version = "1.2.3";
+        public const string Version = "1.2.5";
         public const string GUID = Author + "." + Name;
 
         public static SnowtimeToyboxMod instance;
@@ -180,6 +180,7 @@ namespace SnowtimeToybox
         internal const string _stcharacterAssetBundleName = "snowtimetoybox_characters";
         internal const string _stitemAssetBundleName = "snowtimetoybox_items";
 
+        public static ConfigEntry<bool> ToggleLegendary { get; set; }
         public static ConfigEntry<bool> ToggleSpawnMessages { get; set; }
         public static ConfigEntry<bool> FriendlyTurretImmuneVoidDeath { get; set; }
         public static ConfigEntry<bool> TurretlingImmuneVoidDeath { get; set; }
@@ -199,6 +200,7 @@ namespace SnowtimeToybox
         public static ConfigEntry<float> TurretlingBaseDamagePerLevel { get; set; }
         public static ConfigEntry<float> TurretlingDemoChance { get; set; }
         public static ConfigEntry<float> TurretlingGibberishChance { get; set; }
+        public static ConfigEntry<bool> SwarmlingOSP { get; set; }
 
         public void Awake()
         {
@@ -206,6 +208,8 @@ namespace SnowtimeToybox
 
             Log.Init(Logger);
 
+            ToggleLegendary = Config.Bind("Difficulty", "Legendary", true, "If true, Legendary is enabled as a selectable difficulty.");
+            SwarmlingOSP = Config.Bind("Survivors - Swarmling", "One-Shot Protection", false, "If true, enables one shot protection for the Swarmling.");
             ToggleSpawnMessages = Config.Bind("Friendly Turret Functions", "Spawn Message", true, "If true, the Friendly Turrets will give a message on every stage they spawn on, for insight on if and which turret spawned. Otherwise, friendly turrets are shy, and are also sad!");
             FriendlyTurretShortcakeAggroType = Config.Bind("Friendly Turret Functions", "Strawberry Shortcake Aggro Method", false, "If true, the Strawberry Shortcake Turret will spawn with a native increase to its aggro. Else, it only gains aggro for ~0.5s when its main skill fires.");
             FriendlyTurretImmuneVoidDeath = Config.Bind("Friendly Turret Flags", "Void Death Immunity", true, "If true, Friendly Turrets are immune to Void Death (Void Reaver implosions), this is because they are awful at avoiding them even with mods to make allies avoid them, and we get sad when they are detained.");
@@ -241,11 +245,18 @@ namespace SnowtimeToybox
             Debug.Log(_stdifficultyAssetBundle);
             Debug.Log(_stitemAssetBundle);
 
-            AddDifficulty();
+            if(ToggleLegendary.Value == true)
+            {
+                AddDifficulty();
+            }
             AddCustomItems();
             AddCustomSkills();
             AddCustomAllies();
             AddCustomBuffs();
+            if (scepterLoaded)
+            {
+                AddScepterSkills();
+            }
 
             ItemTag FriendTurret_Borbo_Whitelist = ItemAPI.AddItemTag("FriendTurret_Borbo_Whitelist");
             Log.Debug("FriendTurret_Borbo_Whitelist: " + FriendTurret_Borbo_Whitelist);
@@ -270,11 +281,6 @@ namespace SnowtimeToybox
 
             ItemCatalog.availability.CallWhenAvailable(AddCustomTagsToItems);
             EquipmentCatalog.availability.CallWhenAvailable(AddElitesToList);
-
-            if(scepterLoaded)
-            {
-                AddScepterSkills();
-            }
         }
         
         Dictionary<string, string> itemStuff = new()
@@ -729,8 +735,10 @@ namespace SnowtimeToybox
             SwarmlingDef = _stcharacterAssetBundle.LoadAsset<SurvivorDef>(swarmlingPath + "Swarmling.asset");
             SwarmlingMinionDef = _stcharacterAssetBundle.LoadAsset<DroneDef>(swarmlingPath + "_SwarmTurretling.asset");
             SwarmlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(swarmlingPath + "_TurretlingSurvivorBody.prefab");
+            SwarmlingBody.GetComponent<CharacterBody>().hasOneShotProtection = SwarmlingOSP.Value;
             SwarmlingBody.GetComponent<CharacterDeathBehavior>().deathState = new SerializableEntityStateType(typeof(TurretlingDeath));
             SwarmlingBody.AddComponent<TurretlingMissileTracker>();
+            SwarmlingBody.AddComponent<SwarmPlayerOSPHandler>();
             SwarmlingBody.AddComponent<SwarmPlayerSwarmlingTracker>();
             DroneTechRepairQueue repairQueueSwarmling = SwarmlingBody.AddComponent<DroneTechRepairQueue>();
             repairQueueSwarmling.healRate = 0.05f;
@@ -819,6 +827,7 @@ namespace SnowtimeToybox
             ContentAddition.AddEntityState(typeof(TurretlingGrenadeLauncher), out _);
             ContentAddition.AddEffect(TurretlingGrenadeLauncher.grenadeGhostObject);
             ContentAddition.AddEffect(TurretlingGrenadeLauncher.grenadeImpactObject);
+            ContentAddition.AddEffect(TurretlingGrenadeLauncher.grenadeImpactRainbowObject);
             ContentAddition.AddProjectile(TurretlingGrenadeLauncher.grenadeObject);
             ContentAddition.AddProjectile(TurretlingGrenadeLauncher.grenadePlayerObject);
             ContentAddition.AddSkillDef(DemoTurretlingPrimarySkill);

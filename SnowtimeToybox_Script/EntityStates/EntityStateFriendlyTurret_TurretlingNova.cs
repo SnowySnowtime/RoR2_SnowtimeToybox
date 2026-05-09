@@ -57,6 +57,11 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             Ray aimRay = GetAimRay();
             TeamIndex myTeam = base.gameObject.GetComponent<TeamComponent>().teamIndex;
             Transform fxorigin = base.modelLocator.modelChildLocator.FindChild("HeadCenter").transform;
+            var immunity = RoR2Content.Buffs.Immune;
+            if (!base.HasBuff(immunity.buffIndex))
+            {
+                base.characterBody.AddTimedBuff(immunity.buffIndex, 0.15f);
+            }
             if (base.isAuthority)
             {
                 if ((bool)novaPrefab)

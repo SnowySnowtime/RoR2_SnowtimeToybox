@@ -14,8 +14,8 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         public List<CharacterBody> Swarmlings = [];
         public override void OnEnter()
         {
-            duration = 0.1f;
-            speedCoefficient = 15f;
+            duration = 0.08f;
+            speedCoefficient = 13f;
             beginSoundString = "Play_huntress_shift_mini_blink";
             endSoundString = "Play_huntress_shift_end";
             base.OnEnter();
