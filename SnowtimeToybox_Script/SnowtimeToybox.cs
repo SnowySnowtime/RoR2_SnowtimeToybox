@@ -1318,11 +1318,28 @@ namespace SnowtimeToybox
 
                                     if (bodyPrefab.name == bodyName)
                                     {
+                                        GenericSkill Turretling = bodyPrefab.gameObject.AddComponent<GenericSkill>();
+
+                                        var newFamily = ScriptableObject.CreateInstance<SkillFamily>();
+                                        (newFamily as ScriptableObject).name = bodyPrefab.name.Replace(" (UnityEngine.GameObject)","").ToString() + "TurretlingFamily";
+                                        newFamily.variants = [];
+                                        foreach (var variant in ArtiPassiveFamily.variants)
+                                        {
+                                            Array.Resize(ref newFamily.variants, newFamily.variants.Length + 1);
+
+                                            newFamily.variants[^1] = new SkillFamily.Variant
+                                            {
+                                                skillDef = variant.skillDef,
+                                                unlockableDef = variant.unlockableDef,
+                                                viewableNode = new ViewablesCatalog.Node(variant.skillDef.skillNameToken, false, null)
+                                            };
+                                        }
+
+                                        ContentAddition.AddSkillFamily(newFamily);
+                                        Turretling._skillFamily = newFamily;
+                                        Turretling.skillName = "Turretling";
                                         DroneTechRepairQueue RepairQueue = bodyPrefab.gameObject.AddComponent<DroneTechRepairQueue>();
                                         RepairQueue.healRate = 0.05f;
-                                        GenericSkill Turretling = bodyPrefab.gameObject.AddComponent<GenericSkill>();
-                                        Turretling._skillFamily = ArtiPassiveFamily;
-                                        Turretling.skillName = "Turretling";
 
                                         Log.Debug($" body prefab name {bodyPrefab.name}");
                                         LanguageAPI.Add($"TURRETLING_{bodyPrefab.name.ToUpper()}_NAME", turretlingName);

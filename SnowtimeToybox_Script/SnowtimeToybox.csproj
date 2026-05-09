@@ -65,6 +65,9 @@
 	  <Reference Include="UnityHotReload">
 	    <HintPath>lib\UnityHotReload.dll</HintPath>
 	  </Reference>
+	  <Reference Include="MiscFixes">
+	    <HintPath>lib\MiscFixes.dll</HintPath>
+	  </Reference>
 	</ItemGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
