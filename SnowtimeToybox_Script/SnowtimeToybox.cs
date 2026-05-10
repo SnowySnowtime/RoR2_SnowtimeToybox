@@ -181,6 +181,7 @@ namespace SnowtimeToybox
         internal const string _stitemAssetBundleName = "snowtimetoybox_items";
 
         public static ConfigEntry<bool> ToggleLegendary { get; set; }
+        public static ConfigEntry<bool> SwarmlingOSP { get; set; }
         public static ConfigEntry<bool> ToggleSpawnMessages { get; set; }
         public static ConfigEntry<bool> FriendlyTurretImmuneVoidDeath { get; set; }
         public static ConfigEntry<bool> TurretlingImmuneVoidDeath { get; set; }
@@ -200,7 +201,6 @@ namespace SnowtimeToybox
         public static ConfigEntry<float> TurretlingBaseDamagePerLevel { get; set; }
         public static ConfigEntry<float> TurretlingDemoChance { get; set; }
         public static ConfigEntry<float> TurretlingGibberishChance { get; set; }
-        public static ConfigEntry<bool> SwarmlingOSP { get; set; }
 
         public void Awake()
         {
