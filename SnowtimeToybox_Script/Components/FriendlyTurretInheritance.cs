@@ -139,7 +139,7 @@ namespace SnowtimeToybox.Components
             }
             if (gameObject.name.Contains("_SwarmTurretling") || gameObject.name.Contains("_DT"))
             {
-                if (item.ContainsTag(ItemTag.AIBlacklist) || item.ContainsTag(ItemTag.MobilityRelated) || item.ContainsTag(ItemTag.OnStageBeginEffect)) return false;
+                if (item.ContainsTag(ItemTag.AIBlacklist) || item.ContainsTag(ItemTag.MobilityRelated) || item.ContainsTag(ItemTag.OnStageBeginEffect) || item.ContainsTag(ItemTag.CannotCopy)) return false;
                 return true;
             }
             if (item.ContainsTag(specificTag) || item.ContainsTag(globalTag))
