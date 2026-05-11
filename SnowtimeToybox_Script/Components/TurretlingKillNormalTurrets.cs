@@ -10,9 +10,9 @@ public class TurretlingKillNormalTurrets : MonoBehaviour
     public bool rareReplaceDemoman;
     public void OnEnable()
     {
-        if(NetworkServer.active)
+        if (!NetworkServer.active) return;
+        if (gameObject.name.Contains("Turretling"))
         {
-            if (!gameObject.name.Contains("Turretling")) return;
             rareReplaceDemoman = SnowtimeToyboxMod.TurretlingDemoChance.Value >= Run.instance.runRNG.RangeFloat(0, 100);
             if (rareReplaceDemoman)
             {
@@ -22,12 +22,14 @@ public class TurretlingKillNormalTurrets : MonoBehaviour
                 Destroy(gameObject);
             }
         }
-        if (gameObject.name.Contains("Turretling")) return;
-        if (!SnowtimeToyboxMod.TurretlingKillOriginalTurrets.Value || !NetworkServer.active) return;
-        
-        GameObject newTurretling = Instantiate(SnowtimeToyboxMod.FriendlyTurretTurretlingBroken, gameObject.transform.position, gameObject.transform.rotation);
-        newTurretling.GetComponent<PurchaseInteraction>().cost = Run.instance.GetDifficultyScaledCost(newTurretling.GetComponent<PurchaseInteraction>().cost);
-        NetworkServer.Spawn(newTurretling);
-        Destroy(gameObject);
+        else if (!gameObject.name.Contains("Turretling"))
+        {
+            if (!SnowtimeToyboxMod.TurretlingKillOriginalTurrets.Value) return;
+            GameObject newTurretling = Instantiate(SnowtimeToyboxMod.FriendlyTurretTurretlingBroken, gameObject.transform.position, gameObject.transform.rotation);
+            newTurretling.GetComponent<PurchaseInteraction>().cost = Run.instance.GetDifficultyScaledCost(newTurretling.GetComponent<PurchaseInteraction>().cost);
+            NetworkServer.Spawn(newTurretling);
+            Destroy(gameObject);
+        }
+
     }
 }
