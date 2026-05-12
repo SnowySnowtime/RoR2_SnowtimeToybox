@@ -1,5 +1,5 @@
 # SnowtimeToybox
-adds skins for my friends and I. also adds one skill, difficulty, a new turret, and a few friendly turrets! still working on other stuff.
+adds skins for my friends and I. also adds one skill, difficulty, a new turret, survivor from said turret, and a few friendly turrets! still working on other stuff.
 - please direct any feedback to snowysnowtime in the risk of rain 2 modding discord
 
 # Swarmling
@@ -55,6 +55,7 @@ Note: This must be enabled by setting "Turretling Passive" to true. You can add 
 - [WORMSWORMS' Broadcast Perch](https://thunderstore.io/package/wormsworms/Broadcast_Perch/)
 - [WORMSWORMS' Ancient Observatory](https://thunderstore.io/package/wormsworms/Ancient_Observatory/)
 - [WORMSWORMS' Wetland Downpour](https://thunderstore.io/package/wormsworms/Wetland_Downpour/)
+- [WORMSWORMS' Sunken Tomb](https://thunderstore.io/package/wormsworms/Sunken_Tombs_Returns/)
 - [viliger's Bobomb Battlefield](https://thunderstore.io/package/viliger/BobombBattlefield/)
 - [viliger's Catacombs](https://thunderstore.io/package/viliger/Catacombs/)
 - [Jace's Fogbound Lagoon](https://thunderstore.io/package/JaceDaDorito/FogboundLagoon/)
@@ -121,31 +122,29 @@ Note: This must be enabled by setting "Turretling Passive" to true. You can add 
 
 - Custom Skill for Operator
 ![skill](https://github.com/SnowySnowtime/snowtimetoybox/blob/main/didntliketheblue.png?raw=true)
-- Snowy Snowtime -> VRChat Avatar for Operator
+- Snowy Snowtime -> VRChat Avatar for Operator (Opt-In)
 ![Operator - Anastasia Winters](https://github.com/SnowySnowtime/snowtimetoybox/blob/main/snowtime_vrc_preview.jpg?raw=true)
-- Shortcake -> VRChat Avatar for Artificer
+- Shortcake -> VRChat Avatar for Artificer (Opt-In)
 ![Artificer - Kate](https://github.com/SnowySnowtime/snowtimetoybox/blob/main/shortcakepreview.jpg?raw=true)
-- Legendary, and if [2R4R](https://thunderstore.io/package/RiskOfBrainrot/2R4R/) is installed, LASO
+- Legendary, and if [2R4R](https://thunderstore.io/package/RiskOfBrainrot/2R4R/) is installed, LASO (can be disabled)
 ![Legendary](https://github.com/SnowySnowtime/snowtimetoybox/blob/main/snowtimetoybox_difficulty.jpg?raw=true)
 
 # Credits
-- icebro | a bunch of code directly committed, helping getting most of the friendly turret spawns and other effects working
+- icebro | a bunch of code directly committed, helping getting most of the friendly turret spawns and other effects working. effectively co-author of the mod at this point.
 - acanthi | helped with figuring out how to do some things, like handling the interactable for the turret to remain per-player singletons
 - without icebro and acanthi, the friendly turret(s) would have never become a thing. thank you two so very much!
 - PlNK & ebbysauce | Authored the logbooks.
 - anartoast | Custom Icon for the H4-L0 PL45 Rifle, ideas for balancing said skill
-- .score | Assistance with making the on-hit bounce work for H4-L0 PL45 Rifle
+- .score | Assistance with making the on-hit bounce work for H4-L0 PL45 Rifle, and fixing the opt-in turretling passives.
 - HIFU | Custom component for lingering tracers
-- [Astroflux](https://store.steampowered.com/app/489560/Astroflux/) | SFX used for the Turretling; game is now fully defunct though, which is unfortunate
+- [Astroflux](https://store.steampowered.com/app/489560/Astroflux/) | SFX used for the Turretling; game was defunct, but revived immediately after I uploaded the turretlings?
 
 ## TODO
 
-- additional friendly turrets based on individuals (not sorted):
+- remaining friendly turrets:
 - Anartoast | "Seeker Turret"
 - Lukas | "Lukas Turret"
-- Icebro | "bread turret"
 - PlNK | "PlNK Turret"
-- HIFU | "HIFU Turret"
 
 ## TODO(2)
 - Other drones or turrets (possibility of being implemented):
@@ -153,3 +152,4 @@ Note: This must be enabled by setting "Turretling Passive" to true. You can add 
 - T0AST3R Turret
 - "Throw Turret"
 - ANKLE Turret
+- Railgun Drone

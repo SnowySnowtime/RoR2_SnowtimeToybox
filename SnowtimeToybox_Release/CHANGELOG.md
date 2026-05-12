@@ -16,6 +16,8 @@ Snowy Snowtime
 - cleaned up logbook to remove silly decisions and excess clones of turretlings
 - fixed an issue where swarmling(minion) did not use CannotCopy tag, resulting in over 14 balls being summoned at once when ally limit was removed
 - fixed an issue where swarmling(player) and operator turretlings skills were not defined, therefore wouldnt save upon a restart
+- fixed an issue where, for the default config for the turretlings passives, loaders characterbody was not defined correctly
+- cut 10mb from skins module
 
 .score
 ---
