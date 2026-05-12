@@ -49,6 +49,7 @@ namespace SnowtimeToybox
     [BepInDependency(R2API.RecalculateStatsAPI.PluginGUID)]
     [BepInDependency(R2API.DamageAPI.PluginGUID)]
     [BepInDependency(R2API.DifficultyAPI.PluginGUID)]
+    [BepInDependency("_score.MiscFixes", BepInDependency.DependencyFlags.HardDependency)]
     [BepInDependency("com.RiskOfBrainrot.RiskierRain", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.RiskOfBrainrot.SwanSongExtended", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.DestroyedClone.AncientScepter", BepInDependency.DependencyFlags.SoftDependency)]
@@ -56,7 +57,7 @@ namespace SnowtimeToybox
     {
         public const string Author = "SnowySnowtime";
         public const string Name = nameof(SnowtimeToyboxMod);
-        public const string Version = "1.2.5";
+        public const string Version = "1.2.6";
         public const string GUID = Author + "." + Name;
 
         public static SnowtimeToyboxMod instance;
