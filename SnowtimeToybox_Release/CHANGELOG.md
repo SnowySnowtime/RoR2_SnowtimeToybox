@@ -1,3 +1,31 @@
+`1.2.6`
+<details>
+<summary>Update Summary (includes summary of commits by users)</summary>
+
+- bugfixes and logbooks
+
+Snowy Snowtime
+---
+- removed one shot protection from swarmling(player), can be reenabled for modpack usage
+- most of swarmling(players) stats can now be modified for modpack usage
+- swarmling(minion) now has its damage divided from swarmling(player) instead of the turretling damage config, and can be adjusted
+- swarmling(minion) had its missile damage coefficient nerf removed, it now deals 400% just like swarmling(player) does
+- adjusted base damage (16->12), armor(20->15), and regen(7->5) of swarming(player), and no longer receives armor on level up
+- energy nova now gives immunity for 0.15s
+- bionic blink is slightly slower
+- cleaned up logbook to remove silly decisions and excess clones of turretlings
+- fixed an issue where swarmling(minion) did not use CannotCopy tag, resulting in over 14 balls being summoned at once when ally limit was removed
+- fixed an issue where swarmling(player) and operator turretlings skills were not defined, therefore wouldnt save upon a restart
+
+.score
+---
+- Helped fix an issue where the custom passives for turretlings would always have an invisible viewable that couldnt be viewed, causing the loadout borders of the defined characterbodies that had this passive to forever have the new yellow border
+
+PlNK & ebbysauce
+---
+- Wrote logbook entries for all friendly turrets and turretlings.
+</details>
+
 `1.2.5`
 Emergency release, fixed missing dependency
 - i knew i forgot something...

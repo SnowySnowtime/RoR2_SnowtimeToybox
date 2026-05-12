@@ -182,6 +182,14 @@ namespace SnowtimeToybox
 
         public static ConfigEntry<bool> ToggleLegendary { get; set; }
         public static ConfigEntry<bool> SwarmlingOSP { get; set; }
+        public static ConfigEntry<float> SwarmlingBaseDamage { get; set; }
+        public static ConfigEntry<float> SwarmlingDamagePerLevel { get; set; }
+        public static ConfigEntry<float> SwarmlingBaseMaxHealth { get; set; }
+        public static ConfigEntry<float> SwarmlingMaxHealthPerLevel { get; set; }
+        public static ConfigEntry<float> SwarmlingBaseRegen { get; set; }
+        public static ConfigEntry<float> SwarmlingRegenPerLevel { get; set; }
+        public static ConfigEntry<float> SwarmlingBaseArmor { get; set; }
+        public static ConfigEntry<float> SwarmlingMinionStatMult { get; set; }
         public static ConfigEntry<bool> ToggleSpawnMessages { get; set; }
         public static ConfigEntry<bool> FriendlyTurretImmuneVoidDeath { get; set; }
         public static ConfigEntry<bool> TurretlingImmuneVoidDeath { get; set; }
@@ -210,6 +218,14 @@ namespace SnowtimeToybox
 
             ToggleLegendary = Config.Bind("Difficulty", "Legendary", true, "If true, Legendary is enabled as a selectable difficulty.");
             SwarmlingOSP = Config.Bind("Survivors - Swarmling", "One-Shot Protection", false, "If true, enables one shot protection for the Swarmling.");
+            SwarmlingBaseDamage = Config.Bind("Survivors - Swarmling", "Base Damage", 12f, "Base Damage.");
+            SwarmlingDamagePerLevel = Config.Bind("Survivors - Swarmling", "Damage per Level", 2.4f, "Damage per Level.");
+            SwarmlingBaseMaxHealth = Config.Bind("Survivors - Swarmling", "Base Health", 50f, "Base Health.");
+            SwarmlingMaxHealthPerLevel = Config.Bind("Survivors - Swarmling", "Health per Level", 15f, "Health per Level.");
+            SwarmlingBaseRegen = Config.Bind("Survivors - Swarmling", "Base Health Regen", 5f, "Base Health Regen.");
+            SwarmlingRegenPerLevel = Config.Bind("Survivors - Swarmling", "Health Regen per Level", 1f, "Health Regen per Level.");
+            SwarmlingBaseArmor = Config.Bind("Survivors - Swarmling", "Base Armor", 15f, "Base Armor.");
+            SwarmlingMinionStatMult = Config.Bind("Survivors - Swarmling", "(Minion) Swarm Stat Divider", 3f, "Divides the 'Base Damage', 'Damage per Level' of the Swarm for balance purposes. Uses the base stats of the player at 1");
             ToggleSpawnMessages = Config.Bind("Friendly Turret Functions", "Spawn Message", true, "If true, the Friendly Turrets will give a message on every stage they spawn on, for insight on if and which turret spawned. Otherwise, friendly turrets are shy, and are also sad!");
             FriendlyTurretShortcakeAggroType = Config.Bind("Friendly Turret Functions", "Strawberry Shortcake Aggro Method", false, "If true, the Strawberry Shortcake Turret will spawn with a native increase to its aggro. Else, it only gains aggro for ~0.5s when its main skill fires.");
             FriendlyTurretImmuneVoidDeath = Config.Bind("Friendly Turret Flags", "Void Death Immunity", true, "If true, Friendly Turrets are immune to Void Death (Void Reaver implosions), this is because they are awful at avoiding them even with mods to make allies avoid them, and we get sad when they are detained.");
@@ -740,6 +756,13 @@ namespace SnowtimeToybox
             SwarmlingBody.AddComponent<TurretlingMissileTracker>();
             SwarmlingBody.AddComponent<SwarmPlayerOSPHandler>();
             SwarmlingBody.AddComponent<SwarmPlayerSwarmlingTracker>();
+            SwarmlingBody.GetComponent<CharacterBody>().baseDamage = SwarmlingBaseDamage.Value;
+            SwarmlingBody.GetComponent<CharacterBody>().levelDamage = SwarmlingDamagePerLevel.Value;
+            SwarmlingBody.GetComponent<CharacterBody>().maxHealth = SwarmlingBaseMaxHealth.Value;
+            SwarmlingBody.GetComponent<CharacterBody>().levelMaxHealth = SwarmlingMaxHealthPerLevel.Value;
+            SwarmlingBody.GetComponent<CharacterBody>().baseRegen = SwarmlingBaseRegen.Value;
+            SwarmlingBody.GetComponent<CharacterBody>().levelRegen = SwarmlingRegenPerLevel.Value;
+            SwarmlingBody.GetComponent<CharacterBody>().baseArmor = SwarmlingBaseArmor.Value;
             DroneTechRepairQueue repairQueueSwarmling = SwarmlingBody.AddComponent<DroneTechRepairQueue>();
             repairQueueSwarmling.healRate = 0.05f;
 
@@ -748,8 +771,8 @@ namespace SnowtimeToybox
             SwarmlingMinionBody.AddComponent<TurretlingMissileTracker>();
             SwarmlingMinionBody.AddComponent<SwarmMinionSwarmlingTeleportHandler>();
             SwarmlingMinionBody.AddComponent<EquipmentSlot>();
-            SwarmlingMinionBody.GetComponent<CharacterBody>().baseDamage = (TurretlingBaseDamage.Value / 2f);
-            SwarmlingMinionBody.GetComponent<CharacterBody>().levelDamage = (TurretlingBaseDamagePerLevel.Value / 2f);
+            SwarmlingMinionBody.GetComponent<CharacterBody>().baseDamage = (SwarmlingBaseDamage.Value / SwarmlingMinionStatMult.Value);
+            SwarmlingMinionBody.GetComponent<CharacterBody>().levelDamage = (SwarmlingDamagePerLevel.Value / SwarmlingMinionStatMult.Value);
             SwarmlingMinionBroken = _stcharacterAssetBundle.LoadAsset<GameObject>(swarmlingPath + "_SwarmTurretlingBroken.prefab");
             SwarmlingMinionMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(swarmlingPath + "_SwarmTurretlingMaster.prefab");
             SwarmlingMinionMaster.AddComponent<TurretlingRainbow>();
