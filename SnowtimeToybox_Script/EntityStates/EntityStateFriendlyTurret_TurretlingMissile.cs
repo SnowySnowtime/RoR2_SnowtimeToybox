@@ -41,8 +41,8 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         public override void OnEnter()
         {
             base.OnEnter();
-            if (!gameObject?.GetComponent<TurretlingMissileTracker>()) return;
-            if (gameObject?.TryGetComponent(out TurretlingMissileTracker missileTracker) != true) return;
+            if (!gameObject.GetComponent<TurretlingMissileTracker>()) return;
+            if (gameObject.TryGetComponent(out TurretlingMissileTracker missileTracker) != true) return;
             if (missileTracker?.GetTrackingTarget()?.gameObject == null)
             if (missileTracker?.GetTrackingTarget() == null)
             {
@@ -51,6 +51,10 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 return;
             }
             missileCheckPassed = true;
+            if (NetworkServer.active && characterBody.inventory && characterBody.inventory.GetItemCountEffective(DLC2Content.Items.IncreasePrimaryDamage) > 0)
+            {
+                characterBody.AddIncreasePrimaryDamageStack();
+            }
             //Log.Debug(missileTracker.GetTrackingTarget().gameObject);
             //base.skillLocator.secondary.DeductStock(base.skillLocator.secondary.maxStock);
             skillLocator.secondary.RemoveAllStocks();
@@ -150,17 +154,6 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 if (firingTime > refireTime && missilesFired < 4)
                 {
                     FireOrbMissile();
-                }
-            }
-            if (characterBody.isServer)
-            {
-                if (missileCheckPassed == true)
-                {
-                    CharacterBody obj = characterBody;
-                    if ((object)obj != null && obj.inventory.GetItemCountEffective(DLC2Content.Items.IncreasePrimaryDamage) > 0)
-                    {
-                        characterBody.AddIncreasePrimaryDamageStack();
-                    }
                 }
             }
             if (fixedAge > duration && isAuthority)
