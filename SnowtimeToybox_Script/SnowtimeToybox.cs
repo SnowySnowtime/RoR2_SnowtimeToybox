@@ -139,6 +139,7 @@ namespace SnowtimeToybox
         // turretling survivor
         public static SurvivorDef SwarmlingDef;
         public static GameObject SwarmlingBody;
+        public static GameObject SwarmlingMaster;
         public static DroneDef SwarmlingMinionDef;
         public static GameObject SwarmlingMinionBody;
         public static GameObject SwarmlingMinionBroken;
@@ -752,6 +753,7 @@ namespace SnowtimeToybox
             SwarmlingDef = _stcharacterAssetBundle.LoadAsset<SurvivorDef>(swarmlingPath + "Swarmling.asset");
             SwarmlingMinionDef = _stcharacterAssetBundle.LoadAsset<DroneDef>(swarmlingPath + "_SwarmTurretling.asset");
             SwarmlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(swarmlingPath + "_TurretlingSurvivorBody.prefab");
+            SwarmlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(swarmlingPath + "_TurretlingSurvivorMonsterMaster.prefab");
             SwarmlingBody.GetComponent<CharacterBody>().hasOneShotProtection = SwarmlingOSP.Value;
             SwarmlingBody.GetComponent<CharacterDeathBehavior>().deathState = new SerializableEntityStateType(typeof(TurretlingDeath));
             SwarmlingBody.AddComponent<TurretlingMissileTracker>();
@@ -796,6 +798,7 @@ namespace SnowtimeToybox
             ContentAddition.AddSurvivorDef(SwarmlingDef);
             ContentAddition.AddDroneDef(SwarmlingMinionDef);
             ContentAddition.AddBody(SwarmlingBody);
+            ContentAddition.AddMaster(SwarmlingMaster);
             ContentAddition.AddBody(SwarmlingMinionBody);
             ContentAddition.AddBody(SwarmlingMinionBroken);
             ContentAddition.AddMaster(SwarmlingMinionMaster);

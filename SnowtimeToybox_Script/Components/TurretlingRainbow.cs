@@ -153,7 +153,7 @@ public class TurretlingRainbow : NetworkBehaviour
             else if (gameObject.name.Contains("PlayerMaster"))
             {
                 turretlingPlayerMaster = gameObject.GetComponent<CharacterMaster>();
-                //Log.Debug("Player found possessing Turretling, defining SteamID directly.");
+                Log.Debug("Player found possessing Turretling, defining SteamID directly.");
                 if (!gameObject.GetComponent<PlayerCharacterMasterController>()) return;
                 steamid = turretlingPlayerMaster.playerCharacterMasterController.networkUser.id.steamId.ToSteamID();
                 //Log.Debug("Player" + gameObject.GetComponent<PlayerCharacterMasterController>().GetDisplayName() + " SteamID: " + steamid);

@@ -67,7 +67,9 @@
 		"TURRETLING_SUBTITLE": "not so cute now...",
 		"TURRETLING_FUNCTION": "Tiny walking turret which assists the user in dealing damage.",
 		"TURRETLING_DESCRIPTION": "Tiny, distracting, walking turret which assists the user in damage.",
+		"TURRETLINGDEMO_DESCRIPTION": "Tiny, distracting, walking turret which assists the user in damage.",
 		"TURRETLING_SKILL_DESCRIPTION": "Fires a blaster for <style=cIsDamage>100% damage</style>.\nOccassionally fires its pixi launcher for <style=cIsDamage>200% damage</style>.",
+		"TURRETLINGDEMO_SKILL_DESCRIPTION": "Fires a blaster for <style=cIsDamage>100% damage</style>.\nOccassionally fires its pixi launcher for <style=cIsDamage>200% damage</style>.",
 		
 		"TURRETLING_BROKEN_NAME": "Broken Turretling",
 		"TURRETLING_BROKEN_CONTEXT": "Repair the cute Turretling...",
