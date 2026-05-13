@@ -1,5 +1,6 @@
 `1.2.8`
 - fixed an issue with a contributors special vfx
+- goobo
 
 `1.2.7` Accidentally built debug instead of release binaries
 - gorp..,.,,. once again forgot something despite quintuple checking everything.
