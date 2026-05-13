@@ -1,3 +1,7 @@
+`1.2.7` Accidentally built debug instead of release binaries
+- gorp..,.,,. once again forgot something despite quintuple checking everything.
+- should fix log spam
+
 `1.2.6`
 <details>
 <summary>Update Summary (includes summary of commits by users)</summary>
