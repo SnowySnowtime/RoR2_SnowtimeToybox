@@ -52,6 +52,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             additionalStocks = base.skillLocator.special.bonusStockFromBody;
             newrad = radius + (additionalStocks + additionalStocks + additionalStocks);
             //Log.Debug("Original Radius: " + radius + "... Now it is: " + newrad);
+            skillLocator.special.RemoveAllStocks();
             Util.PlaySound(attackSoundString, base.gameObject);
             Ray aimRay = GetAimRay();
             TeamIndex myTeam = base.gameObject.GetComponent<TeamComponent>().teamIndex;
