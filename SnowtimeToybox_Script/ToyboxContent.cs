@@ -804,13 +804,6 @@ public class Content
         ContentAddition.AddEffect(HaloHitObject);
         ContentAddition.AddEffect(HaloorbEffectObject);
         ContentAddition.AddEffect(SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/PlasmaRifle/PlasmaRifleImpactVFXRico.prefab"));
-        ContentAddition.AddEffect(effectPrefabObject);
-        ContentAddition.AddEffect(hitEffectPrefabObject);
-        ContentAddition.AddEffect(tracerEffectPrefabObject);
-        ContentAddition.AddEffect(muzzleflashEffectObject);
-        ContentAddition.AddProjectile(projectileObject);
-        ContentAddition.AddEffect(projectileGhostObject);
-        ContentAddition.AddEffect(projectileExplosionObject);
         ContentAddition.AddEffect(BorboCheck.turretUseEffect);
         ContentAddition.AddEffect(deathfx);
         ContentAddition.AddEffect(orbShortcakeRetaliateObject);

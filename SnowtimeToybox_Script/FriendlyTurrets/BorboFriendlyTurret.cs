@@ -48,6 +48,9 @@ public class BorboFriendlyTurret : FriendlyTurretBase<BorboFriendlyTurret>
         base.ContentAdditionFuncs();
         ContentAddition.AddEntityState(typeof(FireBorboLaser), out _);
         ContentAddition.AddEntityState(typeof(ChargeBorboLaser), out _);
+        ContentAddition.AddEffect(Content.effectPrefabObject);
+        ContentAddition.AddEffect(Content.hitEffectPrefabObject);
+        ContentAddition.AddEffect(Content.tracerEffectPrefabObject);
     }
     public override void StageInteractableFuncs()
     {
