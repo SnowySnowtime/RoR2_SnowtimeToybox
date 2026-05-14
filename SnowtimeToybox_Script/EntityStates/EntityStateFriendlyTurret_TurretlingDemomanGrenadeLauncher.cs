@@ -21,11 +21,11 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             projectilePitchBonus = -2f;
             if (gameObject.name.Contains("Survivor") || gameObject.name.Contains("PlayerMaster"))
             {
-                projectilePrefab = SnowtimeToyboxMod.grenadePlayerObject;
+                projectilePrefab = Content.grenadePlayerObject;
             }
             else
             {
-                projectilePrefab = SnowtimeToyboxMod.grenadeObject;
+                projectilePrefab = Content.grenadeObject;
             }
 
             targetMuzzle = "Muzzle_Primary";

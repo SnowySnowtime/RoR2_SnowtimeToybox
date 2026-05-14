@@ -16,7 +16,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
 {
     public class TurretlingEnergyNova : BaseState
     {
-        public static GameObject novaPrefab = SnowtimeToyboxMod.novafx;
+        public static GameObject novaPrefab = Content.novafx;
 
         public static string attackSoundString = "Play_Turretling_Nova";
 
@@ -50,8 +50,8 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             base.characterBody.SetAimTimer(0f);
             duration = baseDuration;
             additionalStocks = base.skillLocator.special.bonusStockFromBody;
-            newrad = radius + (additionalStocks + additionalStocks + additionalStocks);
-            //Log.Debug("Original Radius: " + radius + "... Now it is: " + newrad);
+            newrad = (Mathf.Clamp(((radius + (additionalStocks * 2))), 15f, 30f));
+            Log.Debug("Nova Original Radius: " + radius + "... Now it is: " + newrad);
             skillLocator.special.RemoveAllStocks();
             Util.PlaySound(attackSoundString, base.gameObject);
             Ray aimRay = GetAimRay();

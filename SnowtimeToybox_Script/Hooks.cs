@@ -1,21 +1,27 @@
-using System.Collections.Generic;
-using System.Linq;
-using Mono.Collections.Generic;
+using EntityStates;
 using R2API;
 using RoR2;
 using Ror2AggroTools;
 using SnowtimeToybox.Components;
 using SnowtimeToybox.FriendlyTurrets;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using SceneDirector = On.RoR2.SceneDirector;
+using On.RoR2.CharacterAI;
+using RoR2.Networking;
+using SnowtimeToybox.FriendlyTurretChecks;
+using RoR2.Projectile;
+using Object = UnityEngine.Object;
 
 namespace SnowtimeToybox;
 
 public class Hooks
 {
+
     public static void Hook()
     {
         Run.onRunStartGlobal += (Run run) =>
@@ -43,6 +49,224 @@ public class Hooks
         {
             handle.Result.AddComponent<TurretlingKillNormalTurrets>();
         };
+
+        // this isnt going to be fun.
+        On.RoR2.DroneRepairMaster.TickHealthRepairServer += DroneRepairMasterHookTickHealthRepairServer;
+        On.DroneTechController.CommandFollowInternal += DroneTechControllerHookCommandFollowInternal;
+        On.DroneTechController.CommandFollow_bool_GameObject += DroneTechControllerHookCommandFollowGameObject;
+        On.DroneTechController.CommandFollow_bool_DroneInfo += DroneTechControllerHookCommandFollowDroneInfo;
+        On.DroneTechController.BeginFollow_CharacterBody += DroneTechControllerHookBeginFollow;
+        On.DroneTechController.BeginFollow_CharacterBody_int += DroneTechControllerHookBeginFollowInt;
+        On.RoR2.DroneCommandReceiver.FixedUpdate += DroneCommandReceiverHookFixedUpdate;
+        On.RoR2.DroneCommandReceiver.CommandFollow += DroneCommandReceiverHookCommandFollow;
+        On.RoR2.DroneCommandReceiver.ActivateFollow += DroneCommandReceiverHookActivateFollow;
+        On.RoR2.DroneCommandReceiver.CommandActivate += DroneCommandReceiverHookCommandActivate;
+        On.RoR2.DroneCommandReceiver.IsReady += DroneCommandReceiverOnIsReady;
+        On.EntityStates.DroneTech.CommandCarry.OnEnter += DroneTechHookOnEnter;
+        On.RoR2.Items.DroneUpgradeHiddenBodyBehavior.UpdateStack += DroneUpgradeHiddenBodyBehaviorHookUpdateStack;
+        // i hate doing this, idk.
+        On.RoR2.CharacterModel.IsUpgradedDrone += CharacterModelHookIsUpgradedDrone;
+        On.RoR2.DroneCombinerController.Init += DroneCombinerControllerHookInit;
+        On.RoR2.Projectile.ProjectileController.IgnoreCollisionsWithBody += IgnoreCollisionsWithBody;
+
+        On.RoR2.PurchaseInteraction.GetInteractability += GetInteractabilityFriendlyTurrets;
+        // update friendly turret targeting
+        BaseAI.UpdateTargets += UpdateFriendlyTurretTargeting;
+        //overlay amanger ,.,. 
+        On.RoR2.CharacterModel.UpdateOverlays += CharacterModelOnUpdateOverlays;
+    }
+
+    private static Interactability GetInteractabilityFriendlyTurrets(On.RoR2.PurchaseInteraction.orig_GetInteractability orig, PurchaseInteraction self, Interactor activator)
+    {
+        //Log.Debug(self.displayNameToken);
+        if (!self.displayNameToken.StartsWith("FRIENDLYTURRET_")) return orig(self, activator);
+
+        CharacterBody[] minionBodies = activator.gameObject.GetComponent<CharacterBody>()?.GetMinionBodies();
+        if (minionBodies == null) return orig(self, activator);
+
+        foreach (CharacterBody body in minionBodies)
+        {
+            if (!body.baseNameToken.StartsWith("FRIENDLYTURRET_")) continue;
+
+            //Log.Debug(self.gameObject.GetComponent<BorboCheck>().bodyName);
+            //Log.Debug(body.name);
+
+            if (body.name.Contains(self.gameObject.GetComponent<BorboCheck>().bodyName))
+            {
+                return Interactability.Disabled;
+            }
+        }
+
+        return orig(self, activator);
+    }
+    private static void CharacterModelOnUpdateOverlays(On.RoR2.CharacterModel.orig_UpdateOverlays orig, RoR2.CharacterModel self)
+    {
+        orig(self);
+
+        if (self && self.body)
+        {
+            if (self.body.HasBuff(BreadFriendlyTurret.BreadTurretBuffFortune))
+            {
+                FriendlyTurretOverlayManager friendlyTurretOverlayManager = self.body.GetComponent<FriendlyTurretOverlayManager>();
+                if (!friendlyTurretOverlayManager) friendlyTurretOverlayManager = self.body.gameObject.AddComponent<FriendlyTurretOverlayManager>();
+                if (!friendlyTurretOverlayManager.hasOverlay("matBreadFortune"))
+                {
+                    friendlyTurretOverlayManager.Body = self.body;
+                    var temporaryOverlay = TemporaryOverlayManager.AddOverlay(self.gameObject);
+                    temporaryOverlay.duration = float.PositiveInfinity;
+                    temporaryOverlay.animateShaderAlpha = true;
+                    temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(1f, 1f, 2f, 0f);
+                    temporaryOverlay.destroyComponentOnEnd = true;
+                    temporaryOverlay.originalMaterial = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<Material>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Bread/matBreadFortune.mat");
+                    temporaryOverlay.AddToCharacterModel(self);
+                    friendlyTurretOverlayManager.Overlay.Add(temporaryOverlay);
+                }
+            }
+
+            if (self.body.HasBuff(AcanthiFriendlyTurret.AcanthiTurretDebuff))
+            {
+                FriendlyTurretOverlayManager friendlyTurretOverlayManager = self.body.GetComponent<FriendlyTurretOverlayManager>();
+                if (!friendlyTurretOverlayManager) friendlyTurretOverlayManager = self.body.gameObject.AddComponent<FriendlyTurretOverlayManager>();
+                if (!friendlyTurretOverlayManager.hasOverlay("acanthidebuffoverlay"))
+                {
+                    friendlyTurretOverlayManager.Body = self.body;
+                    var temporaryOverlay = TemporaryOverlayManager.AddOverlay(self.gameObject);
+                    temporaryOverlay.duration = float.PositiveInfinity;
+                    temporaryOverlay.animateShaderAlpha = true;
+                    temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(1f, 1f, 2f, 0f);
+                    temporaryOverlay.destroyComponentOnEnd = true;
+                    temporaryOverlay.originalMaterial = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<Material>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Acanthi/acanthidebuffoverlay.mat");
+                    temporaryOverlay.AddToCharacterModel(self);
+                    friendlyTurretOverlayManager.Overlay.Add(temporaryOverlay);
+                }
+            }
+
+            if (self.body.HasBuff(BorboFriendlyTurret.BorboTurretDebuff))
+            {
+                FriendlyTurretOverlayManager friendlyTurretOverlayManager = self.body.GetComponent<FriendlyTurretOverlayManager>();
+                if (!friendlyTurretOverlayManager) friendlyTurretOverlayManager = self.body.gameObject.AddComponent<FriendlyTurretOverlayManager>();
+                if (!friendlyTurretOverlayManager.hasOverlay("borboturretdebuffoverlay"))
+                {
+                    friendlyTurretOverlayManager.Body = self.body;
+                    var temporaryOverlay = TemporaryOverlayManager.AddOverlay(self.gameObject);
+                    temporaryOverlay.duration = float.PositiveInfinity;
+                    temporaryOverlay.animateShaderAlpha = true;
+                    temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(1f, 1f, 2f, 0f);
+                    temporaryOverlay.destroyComponentOnEnd = true;
+                    temporaryOverlay.originalMaterial = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<Material>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/borboturretdebuffoverlay.mat");
+                    temporaryOverlay.AddToCharacterModel(self);
+                    friendlyTurretOverlayManager.Overlay.Add(temporaryOverlay);
+                }
+            }
+
+            if (self.body.HasBuff(BreadFriendlyTurret.BreadTurretBuffNearbyAllies))
+            {
+                FriendlyTurretOverlayManager friendlyTurretOverlayManager = self.body.GetComponent<FriendlyTurretOverlayManager>();
+                if (!friendlyTurretOverlayManager) friendlyTurretOverlayManager = self.body.gameObject.AddComponent<FriendlyTurretOverlayManager>();
+                if (!friendlyTurretOverlayManager.hasOverlay("matBreadGraceOverlay"))
+                {
+                    friendlyTurretOverlayManager.Body = self.body;
+                    var temporaryOverlay = TemporaryOverlayManager.AddOverlay(self.gameObject);
+                    temporaryOverlay.duration = float.PositiveInfinity;
+                    temporaryOverlay.animateShaderAlpha = true;
+                    temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(1f, 1f, 2f, 0f);
+                    temporaryOverlay.destroyComponentOnEnd = true;
+                    temporaryOverlay.originalMaterial = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<Material>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Bread/matBreadGraceOverlay.mat");
+                    temporaryOverlay.AddToCharacterModel(self);
+                    friendlyTurretOverlayManager.Overlay.Add(temporaryOverlay);
+                }
+            }
+        }
+    }
+    private static void UpdateFriendlyTurretTargeting(BaseAI.orig_UpdateTargets orig, RoR2.CharacterAI.BaseAI self)
+    {
+        // Default targeting type: Closest enemy(?)
+        orig(self);
+        CharacterBody body = self.body;
+        string bodyname = body.baseNameToken;
+        float target_maxdist = 250f;
+        //Log.Debug(bodyname);
+        // Target High Value Targets (enemies with greatest combinedhealth)
+        if (bodyname.Contains("FRIENDLYTURRET_BORBO") || bodyname.Contains("FRIENDLYTURRET_SNOWTIME") || bodyname.Contains("FRIENDLYTURRET_ACANTHI"))
+        {
+            if (bodyname.Contains("FRIENDLYTURRET_SNOWTIME"))
+            {
+                target_maxdist = 125f;
+            }
+            if (bodyname.Contains("FRIENDLYTURRET_ACANTHI"))
+            {
+                target_maxdist = 80f;
+            }
+            //Log.Debug("Found appropriate turret AI: " + bodyname);
+            InputBankTest inputBank = body.inputBank;
+            TeamComponent teamComponent = body.teamComponent;
+            if (body == null || inputBank == null || teamComponent == null)
+            {
+                return;
+            }
+            BullseyeSearch bullseyeSearch = new BullseyeSearch
+            {
+                searchOrigin = body.corePosition,
+                searchDirection = inputBank.aimDirection,
+                teamMaskFilter = TeamMask.GetEnemyTeams(teamComponent.teamIndex),
+                maxDistanceFilter = target_maxdist,
+                filterByLoS = true,
+                sortMode = BullseyeSearch.SortMode.None
+            };
+            bullseyeSearch.RefreshCandidates();
+            HurtBox hurtBox = null;
+            float num = float.NegativeInfinity;
+            foreach (HurtBox result in bullseyeSearch.GetResults())
+            {
+                float maxCombinedHealth = result.healthComponent.fullCombinedHealth;
+                if (maxCombinedHealth > num)
+                {
+                    num = maxCombinedHealth;
+                    hurtBox = result;
+                }
+            }
+            if ((bool)hurtBox)
+            {
+                self.currentEnemy.bestHurtBox = hurtBox;
+            }
+        }
+        // Clean up the small fry (enemies with lowest current health)
+        // Nothing uses this yet but I think it might be worth on some turrets, keeping for the future.
+        if (bodyname.Contains("sometheoreticalturret"))
+        {
+            //Log.Debug("Found appropriate turret AI: " + bodyname);
+            InputBankTest inputBank = body.inputBank;
+            TeamComponent teamComponent = body.teamComponent;
+            if (body == null || inputBank == null || teamComponent == null)
+            {
+                return;
+            }
+            BullseyeSearch bullseyeSearch = new BullseyeSearch
+            {
+                searchOrigin = body.corePosition,
+                searchDirection = inputBank.aimDirection,
+                teamMaskFilter = TeamMask.GetEnemyTeams(teamComponent.teamIndex),
+                maxDistanceFilter = 250f,
+                filterByLoS = true,
+                sortMode = BullseyeSearch.SortMode.None
+            };
+            bullseyeSearch.RefreshCandidates();
+            HurtBox hurtBox = null;
+            float num = float.NegativeInfinity;
+            foreach (HurtBox result in bullseyeSearch.GetResults())
+            {
+                float currenthealth = result.healthComponent.health;
+                if (currenthealth < num)
+                {
+                    num = currenthealth;
+                    hurtBox = result;
+                }
+            }
+            if ((bool)hurtBox)
+            {
+                self.currentEnemy.bestHurtBox = hurtBox;
+            }
+        }
     }
 
     private static void JustLetMeDamageMyFoesPleaseThankYou(On.RoR2.GlobalEventManager.orig_OnHitEnemy orig, GlobalEventManager self, DamageInfo damageInfo, GameObject victim)
@@ -440,6 +664,197 @@ public class Hooks
             if (obj.inventory) obj.inventory.GiveItemPermanent(RoR2Content.Items.PersonalShield, 5);
             if (obj.inventory) obj.inventory.GiveItemPermanent(RoR2Content.Items.BoostDamage, 10);
             if (obj.inventory) obj.inventory.GiveItemPermanent(RoR2Content.Items.ShinyPearl, 1);
+        }
+    }
+
+
+    private static bool DroneCommandReceiverOnIsReady(On.RoR2.DroneCommandReceiver.orig_IsReady orig, DroneCommandReceiver self)
+    {
+        return !TurretlingRainbow.DTActiveTurretlings.Contains(self.characterBody) && orig(self);
+    }
+
+    private static void DroneCombinerControllerHookInit(On.RoR2.DroneCombinerController.orig_Init orig)
+    {
+        orig();
+        DroneCombinerController.doNotDestroy.Add(BodyCatalog.FindBodyIndex(Content.SwarmlingMinionBody));
+        DroneCombinerController.doNotDestroy.Add(BodyCatalog.FindBodyIndex(Content.SwarmlingDemoMinionBody));
+        DroneCombinerController.doNotDestroy.Add(BodyCatalog.FindBodyIndex(Content.ArtiTurretlingBody));
+        DroneCombinerController.doNotDestroy.Add(BodyCatalog.FindBodyIndex(Content.PassiveDemoTurretlingBody));
+        DroneCombinerController.doNotDestroy.Add(BodyCatalog.FindBodyIndex(Content.DTTurretlingBody));
+        DroneCombinerController.doNotDestroy.Add(BodyCatalog.FindBodyIndex(Content.DTDemoTurretlingBody));
+        DroneCombinerController.droneCompatibilityLUT.Add(BodyCatalog.FindBodyIndex(Content.SwarmlingMinionBody), BodyCatalog.FindBodyIndex(Content.FriendlyTurretTurretlingBody));
+        DroneCombinerController.droneCompatibilityLUT.Add(BodyCatalog.FindBodyIndex(Content.SwarmlingDemoMinionBody), BodyCatalog.FindBodyIndex(Content.FriendlyTurretTurretlingBody));
+        DroneCombinerController.droneCompatibilityLUT.Add(BodyCatalog.FindBodyIndex(Content.ArtiTurretlingBody), BodyCatalog.FindBodyIndex(Content.FriendlyTurretTurretlingBody));
+        DroneCombinerController.droneCompatibilityLUT.Add(BodyCatalog.FindBodyIndex(Content.PassiveDemoTurretlingBody), BodyCatalog.FindBodyIndex(Content.FriendlyTurretTurretlingBody));
+        DroneCombinerController.droneCompatibilityLUT.Add(BodyCatalog.FindBodyIndex(Content.DTTurretlingBody), BodyCatalog.FindBodyIndex(Content.FriendlyTurretTurretlingBody));
+        DroneCombinerController.droneCompatibilityLUT.Add(BodyCatalog.FindBodyIndex(Content.DTDemoTurretlingBody), BodyCatalog.FindBodyIndex(Content.FriendlyTurretTurretlingBody));
+    }
+
+    private static bool CharacterModelHookIsUpgradedDrone(On.RoR2.CharacterModel.orig_IsUpgradedDrone orig, CharacterModel self)
+    {
+        if (self.gameObject.name.Contains("Turretling"))
+        {
+            return false;
+        }
+        else return orig(self);
+    }
+
+    private static void DroneUpgradeHiddenBodyBehaviorHookUpdateStack(On.RoR2.Items.DroneUpgradeHiddenBodyBehavior.orig_UpdateStack orig, RoR2.Items.DroneUpgradeHiddenBodyBehavior self, int newStack)
+    {
+        if (self.body.gameObject.name.Contains("Turretling")) return;
+        orig(self, newStack);
+    }
+
+    private static void DroneTechHookOnEnter(On.EntityStates.DroneTech.CommandCarry.orig_OnEnter orig, EntityStates.DroneTech.CommandCarry self)
+    {
+        if (self.gameObject.name.Contains("Turretling"))
+        {
+            //Log.Debug(self.gameObject.name + " entered state CommandCarry.OnEnter");
+            if ((bool)self.target && self.target.TryGetComponent<CharacterBody>(out var component))
+            {
+                self.targetBody = component;
+                self.targetTransform = self.targetBody.modelLocator.modelChildLocator.FindChild(self.targetChildIndex);
+            }
+            if (!self.targetTransform)
+            {
+                //Debug.LogError("CommandCarry.OnEnter: No targetTransform! " + self.targetChildIndex);
+            }
+            if ((bool)self.rigidbodyMotor)
+            {
+                self.rigidbodyMotor.enabled = false;
+            }
+            if ((bool)self.characterMotor)
+            {
+                self.characterMotor.enabled = false;
+            }
+            if ((bool)self.modelLocator && (bool)self.modelLocator.modelBaseTransform && (bool)self.targetTransform)
+            {
+                Transform modelBaseTransform = self.modelLocator.modelBaseTransform;
+                self.cachedModelPosition = modelBaseTransform.localPosition;
+                self.cachedModelRotation = modelBaseTransform.localRotation;
+                modelBaseTransform.parent = self.targetTransform;
+                modelBaseTransform.rotation = self.targetTransform.rotation;
+                modelBaseTransform.localPosition = new Vector3(0f, self.characterBody.radius, 0f);
+                self.transform.position = modelBaseTransform.transform.position;
+            }
+            if ((bool)self.characterBody.hurtBoxGroup)
+            {
+                self.characterBody.hurtBoxGroup.hurtBoxesDeactivatorCounter++;
+            }
+            self.commandReceiver = self.GetComponent<DroneCommandReceiver>();
+            if ((bool)self.commandReceiver)
+            {
+                self.commandReceiver.droneState = DroneCommandReceiver.DroneState.Busy;
+            }
+            self.characterBody.fakeActorCounter++;
+            if (!self.isAuthority && self.TryGetComponent<CharacterNetworkTransform>(out var t))
+            {
+                self.networkTransform = t;
+                self.networkTransform.enabled = false;
+            }
+        }
+        if (self.gameObject.name.Contains("Turretling")) return;
+        orig(self);
+    }
+
+    private static void DroneTechControllerHookCommandFollowInternal(On.DroneTechController.orig_CommandFollowInternal orig, DroneTechController self, bool shouldFollow, GameObject droneBody)
+    {
+        if (droneBody.gameObject.name.Contains("Turretling")) return;
+        orig(self, shouldFollow, droneBody);
+    }
+
+    private static void DroneTechControllerHookCommandFollowGameObject(On.DroneTechController.orig_CommandFollow_bool_GameObject orig, DroneTechController self, bool shouldFollow, GameObject droneBody)
+    {
+        if (droneBody.gameObject.name.Contains("Turretling")) return;
+        orig(self, shouldFollow, droneBody);
+    }
+
+    private static void DroneTechControllerHookCommandFollowDroneInfo(On.DroneTechController.orig_CommandFollow_bool_DroneInfo orig, DroneTechController self, bool shouldFollow, DroneInfo drone)
+    {
+        if (drone.characterBody.gameObject.name.Contains("Turretling")) return;
+        orig(self, shouldFollow, drone);
+    }
+
+    // Double the rate that the Operator Turretlings respawn; in part due to their fragility.
+    private static void DroneRepairMasterHookTickHealthRepairServer(On.RoR2.DroneRepairMaster.orig_TickHealthRepairServer orig, DroneRepairMaster self, float healRate)
+    {
+        if (self.gameObject.name.Contains("Turretling"))
+        {
+            if (!NetworkServer.active)
+            {
+                Debug.LogWarning("[Server] function 'System.Void RoR2.DroneRepairMaster::TickHealthRepairServer(System.Single)' called on client");
+            }
+            else if (self.HaveRepairBody && !(self.healthComponent == null) && NetworkServer.active)
+            {
+                self.healthComponent.Heal((healRate * 2) * self.healthComponent.fullHealth * Time.fixedDeltaTime, default(ProcChainMask), nonRegen: false);
+                if (self.healthComponent.health >= self.healthComponent.fullHealth)
+                {
+                    self.RespawnDrone();
+                }
+            }
+        }
+        if (self.gameObject.name.Contains("Turretling")) return;
+        orig(self, healRate);
+    }
+    private static void DroneTechControllerHookBeginFollow(On.DroneTechController.orig_BeginFollow_CharacterBody orig, DroneTechController self, CharacterBody drone)
+    {
+        if (drone.gameObject.name.Contains("Turretling")) return;
+        orig(self, drone);
+    }
+    private static void DroneTechControllerHookBeginFollowInt(On.DroneTechController.orig_BeginFollow_CharacterBody_int orig, DroneTechController self, CharacterBody drone, int index)
+    {
+        if (self.gameObject.name.Contains("Turretling")) return;
+        orig(self, drone, index);
+    }
+    private static void DroneCommandReceiverHookFixedUpdate(On.RoR2.DroneCommandReceiver.orig_FixedUpdate orig, DroneCommandReceiver self)
+    {
+        if (self.gameObject.name.Contains("Turretling")) return;
+        orig(self);
+    }
+    private static void DroneCommandReceiverHookCommandFollow(On.RoR2.DroneCommandReceiver.orig_CommandFollow orig, DroneCommandReceiver self, bool shouldFollow)
+    {
+        //Log.Debug("DroneCommandReceiver.CommandFollow fired on" + self.gameObject.name);
+        if (self.gameObject.name.Contains("Turretling")) return;
+        orig(self, shouldFollow);
+    }
+    private static void DroneCommandReceiverHookActivateFollow(On.RoR2.DroneCommandReceiver.orig_ActivateFollow orig, DroneCommandReceiver self, bool occupySpace)
+    {
+        //Log.Debug("DroneCommandReceiver.ActivateFollow fired on" + self.gameObject.name);
+        if (self.gameObject.name.Contains("Turretling")) return;
+        orig(self, occupySpace);
+    }
+    private static void DroneCommandReceiverHookCommandActivate(On.RoR2.DroneCommandReceiver.orig_CommandActivate orig, DroneCommandReceiver self)
+    {
+        //Log.Debug("DroneCommandReceiver.CommandActivate fired on " + self.gameObject.name);
+        if ((bool)self.commandSkill && self.gameObject.name.Contains("Turretling"))
+        {
+            //Log.Debug("Turretling: ADMIN OVERRIDE! Executing...");
+            SerializableEntityStateType serializableEntityStateType = self.commandSkill.activationState;
+            self.commandSkill.stateMachine.SetInterruptState(EntityStateCatalog.InstantiateState(ref serializableEntityStateType), InterruptPriority.Vehicle);
+        }
+        if (self.gameObject.name.Contains("Turretling")) return;
+        //Log.Debug("Drone: ADMIN OVERRIDE! Executing...");
+        orig(self);
+    }
+
+    private static void IgnoreCollisionsWithBody(On.RoR2.Projectile.ProjectileController.orig_IgnoreCollisionsWithBody orig, RoR2.Projectile.ProjectileController self, GameObject bodyObject, bool shouldIgnore)
+    {
+        orig(self, bodyObject, shouldIgnore);
+        if (self.name.Contains("TurretlingDemoGrenade"))
+        {
+            if (!self.owner?.gameObject.GetComponent<CharacterBody>()) return;
+            float myHue = self.owner.gameObject.GetComponent<CharacterBody>().master.gameObject.GetComponent<TurretlingRainbow>().myHue;
+            bool rainbow = self.owner.gameObject.GetComponent<CharacterBody>().master.gameObject.GetComponent<TurretlingRainbow>().turretlingRainbow;
+            self.gameObject.GetComponent<ChildLocator>().FindChild("Grenade").gameObject.GetComponent<Animator>().SetBool("rainbow", rainbow);
+            if (rainbow)
+            {
+                self.gameObject.GetComponent<ChildLocator>().FindChild("Grenade").gameObject.GetComponent<Animator>().SetFloat("hue", 0);
+                self.gameObject.GetComponent<ProjectileImpactExplosion>().impactEffect = Content.grenadeImpactRainbowObject;
+            }
+            else
+            {
+                self.gameObject.GetComponent<ChildLocator>().FindChild("Grenade").gameObject.GetComponent<Animator>().SetFloat("hue", myHue);
+            }
         }
     }
 }

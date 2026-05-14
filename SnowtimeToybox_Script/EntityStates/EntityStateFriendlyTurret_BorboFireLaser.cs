@@ -8,12 +8,9 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
 {
     public class FireBorboLaser : BaseState
     {
-        public static GameObject effectPrefabObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/Skills/MuzzleflashBorbo.prefab");
-        public static GameObject hitEffectPrefabObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/Skills/ExplosionBorbo.prefab");
-        public static GameObject tracerEffectPrefabObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Borbo/Skills/TracerBorbo.prefab");
-        public static GameObject effectPrefab = effectPrefabObject;
-        public static GameObject hitEffectPrefab = hitEffectPrefabObject;
-        public static GameObject tracerEffectPrefab = tracerEffectPrefabObject;
+        public GameObject effectPrefab = Content.effectPrefabObject;
+        public GameObject hitEffectPrefab = Content.hitEffectPrefabObject;
+        public GameObject tracerEffectPrefab = Content.tracerEffectPrefabObject;
         public static Component TracerWaow;
         public static float damageCoefficient = 15.0f;
         public static float blastRadius = 8f;
@@ -34,10 +31,10 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         public override void OnEnter()
         {
             base.OnEnter();
-            Component TracerWaow = tracerEffectPrefabObject.GetComponent<SnowtimeToybox.Components.TracerComponentLinger>();
+            Component TracerWaow = tracerEffectPrefab.GetComponent<SnowtimeToybox.Components.TracerComponentLinger>();
             if (!TracerWaow)
             {
-                tracerEffectPrefabObject.AddComponent<SnowtimeToybox.Components.TracerComponentLinger>();
+                tracerEffectPrefab.AddComponent<SnowtimeToybox.Components.TracerComponentLinger>();
             }
             duration = baseDuration;
             modifiedAimRay = GetAimRay();

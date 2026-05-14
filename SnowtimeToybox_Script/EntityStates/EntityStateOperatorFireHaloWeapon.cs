@@ -14,12 +14,9 @@ namespace EntityStates.SnowtimeToybox_FireHaloWeapon
     public class FirePlasmaRifle : GenericBulletBaseState
     {
         public new string muzzleName = "NanoPistolOrigin";
-        public static GameObject MuzzleFlashObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/PlasmaRifle/PlasmaRifleMuzzleFlashVFX.prefab");
-        public static GameObject TracerObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/PlasmaRifle/TracerPlasmaRifle.prefab");
-        public static GameObject HitObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/PlasmaRifle/PlasmaRifleImpactVFX.prefab");
-        public new GameObject muzzleFlashPrefab = MuzzleFlashObject;
-        public new GameObject tracerEffectPrefab = TracerObject;
-        public new GameObject hitEffectPrefab = HitObject;
+        public new GameObject muzzleFlashPrefab = Content.HaloMuzzleFlashObject;
+        public new GameObject tracerEffectPrefab = Content.HaloTracerObject;
+        public new GameObject hitEffectPrefab = Content.HaloHitObject;
         public new string fireSoundString = "Play_Plasma_Rifle_Fire";
         public new float procCoefficient = 0.7f;
         public new float damageCoefficient = 0.6f;

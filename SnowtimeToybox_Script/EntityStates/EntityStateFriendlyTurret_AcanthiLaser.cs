@@ -53,8 +53,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
 
         //public GameObject effectPrefab;
 
-        public static GameObject laserObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Acanthi/Skills/laseracanthi.prefab");
-        public GameObject laserPrefab = laserObject;
+        public GameObject laserPrefab = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Acanthi/Skills/laseracanthi.prefab");
 
         public string muzzleString = "Muzzle";
 

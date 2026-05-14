@@ -43,10 +43,6 @@ public class SnowtimeFriendlyTurret : FriendlyTurretBase<SnowtimeFriendlyTurret>
     {
         base.ContentAdditionFuncs();
         ContentAddition.AddEntityState(typeof(SnowtimeCryoGaussFire), out _);
-        ContentAddition.AddEffect(SnowtimeCryoGaussFire.muzzleflashEffectObject);
-        ContentAddition.AddProjectile(SnowtimeCryoGaussFire.projectileObject);
-        ContentAddition.AddEffect(SnowtimeCryoGaussFire.projectileGhostObject);
-        ContentAddition.AddEffect(SnowtimeCryoGaussFire.projectileExplosionObject);
     }
     public override void StageInteractableFuncs()
     {

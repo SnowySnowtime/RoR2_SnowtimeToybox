@@ -9,7 +9,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
     {
         public static float deathDelay = 0f;
 
-        public GameObject deathEffectPrefab = SnowtimeToyboxMod.deathfx;
+        public GameObject deathEffectPrefab = Content.deathfx;
 
         private bool hasDied;
 

@@ -92,39 +92,39 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             string muzzleName = "Muzzle_Primary";
             if (base.gameObject.name.Contains("Acanthi"))
             {
-                effectPrefab = SnowtimeToyboxMod.muzzlefx_acanthi;
-                hitEffectPrefab = SnowtimeToyboxMod.hitfx_acanthi;
-                tracerEffectPrefab = SnowtimeToyboxMod.tracerfx_acanthi;
+                effectPrefab = Content.muzzlefx_acanthi;
+                hitEffectPrefab = Content.hitfx_acanthi;
+                tracerEffectPrefab = Content.tracerfx_acanthi;
             }
             else if (base.gameObject.name.Contains("Borbo"))
             {
-                effectPrefab = SnowtimeToyboxMod.muzzlefx_borbo;
-                hitEffectPrefab = SnowtimeToyboxMod.hitfx_borbo;
-                tracerEffectPrefab = SnowtimeToyboxMod.tracerfx_borbo;
+                effectPrefab = Content.muzzlefx_borbo;
+                hitEffectPrefab = Content.hitfx_borbo;
+                tracerEffectPrefab = Content.tracerfx_borbo;
             }
             else if (base.gameObject.name.Contains("Bread"))
             {
                 effectPrefab = muzzlefx;
-                hitEffectPrefab = SnowtimeToyboxMod.hitfx_bread;
+                hitEffectPrefab = Content.hitfx_bread;
                 tracerEffectPrefab = tracerfx;
             }
             else if (base.gameObject.name.Contains("Shortcake"))
             {
-                effectPrefab = SnowtimeToyboxMod.muzzlefx_shortcake;
-                hitEffectPrefab = SnowtimeToyboxMod.hitfx_shortcake;
-                tracerEffectPrefab = SnowtimeToyboxMod.tracerfx_shortcake;
+                effectPrefab = Content.muzzlefx_shortcake;
+                hitEffectPrefab = Content.hitfx_shortcake;
+                tracerEffectPrefab = Content.tracerfx_shortcake;
             }
             else if (base.gameObject.name.Contains("Snowtime"))
             {
-                effectPrefab = SnowtimeToyboxMod.muzzlefx_snowtime;
-                hitEffectPrefab = SnowtimeToyboxMod.hitfx_snowtime;
-                tracerEffectPrefab = SnowtimeToyboxMod.tracerfx_snowtime;
+                effectPrefab = Content.muzzlefx_snowtime;
+                hitEffectPrefab = Content.hitfx_snowtime;
+                tracerEffectPrefab = Content.tracerfx_snowtime;
             }
             else if (characterBody.master.gameObject.TryGetComponent(out TurretlingRainbow rainbowCheck) && rainbowCheck.turretlingRainbow)
             {
-                effectPrefab = SnowtimeToyboxMod.muzzlefx_rainbow;
-                hitEffectPrefab = SnowtimeToyboxMod.hitfx_rainbow;
-                tracerEffectPrefab = SnowtimeToyboxMod.tracerfx_rainbow;
+                effectPrefab = Content.muzzlefx_rainbow;
+                hitEffectPrefab = Content.hitfx_rainbow;
+                tracerEffectPrefab = Content.tracerfx_rainbow;
             }
             else
             {

@@ -53,18 +53,18 @@ namespace SnowtimeToybox
         private bool isRainbow;
         private bool isMissile;
 
-        public GameObject orbShortcakeRetaliatePrefab = SnowtimeToyboxMod.orbShortcakeRetaliateObject;
-        public GameObject orbShortcakeRetaliateFriendlyPrefab = SnowtimeToyboxMod.orbShortcakeRetaliateFriendlyObject;
-        public GameObject orbShortcakeTauntPrefab = SnowtimeToyboxMod.orbShortcakeTauntObject;
+        public GameObject orbShortcakeRetaliatePrefab = Content.orbShortcakeRetaliateObject;
+        public GameObject orbShortcakeRetaliateFriendlyPrefab = Content.orbShortcakeRetaliateFriendlyObject;
+        public GameObject orbShortcakeTauntPrefab = Content.orbShortcakeTauntObject;
 
-        public GameObject orbTurretlingMissilePrefab = SnowtimeToyboxMod.orbTurretlingMissileObject;
-        public GameObject orbAcanthilingMissilePrefab = SnowtimeToyboxMod.orbAcanthilingMissileObject;
-        public GameObject orbBorbolingMissilePrefab = SnowtimeToyboxMod.orbBorbolingMissileObject;
-        public GameObject orbBreadlingMissilePrefab = SnowtimeToyboxMod.orbBreadlingMissileObject;
-        public GameObject orbShortcakelingMissilePrefab = SnowtimeToyboxMod.orbShortcakelingMissileObject;
-        public GameObject orbSnowtimelingMissilePrefab = SnowtimeToyboxMod.orbSnowtimelingMissileObject;
-        public GameObject orbRainbowMissilePrefab = SnowtimeToyboxMod.orbRainbowMissileObject;
-        public GameObject orbPlayerMissilePrefab = SnowtimeToyboxMod.orbPlayerMissileObject;
+        public GameObject orbTurretlingMissilePrefab = Content.orbTurretlingMissileObject;
+        public GameObject orbAcanthilingMissilePrefab = Content.orbAcanthilingMissileObject;
+        public GameObject orbBorbolingMissilePrefab = Content.orbBorbolingMissileObject;
+        public GameObject orbBreadlingMissilePrefab = Content.orbBreadlingMissileObject;
+        public GameObject orbShortcakelingMissilePrefab = Content.orbShortcakelingMissileObject;
+        public GameObject orbSnowtimelingMissilePrefab = Content.orbSnowtimelingMissileObject;
+        public GameObject orbRainbowMissilePrefab = Content.orbRainbowMissileObject;
+        public GameObject orbPlayerMissilePrefab = Content.orbPlayerMissileObject;
 
         public override void Begin()
         {

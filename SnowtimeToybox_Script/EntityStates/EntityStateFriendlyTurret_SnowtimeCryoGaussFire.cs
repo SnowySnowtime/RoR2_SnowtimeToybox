@@ -10,12 +10,8 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
 {
     public class SnowtimeCryoGaussFire : BaseState
     {
-        public static GameObject muzzleflashEffectObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Snowtime/Skills/CryoGaussMuzzleFlash.prefab");
-        public static GameObject muzzleflashEffectPrefab = muzzleflashEffectObject;
-        public static GameObject projectileObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Snowtime/Skills/CryoGaussProjectile.prefab");
-        public static GameObject projectilePrefab = projectileObject;
-        public static GameObject projectileGhostObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Snowtime/Skills/CryoGaussProjectileGhost.prefab");
-        public static GameObject projectileExplosionObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Snowtime/Skills/CryoGaussExplosion.prefab");
+        public static GameObject muzzleflashEffectPrefab = Content.muzzleflashEffectObject;
+        public static GameObject projectilePrefab = Content.projectileObject;
         public static Component TracerWaow;
         public static float damageCoefficient = 4.0f;
         public static float blastRadius = 4f;
@@ -42,7 +38,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             Transform modelTransform = GetModelTransform();
             Util.PlaySound(attackSoundString, base.gameObject);
             string text = "Muzzle";
-            projectileObject.GetComponent<ProjectileController>().ghostPrefab = projectileGhostObject;
+            Content.projectileObject.GetComponent<ProjectileController>().ghostPrefab = Content.projectileGhostObject;
             PlayAnimation("Gesture", FireLaserStateHash);
             if ((bool)muzzleflashEffectPrefab)
             {

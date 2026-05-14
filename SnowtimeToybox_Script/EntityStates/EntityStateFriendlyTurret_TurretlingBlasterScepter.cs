@@ -71,7 +71,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 bulletAttack.muzzleName = muzzleName;
                 bulletAttack.hitEffectPrefab = hitfx_kinetic;
                 bulletAttack.tracerEffectPrefab = tracerfx_kinetic;
-                bulletAttack.damageColorIndex = SnowtimeToyboxMod.BlasterScepterColor1;
+                bulletAttack.damageColorIndex = Content.BlasterScepterColor1;
                 bulletAttack.isCrit = Util.CheckRoll(critStat, base.characterBody.master);
                 bulletAttack.HitEffectNormal = false;
                 bulletAttack.radius = 0.15f;
@@ -93,7 +93,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 bulletAttack1.muzzleName = muzzleName;
                 bulletAttack1.hitEffectPrefab = hitfx_corrosive;
                 bulletAttack1.tracerEffectPrefab = tracerfx_corrosive;
-                bulletAttack1.damageColorIndex = SnowtimeToyboxMod.BlasterScepterColor2;
+                bulletAttack1.damageColorIndex = Content.BlasterScepterColor2;
                 bulletAttack1.isCrit = Util.CheckRoll(critStat, base.characterBody.master);
                 bulletAttack1.HitEffectNormal = false;
                 bulletAttack1.radius = 0.15f;
@@ -114,7 +114,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 bulletAttack2.muzzleName = muzzleName;
                 bulletAttack2.hitEffectPrefab = hitfx_energy;
                 bulletAttack2.tracerEffectPrefab = tracerfx_energy;
-                bulletAttack2.damageColorIndex = SnowtimeToyboxMod.BlasterScepterColor3;
+                bulletAttack2.damageColorIndex = Content.BlasterScepterColor3;
                 bulletAttack2.isCrit = Util.CheckRoll(critStat, base.characterBody.master);
                 bulletAttack2.HitEffectNormal = false;
                 bulletAttack2.radius = 0.15f;

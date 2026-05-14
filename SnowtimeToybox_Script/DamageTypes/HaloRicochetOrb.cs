@@ -8,8 +8,7 @@ namespace SnowtimeToybox
 {
     public class SnowtimeHaloRicochetOrb : GenericDamageOrb
     {
-        public static GameObject orbEffectObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/PlasmaRifle/PlasmaRifleOrbEffect.prefab");
-        public GameObject orbEffectPrefab = orbEffectObject;
+        public GameObject orbEffectPrefab = Content.HaloorbEffectObject;
 
         public override void Begin()
         {
@@ -82,7 +81,7 @@ namespace SnowtimeToybox
                 return;
             RicochetOrb ricochetOrb = new RicochetOrb();
             ricochetOrb.origin = damageInfo.position;
-            ricochetOrb.effectPrefab = orbEffectObject;
+            ricochetOrb.effectPrefab = Content.HaloorbEffectObject;
             ricochetOrb.damageValue = damageInfo.damage * 0.75f;
             ricochetOrb.isCrit = damageInfo.crit;
             ricochetOrb.teamIndex = attackerTeamIndex;

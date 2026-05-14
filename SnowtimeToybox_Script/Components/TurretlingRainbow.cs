@@ -213,8 +213,8 @@ public class TurretlingRainbow : NetworkBehaviour
             //Log.Debug("Character Body Player Name:" + gameObject.GetComponent<PlayerCharacterMasterController>().GetDisplayName());
         }
         if (charBody.name.Contains("Broken")) return;
-        
-        ChildLocator childLocator = charBody?.modelLocator?.modelTransform?.gameObject.GetComponent<ChildLocator>();
+
+        if (!charBody.modelLocator._modelTransform?.gameObject || charBody.modelLocator._modelTransform?.gameObject.TryGetComponent(out ChildLocator childLocator) != true) return;
         if (childLocator == null) return;
         //Log.Debug("ChildLocator: " + childLocator.gameObject.name);
 
@@ -333,13 +333,13 @@ public class TurretlingRainbow : NetworkBehaviour
         {
             if(gameObject.name.Contains("Demo"))
             {
-                GameObject newTurretling = Object.Instantiate(SnowtimeToyboxMod.DemoTurretlingBroken, master.GetBody().transform.position, master.GetBody().transform.rotation);
+                GameObject newTurretling = Object.Instantiate(Content.DemoTurretlingBroken, master.GetBody().transform.position, master.GetBody().transform.rotation);
                 newTurretling.GetComponent<PurchaseInteraction>().cost = (int)(Run.instance.GetDifficultyScaledCost(newTurretling.GetComponent<PurchaseInteraction>().cost) * SnowtimeToyboxMod.TurretlingReviveCostMult.Value);
                 NetworkServer.Spawn(newTurretling);
             }
             else
             {
-                GameObject newTurretling = Object.Instantiate(SnowtimeToyboxMod.FriendlyTurretTurretlingBroken, master.GetBody().transform.position, master.GetBody().transform.rotation);
+                GameObject newTurretling = Object.Instantiate(Content.FriendlyTurretTurretlingBroken, master.GetBody().transform.position, master.GetBody().transform.rotation);
                 newTurretling.GetComponent<PurchaseInteraction>().cost = (int)(Run.instance.GetDifficultyScaledCost(newTurretling.GetComponent<PurchaseInteraction>().cost) * SnowtimeToyboxMod.TurretlingReviveCostMult.Value);
                 NetworkServer.Spawn(newTurretling);
             }
