@@ -163,8 +163,52 @@ namespace SnowtimeToybox
         public static DamageColorIndex BlasterScepterColor1;
         public static DamageColorIndex BlasterScepterColor2;
         public static DamageColorIndex BlasterScepterColor3;
-
-        //public static DroneDef FriendlyTurretTestDroneDef;
+        // oh god effects... effects... effects...
+        public static GameObject muzzlefx_acanthi;
+        public static GameObject hitfx_acanthi;
+        public static GameObject tracerfx_acanthi;
+        public static GameObject muzzlefx_borbo;
+        public static GameObject hitfx_borbo;
+        public static GameObject tracerfx_borbo;
+        public static GameObject hitfx_bread;
+        public static GameObject muzzlefx_shortcake;
+        public static GameObject hitfx_shortcake;
+        public static GameObject tracerfx_shortcake;
+        public static GameObject muzzlefx_snowtime;
+        public static GameObject hitfx_snowtime;
+        public static GameObject tracerfx_snowtime;
+        public static GameObject muzzlefx_rainbow;
+        public static GameObject hitfx_rainbow;
+        public static GameObject tracerfx_rainbow;
+        public static GameObject orbTurretlingMissileObject;
+        public static GameObject orbTurretlingMissileImpactObject;
+        public static GameObject orbAcanthilingMissileObject;
+        public static GameObject orbAcanthilingMissileImpactObject;
+        public static GameObject orbBorbolingMissileObject;
+        public static GameObject orbBorbolingMissileImpactObject;
+        public static GameObject orbBreadlingMissileObject;
+        public static GameObject orbBreadlingMissileImpactObject;
+        public static GameObject orbShortcakelingMissileObject;
+        public static GameObject orbShortcakelingMissileImpactObject;
+        public static GameObject orbSnowtimelingMissileObject;
+        public static GameObject orbSnowtimelingMissileImpactObject;
+        public static GameObject orbRainbowMissileObject;
+        public static GameObject orbRainbowMissileImpactObject;
+        public static GameObject orbPlayerMissileObject;
+        public static GameObject orbPlayerMissileImpactObject;
+        public static GameObject novafx;
+        public static GameObject orbShortcakeRetaliateObject;
+        public static GameObject orbShortcakeRetaliateImpactObject;
+        public static GameObject orbShortcakeRetaliateFriendlyObject;
+        public static GameObject orbShortcakeRetaliateFriendlyImpactObject;
+        public static GameObject orbShortcakeTauntObject;
+        public static GameObject orbShortcakeTauntImpactObject;
+        public static GameObject deathfx;
+        public static GameObject grenadeObject;
+        public static GameObject grenadePlayerObject;
+        public static GameObject grenadeGhostObject;
+        public static GameObject grenadeImpactObject;
+        public static GameObject grenadeImpactRainbowObject;
 
         public static List<FriendlyTurretBase> friendlyTurretList = [];
 
@@ -271,6 +315,7 @@ namespace SnowtimeToybox
             AddCustomSkills();
             AddCustomAllies();
             AddCustomBuffs();
+            AddCustomEffects();
             if (scepterLoaded)
             {
                 AddScepterSkills();
@@ -300,7 +345,7 @@ namespace SnowtimeToybox
             ItemCatalog.availability.CallWhenAvailable(AddCustomTagsToItems);
             EquipmentCatalog.availability.CallWhenAvailable(AddElitesToList);
         }
-        
+
         Dictionary<string, string> itemStuff = new()
         {
             {"ITEM_LUNARSOAP_NAME", "FriendTurret_Acanthi_Whitelist"},
@@ -621,9 +666,7 @@ namespace SnowtimeToybox
             ContentAddition.AddSkillDef(FriendlyTurretTurretlingPrimaryMinionSkillDef);
             ContentAddition.AddSkillFamily(FriendlyTurretTurretlingSecondarySkillFamily);
             ContentAddition.AddSkillDef(FriendlyTurretTurretlingSecondarySkillDef);
-            ContentAddition.AddEffect(TurretlingDeath.deathfx);
-            ContentAddition.AddEffect(SnowtimeOrbs.orbTurretlingMissileObject);
-            ContentAddition.AddEffect(SnowtimeOrbs.orbTurretlingMissileImpactObject);
+            
             // add turretling variants (spawned with a friendly turret)
             AcanthiTurretlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "Variants/_TurretlingBody_Acanthi.prefab");
             AcanthiTurretlingBody.GetComponent<CharacterDeathBehavior>().deathState = new SerializableEntityStateType(typeof(TurretlingDeath));
@@ -642,45 +685,14 @@ namespace SnowtimeToybox
             SnowtimeTurretlingMaster = _stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "Variants/_TurretlingMaster_Snowtime.prefab");
             ContentAddition.AddBody(AcanthiTurretlingBody);
             ContentAddition.AddMaster(AcanthiTurretlingMaster);
-            ContentAddition.AddEffect(TurretlingBlaster.muzzlefx_acanthi);
-            ContentAddition.AddEffect(TurretlingBlaster.hitfx_acanthi);
-            ContentAddition.AddEffect(TurretlingBlaster.tracerfx_acanthi);
-            ContentAddition.AddEffect(SnowtimeOrbs.orbAcanthilingMissileObject);
-            ContentAddition.AddEffect(SnowtimeOrbs.orbAcanthilingMissileImpactObject);
             ContentAddition.AddBody(BorboTurretlingBody);
             ContentAddition.AddMaster(BorboTurretlingMaster);
-            ContentAddition.AddEffect(TurretlingBlaster.muzzlefx_borbo);
-            ContentAddition.AddEffect(TurretlingBlaster.hitfx_borbo);
-            ContentAddition.AddEffect(TurretlingBlaster.tracerfx_borbo);
-            ContentAddition.AddEffect(SnowtimeOrbs.orbBorbolingMissileObject);
-            ContentAddition.AddEffect(SnowtimeOrbs.orbBorbolingMissileImpactObject);
             ContentAddition.AddBody(BreadTurretlingBody);
             ContentAddition.AddMaster(BreadTurretlingMaster);
-            ContentAddition.AddEffect(TurretlingBlaster.hitfx_bread);
-            ContentAddition.AddEffect(SnowtimeOrbs.orbBreadlingMissileObject);
-            ContentAddition.AddEffect(SnowtimeOrbs.orbBreadlingMissileImpactObject);
             ContentAddition.AddBody(ShortcakeTurretlingBody);
             ContentAddition.AddMaster(ShortcakeTurretlingMaster);
-            ContentAddition.AddEffect(TurretlingBlaster.muzzlefx_shortcake);
-            ContentAddition.AddEffect(TurretlingBlaster.hitfx_shortcake);
-            ContentAddition.AddEffect(TurretlingBlaster.tracerfx_shortcake);
-            ContentAddition.AddEffect(SnowtimeOrbs.orbShortcakelingMissileObject);
-            ContentAddition.AddEffect(SnowtimeOrbs.orbShortcakelingMissileImpactObject);
             ContentAddition.AddBody(SnowtimeTurretlingBody);
             ContentAddition.AddMaster(SnowtimeTurretlingMaster);
-            ContentAddition.AddEffect(TurretlingBlaster.muzzlefx_snowtime);
-            ContentAddition.AddEffect(TurretlingBlaster.hitfx_snowtime);
-            ContentAddition.AddEffect(TurretlingBlaster.tracerfx_snowtime);
-            ContentAddition.AddEffect(SnowtimeOrbs.orbSnowtimelingMissileObject);
-            ContentAddition.AddEffect(SnowtimeOrbs.orbSnowtimelingMissileImpactObject);
-
-            ContentAddition.AddEffect(TurretlingBlaster.muzzlefx_rainbow);
-            ContentAddition.AddEffect(TurretlingBlaster.hitfx_rainbow);
-            ContentAddition.AddEffect(TurretlingBlaster.tracerfx_rainbow);
-            ContentAddition.AddEffect(SnowtimeOrbs.orbRainbowMissileObject);
-            ContentAddition.AddEffect(SnowtimeOrbs.orbRainbowMissileImpactObject);
-            ContentAddition.AddEffect(SnowtimeOrbs.orbPlayerMissileObject);
-            ContentAddition.AddEffect(SnowtimeOrbs.orbPlayerMissileImpactObject);
             // Arti really quickly 
             ArtiTurretlingDef = _stcharacterAssetBundle.LoadAsset<DroneDef>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_HolyTurretling.asset");
             ArtiTurretlingBody = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/Turretling/_HolyTurretlingBody.prefab");
@@ -815,7 +827,6 @@ namespace SnowtimeToybox
             ContentAddition.AddSkillDef(SwarmlingUtilitySkill);
             ContentAddition.AddEntityState(typeof(TurretlingEnergyNova), out _);
             ContentAddition.AddEntityState(typeof(TurretlingMiniBlinkState), out _);
-            ContentAddition.AddEffect(TurretlingEnergyNova.novafx);
 
             SwarmlingDemoMinionDef = _stcharacterAssetBundle.LoadAsset<DroneDef>(swarmlingPath + "_SwarmTurretling_Demo.asset");
             SwarmlingDemoMinionBody = _stcharacterAssetBundle.LoadAsset<GameObject>(swarmlingPath + "_SwarmTurretling_DemoBody.prefab");
@@ -852,11 +863,6 @@ namespace SnowtimeToybox
             DemoTurretlingPrimarySkill = _stcharacterAssetBundle.LoadAsset<SkillDef>(turretlingPath + "Skills/Turretling_Primary_GL.asset");
             DemoTurretlingPrimarySkill.activationState = new SerializableEntityStateType(typeof(TurretlingGrenadeLauncher));
             ContentAddition.AddEntityState(typeof(TurretlingGrenadeLauncher), out _);
-            ContentAddition.AddEffect(TurretlingGrenadeLauncher.grenadeGhostObject);
-            ContentAddition.AddEffect(TurretlingGrenadeLauncher.grenadeImpactObject);
-            ContentAddition.AddEffect(TurretlingGrenadeLauncher.grenadeImpactRainbowObject);
-            ContentAddition.AddProjectile(TurretlingGrenadeLauncher.grenadeObject);
-            ContentAddition.AddProjectile(TurretlingGrenadeLauncher.grenadePlayerObject);
             ContentAddition.AddSkillDef(DemoTurretlingPrimarySkill);
             ContentAddition.AddSkillFamily(DemoTurretlingPrimaryFamily);
             ContentAddition.AddBody(DemoTurretlingBody);
@@ -1040,7 +1046,7 @@ namespace SnowtimeToybox
                 if (rainbow)
                 {
                     self.gameObject.GetComponent<ChildLocator>().FindChild("Grenade").gameObject.GetComponent<Animator>().SetFloat("hue", 0);
-                    self.gameObject.GetComponent<ProjectileImpactExplosion>().impactEffect = TurretlingGrenadeLauncher.grenadeImpactRainbowObject;
+                    self.gameObject.GetComponent<ProjectileImpactExplosion>().impactEffect = grenadeImpactRainbowObject;
                 }
                 else
                 {
@@ -1311,6 +1317,103 @@ namespace SnowtimeToybox
                 BuffBase buff = (BuffBase)System.Activator.CreateInstance(buffType);
                 buff.Create();
             }
+        }
+
+
+        private void AddCustomEffects()
+        {
+            //bwaa.,.,.,,,,,
+            string variantPath = @"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/";
+            orbShortcakeRetaliateObject = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Shortcake/Skills/shortcakeretaliate_orbeffect.prefab");
+            orbShortcakeRetaliateImpactObject = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Shortcake/Skills/shortcakeretaliate_impacteffect.prefab");
+            orbShortcakeRetaliateFriendlyObject = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Shortcake/Skills/shortcakeretaliatefriendly_orbeffect.prefab");
+            orbShortcakeRetaliateFriendlyImpactObject = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Shortcake/Skills/shortcakeretaliatefriendly_impacteffect.prefab");
+            orbShortcakeTauntObject = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Shortcake/Skills/shortcaketaunt_orbeffect.prefab");
+            orbShortcakeTauntImpactObject = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Shortcake/Skills/shortcaketaunt_impacteffect.prefab");
+            orbTurretlingMissileObject = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/turretling_orbeffect.prefab");
+            orbTurretlingMissileImpactObject = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/turretling_impacteffect.prefab");
+            orbAcanthilingMissileObject = _stcharacterAssetBundle.LoadAsset<GameObject>(variantPath + "vfx__Missile_Orb_Acanthiling.prefab");
+            orbAcanthilingMissileImpactObject = _stcharacterAssetBundle.LoadAsset<GameObject>(variantPath + "vfx__Missile_Impact_Acanthiling.prefab");
+            orbBorbolingMissileObject = _stcharacterAssetBundle.LoadAsset<GameObject>(variantPath + "vfx__Missile_Orb_Borboling.prefab");
+            orbBorbolingMissileImpactObject = _stcharacterAssetBundle.LoadAsset<GameObject>(variantPath + "vfx__Missile_Impact_Borboling.prefab");
+            orbBreadlingMissileObject = _stcharacterAssetBundle.LoadAsset<GameObject>(variantPath + "vfx__Missile_Orb_Breadling.prefab");
+            orbBreadlingMissileImpactObject = _stcharacterAssetBundle.LoadAsset<GameObject>(variantPath + "vfx__Missile_Impact_Breadling.prefab");
+            orbShortcakelingMissileObject = _stcharacterAssetBundle.LoadAsset<GameObject>(variantPath + "vfx__Missile_Orb_Shortcakeling.prefab");
+            orbShortcakelingMissileImpactObject = _stcharacterAssetBundle.LoadAsset<GameObject>(variantPath + "vfx__Missile_Impact_Shortcakeling.prefab");
+            orbSnowtimelingMissileObject = _stcharacterAssetBundle.LoadAsset<GameObject>(variantPath + "vfx__Missile_Orb_Snowtimeling.prefab");
+            orbSnowtimelingMissileImpactObject = _stcharacterAssetBundle.LoadAsset<GameObject>(variantPath + "vfx__Missile_Impact_Snowtimeling.prefab");
+            orbRainbowMissileObject = _stcharacterAssetBundle.LoadAsset<GameObject>(variantPath + "vfx__Missile_Orb__Rainbow.prefab");
+            orbRainbowMissileImpactObject = _stcharacterAssetBundle.LoadAsset<GameObject>(variantPath + "vfx__Missile_Impact__Rainbow.prefab");
+            orbPlayerMissileObject = _stcharacterAssetBundle.LoadAsset<GameObject>(variantPath + "vfx__Missile_Orb__Player.prefab");
+            orbPlayerMissileImpactObject = _stcharacterAssetBundle.LoadAsset<GameObject>(variantPath + "vfx__Missile_Impact__Player.prefab");
+            muzzlefx_acanthi = _stcharacterAssetBundle.LoadAsset<GameObject>(variantPath + "vfx_Muzzleflash_Acanthiling.prefab");
+            hitfx_acanthi = _stcharacterAssetBundle.LoadAsset<GameObject>(variantPath + "vfx_Hitspark_Acanthiling.prefab");
+            tracerfx_acanthi = _stcharacterAssetBundle.LoadAsset<GameObject>(variantPath + "vfx_Tracer_Acanthiling.prefab");
+            muzzlefx_borbo = _stcharacterAssetBundle.LoadAsset<GameObject>(variantPath + "vfx_Muzzleflash_Borboling.prefab");
+            hitfx_borbo = _stcharacterAssetBundle.LoadAsset<GameObject>(variantPath + "vfx_Hitspark_Borboling.prefab");
+            tracerfx_borbo = _stcharacterAssetBundle.LoadAsset<GameObject>(variantPath + "vfx_Tracer_Borboling.prefab");
+            hitfx_bread = _stcharacterAssetBundle.LoadAsset<GameObject>(variantPath + "vfx_Hitspark_Breadling.prefab");
+            muzzlefx_shortcake = _stcharacterAssetBundle.LoadAsset<GameObject>(variantPath + "vfx_Muzzleflash_Shortcakeling.prefab");
+            hitfx_shortcake = _stcharacterAssetBundle.LoadAsset<GameObject>(variantPath + "vfx_Hitspark_Shortcakeling.prefab");
+            tracerfx_shortcake = _stcharacterAssetBundle.LoadAsset<GameObject>(variantPath + "vfx_Tracer_Shortcakeling.prefab");
+            muzzlefx_snowtime = _stcharacterAssetBundle.LoadAsset<GameObject>(variantPath + "vfx_Muzzleflash_Snowtimeling.prefab");
+            hitfx_snowtime = _stcharacterAssetBundle.LoadAsset<GameObject>(variantPath + "vfx_Hitspark_Snowtimeling.prefab");
+            tracerfx_snowtime = _stcharacterAssetBundle.LoadAsset<GameObject>(variantPath + "vfx_Tracer_Snowtimeling.prefab");
+            muzzlefx_rainbow = _stcharacterAssetBundle.LoadAsset<GameObject>(variantPath + "vfx_Muzzleflash__Rainbow.prefab");
+            hitfx_rainbow = _stcharacterAssetBundle.LoadAsset<GameObject>(variantPath + "vfx_Hitspark__Rainbow.prefab");
+            tracerfx_rainbow = _stcharacterAssetBundle.LoadAsset<GameObject>(variantPath + "vfx_Tracer__Rainbow.prefab");
+            novafx = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Survivor/Skills/turretling_novaeffect.prefab");
+            deathfx = _stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/turretling_deatheffect.prefab");
+            grenadeObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/TurretlingDemoGrenadeProjectile.prefab");
+            grenadePlayerObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/TurretlingDemoGrenadeProjectile_Player.prefab");
+            grenadeGhostObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/DemoGrenadeGhost.prefab");
+            grenadeImpactObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/GrenadeImpact.prefab");
+            grenadeImpactRainbowObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/GrenadeImpact_Rainbow.prefab");
+            ContentAddition.AddEffect(deathfx);
+            ContentAddition.AddEffect(orbShortcakeRetaliateObject);
+            ContentAddition.AddEffect(orbShortcakeRetaliateFriendlyObject);
+            ContentAddition.AddEffect(orbShortcakeTauntObject);
+            ContentAddition.AddEffect(orbShortcakeRetaliateImpactObject);
+            ContentAddition.AddEffect(orbShortcakeRetaliateFriendlyImpactObject);
+            ContentAddition.AddEffect(orbShortcakeTauntImpactObject);
+            ContentAddition.AddEffect(orbTurretlingMissileObject);
+            ContentAddition.AddEffect(orbTurretlingMissileImpactObject);
+            ContentAddition.AddEffect(muzzlefx_acanthi);
+            ContentAddition.AddEffect(hitfx_acanthi);
+            ContentAddition.AddEffect(tracerfx_acanthi);
+            ContentAddition.AddEffect(orbAcanthilingMissileObject);
+            ContentAddition.AddEffect(orbAcanthilingMissileImpactObject);
+            ContentAddition.AddEffect(muzzlefx_borbo);
+            ContentAddition.AddEffect(hitfx_borbo);
+            ContentAddition.AddEffect(tracerfx_borbo);
+            ContentAddition.AddEffect(orbBorbolingMissileObject);
+            ContentAddition.AddEffect(orbBorbolingMissileImpactObject);
+            ContentAddition.AddEffect(hitfx_bread);
+            ContentAddition.AddEffect(orbBreadlingMissileObject);
+            ContentAddition.AddEffect(orbBreadlingMissileImpactObject);
+            ContentAddition.AddEffect(muzzlefx_shortcake);
+            ContentAddition.AddEffect(hitfx_shortcake);
+            ContentAddition.AddEffect(tracerfx_shortcake);
+            ContentAddition.AddEffect(orbShortcakelingMissileObject);
+            ContentAddition.AddEffect(orbShortcakelingMissileImpactObject);
+            ContentAddition.AddEffect(muzzlefx_snowtime);
+            ContentAddition.AddEffect(hitfx_snowtime);
+            ContentAddition.AddEffect(tracerfx_snowtime);
+            ContentAddition.AddEffect(orbSnowtimelingMissileObject);
+            ContentAddition.AddEffect(orbSnowtimelingMissileImpactObject);
+            ContentAddition.AddEffect(muzzlefx_rainbow);
+            ContentAddition.AddEffect(hitfx_rainbow);
+            ContentAddition.AddEffect(tracerfx_rainbow);
+            ContentAddition.AddEffect(orbRainbowMissileObject);
+            ContentAddition.AddEffect(orbRainbowMissileImpactObject);
+            ContentAddition.AddEffect(orbPlayerMissileObject);
+            ContentAddition.AddEffect(orbPlayerMissileImpactObject);
+            ContentAddition.AddEffect(novafx);
+            ContentAddition.AddEffect(grenadeGhostObject);
+            ContentAddition.AddEffect(grenadeImpactObject);
+            ContentAddition.AddEffect(grenadeImpactRainbowObject);
+            ContentAddition.AddProjectile(grenadeObject);
+            ContentAddition.AddProjectile(grenadePlayerObject);
         }
 
         public void AddCustomSkills()

@@ -40,7 +40,7 @@ public class TurretlingRainbow : NetworkBehaviour
         { "STEAM_1:1:146751517", "0.5,0,0,Snowtime" }, // snowy
         { "STEAM_1:0:615574887", "0.05,0,0,Shortcake" }, //shortcake
         { "STEAM_1:1:60493073", "0,1,0,Acanthi" }, // canthi 
-        { "STEAM_1:0:1737027363", "0.87,0.87,0,Bread" }, // bread
+        { "STEAM_1:1:174533492", "0.87,0.87,0,Bread" }, // bread
         { "STEAM_1:0:64329810", "0.71,0.27,0.27,Illusive" }, // illusive 
         { "STEAM_1:1:891275848", "0.85,0.45,0.8,Sentry" }, // illusive 
         { "STEAM_1:1:502654116", "0.83,0,0,Anartoast" }, // anar
@@ -49,7 +49,7 @@ public class TurretlingRainbow : NetworkBehaviour
         { "STEAM_1:1:35743795", "0.9,0.5,0,PlNK" }, // plnk (logbook)
         { "STEAM_1:0:24377756", "0.014,0.52,0.4,Saucy" }, // ebbysauce (logbook)
         // Indirect Contributor
-        { "STEAM_1:1:48521507", "0.014,0.52,0.4,Score" }, // .score (passive skill fix)
+        { "STEAM_1:1:48521507", "0.014,0.52,0.4,Score" }, // .score (passive skill fix, missiles, and more...)
         // Testers!!!!!
         { "STEAM_1:0:502558120", "0.32,0.3,0.99,Green" }, // green 
         { "STEAM_1:0:75897289", "0.5,0.3,0.99,Regi" }, // Regigigas 

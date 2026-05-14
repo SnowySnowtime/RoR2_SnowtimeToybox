@@ -10,12 +10,6 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
 {
     public class TurretlingGrenadeLauncher : GenericProjectileBaseState
     {
-        public static GameObject grenadeObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/TurretlingDemoGrenadeProjectile.prefab");
-        public static GameObject grenadePlayerObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/TurretlingDemoGrenadeProjectile_Player.prefab");
-        public static GameObject grenadeGhostObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/DemoGrenadeGhost.prefab");
-        public static GameObject grenadeImpactObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/GrenadeImpact.prefab");
-        public static GameObject grenadeImpactRainbowObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/GrenadeImpact_Rainbow.prefab");
-
         private static int FireHash = Animator.StringToHash("turretling_fire");
         private static int FireParamHash = Animator.StringToHash("turretling_fire.playbackRate");
         public float myHue;
@@ -27,11 +21,11 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             projectilePitchBonus = -2f;
             if (gameObject.name.Contains("Survivor") || gameObject.name.Contains("PlayerMaster"))
             {
-                projectilePrefab = grenadePlayerObject;
+                projectilePrefab = SnowtimeToyboxMod.grenadePlayerObject;
             }
             else
             {
-                projectilePrefab = grenadeObject;
+                projectilePrefab = SnowtimeToyboxMod.grenadeObject;
             }
 
             targetMuzzle = "Muzzle_Primary";

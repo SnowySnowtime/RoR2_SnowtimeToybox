@@ -41,14 +41,24 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         public override void OnEnter()
         {
             base.OnEnter();
-            if (!gameObject.GetComponent<TurretlingMissileTracker>()) return;
-            if (gameObject.TryGetComponent(out TurretlingMissileTracker missileTracker) != true) return;
-            if (missileTracker?.GetTrackingTarget()?.gameObject == null)
-            if (missileTracker?.GetTrackingTarget() == null)
+            if (TryGetComponent(out TurretlingMissileTracker missileTracker) != true) return;
+            if(isAuthority)
             {
-                //base.skillLocator.secondary.AddOneStock();
-                outer.SetNextStateToMain();
-                return;
+                initialOrbTarget = missileTracker?.GetTrackingTarget();
+            }
+            if(initialOrbTarget == null)
+            {
+                if(isAuthority)
+                {
+                    outer.SetNextStateToMain();
+                    return;
+                }
+            }
+            Transform modelTransform = GetModelTransform();
+            if ((bool)modelTransform)
+            {
+                childLocator = modelTransform.GetComponent<ChildLocator>();
+                animator = modelTransform.GetComponent<Animator>();
             }
             missileCheckPassed = true;
             if (NetworkServer.active && characterBody.inventory && characterBody.inventory.GetItemCountEffective(DLC2Content.Items.IncreasePrimaryDamage) > 0)
@@ -60,16 +70,6 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             skillLocator.secondary.RemoveAllStocks();
             firingTime = 0f;
             missilesFired = 0;
-            Transform modelTransform = GetModelTransform();
-            if ((bool)modelTransform)
-            {
-                childLocator = modelTransform.GetComponent<ChildLocator>();
-                animator = modelTransform.GetComponent<Animator>();
-            }
-            if ((bool)missileTracker && isAuthority)
-            {
-                initialOrbTarget = missileTracker.GetTrackingTarget();
-            }
             duration = baseDuration;
             refireTime = duration / 4;
             isCrit = Util.CheckRoll(characterBody.crit, characterBody.master);

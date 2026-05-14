@@ -16,8 +16,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
 {
     public class TurretlingEnergyNova : BaseState
     {
-        public static GameObject novafx = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Survivor/Skills/turretling_novaeffect.prefab");
-        public static GameObject novaPrefab = novafx;
+        public static GameObject novaPrefab = SnowtimeToyboxMod.novafx;
 
         public static string attackSoundString = "Play_Turretling_Nova";
 

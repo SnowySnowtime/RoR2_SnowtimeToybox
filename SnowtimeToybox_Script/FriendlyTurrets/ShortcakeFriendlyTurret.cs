@@ -47,12 +47,6 @@ public class ShortcakeFriendlyTurret : FriendlyTurretBase<ShortcakeFriendlyTurre
     {
         base.ContentAdditionFuncs();
         ContentAddition.AddEntityState(typeof(ShortcakeTaunt), out _);
-        ContentAddition.AddEffect(SnowtimeOrbs.orbShortcakeRetaliateObject);
-        ContentAddition.AddEffect(SnowtimeOrbs.orbShortcakeRetaliateFriendlyObject);
-        ContentAddition.AddEffect(SnowtimeOrbs.orbShortcakeTauntObject);
-        ContentAddition.AddEffect(SnowtimeOrbs.orbShortcakeRetaliateImpactObject);
-        ContentAddition.AddEffect(SnowtimeOrbs.orbShortcakeRetaliateFriendlyImpactObject);
-        ContentAddition.AddEffect(SnowtimeOrbs.orbShortcakeTauntImpactObject);
     }
     public override void StageInteractableFuncs()
     {

@@ -11,36 +11,14 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
 {
     public class TurretlingBlaster : BaseState
     {
-        public static GameObject muzzlefx = Addressables.LoadAssetAsync<GameObject>(RoR2BepInExPack.GameAssetPaths.Version_1_39_0.RoR2_Base_Common_VFX.Muzzleflash1_prefab).WaitForCompletion();
-        public static GameObject effectPrefab;
+        public GameObject muzzlefx = Addressables.LoadAssetAsync<GameObject>(RoR2BepInExPack.GameAssetPaths.Version_1_39_0.RoR2_Base_Common_VFX.Muzzleflash1_prefab).WaitForCompletion();
+        public GameObject effectPrefab;
 
-        public static GameObject hitfx = Addressables.LoadAssetAsync<GameObject>(RoR2BepInExPack.GameAssetPaths.Version_1_39_0.RoR2_Base_Common_VFX.Hitspark1_prefab).WaitForCompletion();
-        public static GameObject hitEffectPrefab;
+        public GameObject hitfx = Addressables.LoadAssetAsync<GameObject>(RoR2BepInExPack.GameAssetPaths.Version_1_39_0.RoR2_Base_Common_VFX.Hitspark1_prefab).WaitForCompletion();
+        public GameObject hitEffectPrefab;
 
-        public static GameObject tracerfx = Addressables.LoadAssetAsync<GameObject>(RoR2BepInExPack.GameAssetPaths.Version_1_39_0.RoR2_Base_Common_VFX.TracerNoSmoke_prefab).WaitForCompletion();
-        public static GameObject tracerEffectPrefab;
-
-        public static GameObject muzzlefx_acanthi = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx_Muzzleflash_Acanthiling.prefab");
-        public static GameObject hitfx_acanthi = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx_Hitspark_Acanthiling.prefab");
-        public static GameObject tracerfx_acanthi = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx_Tracer_Acanthiling.prefab");
-
-        public static GameObject muzzlefx_borbo = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx_Muzzleflash_Borboling.prefab");
-        public static GameObject hitfx_borbo = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx_Hitspark_Borboling.prefab");
-        public static GameObject tracerfx_borbo = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx_Tracer_Borboling.prefab");
-
-        public static GameObject hitfx_bread = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx_Hitspark_Breadling.prefab");
-
-        public static GameObject muzzlefx_shortcake = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx_Muzzleflash_Shortcakeling.prefab");
-        public static GameObject hitfx_shortcake = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx_Hitspark_Shortcakeling.prefab");
-        public static GameObject tracerfx_shortcake = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx_Tracer_Shortcakeling.prefab");
-
-        public static GameObject muzzlefx_snowtime = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx_Muzzleflash_Snowtimeling.prefab");
-        public static GameObject hitfx_snowtime = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx_Hitspark_Snowtimeling.prefab");
-        public static GameObject tracerfx_snowtime = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx_Tracer_Snowtimeling.prefab");
-
-        public static GameObject muzzlefx_rainbow = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx_Muzzleflash__Rainbow.prefab");
-        public static GameObject hitfx_rainbow = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx_Hitspark__Rainbow.prefab");
-        public static GameObject tracerfx_rainbow = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Variants/vfx_Tracer__Rainbow.prefab");
+        public GameObject tracerfx = Addressables.LoadAssetAsync<GameObject>(RoR2BepInExPack.GameAssetPaths.Version_1_39_0.RoR2_Base_Common_VFX.TracerNoSmoke_prefab).WaitForCompletion();
+        public GameObject tracerEffectPrefab;
 
         public static string attackSoundString = "Play_Turretling_Fire";
 
@@ -114,39 +92,39 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             string muzzleName = "Muzzle_Primary";
             if (base.gameObject.name.Contains("Acanthi"))
             {
-                effectPrefab = muzzlefx_acanthi;
-                hitEffectPrefab = hitfx_acanthi;
-                tracerEffectPrefab = tracerfx_acanthi;
+                effectPrefab = SnowtimeToyboxMod.muzzlefx_acanthi;
+                hitEffectPrefab = SnowtimeToyboxMod.hitfx_acanthi;
+                tracerEffectPrefab = SnowtimeToyboxMod.tracerfx_acanthi;
             }
             else if (base.gameObject.name.Contains("Borbo"))
             {
-                effectPrefab = muzzlefx_borbo;
-                hitEffectPrefab = hitfx_borbo;
-                tracerEffectPrefab = tracerfx_borbo;
+                effectPrefab = SnowtimeToyboxMod.muzzlefx_borbo;
+                hitEffectPrefab = SnowtimeToyboxMod.hitfx_borbo;
+                tracerEffectPrefab = SnowtimeToyboxMod.tracerfx_borbo;
             }
             else if (base.gameObject.name.Contains("Bread"))
             {
                 effectPrefab = muzzlefx;
-                hitEffectPrefab = hitfx_bread;
+                hitEffectPrefab = SnowtimeToyboxMod.hitfx_bread;
                 tracerEffectPrefab = tracerfx;
             }
             else if (base.gameObject.name.Contains("Shortcake"))
             {
-                effectPrefab = muzzlefx_shortcake;
-                hitEffectPrefab = hitfx_shortcake;
-                tracerEffectPrefab = tracerfx_shortcake;
+                effectPrefab = SnowtimeToyboxMod.muzzlefx_shortcake;
+                hitEffectPrefab = SnowtimeToyboxMod.hitfx_shortcake;
+                tracerEffectPrefab = SnowtimeToyboxMod.tracerfx_shortcake;
             }
             else if (base.gameObject.name.Contains("Snowtime"))
             {
-                effectPrefab = muzzlefx_snowtime;
-                hitEffectPrefab = hitfx_snowtime;
-                tracerEffectPrefab = tracerfx_snowtime;
+                effectPrefab = SnowtimeToyboxMod.muzzlefx_snowtime;
+                hitEffectPrefab = SnowtimeToyboxMod.hitfx_snowtime;
+                tracerEffectPrefab = SnowtimeToyboxMod.tracerfx_snowtime;
             }
             else if (characterBody.master.gameObject.TryGetComponent(out TurretlingRainbow rainbowCheck) && rainbowCheck.turretlingRainbow)
             {
-                effectPrefab = muzzlefx_rainbow;
-                hitEffectPrefab = hitfx_rainbow;
-                tracerEffectPrefab = tracerfx_rainbow;
+                effectPrefab = SnowtimeToyboxMod.muzzlefx_rainbow;
+                hitEffectPrefab = SnowtimeToyboxMod.hitfx_rainbow;
+                tracerEffectPrefab = SnowtimeToyboxMod.tracerfx_rainbow;
             }
             else
             {

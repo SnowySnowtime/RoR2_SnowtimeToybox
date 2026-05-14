@@ -9,8 +9,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
     {
         public static float deathDelay = 0f;
 
-        public static GameObject deathfx = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/turretling_deatheffect.prefab");
-        public static GameObject deathEffectPrefab = deathfx;
+        public GameObject deathEffectPrefab = SnowtimeToyboxMod.deathfx;
 
         private bool hasDied;
 
