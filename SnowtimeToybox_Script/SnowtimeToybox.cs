@@ -57,7 +57,7 @@ namespace SnowtimeToybox
     {
         public const string Author = "SnowySnowtime";
         public const string Name = nameof(SnowtimeToyboxMod);
-        public const string Version = "1.2.7";
+        public const string Version = "1.2.9";
         public const string GUID = Author + "." + Name;
 
         public static SnowtimeToyboxMod instance;

@@ -1,3 +1,18 @@
+`1.2.9`
+<details>
+<summary>Update Summary (includes summary of commits by users)</summary>
+
+Snowy Snowtime
+---
+- energy nova nerfed a bit (1s -> 1.5s cd), and must be pressed. cannot be held anymore
+- fixed missiles on turretlings being mute besides variants and rainbow
+- refactored mod ever so slightly. might cause bugs idk
+
+.score
+---
+- once again being based and helped fix the missile skill this time, should be a lot more consistent as client, and luminous shot has been shot
+</details>
+
 `1.2.8`
 - fixed an issue with a contributors special vfx
 - goobo
