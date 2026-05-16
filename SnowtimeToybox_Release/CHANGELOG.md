@@ -1,3 +1,6 @@
+`1.3.0`
+- emergency release, fixes loading. bwaa.
+
 `1.2.9`
 <details>
 <summary>Update Summary (includes summary of commits by users)</summary>

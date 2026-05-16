@@ -5,6 +5,7 @@ using HG;
 using R2API;
 using RoR2;
 using RoR2.Skills;
+using SnowtimeToybox.Buffs;
 using SnowtimeToybox.Components;
 using SnowtimeToybox.FriendlyTurretChecks;
 using SnowtimeToybox.FriendlyTurrets;
@@ -25,9 +26,12 @@ public class Content
     public static InteractableSpawnCard FriendlyTurretTurretlingIsc;
     public static SkillFamily FriendlyTurretTurretlingPrimarySkillFamily;
     public static SkillFamily FriendlyTurretTurretlingPrimaryMinionSkillFamily;
+    public static SkillFamily FriendlyTurretTurretlingPrimaryMeleeMinionSkillFamily;
     public static SkillFamily FriendlyTurretTurretlingSecondarySkillFamily;
     public static SkillFamily FriendlyTurretTurretlingUtilSkillFamily;
     public static SkillDef FriendlyTurretTurretlingPrimarySkillDef;
+    public static SkillDef FriendlyTurretTurretlingPrimaryMeleeSkillDef;
+    public static SkillDef FriendlyTurretTurretlingPrimaryMeleeMinionSkillDef;
     public static SkillDef FriendlyTurretTurretlingPrimaryMinionSkillDef;
     public static SkillDef FriendlyTurretTurretlingPrimaryScepterSkillDef;
     public static SkillDef FriendlyTurretTurretlingPrimaryScepterMinionSkillDef;
@@ -92,6 +96,10 @@ public class Content
     public static GameObject SwarmlingDemoMinionBody;
     public static GameObject SwarmlingDemoMinionBroken;
     public static GameObject SwarmlingDemoMinionMaster;
+    public static DroneDef SwarmlingMeleeMinionDef;
+    public static GameObject SwarmlingMeleeMinionBody;
+    public static GameObject SwarmlingMeleeMinionBroken;
+    public static GameObject SwarmlingMeleeMinionMaster;
     public static SkillFamily Swarmling_PassiveFamily1;
     public static SkillFamily Swarmling_PassiveFamily2;
     public static SkillFamily Swarmling_PassiveFamily3;
@@ -100,10 +108,12 @@ public class Content
     public static SkillFamily Swarmling_PassiveFamily6;
     public static SkillDef SwarmlingPassiveMinion;
     public static SkillDef SwarmlingDemoPassiveMinion;
+    public static SkillDef SwarmlingMeleePassiveMinion;
     public static SkillFamily SwarmlingSpecialFamily;
     public static SkillDef SwarmlingSpecialSkill;
     public static SkillFamily SwarmlingUtilityFamily;
     public static SkillDef SwarmlingUtilitySkill;
+    public static SkillDef SwarmlingUtilityAltSkill;
     public static DamageColorIndex BlasterScepterColor1;
     public static DamageColorIndex BlasterScepterColor2;
     public static DamageColorIndex BlasterScepterColor3;
@@ -164,6 +174,9 @@ public class Content
     public static GameObject HaloTracerObject;
     public static GameObject HaloHitObject;
     public static GameObject HaloorbEffectObject;
+    public static BuffDef SwarmlingMeleeArmorStrip;
+    public static BuffDef SwarmlingMeleeBarrierHandler;
+    public static BuffDef SwarmlingMeleeBarrierDecayDelayHandler;
     public static void AddCustomSkills()
     {
         Log.Debug("Adding SnowtimeToybox Custom Skills...");
@@ -343,6 +356,7 @@ public class Content
         // add turretling
         Log.Debug("Defining Turretling(s)...");
         string turretlingPath = @"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/";
+
         FriendlyTurretTurretlingBody = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "_TurretlingBody.prefab");
         FriendlyTurretTurretlingBodyRemoteOp = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "_TurretlingBodyRemoteOp.prefab");
         // update stats and components
@@ -382,6 +396,20 @@ public class Content
         ContentAddition.AddSkillDef(FriendlyTurretTurretlingPrimaryMinionSkillDef);
         ContentAddition.AddSkillFamily(FriendlyTurretTurretlingSecondarySkillFamily);
         ContentAddition.AddSkillDef(FriendlyTurretTurretlingSecondarySkillDef);
+
+        
+        FriendlyTurretTurretlingPrimaryMeleeSkillDef = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<SkillDef>(turretlingPath + "Skills/Turretling_Primary_Melee.asset");
+        FriendlyTurretTurretlingPrimaryMeleeSkillDef.activationState = new SerializableEntityStateType(typeof(FireTurretlingMeleeBeam));
+        ContentAddition.AddSkillDef(FriendlyTurretTurretlingPrimaryMeleeSkillDef);
+        ContentAddition.AddEntityState(typeof(FireTurretlingMeleeBeam), out _);
+        FriendlyTurretTurretlingPrimaryMeleeMinionSkillFamily = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<SkillFamily>(turretlingPath + "Skills/TurretlingPrimaryFamilyMeleeMinion.asset");
+        FriendlyTurretTurretlingPrimaryMeleeMinionSkillDef = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<SkillDef>(turretlingPath + "Skills/Turretling_Primary_Melee_Minion.asset");
+        FriendlyTurretTurretlingPrimaryMeleeMinionSkillDef.activationState = new SerializableEntityStateType(typeof(FireTurretlingMeleeBeam));
+        ContentAddition.AddSkillFamily(FriendlyTurretTurretlingPrimaryMeleeMinionSkillFamily);
+        ContentAddition.AddSkillDef(FriendlyTurretTurretlingPrimaryMeleeMinionSkillDef);
+        SwarmlingMeleeArmorStrip = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<BuffDef>(turretlingPath + "Buff/TurretlingMeleeArmorDebuff.asset");
+        SwarmlingMeleeBarrierHandler = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<BuffDef>(turretlingPath + "Buff/TurretlingMeleeBarrierHandler.asset");
+        SwarmlingMeleeBarrierDecayDelayHandler = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<BuffDef>(turretlingPath + "Buff/TurretlingMeleeBarrierDecayDelayHandler.asset");
 
         // add turretling variants (spawned with a friendly turret)
         AcanthiTurretlingBody = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "Variants/_TurretlingBody_Acanthi.prefab");
@@ -502,8 +530,13 @@ public class Content
         SwarmlingMinionBody.AddComponent<TurretlingMissileTracker>();
         SwarmlingMinionBody.AddComponent<SwarmMinionSwarmlingTeleportHandler>();
         SwarmlingMinionBody.AddComponent<EquipmentSlot>();
-        SwarmlingMinionBody.GetComponent<CharacterBody>().baseDamage = (SnowtimeToyboxMod.SwarmlingBaseDamage.Value / SnowtimeToyboxMod.SwarmlingMinionStatMult.Value);
-        SwarmlingMinionBody.GetComponent<CharacterBody>().levelDamage = (SnowtimeToyboxMod.SwarmlingDamagePerLevel.Value / SnowtimeToyboxMod.SwarmlingMinionStatMult.Value);
+        SwarmlingMinionBody.GetComponent<CharacterBody>().baseDamage = (SnowtimeToyboxMod.SwarmlingBaseDamage.Value / SnowtimeToyboxMod.SwarmlingMinionOffenseStatMult.Value);
+        SwarmlingMinionBody.GetComponent<CharacterBody>().levelDamage = (SnowtimeToyboxMod.SwarmlingDamagePerLevel.Value / SnowtimeToyboxMod.SwarmlingMinionOffenseStatMult.Value);
+        SwarmlingMinionBody.GetComponent<CharacterBody>().maxHealth = (SnowtimeToyboxMod.SwarmlingBaseMaxHealth.Value / SnowtimeToyboxMod.SwarmlingMinionDefenseStatMult.Value);
+        SwarmlingMinionBody.GetComponent<CharacterBody>().levelMaxHealth = (SnowtimeToyboxMod.SwarmlingMaxHealthPerLevel.Value);
+        SwarmlingMinionBody.GetComponent<CharacterBody>().baseRegen = (SnowtimeToyboxMod.SwarmlingBaseRegen.Value / SnowtimeToyboxMod.SwarmlingMinionDefenseStatMult.Value);
+        SwarmlingMinionBody.GetComponent<CharacterBody>().levelRegen = (SnowtimeToyboxMod.SwarmlingRegenPerLevel.Value / SnowtimeToyboxMod.SwarmlingMinionDefenseStatMult.Value);
+        SwarmlingMinionBody.GetComponent<CharacterBody>().baseArmor = (SnowtimeToyboxMod.SwarmlingBaseArmor.Value / SnowtimeToyboxMod.SwarmlingMinionDefenseStatMult.Value);
         SwarmlingMinionBroken = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(swarmlingPath + "_SwarmTurretlingBroken.prefab");
         SwarmlingMinionMaster = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(swarmlingPath + "_SwarmTurretlingMaster.prefab");
         SwarmlingMinionMaster.AddComponent<TurretlingRainbow>();
@@ -523,6 +556,8 @@ public class Content
         SwarmlingSpecialSkill.activationState = new SerializableEntityStateType(typeof(TurretlingEnergyNova));
         SwarmlingUtilitySkill = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<SkillDef>(swarmlingPath + "Skills/Turretling_UtilitySurvivor.asset");
         SwarmlingUtilitySkill.activationState = new SerializableEntityStateType(typeof(TurretlingMiniBlinkState));
+        SwarmlingUtilityAltSkill = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<SkillDef>(swarmlingPath + "Skills/Turretling_UtilityAltSurvivor.asset");
+        SwarmlingUtilityAltSkill.activationState = new SerializableEntityStateType(typeof(TurretlingMiniBlinkState));
         ContentAddition.AddSurvivorDef(SwarmlingDef);
         ContentAddition.AddDroneDef(SwarmlingMinionDef);
         ContentAddition.AddBody(SwarmlingBody);
@@ -541,6 +576,7 @@ public class Content
         ContentAddition.AddSkillDef(SwarmlingPassiveMinion);
         ContentAddition.AddSkillDef(SwarmlingSpecialSkill);
         ContentAddition.AddSkillDef(SwarmlingUtilitySkill);
+        ContentAddition.AddSkillDef(SwarmlingUtilityAltSkill);
         ContentAddition.AddEntityState(typeof(TurretlingEnergyNova), out _);
         ContentAddition.AddEntityState(typeof(TurretlingMiniBlinkState), out _);
 
@@ -550,8 +586,13 @@ public class Content
         SwarmlingDemoMinionBody.AddComponent<TurretlingMissileTracker>();
         SwarmlingDemoMinionBody.AddComponent<SwarmMinionSwarmlingTeleportHandler>();
         SwarmlingDemoMinionBody.AddComponent<EquipmentSlot>();
-        SwarmlingDemoMinionBody.GetComponent<CharacterBody>().baseDamage = (SnowtimeToyboxMod.TurretlingBaseDamage.Value / 2f);
-        SwarmlingDemoMinionBody.GetComponent<CharacterBody>().levelDamage = (SnowtimeToyboxMod.TurretlingBaseDamagePerLevel.Value / 2f);
+        SwarmlingDemoMinionBody.GetComponent<CharacterBody>().baseDamage = (SnowtimeToyboxMod.SwarmlingBaseDamage.Value / SnowtimeToyboxMod.SwarmlingMinionOffenseStatMult.Value);
+        SwarmlingDemoMinionBody.GetComponent<CharacterBody>().levelDamage = (SnowtimeToyboxMod.SwarmlingDamagePerLevel.Value / SnowtimeToyboxMod.SwarmlingMinionOffenseStatMult.Value);
+        SwarmlingDemoMinionBody.GetComponent<CharacterBody>().maxHealth = (SnowtimeToyboxMod.SwarmlingBaseMaxHealth.Value / SnowtimeToyboxMod.SwarmlingMinionDefenseStatMult.Value);
+        SwarmlingDemoMinionBody.GetComponent<CharacterBody>().levelMaxHealth = (SnowtimeToyboxMod.SwarmlingMaxHealthPerLevel.Value);
+        SwarmlingDemoMinionBody.GetComponent<CharacterBody>().baseRegen = (SnowtimeToyboxMod.SwarmlingBaseRegen.Value / SnowtimeToyboxMod.SwarmlingMinionDefenseStatMult.Value);
+        SwarmlingDemoMinionBody.GetComponent<CharacterBody>().levelRegen = (SnowtimeToyboxMod.SwarmlingRegenPerLevel.Value / SnowtimeToyboxMod.SwarmlingMinionDefenseStatMult.Value);
+        SwarmlingDemoMinionBody.GetComponent<CharacterBody>().baseArmor = (SnowtimeToyboxMod.SwarmlingBaseArmor.Value / SnowtimeToyboxMod.SwarmlingMinionDefenseStatMult.Value);
         SwarmlingDemoMinionBody.AddComponent<TurretlingDrunkenRamblingHandler>();
         SwarmlingDemoMinionBroken = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(swarmlingPath + "_SwarmTurretling_DemoBroken.prefab");
         SwarmlingDemoMinionMaster = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(swarmlingPath + "_SwarmTurretling_DemoMaster.prefab");
@@ -565,6 +606,33 @@ public class Content
         ContentAddition.AddBody(SwarmlingDemoMinionBroken);
         ContentAddition.AddMaster(SwarmlingDemoMinionMaster);
         ContentAddition.AddSkillDef(SwarmlingDemoPassiveMinion);
+
+
+        SwarmlingMeleeMinionDef = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<DroneDef>(swarmlingPath + "_SwarmTurretling_Melee.asset");
+        SwarmlingMeleeMinionBody = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(swarmlingPath + "_SwarmTurretling_MeleeBody.prefab");
+        SwarmlingMeleeMinionBody.GetComponent<CharacterDeathBehavior>().deathState = new SerializableEntityStateType(typeof(DTTurretlingDeath));
+        SwarmlingMeleeMinionBody.AddComponent<TurretlingMissileTracker>();
+        SwarmlingMeleeMinionBody.AddComponent<SwarmMinionSwarmlingTeleportHandler>();
+        SwarmlingMeleeMinionBody.AddComponent<EquipmentSlot>();
+        SwarmlingMeleeMinionBody.GetComponent<CharacterBody>().baseDamage = (SnowtimeToyboxMod.SwarmlingBaseDamage.Value / SnowtimeToyboxMod.SwarmlingMinionOffenseStatMult.Value);
+        SwarmlingMeleeMinionBody.GetComponent<CharacterBody>().levelDamage = (SnowtimeToyboxMod.SwarmlingDamagePerLevel.Value / SnowtimeToyboxMod.SwarmlingMinionOffenseStatMult.Value);
+        SwarmlingMeleeMinionBody.GetComponent<CharacterBody>().maxHealth = (SnowtimeToyboxMod.SwarmlingBaseMaxHealth.Value / SnowtimeToyboxMod.SwarmlingMinionDefenseStatMult.Value);
+        SwarmlingMeleeMinionBody.GetComponent<CharacterBody>().levelMaxHealth = (SnowtimeToyboxMod.SwarmlingMaxHealthPerLevel.Value);
+        SwarmlingMeleeMinionBody.GetComponent<CharacterBody>().baseRegen = (SnowtimeToyboxMod.SwarmlingBaseRegen.Value / SnowtimeToyboxMod.SwarmlingMinionDefenseStatMult.Value);
+        SwarmlingMeleeMinionBody.GetComponent<CharacterBody>().levelRegen = (SnowtimeToyboxMod.SwarmlingRegenPerLevel.Value / SnowtimeToyboxMod.SwarmlingMinionDefenseStatMult.Value);
+        SwarmlingMeleeMinionBody.GetComponent<CharacterBody>().baseArmor = ((SnowtimeToyboxMod.SwarmlingBaseArmor.Value * 2f) / SnowtimeToyboxMod.SwarmlingMinionDefenseStatMult.Value);
+        SwarmlingMeleeMinionBroken = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(swarmlingPath + "_SwarmTurretling_MeleeBroken.prefab");
+        SwarmlingMeleeMinionMaster = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(swarmlingPath + "_SwarmTurretling_MeleeMaster.prefab");
+        SwarmlingMeleeMinionMaster.AddComponent<TurretlingRainbow>();
+        SwarmlingMeleeMinionMaster.AddComponent<FriendlyTurretInheritance>().whitelistedTag = "FriendTurret_None_Whitelist";
+        SwarmlingMeleePassiveMinion = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<SkillDef>(swarmlingPath + "Skills/Swarmling_Melee.asset");
+        SwarmlingMeleePassiveMinion.activationState = new SerializableEntityStateType(typeof(Idle));
+        SwarmlingMeleePassiveMinion.activationStateMachineName = "gorp";
+        ContentAddition.AddDroneDef(SwarmlingMeleeMinionDef);
+        ContentAddition.AddBody(SwarmlingMeleeMinionBody);
+        ContentAddition.AddBody(SwarmlingMeleeMinionBroken);
+        ContentAddition.AddMaster(SwarmlingMeleeMinionMaster);
+        ContentAddition.AddSkillDef(SwarmlingMeleePassiveMinion);
 
         DemoTurretlingDef = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<DroneDef>(turretlingPath + "_DemoTurretling.asset");
         DemoTurretlingBody = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "_DemoTurretlingBody.prefab");
@@ -737,6 +805,7 @@ public class Content
 
         if (SnowtimeToyboxMod.scepterLoaded) return;
         DemoTurretlingPrimarySkill.keywordTokens = new string[1] { "TURRETLING_SKILL7_KEYWORD" };
+        FriendlyTurretTurretlingPrimaryMeleeSkillDef.keywordTokens = new string[1] { "TURRETLING_SKILL8_KEYWORD" };
     }
     public static void AddCustomEffects()
     {
@@ -799,6 +868,14 @@ public class Content
         HaloHitObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/PlasmaRifle/PlasmaRifleImpactVFX.prefab");
         HaloorbEffectObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/PlasmaRifle/PlasmaRifleOrbEffect.prefab");
 
+
+        ContentAddition.AddEffect(muzzleflashEffectObject);
+        ContentAddition.AddProjectile(projectileObject);
+        ContentAddition.AddEffect(projectileGhostObject);
+        ContentAddition.AddEffect(projectileExplosionObject);
+        ContentAddition.AddEffect(effectPrefabObject);
+        ContentAddition.AddEffect(hitEffectPrefabObject);
+        ContentAddition.AddEffect(tracerEffectPrefabObject);
         ContentAddition.AddEffect(HaloMuzzleFlashObject);
         ContentAddition.AddEffect(HaloTracerObject);
         ContentAddition.AddEffect(HaloHitObject);
@@ -860,6 +937,7 @@ public class Content
             FriendlyTurretTurretlingPrimaryScepterSkillDef.activationState = new SerializableEntityStateType(typeof(TurretlingBlasterScepter));
             FriendlyTurretTurretlingPrimarySkillDef.keywordTokens = new string[1] { "TURRETLING_SKILL1_KEYWORD" };
             DemoTurretlingPrimarySkill.keywordTokens = new string[1] { "TURRETLING_SKILL7_KEYWORD_SCEPTER" };
+            FriendlyTurretTurretlingPrimaryMeleeSkillDef.keywordTokens = new string[1] { "TURRETLING_SKILL8_KEYWORD_SCEPTER" };
             FriendlyTurretTurretlingPrimaryScepterMinionSkillDef = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<SkillDef>(turretlingPath + "Skills/Turretling_Primary_Scepter.asset");
             FriendlyTurretTurretlingPrimaryScepterMinionSkillDef.activationState = new SerializableEntityStateType(typeof(TurretlingBlasterScepter));
 

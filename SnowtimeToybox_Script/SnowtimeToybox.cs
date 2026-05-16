@@ -75,6 +75,7 @@ namespace SnowtimeToybox
         // KEEP YOURSELF SAFE
         public static DamageAPI.ModdedDamageType HaloRicochetOnHit = DamageAPI.ReserveDamageType();
         public static DamageAPI.ModdedDamageType BorboSuperDebuffOnHit = DamageAPI.ReserveDamageType();
+        public static DamageAPI.ModdedDamageType SwarmlingArmorStripOnHit = DamageAPI.ReserveDamageType();
 
         public static List<FriendlyTurretBase> friendlyTurretList = [];
 
@@ -101,7 +102,8 @@ namespace SnowtimeToybox
         public static ConfigEntry<float> SwarmlingBaseRegen { get; set; }
         public static ConfigEntry<float> SwarmlingRegenPerLevel { get; set; }
         public static ConfigEntry<float> SwarmlingBaseArmor { get; set; }
-        public static ConfigEntry<float> SwarmlingMinionStatMult { get; set; }
+        public static ConfigEntry<float> SwarmlingMinionOffenseStatMult { get; set; }
+        public static ConfigEntry<float> SwarmlingMinionDefenseStatMult { get; set; }
         public static ConfigEntry<bool> ToggleSpawnMessages { get; set; }
         public static ConfigEntry<bool> FriendlyTurretImmuneVoidDeath { get; set; }
         public static ConfigEntry<bool> TurretlingImmuneVoidDeath { get; set; }
@@ -134,10 +136,11 @@ namespace SnowtimeToybox
             SwarmlingDamagePerLevel = Config.Bind("Survivors - Swarmling", "Damage per Level", 2.4f, "Damage per Level.");
             SwarmlingBaseMaxHealth = Config.Bind("Survivors - Swarmling", "Base Health", 50f, "Base Health.");
             SwarmlingMaxHealthPerLevel = Config.Bind("Survivors - Swarmling", "Health per Level", 15f, "Health per Level.");
-            SwarmlingBaseRegen = Config.Bind("Survivors - Swarmling", "Base Health Regen", 5f, "Base Health Regen.");
-            SwarmlingRegenPerLevel = Config.Bind("Survivors - Swarmling", "Health Regen per Level", 1f, "Health Regen per Level.");
-            SwarmlingBaseArmor = Config.Bind("Survivors - Swarmling", "Base Armor", 15f, "Base Armor.");
-            SwarmlingMinionStatMult = Config.Bind("Survivors - Swarmling", "(Minion) Swarm Stat Divider", 3f, "Divides the 'Base Damage', 'Damage per Level' of the Swarm for balance purposes. Uses the base stats of the player at 1");
+            SwarmlingBaseRegen = Config.Bind("Survivors - Swarmling", "Base Health Regen", 3f, "Base Health Regen.");
+            SwarmlingRegenPerLevel = Config.Bind("Survivors - Swarmling", "Health Regen per Level", 0.5f, "Health Regen per Level.");
+            SwarmlingBaseArmor = Config.Bind("Survivors - Swarmling", "Base Armor", 10f, "Base Armor.");
+            SwarmlingMinionOffenseStatMult = Config.Bind("Survivors - Swarmling", "(Minion) Swarm Offensive Stat Divider", 3f, "Divides the 'Base Damage', 'Damage per Level' of the Swarm for balance purposes. Uses the base stats of the player at 1");
+            SwarmlingMinionDefenseStatMult = Config.Bind("Survivors - Swarmling", "(Minion) Swarm Defensive Stat Divider", 1.25f, "Divides the 'Base Damage', 'Damage per Level' of the Swarm for balance purposes. Uses the base stats of the player at 1");
             ToggleSpawnMessages = Config.Bind("Friendly Turret Functions", "Spawn Message", true, "If true, the Friendly Turrets will give a message on every stage they spawn on, for insight on if and which turret spawned. Otherwise, friendly turrets are shy, and are also sad!");
             FriendlyTurretShortcakeAggroType = Config.Bind("Friendly Turret Functions", "Strawberry Shortcake Aggro Method", false, "If true, the Strawberry Shortcake Turret will spawn with a native increase to its aggro. Else, it only gains aggro for ~0.5s when its main skill fires.");
             FriendlyTurretImmuneVoidDeath = Config.Bind("Friendly Turret Flags", "Void Death Immunity", true, "If true, Friendly Turrets are immune to Void Death (Void Reaver implosions), this is because they are awful at avoiding them even with mods to make allies avoid them, and we get sad when they are detained.");

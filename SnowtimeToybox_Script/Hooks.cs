@@ -74,6 +74,30 @@ public class Hooks
         BaseAI.UpdateTargets += UpdateFriendlyTurretTargeting;
         //overlay amanger ,.,. 
         On.RoR2.CharacterModel.UpdateOverlays += CharacterModelOnUpdateOverlays;
+        On.RoR2.CharacterBody.Start += CharacterBodyOnStartUpdatePermutationSwarmling;
+    }
+
+    private static void CharacterBodyOnStartUpdatePermutationSwarmling(On.RoR2.CharacterBody.orig_Start orig, CharacterBody self)
+    {
+        orig(self);
+        if(self.gameObject.name.Contains("_TurretlingSurvivorBody"))
+        {
+            Log.Debug("update player stuff.,.,");
+            if(self.skillLocator.primary.skillDef == Content.FriendlyTurretTurretlingPrimaryMeleeSkillDef)
+            {
+                Log.Debug("waow we melee.,.,");
+                if (self.modelLocator?.modelTransform?.gameObject.TryGetComponent(out ChildLocator childLocator) == true)
+                {
+                    Log.Debug("we really melee.,.,");
+                    childLocator.FindChild("Melee1")?.gameObject.SetActive(true);
+                    childLocator.FindChild("Melee2")?.gameObject.SetActive(true);
+                    childLocator.FindChild("Melee3")?.gameObject.SetActive(true);
+                    childLocator.FindChild("Default1")?.gameObject.SetActive(false);
+                    childLocator.FindChild("Default2")?.gameObject.SetActive(false);
+                    childLocator.FindChild("Default3")?.gameObject.SetActive(false);
+                }
+            }
+        }
     }
 
     private static Interactability GetInteractabilityFriendlyTurrets(On.RoR2.PurchaseInteraction.orig_GetInteractability orig, PurchaseInteraction self, Interactor activator)
@@ -282,6 +306,10 @@ public class Hooks
         if (damageInfo.HasModdedDamageType(SnowtimeToyboxMod.BorboSuperDebuffOnHit))
         {
             victim.GetComponent<CharacterBody>().AddTimedBuff(BorboFriendlyTurret.BorboTurretDebuff, 3);
+        }
+        if (damageInfo.HasModdedDamageType(SnowtimeToyboxMod.SwarmlingArmorStripOnHit))
+        {
+            victim.GetComponent<CharacterBody>().AddTimedBuff(Content.SwarmlingMeleeArmorStrip, 5);
         }
     }
 
@@ -666,7 +694,6 @@ public class Hooks
             if (obj.inventory) obj.inventory.GiveItemPermanent(RoR2Content.Items.ShinyPearl, 1);
         }
     }
-
 
     private static bool DroneCommandReceiverOnIsReady(On.RoR2.DroneCommandReceiver.orig_IsReady orig, DroneCommandReceiver self)
     {

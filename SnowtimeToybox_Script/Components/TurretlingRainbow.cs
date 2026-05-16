@@ -258,11 +258,15 @@ public class TurretlingRainbow : NetworkBehaviour
             if (turretlingParams.Length == 4)
             {
                 string turretlingName = turretlingParams[^1].Trim();
-                if (charBody && charBody.modelLocator?.modelTransform?.gameObject.TryGetComponent(out ChildLocator childLocatorSteamUnusual) == true)
+                if(charBody && charBody.modelLocator?.modelTransform?.gameObject.TryGetComponent(out ChildLocator childLocatorSteamUnusualHolder) == true)
                 {
-                    childLocatorSteamUnusual.FindChild($"{turretlingName}Halo")?.gameObject.SetActive(true);
-                    childLocatorSteamUnusual.FindChild($"{turretlingName}Unusual")?.gameObject.SetActive(true);
-                    //Log.Debug(turretlingName + " has been applied");
+                    if (childLocatorSteamUnusualHolder.FindChild("DevTesterEffectsPrefab").gameObject.TryGetComponent(out ChildLocator childLocatorSteamUnusual) == true)
+                    {
+                        Log.Debug(childLocatorSteamUnusual.gameObject.name);
+                        childLocatorSteamUnusual.FindChild($"{turretlingName}Halo")?.gameObject.SetActive(true);
+                        childLocatorSteamUnusual.FindChild($"{turretlingName}Unusual")?.gameObject.SetActive(true);
+                        //Log.Debug(turretlingName + " has been applied");
+                    }
                 }
             }
 
