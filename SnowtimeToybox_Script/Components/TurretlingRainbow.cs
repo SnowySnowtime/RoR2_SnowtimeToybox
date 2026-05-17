@@ -7,6 +7,8 @@ using UnityEngine.Networking;
 using RoR2;
 using UnityEngine.TextCore.Text;
 using Object = UnityEngine.Object;
+using HG;
+using System.Net;
 
 namespace SnowtimeToybox.Components;
 [RequireComponent(typeof(CharacterMaster))]
@@ -214,7 +216,8 @@ public class TurretlingRainbow : NetworkBehaviour
         }
         if (charBody.name.Contains("Broken")) return;
 
-        if (!charBody.modelLocator._modelTransform?.gameObject || charBody.modelLocator._modelTransform?.gameObject.TryGetComponent(out ChildLocator childLocator) != true) return;
+        if (charBody.modelLocator._modelTransform.gameObject.AsValidOrNull() == null) return;
+        if (charBody.modelLocator._modelTransform?.gameObject.TryGetComponent(out ChildLocator childLocator) != true) return;
         if (childLocator == null) return;
         //Log.Debug("ChildLocator: " + childLocator.gameObject.name);
 

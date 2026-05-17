@@ -109,6 +109,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         private BulletAttack.HitCallback hitCallback;
 
         private Vector3? bulletEndPos;
+        private bool IsCrit;
 
         public override void Reset()
         {
@@ -245,19 +246,22 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 laserVfxInstanceEndTransform2.position = ray.GetPoint(magnitude);
             }
 
-            float myHue = base.gameObject.GetComponent<CharacterBody>().master.gameObject.GetComponent<TurretlingRainbow>().myHue;
-            bool rainbow = base.gameObject.GetComponent<CharacterBody>().master.gameObject.GetComponent<TurretlingRainbow>().turretlingRainbow;
-            laserVfxInstance.GetComponent<Animator>().SetBool("rainbow", rainbow);
-            laserVfxInstance2.GetComponent<Animator>().SetBool("rainbow", rainbow);
-            if (rainbow)
+            if (laserVfxInstance.AsValidOrNull() != null && laserVfxInstance2.AsValidOrNull() != null)
             {
-                laserVfxInstance.GetComponent<Animator>().SetFloat("hue", 0);
-                laserVfxInstance2.GetComponent<Animator>().SetFloat("hue", 0);
-            }
-            else
-            {
-                laserVfxInstance.GetComponent<Animator>().SetFloat("hue", myHue);
-                laserVfxInstance2.GetComponent<Animator>().SetFloat("hue", myHue);
+                float myHue = base.gameObject.GetComponent<CharacterBody>().master.gameObject.GetComponent<TurretlingRainbow>().myHue;
+                bool rainbow = base.gameObject.GetComponent<CharacterBody>().master.gameObject.GetComponent<TurretlingRainbow>().turretlingRainbow;
+                laserVfxInstance.GetComponent<Animator>().SetBool("rainbow", rainbow);
+                laserVfxInstance2.GetComponent<Animator>().SetBool("rainbow", rainbow);
+                if (rainbow)
+                {
+                    laserVfxInstance.GetComponent<Animator>().SetFloat("hue", 0);
+                    laserVfxInstance2.GetComponent<Animator>().SetFloat("hue", 0);
+                }
+                else
+                {
+                    laserVfxInstance.GetComponent<Animator>().SetFloat("hue", myHue);
+                    laserVfxInstance2.GetComponent<Animator>().SetFloat("hue", myHue);
+                }
             }
         }
 
@@ -297,6 +301,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 if (fireStopwatch > num2)
                 {
                     fireStopwatch = 0f;
+                    IsCrit = Util.CheckRoll(critStat, base.characterBody.master);
                     FireBullet(laserRay, muzzleString, Time.fixedTime);
                 }
                 if (base.isAuthority && !ShouldFireLaser())
@@ -363,7 +368,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 bulletAttack.force = force;
                 bulletAttack.muzzleName = targetMuzzle;
                 bulletAttack.hitEffectPrefab = null;
-                bulletAttack.isCrit = Util.CheckRoll(critStat, base.characterBody.master);
+                bulletAttack.isCrit = IsCrit;
                 bulletAttack.HitEffectNormal = false;
                 bulletAttack.radius = 0f;
                 bulletAttack.maxDistance = maxDistance;
