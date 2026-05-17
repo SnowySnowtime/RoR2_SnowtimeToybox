@@ -109,7 +109,6 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         private BulletAttack.HitCallback hitCallback;
 
         private Vector3? bulletEndPos;
-        private bool IsCrit;
 
         public override void Reset()
         {
@@ -301,7 +300,6 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 if (fireStopwatch > num2)
                 {
                     fireStopwatch = 0f;
-                    IsCrit = Util.CheckRoll(critStat, base.characterBody.master);
                     FireBullet(laserRay, muzzleString, Time.fixedTime);
                 }
                 if (base.isAuthority && !ShouldFireLaser())
@@ -352,6 +350,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             base.characterBody.AddTimedBuff(Content.SwarmlingMeleeBarrierHandler, 1.5f, 1);
             if (base.isAuthority)
             {
+                Log.Debug("Firing...");
                 if (bulletAttack == null)
                 {
                     bulletAttack = new BulletAttack();
@@ -368,7 +367,8 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 bulletAttack.force = force;
                 bulletAttack.muzzleName = targetMuzzle;
                 bulletAttack.hitEffectPrefab = null;
-                bulletAttack.isCrit = IsCrit;
+                bulletAttack.isCrit = RollCrit();
+                Log.Debug(bulletAttack.isCrit);
                 bulletAttack.HitEffectNormal = false;
                 bulletAttack.radius = 0f;
                 bulletAttack.maxDistance = maxDistance;
@@ -379,6 +379,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 bulletAttack.Fire();
                 newestRaycastHitPoint = bulletEndPos;
                 bulletEndPos = null;
+                bulletAttack = null;
             }
             else if ((bool)laserVfxInstanceEndTransform && Util.CharacterRaycast(base.gameObject, laserRay, out hitInfo, maxDistance, (int)LayerIndex.world.mask | (int)LayerIndex.entityPrecise.mask, QueryTriggerInteraction.UseGlobal))
             {
