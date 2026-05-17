@@ -778,6 +778,10 @@ public class Content
             turretling.AddComponent<TurretlingMissileTracker>();
             if (turretling.gameObject.name.Contains("RemoteOp")) continue;
             turretling.AddComponent<EquipmentSlot>();
+            if (SnowtimeToyboxMod.TurretlingImmuneVoidDeath.Value)
+            {
+                turretling.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
+            }
         }
 
         FriendlyTurretTurretlingMaster.AddComponent<FriendlyTurretInheritance>().whitelistedTag = "FriendTurret_None_Whitelist";
@@ -797,11 +801,13 @@ public class Content
 
         if (SnowtimeToyboxMod.TurretlingImmuneVoidDeath.Value)
         {
-            FriendlyTurretTurretlingBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
             SwarmlingMinionBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
             SwarmlingDemoMinionBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
+            SwarmlingMeleeMinionBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath | CharacterBody.BodyFlags.OverheatImmune | CharacterBody.BodyFlags.ResistantToAOE;
         }
         SwarmlingMinionBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
+        SwarmlingDemoMinionBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
+        SwarmlingMeleeMinionBody.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
 
         if (SnowtimeToyboxMod.scepterLoaded) return;
         DemoTurretlingPrimarySkill.keywordTokens = new string[1] { "TURRETLING_SKILL7_KEYWORD" };

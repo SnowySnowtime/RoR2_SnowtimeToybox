@@ -350,7 +350,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             base.characterBody.AddTimedBuff(Content.SwarmlingMeleeBarrierHandler, 1.5f, 1);
             if (base.isAuthority)
             {
-                Log.Debug("Firing...");
+                //Log.Debug("Firing...");
                 if (bulletAttack == null)
                 {
                     bulletAttack = new BulletAttack();
@@ -367,8 +367,8 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 bulletAttack.force = force;
                 bulletAttack.muzzleName = targetMuzzle;
                 bulletAttack.hitEffectPrefab = null;
-                bulletAttack.isCrit = RollCrit();
-                Log.Debug(bulletAttack.isCrit);
+                bulletAttack.isCrit = Util.CheckRoll(characterBody.crit, base.characterBody.master);
+                //Log.Debug(bulletAttack.isCrit);
                 bulletAttack.HitEffectNormal = false;
                 bulletAttack.radius = 0f;
                 bulletAttack.maxDistance = maxDistance;

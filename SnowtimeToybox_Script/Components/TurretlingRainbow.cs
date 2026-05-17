@@ -1,14 +1,11 @@
 using System;
 using System.Collections.Generic;
 using BepInEx;
-using EntityStates.AffixVoid;
 using UnityEngine;
 using UnityEngine.Networking;
 using RoR2;
-using UnityEngine.TextCore.Text;
 using Object = UnityEngine.Object;
 using HG;
-using System.Net;
 
 namespace SnowtimeToybox.Components;
 [RequireComponent(typeof(CharacterMaster))]

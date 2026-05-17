@@ -294,7 +294,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 bulletAttack.force = force;
                 bulletAttack.muzzleName = targetMuzzle;
                 bulletAttack.hitEffectPrefab = null;
-                bulletAttack.isCrit = Util.CheckRoll(critStat, base.characterBody.master);
+                bulletAttack.isCrit = Util.CheckRoll(characterBody.crit, base.characterBody.master);
                 bulletAttack.HitEffectNormal = false;
                 bulletAttack.radius = 0f;
                 bulletAttack.maxDistance = maxDistance;
