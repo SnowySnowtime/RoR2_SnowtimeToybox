@@ -184,19 +184,22 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 }
                 laserVfxInstance2.transform.parent = transform2;
 
-                float myHue = base.gameObject.GetComponent<CharacterBody>().master.gameObject.GetComponent<TurretlingRainbow>().myHue;
-                bool rainbow = base.gameObject.GetComponent<CharacterBody>().master.gameObject.GetComponent<TurretlingRainbow>().turretlingRainbow;
-                if (rainbow)
+                if(base.gameObject.GetComponent<CharacterBody>().master.gameObject.TryGetComponent(out TurretlingRainbow rainbowComponent) == true)
                 {
-                    laserVfxInstance.GetComponent<Animator>().SetFloat("hue", 0);
-                    laserVfxInstance2.GetComponent<Animator>().SetFloat("hue", 0);
-                    laserVfxInstance.GetComponent<Animator>().SetBool("shift", rainbow);
-                    laserVfxInstance2.GetComponent<Animator>().SetBool("shift", rainbow);
-                }
-                else
-                {
-                    laserVfxInstance.GetComponent<Animator>().SetFloat("hue", myHue);
-                    laserVfxInstance2.GetComponent<Animator>().SetFloat("hue", myHue);
+                    float myHue = rainbowComponent.myHue;
+                    bool rainbow = rainbowComponent.turretlingRainbow;
+                    if (rainbow)
+                    {
+                        laserVfxInstance.GetComponent<Animator>().SetFloat("hue", 0);
+                        laserVfxInstance2.GetComponent<Animator>().SetFloat("hue", 0);
+                        laserVfxInstance.GetComponent<Animator>().SetBool("shift", true);
+                        laserVfxInstance2.GetComponent<Animator>().SetBool("shift", true);
+                    }
+                    else
+                    {
+                        laserVfxInstance.GetComponent<Animator>().SetFloat("hue", myHue);
+                        laserVfxInstance2.GetComponent<Animator>().SetFloat("hue", myHue);
+                    }
                 }
             }
         }
@@ -245,16 +248,18 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 laserVfxInstanceEndTransform2.position = ray.GetPoint(magnitude);
             }
 
-            if (laserVfxInstance.AsValidOrNull() != null && laserVfxInstance2.AsValidOrNull() != null)
+            if (laserVfxInstance.AsValidOrNull() == null) return;
+            if (laserVfxInstance2.AsValidOrNull() == null) return;
+            if (base.gameObject.GetComponent<CharacterBody>().master.gameObject.TryGetComponent(out TurretlingRainbow rainbowComponent) == true)
             {
-                float myHue = base.gameObject.GetComponent<CharacterBody>().master.gameObject.GetComponent<TurretlingRainbow>().myHue;
-                bool rainbow = base.gameObject.GetComponent<CharacterBody>().master.gameObject.GetComponent<TurretlingRainbow>().turretlingRainbow;
-                laserVfxInstance.GetComponent<Animator>().SetBool("rainbow", rainbow);
-                laserVfxInstance2.GetComponent<Animator>().SetBool("rainbow", rainbow);
+                float myHue = rainbowComponent.myHue;
+                bool rainbow = rainbowComponent.turretlingRainbow;
                 if (rainbow)
                 {
                     laserVfxInstance.GetComponent<Animator>().SetFloat("hue", 0);
                     laserVfxInstance2.GetComponent<Animator>().SetFloat("hue", 0);
+                    laserVfxInstance.GetComponent<Animator>().SetBool("shift", true);
+                    laserVfxInstance2.GetComponent<Animator>().SetBool("shift", true);
                 }
                 else
                 {
@@ -365,12 +370,13 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 bulletAttack.damage = (damageCoefficient * damageStat) + attackSpeedStat;
                 bulletAttack.procCoefficient = procCoefficient;
                 bulletAttack.force = force;
+                bulletAttack.smartCollision = true;
                 bulletAttack.muzzleName = targetMuzzle;
                 bulletAttack.hitEffectPrefab = null;
                 bulletAttack.isCrit = Util.CheckRoll(characterBody.crit, base.characterBody.master);
                 //Log.Debug(bulletAttack.isCrit);
                 bulletAttack.HitEffectNormal = false;
-                bulletAttack.radius = 0f;
+                bulletAttack.radius = 1f;
                 bulletAttack.maxDistance = maxDistance;
                 bulletAttack.hitCallback = hitCallback;
                 bulletAttack.damageType = (DamageTypeCombo)DamageType.Generic;

@@ -80,11 +80,20 @@ public class Hooks
     private static void CharacterBodyOnStartUpdatePermutationSwarmling(On.RoR2.CharacterBody.orig_Start orig, CharacterBody self)
     {
         orig(self);
-        if(self.gameObject.name.Contains("_TurretlingSurvivorBody"))
+        if (self.gameObject.name.Contains("DroneTechBody"))
+        {
+            if (self.skillLocator.primary.skillDef = Content.SnowtimePlasmaRifleSkillDef)
+            {
+                self._defaultCrosshairPrefab = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/PlasmaRifle/DroneTechPlasmaRifle.prefab");
+                //Log.Debug("hiiiii squidwarddddd");
+            }
+        }
+        if (self.gameObject.name.Contains("_TurretlingSurvivorBody"))
         {
             Log.Debug("update player stuff.,.,");
             if(self.skillLocator.primary.skillDef == Content.FriendlyTurretTurretlingPrimaryMeleeSkillDef)
             {
+                self._defaultCrosshairPrefab = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Survivor/SwarmlingCrosshair_Melee.prefab");
                 Log.Debug("waow we melee.,.,");
                 if (self.modelLocator?.modelTransform?.gameObject.TryGetComponent(out ChildLocator childLocator) == true)
                 {
@@ -96,6 +105,11 @@ public class Hooks
                     childLocator.FindChild("Default2")?.gameObject.SetActive(false);
                     childLocator.FindChild("Default3")?.gameObject.SetActive(false);
                 }
+            }
+            if (self.skillLocator.primary.skillDef == Content.DemoTurretlingPrimarySkill)
+            {
+                self._defaultCrosshairPrefab = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Survivor/SwarmlingCrosshair_GL.prefab");
+                Log.Debug("waow we grenade.,.,");
             }
         }
     }

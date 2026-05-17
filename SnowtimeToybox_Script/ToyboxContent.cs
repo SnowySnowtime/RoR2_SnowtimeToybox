@@ -21,6 +21,8 @@ namespace SnowtimeToybox;
 
 public class Content
 {
+    // operator custom skill
+    public static SkillDef SnowtimePlasmaRifleSkillDef;
     // turretlings
     public static DroneDef FriendlyTurretTurretlingDef;
     public static InteractableSpawnCard FriendlyTurretTurretlingIsc;
@@ -177,6 +179,7 @@ public class Content
     public static BuffDef SwarmlingMeleeArmorStrip;
     public static BuffDef SwarmlingMeleeBarrierHandler;
     public static BuffDef SwarmlingMeleeBarrierDecayDelayHandler;
+    public static BuffDef SwarmlingArmorSteal;
     public static void AddCustomSkills()
     {
         Log.Debug("Adding SnowtimeToybox Custom Skills...");
@@ -263,7 +266,7 @@ public class Content
         GameObject DroneTechBodyPrefab = Addressables.LoadAssetAsync<GameObject>(RoR2BepInExPack.GameAssetPaths.Version_1_39_0.RoR2_DLC3_Drone_Tech.DroneTechBody_prefab).WaitForCompletion();
         SkillLocator skillLocator = DroneTechBodyPrefab.GetComponent<SkillLocator>();
         SkillFamily skillFamily = skillLocator.primary.skillFamily;
-        SkillDef SnowtimePlasmaRifleSkillDef = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/PlasmaRifle/entskilldefFirePlasmaRifle.asset");
+        SnowtimePlasmaRifleSkillDef = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<SkillDef>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/PlasmaRifle/entskilldefFirePlasmaRifle.asset");
 
         SnowtimePlasmaRifleSkillDef.activationState = new SerializableEntityStateType(typeof(FirePlasmaRifle));
 
@@ -410,6 +413,7 @@ public class Content
         SwarmlingMeleeArmorStrip = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<BuffDef>(turretlingPath + "Buff/TurretlingMeleeArmorDebuff.asset");
         SwarmlingMeleeBarrierHandler = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<BuffDef>(turretlingPath + "Buff/TurretlingMeleeBarrierHandler.asset");
         SwarmlingMeleeBarrierDecayDelayHandler = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<BuffDef>(turretlingPath + "Buff/TurretlingMeleeBarrierDecayDelayHandler.asset");
+        SwarmlingArmorSteal = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<BuffDef>(turretlingPath + "Buff/TurretlingMeleeArmorBuff.asset");
 
         // add turretling variants (spawned with a friendly turret)
         AcanthiTurretlingBody = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "Variants/_TurretlingBody_Acanthi.prefab");

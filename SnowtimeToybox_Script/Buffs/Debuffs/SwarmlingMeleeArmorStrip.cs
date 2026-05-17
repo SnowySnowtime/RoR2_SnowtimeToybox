@@ -24,7 +24,7 @@ namespace SnowtimeToybox.Buffs
         {
             if (!sender.HasBuff(Buff)) return;
             
-            args.armorAdd += (-1f * (sender.GetBuffCount(Buff.buffIndex) / 2));
+            args.armorAdd += (-1f * (sender.GetBuffCount(Buff.buffIndex) / 1.5f));
         }
     }
 }

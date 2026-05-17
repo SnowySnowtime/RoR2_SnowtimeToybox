@@ -260,6 +260,7 @@ public class TurretlingRainbow : NetworkBehaviour
                 string turretlingName = turretlingParams[^1].Trim();
                 if(charBody && charBody.modelLocator?.modelTransform?.gameObject.TryGetComponent(out ChildLocator childLocatorSteamUnusualHolder) == true)
                 {
+                    if (!childLocatorSteamUnusualHolder.FindChild("DevTesterEffectsPrefab")) return;
                     if (childLocatorSteamUnusualHolder.FindChild("DevTesterEffectsPrefab").gameObject.TryGetComponent(out ChildLocator childLocatorSteamUnusual) == true)
                     {
                         Log.Debug(childLocatorSteamUnusual.gameObject.name);

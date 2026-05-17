@@ -178,6 +178,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 bulletAttack.origin = aimRay.origin;
                 bulletAttack.aimVector = aimRay.direction;
                 bulletAttack.force = force;
+                bulletAttack.smartCollision = true;
                 bulletAttack.tracerEffectPrefab = tracerEffectPrefab;
                 bulletAttack.muzzleName = muzzleName;
                 bulletAttack.hitEffectPrefab = hitEffectPrefab;

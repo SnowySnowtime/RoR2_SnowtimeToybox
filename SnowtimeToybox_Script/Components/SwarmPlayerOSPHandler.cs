@@ -30,9 +30,10 @@ public class SwarmPlayerOSPHandler : MonoBehaviour
     }
     private void onBodyRecalculateStats(CharacterBody body)
     {
-        Log.Debug("ughhhhhh");
+        //Log.Debug("ughhhhhh");
         if(body.isPlayerControlled)
         {
+            if (!body.GetComponent<SwarmPlayerOSPHandler>()) return;
             body.hasOneShotProtection = SnowtimeToyboxMod.SwarmlingOSP.Value;
         }
     }

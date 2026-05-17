@@ -21,7 +21,6 @@ namespace SnowtimeToybox.Buffs
         {
             orig(self, damageInfo, victim);
             if (victim == null) return;
-            //Log.Debug("Running Lifesteal!");
             if (damageInfo.attacker == null) return;
             CharacterBody swarmling = damageInfo.attacker?.GetComponent<CharacterBody>();
             if (swarmling == null) return;
@@ -29,8 +28,9 @@ namespace SnowtimeToybox.Buffs
             {
                 if (!swarmling.HasBuff(Buff)) return;
                 if(damageInfo.damageType.damageSource != DamageSource.Primary) return;
+                swarmling.AddTimedBuff(Content.SwarmlingArmorSteal, 5);
                 if (!damageInfo.crit) return;
-                float barrierheal = damageInfo.damage / 6f;
+                float barrierheal = damageInfo.damage / 5f;
                 swarmling.healthComponent.AddBarrier(barrierheal);
                 swarmling.AddTimedBuff(Content.SwarmlingMeleeBarrierDecayDelayHandler, 2f);
             }

@@ -68,6 +68,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 bulletAttack.origin = aimRay.origin;
                 bulletAttack.aimVector = aimRay.direction;
                 bulletAttack.force = force;
+                bulletAttack.smartCollision = true;
                 bulletAttack.muzzleName = muzzleName;
                 bulletAttack.hitEffectPrefab = hitfx_kinetic;
                 bulletAttack.tracerEffectPrefab = tracerfx_kinetic;
@@ -90,6 +91,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 bulletAttack1.origin = aimRay.origin;
                 bulletAttack1.aimVector = aimRay.direction;
                 bulletAttack1.force = force;
+                bulletAttack1.smartCollision = true;
                 bulletAttack1.muzzleName = muzzleName;
                 bulletAttack1.hitEffectPrefab = hitfx_corrosive;
                 bulletAttack1.tracerEffectPrefab = tracerfx_corrosive;
@@ -111,6 +113,7 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
                 bulletAttack2.origin = aimRay.origin;
                 bulletAttack2.aimVector = aimRay.direction;
                 bulletAttack2.force = force;
+                bulletAttack2.smartCollision = true;
                 bulletAttack2.muzzleName = muzzleName;
                 bulletAttack2.hitEffectPrefab = hitfx_energy;
                 bulletAttack2.tracerEffectPrefab = tracerfx_energy;
