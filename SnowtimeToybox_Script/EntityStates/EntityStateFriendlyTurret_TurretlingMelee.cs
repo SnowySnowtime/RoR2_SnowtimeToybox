@@ -186,12 +186,12 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
 
                 float myHue = base.gameObject.GetComponent<CharacterBody>().master.gameObject.GetComponent<TurretlingRainbow>().myHue;
                 bool rainbow = base.gameObject.GetComponent<CharacterBody>().master.gameObject.GetComponent<TurretlingRainbow>().turretlingRainbow;
-                laserVfxInstance.GetComponent<Animator>().SetBool("rainbow", rainbow);
-                laserVfxInstance2.GetComponent<Animator>().SetBool("rainbow", rainbow);
                 if (rainbow)
                 {
                     laserVfxInstance.GetComponent<Animator>().SetFloat("hue", 0);
                     laserVfxInstance2.GetComponent<Animator>().SetFloat("hue", 0);
+                    laserVfxInstance.GetComponent<Animator>().SetBool("shift", rainbow);
+                    laserVfxInstance2.GetComponent<Animator>().SetBool("shift", rainbow);
                 }
                 else
                 {
