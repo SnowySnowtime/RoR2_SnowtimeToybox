@@ -76,6 +76,7 @@ namespace SnowtimeToybox
         public static DamageAPI.ModdedDamageType HaloRicochetOnHit = DamageAPI.ReserveDamageType();
         public static DamageAPI.ModdedDamageType BorboSuperDebuffOnHit = DamageAPI.ReserveDamageType();
         public static DamageAPI.ModdedDamageType SwarmlingArmorStripOnHit = DamageAPI.ReserveDamageType();
+        public static DamageAPI.ModdedDamageType SwarmlingNeedleImpale = DamageAPI.ReserveDamageType();
 
         public static List<FriendlyTurretBase> friendlyTurretList = [];
 

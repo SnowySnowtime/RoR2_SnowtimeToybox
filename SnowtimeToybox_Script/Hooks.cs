@@ -325,6 +325,10 @@ public class Hooks
         {
             victim.GetComponent<CharacterBody>().AddTimedBuff(Content.SwarmlingMeleeArmorStrip, 5);
         }
+        if (damageInfo.HasModdedDamageType(SnowtimeToyboxMod.SwarmlingNeedleImpale))
+        {
+            victim.GetComponent<CharacterBody>().AddTimedBuff(Content.SwarmlingNeedlerDebuff, 1.5f);
+        }
     }
 
     private static void ShortcakeTurretHandler(On.RoR2.CharacterBody.orig_FixedUpdate orig, RoR2.CharacterBody self)

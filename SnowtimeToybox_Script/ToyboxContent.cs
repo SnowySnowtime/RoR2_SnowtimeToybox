@@ -30,6 +30,8 @@ public class Content
     public static SkillFamily FriendlyTurretTurretlingPrimaryMinionSkillFamily;
     public static SkillFamily FriendlyTurretTurretlingPrimaryMeleeMinionSkillFamily;
     public static SkillFamily FriendlyTurretTurretlingSecondarySkillFamily;
+    public static SkillFamily FriendlyTurretTurretlingSecondaryPlayerSkillFamily;
+    public static SkillFamily FriendlyTurretTurretlingSecondaryAltSkillFamily;
     public static SkillFamily FriendlyTurretTurretlingUtilSkillFamily;
     public static SkillDef FriendlyTurretTurretlingPrimarySkillDef;
     public static SkillDef FriendlyTurretTurretlingPrimaryMeleeSkillDef;
@@ -38,6 +40,7 @@ public class Content
     public static SkillDef FriendlyTurretTurretlingPrimaryScepterSkillDef;
     public static SkillDef FriendlyTurretTurretlingPrimaryScepterMinionSkillDef;
     public static SkillDef FriendlyTurretTurretlingSecondarySkillDef;
+    public static SkillDef FriendlyTurretTurretlingSecondaryAltSkillDef;
     public static SkillDef FriendlyTurretTurretlingUtilSkillDef;
     public static GameObject FriendlyTurretTurretlingBody;
     public static GameObject FriendlyTurretTurretlingBodyRemoteOp;
@@ -176,10 +179,16 @@ public class Content
     public static GameObject HaloTracerObject;
     public static GameObject HaloHitObject;
     public static GameObject HaloorbEffectObject;
+    public static GameObject SwarmNeedlerOrb;
+    public static GameObject SwarmNeedlerImpact;
+    public static GameObject SwarmNeedlerExpire;
+    public static GameObject SwarmNeedlerMuzzle;
+    public static GameObject SwarmNeedlerSuperCombine;
     public static BuffDef SwarmlingMeleeArmorStrip;
     public static BuffDef SwarmlingMeleeBarrierHandler;
     public static BuffDef SwarmlingMeleeBarrierDecayDelayHandler;
     public static BuffDef SwarmlingArmorSteal;
+    public static BuffDef SwarmlingNeedlerDebuff;
     public static void AddCustomSkills()
     {
         Log.Debug("Adding SnowtimeToybox Custom Skills...");
@@ -377,8 +386,12 @@ public class Content
         FriendlyTurretTurretlingPrimarySkillDef.activationState = new SerializableEntityStateType(typeof(TurretlingBlaster));
         FriendlyTurretTurretlingPrimaryMinionSkillDef.activationState = new SerializableEntityStateType(typeof(TurretlingBlaster));
         FriendlyTurretTurretlingSecondarySkillFamily = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<SkillFamily>(turretlingPath + "Skills/TurretlingSecondaryFamily.asset");
+        FriendlyTurretTurretlingSecondaryAltSkillFamily = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<SkillFamily>(turretlingPath + "Skills/TurretlingSecondaryFamilyAlt.asset");
+        FriendlyTurretTurretlingSecondaryPlayerSkillFamily = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<SkillFamily>(turretlingPath + "Skills/TurretlingSecondaryFamilyPlayer.asset");
         FriendlyTurretTurretlingSecondarySkillDef = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<SkillDef>(turretlingPath + "Skills/Turretling_Secondary.asset");
         FriendlyTurretTurretlingSecondarySkillDef.activationState = new SerializableEntityStateType(typeof(TurretlingMissile));
+        FriendlyTurretTurretlingSecondaryAltSkillDef = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<SkillDef>(turretlingPath + "Skills/Turretling_SecondaryAlt.asset");
+        FriendlyTurretTurretlingSecondaryAltSkillDef.activationState = new SerializableEntityStateType(typeof(TurretlingNeedler));
         FriendlyTurretTurretlingUtilSkillFamily = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<SkillFamily>(turretlingPath + "Skills/TurretlingUtilityFamily.asset");
         FriendlyTurretTurretlingUtilSkillDef = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<SkillDef>(turretlingPath + "Skills/TurretlingShenanigans.asset");
         FriendlyTurretTurretlingUtilSkillDef.activationState = new SerializableEntityStateType(typeof(Shenanigans));
@@ -388,6 +401,7 @@ public class Content
         ContentAddition.AddEntityState(typeof(TurretlingDeath), out _);
         ContentAddition.AddEntityState(typeof(TurretlingBlaster), out _);
         ContentAddition.AddEntityState(typeof(TurretlingMissile), out _);
+        ContentAddition.AddEntityState(typeof(TurretlingNeedler), out _);
         ContentAddition.AddBody(FriendlyTurretTurretlingBody);
         ContentAddition.AddBody(FriendlyTurretTurretlingBodyRemoteOp);
 
@@ -398,7 +412,9 @@ public class Content
         ContentAddition.AddSkillDef(FriendlyTurretTurretlingPrimarySkillDef);
         ContentAddition.AddSkillDef(FriendlyTurretTurretlingPrimaryMinionSkillDef);
         ContentAddition.AddSkillFamily(FriendlyTurretTurretlingSecondarySkillFamily);
+        ContentAddition.AddSkillFamily(FriendlyTurretTurretlingSecondaryAltSkillFamily);
         ContentAddition.AddSkillDef(FriendlyTurretTurretlingSecondarySkillDef);
+        ContentAddition.AddSkillDef(FriendlyTurretTurretlingSecondaryAltSkillDef);
 
         
         FriendlyTurretTurretlingPrimaryMeleeSkillDef = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<SkillDef>(turretlingPath + "Skills/Turretling_Primary_Melee.asset");
@@ -414,6 +430,7 @@ public class Content
         SwarmlingMeleeBarrierHandler = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<BuffDef>(turretlingPath + "Buff/TurretlingMeleeBarrierHandler.asset");
         SwarmlingMeleeBarrierDecayDelayHandler = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<BuffDef>(turretlingPath + "Buff/TurretlingMeleeBarrierDecayDelayHandler.asset");
         SwarmlingArmorSteal = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<BuffDef>(turretlingPath + "Buff/TurretlingMeleeArmorBuff.asset");
+        SwarmlingNeedlerDebuff = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<BuffDef>(turretlingPath + "Buff/TurretlingNeedlerDebuff.asset");
 
         // add turretling variants (spawned with a friendly turret)
         AcanthiTurretlingBody = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(turretlingPath + "Variants/_TurretlingBody_Acanthi.prefab");
@@ -877,7 +894,17 @@ public class Content
         HaloTracerObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/PlasmaRifle/TracerPlasmaRifle.prefab");
         HaloHitObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/PlasmaRifle/PlasmaRifleImpactVFX.prefab");
         HaloorbEffectObject = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/PlasmaRifle/PlasmaRifleOrbEffect.prefab");
+        SwarmNeedlerOrb = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/turretling_needler_orb.prefab");
+        SwarmNeedlerImpact = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/turretling_needler_impact.prefab");
+        SwarmNeedlerExpire = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/turretling_needler_expire.prefab");
+        SwarmNeedlerMuzzle = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/turretling_needler_muzzle.prefab");
+        SwarmNeedlerSuperCombine = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Skills/turretling_needler_supercombine.prefab");
 
+        ContentAddition.AddEffect(SwarmNeedlerOrb);
+        ContentAddition.AddEffect(SwarmNeedlerImpact);
+        ContentAddition.AddEffect(SwarmNeedlerExpire);
+        ContentAddition.AddEffect(SwarmNeedlerMuzzle);
+        ContentAddition.AddEffect(SwarmNeedlerSuperCombine);
 
         ContentAddition.AddEffect(muzzleflashEffectObject);
         ContentAddition.AddProjectile(projectileObject);

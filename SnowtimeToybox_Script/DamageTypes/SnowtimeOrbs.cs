@@ -1,8 +1,9 @@
+using R2API;
+using RoR2;
+using RoR2.Orbs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using RoR2;
-using RoR2.Orbs;
 using UnityEngine;
 
 namespace SnowtimeToybox
@@ -21,10 +22,11 @@ namespace SnowtimeToybox
             TurretlingMissile_Shortcake,
             TurretlingMissile_Snowtime,
             TurretlingMissile_Player,
-            TurretlingMissile_Rainbow
+            TurretlingMissile_Rainbow,
+            TurretlingNeedler
         }
 
-        public float speed = 200f;
+        public float speed = 250f;
 
         public float damageValue;
 
@@ -52,6 +54,7 @@ namespace SnowtimeToybox
         private bool isHealing;
         private bool isRainbow;
         private bool isMissile;
+        private bool isNeedler;
 
         public GameObject orbShortcakeRetaliatePrefab = Content.orbShortcakeRetaliateObject;
         public GameObject orbShortcakeRetaliateFriendlyPrefab = Content.orbShortcakeRetaliateFriendlyObject;
@@ -65,10 +68,10 @@ namespace SnowtimeToybox
         public GameObject orbSnowtimelingMissilePrefab = Content.orbSnowtimelingMissileObject;
         public GameObject orbRainbowMissilePrefab = Content.orbRainbowMissileObject;
         public GameObject orbPlayerMissilePrefab = Content.orbPlayerMissileObject;
+        public GameObject orbNeedlerPrefab = Content.SwarmNeedlerOrb;
 
         public override void Begin()
         {
-            base.duration = Mathf.Max(this.distanceToTarget / this.speed, 0.1f);;
             GameObject orbasset = null;
             switch (snowtimeOrbType)
             {
@@ -78,6 +81,7 @@ namespace SnowtimeToybox
                     isElectric = false;
                     isRainbow = false;
                     isMissile = false;
+                    isNeedler = false;
                     break;
                 case OrbTypes.ShortcakeRetaliate:
                     orbasset = orbShortcakeRetaliatePrefab;
@@ -85,6 +89,7 @@ namespace SnowtimeToybox
                     isElectric = false;
                     isRainbow = false;
                     isMissile = false;
+                    isNeedler = false;
                     break;
                 case OrbTypes.ShortcakeRetaliateFriendly:
                     orbasset = orbShortcakeRetaliateFriendlyPrefab;
@@ -92,6 +97,7 @@ namespace SnowtimeToybox
                     isElectric = false;
                     isRainbow = false;
                     isMissile = false;
+                    isNeedler = false;
                     break;
                 case OrbTypes.TurretlingMissile:
                     orbasset = orbTurretlingMissilePrefab;
@@ -99,6 +105,7 @@ namespace SnowtimeToybox
                     isElectric = false;
                     isRainbow = false;
                     isMissile = true;
+                    isNeedler = false;
                     break;
                 case OrbTypes.TurretlingMissile_Acanthi:
                     orbasset = orbAcanthilingMissilePrefab;
@@ -106,6 +113,7 @@ namespace SnowtimeToybox
                     isElectric = false;
                     isRainbow = false;
                     isMissile = true;
+                    isNeedler = false;
                     break;
                 case OrbTypes.TurretlingMissile_Borbo:
                     orbasset = orbBorbolingMissilePrefab;
@@ -113,6 +121,7 @@ namespace SnowtimeToybox
                     isElectric = false;
                     isRainbow = false;
                     isMissile = true;
+                    isNeedler = false;
                     break;
                 case OrbTypes.TurretlingMissile_Bread:
                     orbasset = orbBreadlingMissilePrefab;
@@ -120,6 +129,7 @@ namespace SnowtimeToybox
                     isElectric = false;
                     isRainbow = false;
                     isMissile = true;
+                    isNeedler = false;
                     break;
                 case OrbTypes.TurretlingMissile_Shortcake:
                     orbasset = orbShortcakelingMissilePrefab;
@@ -127,6 +137,7 @@ namespace SnowtimeToybox
                     isElectric = false;
                     isRainbow = false;
                     isMissile = true;
+                    isNeedler = false;
                     break;
                 case OrbTypes.TurretlingMissile_Snowtime:
                     orbasset = orbSnowtimelingMissilePrefab;
@@ -134,6 +145,7 @@ namespace SnowtimeToybox
                     isElectric = false;
                     isRainbow = false;
                     isMissile = true;
+                    isNeedler = false;
                     break;
                 case OrbTypes.TurretlingMissile_Rainbow:
                     orbasset = orbRainbowMissilePrefab;
@@ -141,6 +153,7 @@ namespace SnowtimeToybox
                     isElectric = true;
                     isRainbow = true;
                     isMissile = true;
+                    isNeedler = false;
                     break;
                 case OrbTypes.TurretlingMissile_Player:
                     orbasset = orbPlayerMissilePrefab;
@@ -148,8 +161,19 @@ namespace SnowtimeToybox
                     isElectric = false;
                     isRainbow = false;
                     isMissile = true;
+                    isNeedler = false;
+                    break;
+                case OrbTypes.TurretlingNeedler:
+                    orbasset = orbNeedlerPrefab;
+                    isHealing = false;
+                    isElectric = false;
+                    isRainbow = false;
+                    isMissile = false;
+                    isNeedler = true;
+                    speed = 125f;
                     break;
             }
+            base.duration = Mathf.Max(this.distanceToTarget / this.speed, 0.1f);
             EffectData effectData = new EffectData
             {
                 origin = origin,
@@ -190,6 +214,10 @@ namespace SnowtimeToybox
                 if (isElectric)
                 {
                     damageInfo.damageType.damageTypeExtended = DamageTypeExtended.Electrical;
+                }
+                if (isNeedler)
+                {
+                    DamageAPI.AddModdedDamageType(damageInfo, SnowtimeToyboxMod.SwarmlingNeedleImpale);
                 }
                 damageInfo.inflictedHurtbox = target;
                 healthComponent.TakeDamage(damageInfo);
