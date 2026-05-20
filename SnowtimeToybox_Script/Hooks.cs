@@ -1,21 +1,22 @@
 using EntityStates;
+using On.RoR2.CharacterAI;
 using R2API;
 using RoR2;
+using RoR2.Networking;
+using RoR2.Projectile;
 using Ror2AggroTools;
 using SnowtimeToybox.Components;
+using SnowtimeToybox.FriendlyTurretChecks;
 using SnowtimeToybox.FriendlyTurrets;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
-using SceneDirector = On.RoR2.SceneDirector;
-using On.RoR2.CharacterAI;
-using RoR2.Networking;
-using SnowtimeToybox.FriendlyTurretChecks;
-using RoR2.Projectile;
 using Object = UnityEngine.Object;
+using SceneDirector = On.RoR2.SceneDirector;
 
 namespace SnowtimeToybox;
 
@@ -110,6 +111,12 @@ public class Hooks
             {
                 self._defaultCrosshairPrefab = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/FriendlyTurrets/FriendlyTurretTestIngame/Turretling/Survivor/SwarmlingCrosshair_GL.prefab");
                 Log.Debug("waow we grenade.,.,");
+            }
+            if (self.skillLocator.secondary.skillDef == Content.FriendlyTurretTurretlingSecondaryAltSkillDef)
+            {
+                if (self.inventory.GetItemCountEffective(ItemCatalog.FindItemIndex("MinionNeedlerHandler")) != 0) return;
+                self.inventory.GiveItemPermanent(ItemCatalog.FindItemIndex("MinionNeedlerHandler"), 1);
+                Log.Debug("waow we needler.,.,");
             }
         }
     }
@@ -312,23 +319,56 @@ public class Hooks
         orig(self, damageInfo, victim);
 
         if (victim == null) return;
+        if(victim.gameObject.TryGetComponent(out CharacterBody victimBody) != true) return;
+        if(damageInfo.attacker.TryGetComponent(out CharacterBody attackerBody) != true) return;
         if (damageInfo.HasModdedDamageType(SnowtimeToyboxMod.HaloRicochetOnHit))
         {
             //Log.Debug("OnHitEnemy DamageInfo: " + damageInfo + " Attacker: " + damageInfo.attacker + " Attacker Team: " + damageInfo.attacker.GetComponent<TeamComponent>().teamIndex + " Victim Body: " + victim.GetComponent<CharacterBody>());
-            SnowtimeHaloRicochetOrb.CreateHaloRicochetOrb(damageInfo, damageInfo.attacker.GetComponent<TeamComponent>().teamIndex, victim.GetComponent<CharacterBody>());
+            SnowtimeHaloRicochetOrb.CreateHaloRicochetOrb(damageInfo, damageInfo.attacker.GetComponent<TeamComponent>().teamIndex, victimBody);
         }
         if (damageInfo.HasModdedDamageType(SnowtimeToyboxMod.BorboSuperDebuffOnHit))
         {
-            victim.GetComponent<CharacterBody>().AddTimedBuff(BorboFriendlyTurret.BorboTurretDebuff, 3);
+            victimBody.AddTimedBuff(BorboFriendlyTurret.BorboTurretDebuff, 3);
         }
         if (damageInfo.HasModdedDamageType(SnowtimeToyboxMod.SwarmlingArmorStripOnHit))
         {
-            victim.GetComponent<CharacterBody>().AddTimedBuff(Content.SwarmlingMeleeArmorStrip, 5);
+            victimBody.AddTimedBuff(Content.SwarmlingMeleeArmorStrip, 5);
         }
         if (damageInfo.HasModdedDamageType(SnowtimeToyboxMod.SwarmlingNeedleImpale))
         {
-            victim.GetComponent<CharacterBody>().AddTimedBuff(Content.SwarmlingNeedlerDebuff, 1.5f);
+            victimBody.AddTimedBuff(Content.SwarmlingNeedlerDebuff, 1.5f);
+            if(victimBody.GetBuffCount(Content.SwarmlingNeedlerDebuff) >= 7)
+            {
+                victimBody.ClearTimedBuffs(Content.SwarmlingNeedlerDebuff);
+                SuperCombine(15f, victimBody, damageInfo.attacker, attackerBody, damageInfo.crit);
+            }    
         }
+    }
+
+    public static void SuperCombine(float explosionRadius, CharacterBody victimBody, GameObject attacker, CharacterBody attackerBody, bool crit)
+    {
+        BlastAttack blastAttack = new BlastAttack();
+        blastAttack.attacker = attacker;
+        blastAttack.inflictor = attacker;
+        blastAttack.teamIndex = attackerBody.teamComponent.teamIndex;
+        blastAttack.radius = explosionRadius;
+        blastAttack.baseDamage = attackerBody.baseDamage * 7f;
+        blastAttack.crit = crit;
+        blastAttack.procCoefficient = 1f;
+        blastAttack.damageColorIndex = DamageColorIndex.Default;
+        blastAttack.attackerFiltering = AttackerFiltering.NeverHitSelf;
+        blastAttack.falloffModel = BlastAttack.FalloffModel.None;
+        blastAttack.position = victimBody.mainHurtBox.transform.position;
+        blastAttack.damageType = DamageType.BypassArmor;
+        blastAttack.damageColorIndex = Content.NeedlerColor;
+        blastAttack.baseForce = 1f;
+        blastAttack.Fire();
+        EffectManager.SpawnEffect(Content.SwarmNeedlerSuperCombine, new EffectData
+        {
+            origin = victimBody.mainHurtBox.transform.position,
+            scale = explosionRadius + victimBody.radius,
+            rotation = Util.QuaternionSafeLookRotation(victimBody.transform.forward)
+        }, transmit: true);
     }
 
     private static void ShortcakeTurretHandler(On.RoR2.CharacterBody.orig_FixedUpdate orig, RoR2.CharacterBody self)
@@ -723,12 +763,14 @@ public class Hooks
         orig();
         DroneCombinerController.doNotDestroy.Add(BodyCatalog.FindBodyIndex(Content.SwarmlingMinionBody));
         DroneCombinerController.doNotDestroy.Add(BodyCatalog.FindBodyIndex(Content.SwarmlingDemoMinionBody));
+        DroneCombinerController.doNotDestroy.Add(BodyCatalog.FindBodyIndex(Content.SwarmlingMeleeMinionBody));
         DroneCombinerController.doNotDestroy.Add(BodyCatalog.FindBodyIndex(Content.ArtiTurretlingBody));
         DroneCombinerController.doNotDestroy.Add(BodyCatalog.FindBodyIndex(Content.PassiveDemoTurretlingBody));
         DroneCombinerController.doNotDestroy.Add(BodyCatalog.FindBodyIndex(Content.DTTurretlingBody));
         DroneCombinerController.doNotDestroy.Add(BodyCatalog.FindBodyIndex(Content.DTDemoTurretlingBody));
         DroneCombinerController.droneCompatibilityLUT.Add(BodyCatalog.FindBodyIndex(Content.SwarmlingMinionBody), BodyCatalog.FindBodyIndex(Content.FriendlyTurretTurretlingBody));
         DroneCombinerController.droneCompatibilityLUT.Add(BodyCatalog.FindBodyIndex(Content.SwarmlingDemoMinionBody), BodyCatalog.FindBodyIndex(Content.FriendlyTurretTurretlingBody));
+        DroneCombinerController.droneCompatibilityLUT.Add(BodyCatalog.FindBodyIndex(Content.SwarmlingMeleeMinionBody), BodyCatalog.FindBodyIndex(Content.FriendlyTurretTurretlingBody));
         DroneCombinerController.droneCompatibilityLUT.Add(BodyCatalog.FindBodyIndex(Content.ArtiTurretlingBody), BodyCatalog.FindBodyIndex(Content.FriendlyTurretTurretlingBody));
         DroneCombinerController.droneCompatibilityLUT.Add(BodyCatalog.FindBodyIndex(Content.PassiveDemoTurretlingBody), BodyCatalog.FindBodyIndex(Content.FriendlyTurretTurretlingBody));
         DroneCombinerController.droneCompatibilityLUT.Add(BodyCatalog.FindBodyIndex(Content.DTTurretlingBody), BodyCatalog.FindBodyIndex(Content.FriendlyTurretTurretlingBody));

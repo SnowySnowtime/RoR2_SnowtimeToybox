@@ -122,6 +122,7 @@ public class Content
     public static DamageColorIndex BlasterScepterColor1;
     public static DamageColorIndex BlasterScepterColor2;
     public static DamageColorIndex BlasterScepterColor3;
+    public static DamageColorIndex NeedlerColor;
     // oh god effects... effects... effects...
     public static GameObject muzzlefx_acanthi;
     public static GameObject hitfx_acanthi;
@@ -364,6 +365,7 @@ public class Content
         BlasterScepterColor1 = ColorsAPI.RegisterDamageColor(new Color(1f, 0.1f, 0.1f));
         BlasterScepterColor2 = ColorsAPI.RegisterDamageColor(new Color(0.1f, 1f, 0.1f));
         BlasterScepterColor3 = ColorsAPI.RegisterDamageColor(new Color(0.1f, 0.7f, 1f));
+        NeedlerColor = ColorsAPI.RegisterDamageColor(new Color(1f, 0.2f, 1f));
 
         // add turretling
         Log.Debug("Defining Turretling(s)...");
@@ -413,6 +415,7 @@ public class Content
         ContentAddition.AddSkillDef(FriendlyTurretTurretlingPrimaryMinionSkillDef);
         ContentAddition.AddSkillFamily(FriendlyTurretTurretlingSecondarySkillFamily);
         ContentAddition.AddSkillFamily(FriendlyTurretTurretlingSecondaryAltSkillFamily);
+        ContentAddition.AddSkillFamily(FriendlyTurretTurretlingSecondaryPlayerSkillFamily);
         ContentAddition.AddSkillDef(FriendlyTurretTurretlingSecondarySkillDef);
         ContentAddition.AddSkillDef(FriendlyTurretTurretlingSecondaryAltSkillDef);
 

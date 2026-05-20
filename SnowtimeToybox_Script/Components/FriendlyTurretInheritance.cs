@@ -128,7 +128,21 @@ namespace SnowtimeToybox.Components
             //Log.Debug("Running ItemFilter");
             ItemDef item = ItemCatalog.GetItemDef(index);
             //Log.Debug("Item Token: " + item.nameToken);
-            if (item.tier == ItemTier.NoTier) return false;
+            if (item.nameToken.Contains("TURRETLING_NEEDLER_OVERRIDE"))
+            {
+                if(gameObject.name.Contains("_SwarmTurretling"))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else if (item.tier == ItemTier.NoTier && !item.nameToken.Contains("TURRETLING_NEEDLER_OVERRIDE"))
+            {
+                return false;
+            }
             ItemTag specificTag = (ItemAPI.FindItemTagByName(whitelistedTag));
             ItemTag globalTag = ItemAPI.FindItemTagByName("GlobalFriendTurret_Whitelist");
             //Log.Debug("Item Token: " + item.nameToken + " Has Whitelisted Tag: " + item.ContainsTag(ItemAPI.FindItemTagByName(whitelistedTag)));

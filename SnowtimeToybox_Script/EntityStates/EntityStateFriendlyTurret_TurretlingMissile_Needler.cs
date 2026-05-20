@@ -68,6 +68,12 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             duration = baseDuration / attackSpeedStat;
             isCrit = Util.CheckRoll(characterBody.crit, characterBody.master);
             Inventory inventory = characterBody.inventory;
+            int itemCountEffective = inventory.GetItemCountEffective(DLC1Content.Items.MoreMissile);
+            if (itemCountEffective > 0)
+            {
+                FireOrbMissile();
+                FireOrbMissile();
+            }
             EffectManager.SimpleMuzzleFlash(Content.SwarmNeedlerMuzzle, base.gameObject, muzzleString, transmit: false);
             FireOrbMissile();
         }
@@ -107,13 +113,6 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            Inventory inventory = characterBody.inventory;
-            int itemCountEffective = inventory.GetItemCountEffective(DLC1Content.Items.MoreMissile);
-            int itemCountDTTurretlingPowerup = inventory.GetItemCountEffective(ItemCatalog.FindItemIndex("RainbowizerPowerUp"));
-            if (itemCountEffective > 0 || itemCountDTTurretlingPowerup > 0 && RainbowizerPowerup.AdditionalMissiles.Value == true)
-            {
-                FireOrbMissile();
-            }
             if (fixedAge > duration && isAuthority)
             {
                 outer.SetNextStateToMain();
