@@ -60,8 +60,8 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
         public string muzzleString = "Blade_L";
         public string muzzleString2 = "Blade_R";
 
-        public string attackSoundPlayString = "Play_HWLocust_Fire";
-        public string attackSoundStopString = "Stop_HWLocust_Fire";
+        public string attackSoundPlayString = "Play_engi_R_walkingTurret_laser_start";
+        public string attackSoundStopString = "Stop_engi_R_walkingTurret_laser_loop";
 
         public float damageCoefficient = 0.3f;
 
