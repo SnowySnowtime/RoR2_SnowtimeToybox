@@ -320,6 +320,7 @@ public class Hooks
 
         if (victim == null) return;
         if(victim.gameObject.TryGetComponent(out CharacterBody victimBody) != true) return;
+        if (!damageInfo.attacker) return;
         if(damageInfo.attacker.TryGetComponent(out CharacterBody attackerBody) != true) return;
         if (damageInfo.HasModdedDamageType(SnowtimeToyboxMod.HaloRicochetOnHit))
         {
