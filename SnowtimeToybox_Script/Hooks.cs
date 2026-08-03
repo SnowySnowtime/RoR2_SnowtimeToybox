@@ -83,7 +83,7 @@ public class Hooks
         orig(self);
         if (self.gameObject.name.Contains("DroneTechBody"))
         {
-            if (self.skillLocator.primary.skillDef = Content.SnowtimePlasmaRifleSkillDef)
+            if (self.skillLocator.primary.skillDef == Content.SnowtimePlasmaRifleSkillDef)
             {
                 self._defaultCrosshairPrefab = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(@"Assets/SnowtimeMod/Assets/Characters/DroneTech/PlasmaRifle/DroneTechPlasmaRifle.prefab");
                 //Log.Debug("hiiiii squidwarddddd");
