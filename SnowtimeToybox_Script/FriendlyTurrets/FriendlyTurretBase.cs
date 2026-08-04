@@ -83,6 +83,14 @@ public abstract class FriendlyTurretBase
             InteractableCategory = DirectorAPI.InteractableCategory.Drones
         };
 
+        if (SnowtimeToyboxMod.FriendlyTurretSpawnRule.Value != true)
+        {
+            interactableSpawnCard.maxSpawnsPerStage = 1;
+            interactableSpawnCard.directorCreditCost = 40;
+            directorCardFriendlyTurret.selectionWeight = 1;
+            directorCardFriendlyTurret.minimumStageCompletions = 0;
+        }
+
         List<DirectorAPI.Stage> friendlyTurretStageList = new List<DirectorAPI.Stage>();
         List<String> friendlyTurretCustomStageList = new List<String>();
 

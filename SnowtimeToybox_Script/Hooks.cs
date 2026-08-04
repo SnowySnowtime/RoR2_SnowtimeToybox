@@ -353,7 +353,7 @@ public class Hooks
         blastAttack.inflictor = attacker;
         blastAttack.teamIndex = attackerBody.teamComponent.teamIndex;
         blastAttack.radius = explosionRadius;
-        blastAttack.baseDamage = attackerBody.baseDamage * 7f;
+        blastAttack.baseDamage = attackerBody.baseDamage * 4.5f;
         blastAttack.crit = crit;
         blastAttack.procCoefficient = 1f;
         blastAttack.damageColorIndex = DamageColorIndex.Default;
@@ -415,6 +415,7 @@ public class Hooks
         orig(self);
         
         if (!NetworkServer.active) return;
+        if (!SnowtimeToyboxMod.FriendlyTurretSpawnRule.Value == true) return;
             
         #region turretSpawns
         Dictionary<Vector3, Quaternion> stagePositions = new Dictionary<Vector3, Quaternion>();

@@ -106,6 +106,7 @@ namespace SnowtimeToybox
         public static ConfigEntry<float> SwarmlingMinionOffenseStatMult { get; set; }
         public static ConfigEntry<float> SwarmlingMinionDefenseStatMult { get; set; }
         public static ConfigEntry<bool> ToggleSpawnMessages { get; set; }
+        public static ConfigEntry<bool> FriendlyTurretSpawnRule { get; set; }
         public static ConfigEntry<bool> FriendlyTurretImmuneVoidDeath { get; set; }
         public static ConfigEntry<bool> TurretlingImmuneVoidDeath { get; set; }
         public static ConfigEntry<bool> FriendlyTurretFallImmunity { get; set; }
@@ -143,6 +144,7 @@ namespace SnowtimeToybox
             SwarmlingMinionOffenseStatMult = Config.Bind("Survivors - Swarmling", "(Minion) Swarm Offensive Stat Divider", 3f, "Divides the 'Base Damage', 'Damage per Level' of the Swarm for balance purposes. Uses the base stats of the player at 1");
             SwarmlingMinionDefenseStatMult = Config.Bind("Survivors - Swarmling", "(Minion) Swarm Defensive Stat Divider", 1.25f, "Divides the 'Base Damage', 'Damage per Level' of the Swarm for balance purposes. Uses the base stats of the player at 1");
             ToggleSpawnMessages = Config.Bind("Friendly Turret Functions", "Spawn Message", true, "If true, the Friendly Turrets will give a message on every stage they spawn on, for insight on if and which turret spawned. Otherwise, friendly turrets are shy, and are also sad!");
+            FriendlyTurretSpawnRule = Config.Bind("Friendly Turret Functions", "Spawn Rules", true, "If true, the Friendly Turrets spawn in pre-determined positions per stage, if false, spawns like any other drone.");
             FriendlyTurretShortcakeAggroType = Config.Bind("Friendly Turret Functions", "Strawberry Shortcake Aggro Method", false, "If true, the Strawberry Shortcake Turret will spawn with a native increase to its aggro. Else, it only gains aggro for ~0.5s when its main skill fires.");
             FriendlyTurretImmuneVoidDeath = Config.Bind("Friendly Turret Flags", "Void Death Immunity", true, "If true, Friendly Turrets are immune to Void Death (Void Reaver implosions), this is because they are awful at avoiding them even with mods to make allies avoid them, and we get sad when they are detained.");
             FriendlyTurretFallImmunity = Config.Bind("Friendly Turret Flags", "Fall Damage Immunity", true, "If true, Friendly Turrets (and turretlings) are immune to fall damage, as navigating some maps can be a little difficult for them. Prevents any unexpected turret deaths, as we cant simply 'replace' them like Engineer can.");
