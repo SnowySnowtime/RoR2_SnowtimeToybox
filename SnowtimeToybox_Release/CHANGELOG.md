@@ -1,58 +1,11 @@
 `1.3.0`
-- emergency release, fixes loading. bwaa.
-
-`1.2.9`
-<details>
-<summary>Update Summary (includes summary of commits by users)</summary>
-
-Snowy Snowtime
----
-- energy nova nerfed a bit (1s -> 1.5s cd), and must be pressed. cannot be held anymore
-- fixed missiles on turretlings being mute besides variants and rainbow
-- refactored mod ever so slightly. might cause bugs idk
-
-.score
----
-- once again being based and helped fix the missile skill this time, should be a lot more consistent as client, and luminous shot has been shot
-</details>
-
-`1.2.8`
-- fixed an issue with a contributors special vfx
-- goobo
-
-`1.2.7` Accidentally built debug instead of release binaries
-- gorp..,.,,. once again forgot something despite quintuple checking everything.
-- should fix log spam
-
-`1.2.6`
-<details>
-<summary>Update Summary (includes summary of commits by users)</summary>
-
-- bugfixes and logbooks
-
-Snowy Snowtime
----
-- removed one shot protection from swarmling(player), can be reenabled for modpack usage
-- most of swarmling(players) stats can now be modified for modpack usage
-- swarmling(minion) now has its damage divided from swarmling(player) instead of the turretling damage config, and can be adjusted
-- swarmling(minion) had its missile damage coefficient nerf removed, it now deals 400% just like swarmling(player) does
-- adjusted base damage (16->12), armor(20->15), and regen(7->5) of swarming(player), and no longer receives armor on level up
-- energy nova now gives immunity for 0.15s
-- bionic blink is slightly slower
-- cleaned up logbook to remove silly decisions and excess clones of turretlings
-- fixed an issue where swarmling(minion) did not use CannotCopy tag, resulting in over 14 balls being summoned at once when ally limit was removed
-- fixed an issue where swarmling(player) and operator turretlings skills were not defined, therefore wouldnt save upon a restart
-- fixed an issue where, for the default config for the turretlings passives, loaders characterbody was not defined correctly
-- cut 10mb from skins module
-
-.score
----
-- Helped fix an issue where the custom passives for turretlings would always have an invisible viewable that couldnt be viewed, causing the loadout borders of the defined characterbodies that had this passive to forever have the new yellow border
-
-PlNK & ebbysauce
----
-- Wrote logbook entries for all friendly turrets and turretlings.
-</details>
+- needler
+- kinetic phase blade
+- fix pookie skin
+- updated for newest vers
+- crosshairs change
+- swarmling now gets silly armor instead of immunity with nova (no more shrine cheese)
+- still burnt out not making new stuff atm
 
 `1.2.5`
 Emergency release, fixed missing dependency

@@ -185,11 +185,13 @@ public class Content
     public static GameObject SwarmNeedlerExpire;
     public static GameObject SwarmNeedlerMuzzle;
     public static GameObject SwarmNeedlerSuperCombine;
+    public static BuffDef SwarmlingNovaArmor;
     public static BuffDef SwarmlingMeleeArmorStrip;
     public static BuffDef SwarmlingMeleeBarrierHandler;
     public static BuffDef SwarmlingMeleeBarrierDecayDelayHandler;
     public static BuffDef SwarmlingArmorSteal;
     public static BuffDef SwarmlingNeedlerDebuff;
+
     public static void AddCustomSkills()
     {
         Log.Debug("Adding SnowtimeToybox Custom Skills...");
@@ -429,6 +431,7 @@ public class Content
         FriendlyTurretTurretlingPrimaryMeleeMinionSkillDef.activationState = new SerializableEntityStateType(typeof(FireTurretlingMeleeBeam));
         ContentAddition.AddSkillFamily(FriendlyTurretTurretlingPrimaryMeleeMinionSkillFamily);
         ContentAddition.AddSkillDef(FriendlyTurretTurretlingPrimaryMeleeMinionSkillDef);
+        SwarmlingNovaArmor = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<BuffDef>(turretlingPath + "Buff/SwarmlingNovaArmor.asset");
         SwarmlingMeleeArmorStrip = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<BuffDef>(turretlingPath + "Buff/TurretlingMeleeArmorDebuff.asset");
         SwarmlingMeleeBarrierHandler = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<BuffDef>(turretlingPath + "Buff/TurretlingMeleeBarrierHandler.asset");
         SwarmlingMeleeBarrierDecayDelayHandler = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<BuffDef>(turretlingPath + "Buff/TurretlingMeleeBarrierDecayDelayHandler.asset");
@@ -630,7 +633,6 @@ public class Content
         ContentAddition.AddBody(SwarmlingDemoMinionBroken);
         ContentAddition.AddMaster(SwarmlingDemoMinionMaster);
         ContentAddition.AddSkillDef(SwarmlingDemoPassiveMinion);
-
 
         SwarmlingMeleeMinionDef = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<DroneDef>(swarmlingPath + "_SwarmTurretling_Melee.asset");
         SwarmlingMeleeMinionBody = SnowtimeToyboxMod._stcharacterAssetBundle.LoadAsset<GameObject>(swarmlingPath + "_SwarmTurretling_MeleeBody.prefab");

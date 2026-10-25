@@ -57,10 +57,10 @@ namespace EntityStates.SnowtimeToybox_FriendlyTurret
             Ray aimRay = GetAimRay();
             TeamIndex myTeam = base.gameObject.GetComponent<TeamComponent>().teamIndex;
             Transform fxorigin = base.modelLocator.modelChildLocator.FindChild("HeadCenter").transform;
-            var immunity = RoR2Content.Buffs.Immune;
+            var immunity = Content.SwarmlingNovaArmor;
             if (!base.HasBuff(immunity.buffIndex))
             {
-                base.characterBody.AddTimedBuff(immunity.buffIndex, 0.15f);
+                base.characterBody.AddTimedBuff(Content.SwarmlingNovaArmor, 0.15f);
             }
             if (base.isAuthority)
             {

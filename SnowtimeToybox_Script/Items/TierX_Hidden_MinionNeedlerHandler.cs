@@ -24,7 +24,7 @@ public class MinionNeedlerHandler : ItemBase<MinionNeedlerHandler>
         CreateItem();
         Hooks();
         // TODO - Mark as Hidden when done.
-        Hidden = true;
+        ItemDef.hidden = true;
     }
 
     public override void CreateConfig(ConfigFile config)
